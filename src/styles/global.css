@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", "Instrument Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* The Archival Matte Palette */
+  --color-workspace-bg: #0d0d0f;
+  --color-workspace-panel: #141417;
+  --color-workspace-surface: #1a1a1e;
+  --color-workspace-surface-hover: #232329;
+  --color-workspace-border: #27272e;
+  --color-workspace-border-subtle: #1e1e24;
+  --color-workspace-text: #f4f4f5;
+  --color-workspace-muted: #8e8e93;
+
+  --color-marketing-bg: #fafaf9;
+  --color-marketing-panel: #ffffff;
+  --color-marketing-surface: #f4f4f5;
+  --color-marketing-border: #e4e4e7;
+  --color-marketing-border-subtle: #f0f0f2;
+  --color-marketing-text: #18181b;
+  --color-marketing-muted: #71717a;
+
+  /* Technical Accent */
+  --color-accent-amber: #f59e0b;
+  --color-accent-amber-hover: #d97706;
+  --color-accent-amber-dark: #b45309;
+  --color-accent-amber-glow: rgba(245, 158, 11, 0.15);
+
+  /* Review Status Indicators */
+  --color-status-keep: #10b981;
+  --color-status-keep-bg: #064e3b;
+  --color-status-keep-border: #059669;
+  --color-status-keep-text: #a7f3d0;
+
+  --color-status-reject: #f43f5e;
+  --color-status-reject-bg: #4c0519;
+  --color-status-reject-border: #e11d48;
+  --color-status-reject-text: #fecdd3;
+
+  --color-status-flag: #f59e0b;
+  --color-status-flag-bg: #451a03;
+  --color-status-flag-border: #d97706;
+  --color-status-flag-text: #fde68a;
+
+  /* 8-Step Spacing Scale */
+  --spacing-space-xs: 4px;
+  --spacing-space-sm: 8px;
+  --spacing-space-md: 16px;
+  --spacing-space-lg: 24px;
+  --spacing-space-xl: 32px;
+  --spacing-space-2xl: 48px;
+  --spacing-space-3xl: 80px;
+  --spacing-space-4xl: 120px;
+}
+
+:root {
+  --content-max: 1200px;
+}
+
+/* Custom Base Styles */
+html {
+  font-family: var(--font-sans);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Focus Ring Utility */
+*:focus-visible {
+  outline: 2px solid var(--color-accent-amber);
+  outline-offset: 2px;
+}
+
+/* Typography Proportions */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: inherit;
+}
+
+p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Measure limit for reading comfort */
+.prose-measure {
+  max-width: 70ch;
+}
+
+/* Custom Scrollbar for Workspace */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
