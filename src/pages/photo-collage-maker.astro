@@ -51,11 +51,11 @@ const schemas = [
   schema={schemas}
 >
   <!-- Page Header -->
-  <div class="bg-white border-b border-marketing-border py-8 sm:py-12">
+  <div class="bg-marketing-panel border-b border-marketing-border py-8 sm:py-12 transition-colors">
     <div class="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-4">
       <Breadcrumbs items={breadcrumbs} />
       <div class="max-w-3xl">
-        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 mb-3">
+        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-marketing-text mb-3">
           Free Photo Collage Maker
         </h1>
         <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
@@ -73,55 +73,55 @@ const schemas = [
   </section>
 
   <!-- Editorial & Educational Content (400-600 words) -->
-  <section class="py-16 sm:py-20 bg-white border-b border-marketing-border">
+  <section class="py-16 sm:py-20 bg-marketing-panel border-b border-marketing-border transition-colors">
     <div class="max-w-[900px] mx-auto px-4 sm:px-6 space-y-12">
       
       <div class="space-y-4 prose-measure">
-        <h2 class="text-2xl font-bold text-zinc-900">
+        <h2 class="text-2xl font-bold text-marketing-text">
           How to design clean, intentional photo collages
         </h2>
-        <p class="text-sm text-zinc-700 leading-relaxed">
+        <p class="text-sm text-marketing-text/90 leading-relaxed">
           A great photo collage tells a cohesive visual story rather than crowding random images into a cluttered box. When designing a collage, start by selecting a purposeful aspect ratio based on where the image will be seen: square (1:1) for portfolio feeds, portrait (4:5) for standard social posts, vertical (9:16) for mobile stories, or widescreen (16:9) for website hero banners and print posters.
         </p>
-        <p class="text-sm text-zinc-700 leading-relaxed">
+        <p class="text-sm text-marketing-text/90 leading-relaxed">
           Pay close attention to visual balance. Place your strongest hero image in the largest cell, and support it with detail or atmospheric shots in adjacent tiles. Keep gutter spacing consistent throughout the layout to give each photograph room to breathe.
         </p>
       </div>
 
       <div class="space-y-4 prose-measure">
-        <h2 class="text-2xl font-bold text-zinc-900">
+        <h2 class="text-2xl font-bold text-marketing-text">
           Why FrameProof is a better collage tool for creators
         </h2>
-        <p class="text-sm text-zinc-700 leading-relaxed">
+        <p class="text-sm text-marketing-text/90 leading-relaxed">
           Most online collage makers are bloated design tools that push subscription upgrades, plaster watermarks on exports, and require you to upload your personal photos to their servers. FrameProof takes a minimalist, privacy-first approach: clean geometric templates, adjustable borders and margins, uncompromised full-resolution exports, and 100% local processing.
         </p>
       </div>
 
       <!-- Links to Related Guides -->
-      <div class="p-6 rounded-2xl bg-marketing-bg border border-marketing-border space-y-3">
-        <h3 class="text-base font-bold text-zinc-900">Collage & Layout Guides</h3>
+      <div class="p-6 rounded-2xl bg-marketing-bg border border-marketing-border space-y-3 transition-colors">
+        <h3 class="text-base font-bold text-marketing-text">Collage & Layout Guides</h3>
         <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
           <li>
-            <a href="/guides/how-to-make-photo-collage" class="font-medium text-zinc-900 hover:text-accent-amber flex items-center gap-1.5">
-              <Icon name="file-text" size={14} class="text-zinc-500" />
+            <a href="/guides/how-to-make-photo-collage" class="font-medium text-marketing-text hover:text-accent-amber flex items-center gap-1.5 transition-colors">
+              <Icon name="file-text" size={14} class="text-marketing-muted" />
               <span>How to Make a Photo Collage Online (Tutorial)</span>
             </a>
           </li>
           <li>
-            <a href="/collage-templates" class="font-medium text-zinc-900 hover:text-accent-amber flex items-center gap-1.5">
-              <Icon name="layout" size={14} class="text-zinc-500" />
+            <a href="/collage-templates" class="font-medium text-marketing-text hover:text-accent-amber flex items-center gap-1.5 transition-colors">
+              <Icon name="layout" size={14} class="text-marketing-muted" />
               <span>Browse Customizable Collage Templates</span>
             </a>
           </li>
           <li>
-            <a href="/photo-contact-sheet-maker" class="font-medium text-zinc-900 hover:text-accent-amber flex items-center gap-1.5">
-              <Icon name="grid" size={14} class="text-zinc-500" />
+            <a href="/photo-contact-sheet-maker" class="font-medium text-marketing-text hover:text-accent-amber flex items-center gap-1.5 transition-colors">
+              <Icon name="grid" size={14} class="text-marketing-muted" />
               <span>Photo Contact Sheet Maker</span>
             </a>
           </li>
           <li>
-            <a href="/guides/how-to-make-a-contact-sheet" class="font-medium text-zinc-900 hover:text-accent-amber flex items-center gap-1.5">
-              <Icon name="file-text" size={14} class="text-zinc-500" />
+            <a href="/guides/how-to-make-a-contact-sheet" class="font-medium text-marketing-text hover:text-accent-amber flex items-center gap-1.5 transition-colors">
+              <Icon name="file-text" size={14} class="text-marketing-muted" />
               <span>Contact Sheet Best Practices</span>
             </a>
           </li>
@@ -130,7 +130,7 @@ const schemas = [
 
       <!-- FAQ Section -->
       <div class="space-y-6 pt-4">
-        <h2 class="text-2xl font-bold text-zinc-900">Photo Collage FAQs</h2>
+        <h2 class="text-2xl font-bold text-marketing-text">Photo Collage FAQs</h2>
         <FaqAccordion faqs={faqs} />
       </div>
 

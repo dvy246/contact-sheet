@@ -66,13 +66,13 @@ const schemas = [
   ogType={meta.ogType}
   schema={schemas}
 >
-  <article class="py-12 sm:py-16 bg-white border-b border-marketing-border">
+  <article class="py-12 sm:py-16 bg-marketing-panel border-b border-marketing-border transition-colors">
     <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-8">
       
       <Breadcrumbs items={breadcrumbs} />
 
       <header class="space-y-4">
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-900 leading-[1.2]">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-[1.2]">
           How to Create Photo Proof Sheets with Filenames Intact
         </h1>
         <p class="text-base text-marketing-muted leading-relaxed">
@@ -81,8 +81,8 @@ const schemas = [
       </header>
 
       <!-- Direct Answer / AEO Definition Block -->
-      <div class="p-6 rounded-2xl bg-amber-50/60 border border-amber-200/80 text-zinc-800 space-y-2">
-        <div class="text-xs font-bold uppercase tracking-wider text-amber-900 font-mono">Direct Answer</div>
+      <div class="p-6 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-marketing-text space-y-2">
+        <div class="text-xs font-bold uppercase tracking-wider text-accent-amber font-mono">Direct Answer</div>
         <p class="text-sm leading-relaxed font-medium">
           To create a photo proof sheet with filenames, import your image batch into FrameProof, enable the "Filename Only" or "Index & Filename" label option under Layout controls, and export as a multi-page PDF or PNG. Every thumbnail displays its verifiable camera filename, and you can export a CSV or TXT list of selected filenames for Lightroom culling.
         </p>
@@ -90,19 +90,19 @@ const schemas = [
 
       <!-- Step-by-Step Guide -->
       <div class="space-y-8 pt-4">
-        <h2 class="text-2xl font-bold text-zinc-900">
+        <h2 class="text-2xl font-bold text-marketing-text">
           The 4-Step Professional Handoff Workflow
         </h2>
 
         <div class="space-y-6">
           {steps.map((step, idx) => (
-            <div class="flex gap-4 p-5 rounded-xl border border-marketing-border bg-marketing-bg">
-              <div class="w-8 h-8 rounded-lg bg-zinc-900 text-white flex-shrink-0 flex items-center justify-center font-bold text-sm">
+            <div class="flex gap-4 p-5 rounded-xl border border-marketing-border bg-marketing-bg transition-colors">
+              <div class="w-8 h-8 rounded-lg bg-zinc-900 text-white dark:bg-accent-amber dark:text-black flex-shrink-0 flex items-center justify-center font-bold text-sm">
                 {idx + 1}
               </div>
               <div class="space-y-1">
-                <h3 class="text-base font-bold text-zinc-900">{step.name}</h3>
-                <p class="text-sm text-zinc-600 leading-relaxed">{step.text}</p>
+                <h3 class="text-base font-bold text-marketing-text">{step.name}</h3>
+                <p class="text-sm text-marketing-muted leading-relaxed">{step.text}</p>
               </div>
             </div>
           ))}
@@ -110,15 +110,15 @@ const schemas = [
       </div>
 
       <!-- Professional Context -->
-      <div class="space-y-6 pt-6 border-t border-marketing-border text-sm text-zinc-700 leading-relaxed prose-measure">
-        <h2 class="text-2xl font-bold text-zinc-900">
+      <div class="space-y-6 pt-6 border-t border-marketing-border text-sm text-marketing-text/90 leading-relaxed prose-measure">
+        <h2 class="text-2xl font-bold text-marketing-text">
           The Problem with Traditional Client Photo Proofing
         </h2>
         <p>
           Every working photographer knows the pain of client feedback via email: "We love the 4th photo in the second row, the one where the groom is smiling, and the photo near the bottom with the bouquet." Translating these subjective descriptions back into raw file numbers (e.g. DSC_8492.NEF) consumes hours of frustrating manual searching.
         </p>
 
-        <h3 class="text-lg font-bold text-zinc-900 pt-3">
+        <h3 class="text-lg font-bold text-marketing-text pt-3">
           How Filename-Accurate Proof Sheets Solve This
         </h3>
         <p>
@@ -143,7 +143,7 @@ const schemas = [
 
       <!-- FAQ Section -->
       <div class="space-y-6 pt-6 border-t border-marketing-border">
-        <h2 class="text-2xl font-bold text-zinc-900">Frequently Asked Questions</h2>
+        <h2 class="text-2xl font-bold text-marketing-text">Frequently Asked Questions</h2>
         <FaqAccordion faqs={faqs} />
       </div>
 

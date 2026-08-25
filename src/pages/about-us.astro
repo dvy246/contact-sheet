@@ -24,10 +24,10 @@ const schemas = [
   robots={meta.robots}
   schema={schemas}
 >
-  <div class="bg-white border-b border-marketing-border py-12 sm:py-16">
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
     <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-4">
       <Breadcrumbs items={breadcrumbs} />
-      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900">
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-marketing-text">
         About FrameProof
       </h1>
       <p class="text-base text-marketing-muted leading-relaxed">
@@ -36,11 +36,11 @@ const schemas = [
     </div>
   </div>
 
-  <article class="py-16 sm:py-20 bg-marketing-bg border-b border-marketing-border">
-    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-10 text-sm text-zinc-700 leading-relaxed prose-measure">
+  <article class="py-16 sm:py-20 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-10 text-sm text-marketing-text/90 leading-relaxed prose-measure">
       
       <div class="space-y-4">
-        <h2 class="text-2xl font-bold text-zinc-900">Our Mission</h2>
+        <h2 class="text-2xl font-bold text-marketing-text">Our Mission</h2>
         <p>
           FrameProof was created to solve a persistent frustration in professional photography: why does creating a simple, filename-accurate contact sheet or client proof pack require expensive subscriptions, slow desktop scripts, or privacy-compromising cloud uploaders?
         </p>
@@ -50,25 +50,25 @@ const schemas = [
       </div>
 
       <div class="space-y-4">
-        <h2 class="text-2xl font-bold text-zinc-900">The Privacy-First Principle</h2>
+        <h2 class="text-2xl font-bold text-marketing-text">The Privacy-First Principle</h2>
         <p>
           Unlike modern web apps that funnel user assets into centralized databases, FrameProof is architected as a true client-side application. When you drop a 500-photo wedding shoot into FrameProof, every single byte of pixel data, filename text, and EXIF tag is processed directly in your browser's local memory sandbox. No photos are transmitted over the wire.
         </p>
       </div>
 
-      <div class="p-6 rounded-2xl bg-white border border-marketing-border space-y-3 shadow-xs">
-        <h3 class="text-base font-bold text-zinc-900">Core Architecture Commitments</h3>
-        <ul class="space-y-2 text-xs text-zinc-600">
+      <div class="p-6 rounded-2xl bg-marketing-panel border border-marketing-border space-y-3 shadow-xs transition-colors">
+        <h3 class="text-base font-bold text-marketing-text">Core Architecture Commitments</h3>
+        <ul class="space-y-2 text-xs text-marketing-muted">
           <li class="flex items-center gap-2">
-            <Icon name="check" size={14} class="text-emerald-600" />
+            <Icon name="check" size={14} class="text-emerald-500" />
             <span>Zero account creation required to access full workspace features.</span>
           </li>
           <li class="flex items-center gap-2">
-            <Icon name="check" size={14} class="text-emerald-600" />
+            <Icon name="check" size={14} class="text-emerald-500" />
             <span>100% in-browser Canvas 2D and Web Worker execution.</span>
           </li>
           <li class="flex items-center gap-2">
-            <Icon name="check" size={14} class="text-emerald-600" />
+            <Icon name="check" size={14} class="text-emerald-500" />
             <span>Zero media telemetry or pixel logging.</span>
           </li>
         </ul>
@@ -77,7 +77,7 @@ const schemas = [
       <div class="pt-6 border-t border-marketing-border">
         <a 
           href="/contact-us" 
-          class="inline-flex items-center gap-2 text-zinc-900 font-semibold hover:text-accent-amber transition-colors"
+          class="inline-flex items-center gap-2 text-marketing-text font-semibold hover:text-accent-amber transition-colors"
         >
           <span>Have feedback or questions? Contact our team</span>
           <Icon name="arrow-right" size={14} />

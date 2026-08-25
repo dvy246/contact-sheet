@@ -40,11 +40,11 @@ const schemas = [
   robots={meta.robots}
   schema={schemas}
 >
-  <div class="bg-white border-b border-marketing-border py-10 sm:py-14">
+  <div class="bg-marketing-panel border-b border-marketing-border py-10 sm:py-14 transition-colors">
     <div class="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-4">
       <Breadcrumbs items={breadcrumbs} />
       <div class="max-w-3xl">
-        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 mb-3">
+        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-marketing-text mb-3">
           Free Contact Sheet Templates
         </h1>
         <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
@@ -54,44 +54,44 @@ const schemas = [
     </div>
   </div>
 
-  <section class="py-12 sm:py-16 bg-marketing-bg border-b border-marketing-border">
+  <section class="py-12 sm:py-16 bg-marketing-bg border-b border-marketing-border transition-colors">
     <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {CONTACT_SHEET_PRESETS.map((preset) => (
-          <div class="bg-white border border-marketing-border rounded-2xl p-6 sm:p-7 flex flex-col justify-between space-y-5 shadow-xs hover:border-zinc-300 transition-all">
+          <div class="bg-marketing-panel border border-marketing-border rounded-2xl p-6 sm:p-7 flex flex-col justify-between space-y-5 shadow-xs hover:border-zinc-500 transition-all">
             <div class="space-y-3">
               <div class="flex items-center justify-between">
                 <span class="text-xs font-bold uppercase tracking-wider text-accent-amber font-mono">
                   {preset.category}
                 </span>
-                <span class="text-xs px-2 py-0.5 rounded bg-zinc-100 font-mono text-zinc-700">
+                <span class="text-xs px-2 py-0.5 rounded bg-marketing-surface border border-marketing-border font-mono text-marketing-text">
                   {preset.config.columns}×{preset.config.rows} Grid
                 </span>
               </div>
-              <h2 class="text-lg font-bold text-zinc-900">{preset.name}</h2>
+              <h2 class="text-lg font-bold text-marketing-text">{preset.name}</h2>
               <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
                 {preset.description}
               </p>
 
-              <div class="pt-3 border-t border-marketing-border space-y-1.5 text-xs text-zinc-600 font-mono">
+              <div class="pt-3 border-t border-marketing-border space-y-1.5 text-xs text-marketing-muted font-mono">
                 <div class="flex justify-between">
                   <span>Page Size:</span>
-                  <span class="font-bold text-zinc-900">{preset.config.pageSize?.toUpperCase()} ({preset.config.orientation})</span>
+                  <span class="font-bold text-marketing-text">{preset.config.pageSize?.toUpperCase()} ({preset.config.orientation})</span>
                 </div>
                 <div class="flex justify-between">
                   <span>Labels:</span>
-                  <span class="font-bold text-zinc-900">{preset.config.labelType}</span>
+                  <span class="font-bold text-marketing-text">{preset.config.labelType}</span>
                 </div>
                 <div class="flex justify-between">
                   <span>Margins / Gap:</span>
-                  <span class="font-bold text-zinc-900">{preset.config.margin}px / {preset.config.spacing}px</span>
+                  <span class="font-bold text-marketing-text">{preset.config.margin}px / {preset.config.spacing}px</span>
                 </div>
               </div>
             </div>
 
             <a 
               href="/#workspace" 
-              class="w-full py-2.5 px-4 rounded-xl bg-zinc-900 hover:bg-black text-white font-semibold text-xs text-center tracking-tight shadow-sm hover:shadow transition-all block"
+              class="w-full py-2.5 px-4 rounded-xl bg-zinc-900 hover:bg-black text-white dark:bg-accent-amber dark:hover:bg-accent-amber-hover dark:text-black font-semibold text-xs text-center tracking-tight shadow-sm hover:shadow transition-all block"
             >
               Open in Workspace
             </a>
@@ -102,22 +102,22 @@ const schemas = [
   </section>
 
   <!-- Editorial Section -->
-  <section class="py-16 sm:py-20 bg-white border-b border-marketing-border">
+  <section class="py-16 sm:py-20 bg-marketing-panel border-b border-marketing-border transition-colors">
     <div class="max-w-[900px] mx-auto px-4 sm:px-6 space-y-10">
       <div class="space-y-4 prose-measure">
-        <h2 class="text-2xl font-bold text-zinc-900">
+        <h2 class="text-2xl font-bold text-marketing-text">
           How to choose the right contact sheet layout
         </h2>
-        <p class="text-sm text-zinc-700 leading-relaxed">
+        <p class="text-sm text-marketing-text/90 leading-relaxed">
           The ideal contact sheet layout balances thumbnail size with page density. If you are printing proofs for a client review binder, 16 to 20 images per A4 or US Letter page allows the viewer to evaluate facial expressions, lighting, and composition without needing a magnifying loupe.
         </p>
-        <p class="text-sm text-zinc-700 leading-relaxed">
+        <p class="text-sm text-marketing-text/90 leading-relaxed">
           For digital screen presentations and video call reviews, 16:9 widescreen formats (such as our 4×3 Digital Review Board) match modern laptop and monitor displays without leaving awkward blank vertical margins.
         </p>
       </div>
 
       <div class="space-y-6">
-        <h2 class="text-2xl font-bold text-zinc-900">Template FAQs</h2>
+        <h2 class="text-2xl font-bold text-marketing-text">Template FAQs</h2>
         <FaqAccordion faqs={faqs} />
       </div>
     </div>

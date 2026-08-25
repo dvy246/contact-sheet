@@ -16,8 +16,8 @@ const { faqs, class: className = '' } = Astro.props;
 
 <div class={`space-y-3 ${className}`}>
   {faqs.map((faq) => (
-    <details class="group bg-white border border-marketing-border rounded-xl p-4 sm:p-5 transition-all open:shadow-xs open:border-zinc-300">
-      <summary class="flex items-center justify-between font-semibold text-sm sm:text-base text-zinc-900 cursor-pointer list-none select-none">
+    <details class="group bg-marketing-panel border border-marketing-border rounded-xl p-4 sm:p-5 transition-all open:shadow-xs open:border-zinc-500">
+      <summary class="flex items-center justify-between font-semibold text-sm sm:text-base text-marketing-text cursor-pointer list-none select-none">
         <span class="pr-4">{faq.question}</span>
         <div class="w-6 h-6 rounded-md bg-marketing-surface flex items-center justify-center text-marketing-muted group-open:rotate-180 transition-transform">
           <Icon name="chevron-down" size={14} />

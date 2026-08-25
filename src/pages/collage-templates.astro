@@ -40,11 +40,11 @@ const schemas = [
   robots={meta.robots}
   schema={schemas}
 >
-  <div class="bg-white border-b border-marketing-border py-10 sm:py-14">
+  <div class="bg-marketing-panel border-b border-marketing-border py-10 sm:py-14 transition-colors">
     <div class="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-4">
       <Breadcrumbs items={breadcrumbs} />
       <div class="max-w-3xl">
-        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 mb-3">
+        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-marketing-text mb-3">
           Custom Photo Collage Templates
         </h1>
         <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
@@ -54,40 +54,40 @@ const schemas = [
     </div>
   </div>
 
-  <section class="py-12 sm:py-16 bg-marketing-bg border-b border-marketing-border">
+  <section class="py-12 sm:py-16 bg-marketing-bg border-b border-marketing-border transition-colors">
     <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {COLLAGE_TEMPLATES.map((template) => (
-          <div class="bg-white border border-marketing-border rounded-2xl p-6 sm:p-7 flex flex-col justify-between space-y-5 shadow-xs hover:border-zinc-300 transition-all">
+          <div class="bg-marketing-panel border border-marketing-border rounded-2xl p-6 sm:p-7 flex flex-col justify-between space-y-5 shadow-xs hover:border-zinc-500 transition-all">
             <div class="space-y-3">
               <div class="flex items-center justify-between">
                 <span class="text-xs font-bold uppercase tracking-wider text-accent-amber font-mono">
                   {template.category}
                 </span>
-                <span class="text-xs px-2 py-0.5 rounded bg-zinc-100 font-mono text-zinc-700">
+                <span class="text-xs px-2 py-0.5 rounded bg-marketing-surface border border-marketing-border font-mono text-marketing-text">
                   {template.cells.length} Photo Cells
                 </span>
               </div>
-              <h2 class="text-lg font-bold text-zinc-900">{template.name}</h2>
+              <h2 class="text-lg font-bold text-marketing-text">{template.name}</h2>
               <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
                 {template.description}
               </p>
 
-              <div class="pt-3 border-t border-marketing-border space-y-1.5 text-xs text-zinc-600 font-mono">
+              <div class="pt-3 border-t border-marketing-border space-y-1.5 text-xs text-marketing-muted font-mono">
                 <div class="flex justify-between">
                   <span>Aspect Ratio:</span>
-                  <span class="font-bold text-zinc-900">{template.aspectRatio >= 1 ? `${template.aspectRatio.toFixed(2)}:1` : `1:${(1 / template.aspectRatio).toFixed(2)}`}</span>
+                  <span class="font-bold text-marketing-text">{template.aspectRatio >= 1 ? `${template.aspectRatio.toFixed(2)}:1` : `1:${(1 / template.aspectRatio).toFixed(2)}`}</span>
                 </div>
                 <div class="flex justify-between">
                   <span>Default Gap:</span>
-                  <span class="font-bold text-zinc-900">{template.defaultSpacing}px</span>
+                  <span class="font-bold text-marketing-text">{template.defaultSpacing}px</span>
                 </div>
               </div>
             </div>
 
             <a 
               href="/#workspace" 
-              class="w-full py-2.5 px-4 rounded-xl bg-zinc-900 hover:bg-black text-white font-semibold text-xs text-center tracking-tight shadow-sm hover:shadow transition-all block"
+              class="w-full py-2.5 px-4 rounded-xl bg-zinc-900 hover:bg-black text-white dark:bg-accent-amber dark:hover:bg-accent-amber-hover dark:text-black font-semibold text-xs text-center tracking-tight shadow-sm hover:shadow transition-all block"
             >
               Use This Template
             </a>
@@ -98,19 +98,19 @@ const schemas = [
   </section>
 
   <!-- Editorial Section -->
-  <section class="py-16 sm:py-20 bg-white border-b border-marketing-border">
+  <section class="py-16 sm:py-20 bg-marketing-panel border-b border-marketing-border transition-colors">
     <div class="max-w-[900px] mx-auto px-4 sm:px-6 space-y-10">
       <div class="space-y-4 prose-measure">
-        <h2 class="text-2xl font-bold text-zinc-900">
+        <h2 class="text-2xl font-bold text-marketing-text">
           Template formats and use cases
         </h2>
-        <p class="text-sm text-zinc-700 leading-relaxed">
+        <p class="text-sm text-marketing-text/90 leading-relaxed">
           FrameProof templates are crafted around photographic proportions rather than generic graphics. For example, our 3-photo horizontal strip is perfect for landscape panoramas and documentary sequences, while our 9:16 vertical story format lets you combine portrait shots with detail insets for mobile platforms.
         </p>
       </div>
 
       <div class="space-y-6">
-        <h2 class="text-2xl font-bold text-zinc-900">Collage Template FAQs</h2>
+        <h2 class="text-2xl font-bold text-marketing-text">Collage Template FAQs</h2>
         <FaqAccordion faqs={faqs} />
       </div>
     </div>

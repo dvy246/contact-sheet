@@ -1,29 +1,32 @@
 @import "tailwindcss";
 @source "../src";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: "Plus Jakarta Sans", "Instrument Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-  /* The Archival Matte Palette */
-  --color-workspace-bg: #0d0d0f;
-  --color-workspace-panel: #141417;
-  --color-workspace-surface: #1a1a1e;
-  --color-workspace-surface-hover: #232329;
-  --color-workspace-border: #27272e;
-  --color-workspace-border-subtle: #1e1e24;
+  /* The Archival Matte Workspace Palette */
+  --color-workspace-bg: #09090b;
+  --color-workspace-panel: #111114;
+  --color-workspace-surface: #18181c;
+  --color-workspace-surface-hover: #222228;
+  --color-workspace-border: #27272f;
+  --color-workspace-border-subtle: #1c1c22;
   --color-workspace-text: #f4f4f5;
-  --color-workspace-muted: #8e8e93;
+  --color-workspace-muted: #909099;
 
-  --color-marketing-bg: #fafaf9;
-  --color-marketing-panel: #ffffff;
-  --color-marketing-surface: #f4f4f5;
-  --color-marketing-border: #e4e4e7;
-  --color-marketing-border-subtle: #f0f0f2;
-  --color-marketing-text: #18181b;
-  --color-marketing-muted: #71717a;
+  /* Marketing Dynamic Palette (Driven by CSS vars) */
+  --color-marketing-bg: var(--marketing-bg);
+  --color-marketing-panel: var(--marketing-panel);
+  --color-marketing-surface: var(--marketing-surface);
+  --color-marketing-border: var(--marketing-border);
+  --color-marketing-border-subtle: var(--marketing-border-subtle);
+  --color-marketing-text: var(--marketing-text);
+  --color-marketing-muted: var(--marketing-muted);
 
-  /* Technical Accent */
+  /* Technical Amber Accent */
   --color-accent-amber: #f59e0b;
   --color-accent-amber-hover: #d97706;
   --color-accent-amber-dark: #b45309;
@@ -58,6 +61,26 @@
 
 :root {
   --content-max: 1200px;
+
+  /* Light Marketing Tokens (White Mode) */
+  --marketing-bg: #fafaf9;
+  --marketing-panel: #ffffff;
+  --marketing-surface: #f4f4f5;
+  --marketing-border: #e4e4e7;
+  --marketing-border-subtle: #f0f0f2;
+  --marketing-text: #18181b;
+  --marketing-muted: #71717a;
+}
+
+html.dark {
+  /* Dark Marketing Tokens (Dark Mode) */
+  --marketing-bg: #09090b;
+  --marketing-panel: #111114;
+  --marketing-surface: #18181c;
+  --marketing-border: #27272f;
+  --marketing-border-subtle: #1c1c22;
+  --marketing-text: #f4f4f5;
+  --marketing-muted: #a1a1aa;
 }
 
 /* Custom Base Styles */
@@ -74,6 +97,9 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: var(--marketing-bg);
+  color: var(--marketing-text);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* Focus Ring Utility */

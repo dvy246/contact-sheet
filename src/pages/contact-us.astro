@@ -18,10 +18,10 @@ const breadcrumbs = [
   canonical={meta.canonical}
   robots={meta.robots}
 >
-  <div class="bg-white border-b border-marketing-border py-12 sm:py-16">
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
     <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-4">
       <Breadcrumbs items={breadcrumbs} />
-      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900">
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-marketing-text">
         Contact Us
       </h1>
       <p class="text-base text-marketing-muted leading-relaxed">
@@ -30,33 +30,33 @@ const breadcrumbs = [
     </div>
   </div>
 
-  <section class="py-16 sm:py-20 bg-marketing-bg border-b border-marketing-border">
+  <section class="py-16 sm:py-20 bg-marketing-bg border-b border-marketing-border transition-colors">
     <div class="max-w-[800px] mx-auto px-4 sm:px-6">
-      <div class="bg-white border border-marketing-border rounded-2xl p-6 sm:p-10 space-y-6 shadow-xs">
+      <div class="bg-marketing-panel border border-marketing-border rounded-2xl p-6 sm:p-10 space-y-6 shadow-xs transition-colors">
         <div class="space-y-2">
-          <h2 class="text-xl font-bold text-zinc-900">Get in Touch</h2>
+          <h2 class="text-xl font-bold text-marketing-text">Get in Touch</h2>
           <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
             FrameProof is developed and maintained for the photographic and visual creator community. Reach out with bug reports, feature ideas, or collaboration inquiries.
           </p>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-          <div class="p-5 rounded-xl bg-marketing-bg border border-marketing-border space-y-2">
-            <div class="flex items-center gap-2 font-bold text-zinc-900 text-sm">
+          <div class="p-5 rounded-xl bg-marketing-surface border border-marketing-border space-y-2 transition-colors">
+            <div class="flex items-center gap-2 font-bold text-marketing-text text-sm">
               <Icon name="help" size={16} class="text-accent-amber" />
               <span>General & Support Inquiries</span>
             </div>
             <p class="text-xs text-marketing-muted">For help using FrameProof or reporting browser compatibility bugs:</p>
-            <div class="text-xs font-mono text-zinc-900 pt-1 font-semibold">support@frameproof.com</div>
+            <div class="text-xs font-mono text-marketing-text pt-1 font-semibold">support@frameproof.com</div>
           </div>
 
-          <div class="p-5 rounded-xl bg-marketing-bg border border-marketing-border space-y-2">
-            <div class="flex items-center gap-2 font-bold text-zinc-900 text-sm">
+          <div class="p-5 rounded-xl bg-marketing-surface border border-marketing-border space-y-2 transition-colors">
+            <div class="flex items-center gap-2 font-bold text-marketing-text text-sm">
               <Icon name="layout" size={16} class="text-accent-amber" />
               <span>Template & Feature Requests</span>
             </div>
             <p class="text-xs text-marketing-muted">Suggesting a new contact sheet preset or collage layout:</p>
-            <div class="text-xs font-mono text-zinc-900 pt-1 font-semibold">features@frameproof.com</div>
+            <div class="text-xs font-mono text-marketing-text pt-1 font-semibold">features@frameproof.com</div>
           </div>
         </div>
 
