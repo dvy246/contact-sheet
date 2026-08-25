@@ -12,13 +12,13 @@ import { calculateCollageLayout } from '../../lib/engine/collageEngine';
 import { COLLAGE_TEMPLATES } from '../../lib/engine/templates';
 import { exportLayoutAsImage } from '../../lib/export/imageExporter';
 import { exportContactSheetPagesToPDF } from '../../lib/export/pdfExporter';
-import { exportFilenamesAsCSV } from '../../lib/export/filenameExporter';
+import { exportFilenamesAsCSV, exportFilenamesAsTXT } from '../../lib/export/filenameExporter';
 import { exportProjectManifest } from '../../lib/export/projectManifest';
 import type { ExportFormat, FilterStatus } from '../../lib/types';
 
 export class ExportDrawer {
   private container: HTMLElement;
-  private selectedFormat: ExportFormat = 'png';
+  private selectedFormat: ExportFormat | 'txt' = 'png';
   private exportScope: FilterStatus = 'all';
   private quality = 0.92;
   private scale = 2; // 2x high-resolution by default
@@ -37,7 +37,7 @@ export class ExportDrawer {
 
     this.container.innerHTML = `
       <div class="flex flex-col gap-4 p-4 bg-workspace-panel border-t border-workspace-border text-xs text-workspace-text">
-        <div class="flex items-center justify-between">
+        <div class="flex flex-wrap items-center justify-between gap-2">
           <div class="flex items-center gap-2">
             <span class="font-bold text-sm tracking-tight">Export Artifact</span>
             <span class="text-[11px] text-workspace-muted">· Generates locally in browser</span>
@@ -45,8 +45,8 @@ export class ExportDrawer {
 
           <!-- Scope Selection -->
           <div class="flex items-center gap-2">
-            <label class="text-[11px] text-workspace-muted">Scope:</label>
-            <select id="export-scope-select" class="bg-workspace-surface border border-workspace-border rounded-md px-2 py-1 text-xs text-workspace-text focus:border-accent-amber">
+            <label class="text-[11px] text-workspace-muted font-medium">Scope:</label>
+            <select id="export-scope-select" class="bg-workspace-surface border border-workspace-border rounded-lg px-2.5 py-1 text-xs text-workspace-text focus:border-accent-amber transition-colors">
               <option value="all" ${this.exportScope === 'all' ? 'selected' : ''}>All Images (${images.length})</option>
               <option value="keep" ${this.exportScope === 'keep' ? 'selected' : ''}>Kept Only (${keptCount})</option>
               <option value="exclude-rejected" ${this.exportScope === 'exclude-rejected' ? 'selected' : ''}>Exclude Rejected</option>
@@ -55,41 +55,45 @@ export class ExportDrawer {
         </div>
 
         <!-- Format Selector Tabs -->
-        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2">
-          <button data-format="png" class="export-format-btn p-2.5 rounded-lg border text-center transition-all ${this.selectedFormat === 'png' ? 'bg-workspace-surface-hover border-accent-amber text-workspace-text font-bold shadow-sm' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
+        <div class="grid grid-cols-2 sm:grid-cols-6 gap-2">
+          <button data-format="png" class="export-format-btn p-2.5 rounded-xl border text-center transition-all ${this.selectedFormat === 'png' ? 'bg-workspace-surface-hover border-accent-amber text-workspace-text font-bold shadow-xs' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
             <div class="font-medium text-xs">PNG Image</div>
             <div class="text-[10px] text-workspace-muted mt-0.5">High-Res Lossless</div>
           </button>
-          <button data-format="jpeg" class="export-format-btn p-2.5 rounded-lg border text-center transition-all ${this.selectedFormat === 'jpeg' ? 'bg-workspace-surface-hover border-accent-amber text-workspace-text font-bold shadow-sm' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
+          <button data-format="jpeg" class="export-format-btn p-2.5 rounded-xl border text-center transition-all ${this.selectedFormat === 'jpeg' ? 'bg-workspace-surface-hover border-accent-amber text-workspace-text font-bold shadow-xs' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
             <div class="font-medium text-xs">JPEG Image</div>
             <div class="text-[10px] text-workspace-muted mt-0.5">Compressed Photo</div>
           </button>
-          <button data-format="pdf" class="export-format-btn p-2.5 rounded-lg border text-center transition-all ${this.selectedFormat === 'pdf' ? 'bg-workspace-surface-hover border-accent-amber text-workspace-text font-bold shadow-sm' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
+          <button data-format="pdf" class="export-format-btn p-2.5 rounded-xl border text-center transition-all ${this.selectedFormat === 'pdf' ? 'bg-workspace-surface-hover border-accent-amber text-workspace-text font-bold shadow-xs' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
             <div class="font-medium text-xs">PDF Document</div>
             <div class="text-[10px] text-workspace-muted mt-0.5">Print Proof Sheet</div>
           </button>
-          <button data-format="csv" class="export-format-btn p-2.5 rounded-lg border text-center transition-all ${this.selectedFormat === 'csv' ? 'bg-workspace-surface-hover border-accent-amber text-workspace-text font-bold shadow-sm' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
-            <div class="font-medium text-xs">CSV / TXT List</div>
+          <button data-format="csv" class="export-format-btn p-2.5 rounded-xl border text-center transition-all ${this.selectedFormat === 'csv' ? 'bg-workspace-surface-hover border-accent-amber text-workspace-text font-bold shadow-xs' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
+            <div class="font-medium text-xs">CSV Table</div>
             <div class="text-[10px] text-workspace-muted mt-0.5">Filename Handoff</div>
           </button>
-          <button data-format="json" class="export-format-btn p-2.5 rounded-lg border text-center transition-all ${this.selectedFormat === 'json' ? 'bg-workspace-surface-hover border-accent-amber text-workspace-text font-bold shadow-sm' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
-            <div class="font-medium text-xs">Project Manifest</div>
+          <button data-format="txt" class="export-format-btn p-2.5 rounded-xl border text-center transition-all ${this.selectedFormat === 'txt' ? 'bg-workspace-surface-hover border-accent-amber text-workspace-text font-bold shadow-xs' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
+            <div class="font-medium text-xs">Lightroom TXT</div>
+            <div class="text-[10px] text-workspace-muted mt-0.5">Search Filter List</div>
+          </button>
+          <button data-format="json" class="export-format-btn p-2.5 rounded-xl border text-center transition-all ${this.selectedFormat === 'json' ? 'bg-workspace-surface-hover border-accent-amber text-workspace-text font-bold shadow-xs' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
+            <div class="font-medium text-xs">Manifest</div>
             <div class="text-[10px] text-workspace-muted mt-0.5">.frameproof.json</div>
           </button>
         </div>
 
         <!-- Action Row -->
-        <div class="flex items-center justify-between pt-2 border-t border-workspace-border">
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-workspace-border">
           <div class="flex items-center gap-3">
             <span class="text-xs text-workspace-muted">
-              ${this.selectedFormat === 'pdf' ? 'Multi-page print document with metadata headers' : this.selectedFormat === 'csv' ? 'Lightroom-compatible structured filenames table' : 'Export rendered at 2× studio quality'}
+              ${this.selectedFormat === 'pdf' ? 'Multi-page 300 DPI print document with metadata headers' : this.selectedFormat === 'txt' ? 'Comma-separated filename string ready to paste into Lightroom search' : this.selectedFormat === 'csv' ? 'Lightroom-compatible structured metadata table' : 'Export rendered at 2× studio quality'}
             </span>
           </div>
 
           <div class="flex items-center gap-3">
             <button 
               id="btn-trigger-export"
-              class="inline-flex items-center justify-center gap-2 h-9 px-5 rounded-lg bg-accent-amber hover:bg-accent-amber-hover text-black font-semibold text-xs tracking-tight shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              class="inline-flex items-center justify-center gap-2 h-9 px-5 rounded-lg bg-accent-amber hover:bg-accent-amber-hover text-black font-semibold text-xs tracking-tight shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               ${isExporting || images.length === 0 ? 'disabled' : ''}
             >
               ${isExporting ? `
@@ -114,7 +118,7 @@ export class ExportDrawer {
     // Format tabs
     this.container.querySelectorAll('.export-format-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
-        const fmt = btn.getAttribute('data-format') as ExportFormat;
+        const fmt = btn.getAttribute('data-format') as ExportFormat | 'txt';
         if (fmt) {
           this.selectedFormat = fmt;
           this.render();
@@ -159,6 +163,9 @@ export class ExportDrawer {
       if (this.selectedFormat === 'csv') {
         exportFilenamesAsCSV(targetImages);
         $exportProgress.set(100);
+      } else if (this.selectedFormat === 'txt') {
+        exportFilenamesAsTXT(targetImages, 'comma');
+        $exportProgress.set(100);
       } else if (this.selectedFormat === 'json') {
         exportProjectManifest(targetImages, mode, config, $activeTemplateId.get());
         $exportProgress.set(100);
@@ -172,7 +179,6 @@ export class ExportDrawer {
           // Collage PDF
           const template = COLLAGE_TEMPLATES.find(t => t.id === $activeTemplateId.get()) || COLLAGE_TEMPLATES[0];
           const collageLayout = calculateCollageLayout(targetImages, template, config, this.scale);
-          // Convert collage to a single page
           const singlePage: any = {
             pageIndex: 0,
             totalPages: 1,
