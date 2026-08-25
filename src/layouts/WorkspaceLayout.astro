@@ -1,0 +1,23 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/common/Header.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  robots?: string;
+  schema?: object | object[];
+}
+
+const props = Astro.props;
+---
+
+<BaseLayout {...props}>
+  <div class="min-h-screen bg-workspace-bg text-workspace-text flex flex-col antialiased">
+    <Header variant="workspace" />
+    <main class="flex-1 flex flex-col overflow-hidden">
+      <slot />
+    </main>
+  </div>
+</BaseLayout>

@@ -1,0 +1,50 @@
+---
+import Icon from './Icon.astro';
+
+export interface BreadcrumbItem {
+  name: string;
+  url?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  class?: string;
+}
+
+const { items, class: className = '' } = Astro.props;
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  'itemListElement': items.map((item, index) => ({
+    '@type': 'ListItem',
+    'position': index + 1,
+    'name': item.name,
+    ...(item.url ? { 'item': item.url.startsWith('http') ? item.url : `https://www.frameproof.com${item.url}` } : {}),
+  })),
+};
+---
+
+<nav aria-label="Breadcrumb" class={`text-xs text-marketing-muted flex items-center gap-1.5 ${className}`}>
+  {items.map((item, index) => {
+    const isLast = index === items.length - 1;
+    return (
+      <div class="inline-flex items-center gap-1.5">
+        {item.url && !isLast ? (
+          <a href={item.url} class="hover:text-marketing-text transition-colors">
+            {item.name}
+          </a>
+        ) : (
+          <span class={isLast ? "font-medium text-marketing-text" : ""}>
+            {item.name}
+          </span>
+        )}
+        {!isLast && (
+          <Icon name="chevron-right" size={12} class="opacity-40" />
+        )}
+      </div>
+    );
+  })}
+</nav>
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />

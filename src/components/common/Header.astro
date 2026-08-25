@@ -1,0 +1,173 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  variant?: 'marketing' | 'workspace';
+}
+
+const { variant = 'marketing' } = Astro.props;
+const isWorkspace = variant === 'workspace';
+---
+
+<header class={`w-full z-40 transition-colors ${
+  isWorkspace 
+    ? 'bg-workspace-panel border-b border-workspace-border text-workspace-text' 
+    : 'bg-marketing-panel/95 backdrop-blur-sm border-b border-marketing-border text-marketing-text sticky top-0'
+}`}>
+  <div class="max-w-[1200px] mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
+    <!-- Brand Logo -->
+    <a href="/" class="flex items-center gap-2.5 group">
+      <div class="w-8 h-8 rounded-lg bg-workspace-surface flex items-center justify-center border border-workspace-border group-hover:border-accent-amber transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="18" height="18" x="3" y="3" rx="2" />
+          <path d="M3 9h18" />
+          <path d="M9 21V9" />
+        </svg>
+      </div>
+      <div class="flex flex-col">
+        <span class={`font-bold tracking-tight text-base sm:text-lg leading-tight ${isWorkspace ? 'text-workspace-text' : 'text-marketing-text'}`}>
+          Frame<span class="text-accent-amber">Proof</span>
+        </span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation Links -->
+    {!isWorkspace ? (
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-marketing-muted">
+        <!-- Tools Dropdown -->
+        <div class="relative group">
+          <button class="flex items-center gap-1 hover:text-marketing-text transition-colors py-2 cursor-pointer">
+            <span>Tools</span>
+            <Icon name="chevron-down" size={14} class="group-hover:rotate-180 transition-transform" />
+          </button>
+          <div class="absolute left-0 top-full hidden group-hover:flex flex-col bg-white border border-marketing-border rounded-xl shadow-lg p-2 min-w-[240px] z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+            <a href="/photo-contact-sheet-maker" class="flex flex-col p-2.5 rounded-lg hover:bg-marketing-surface transition-colors">
+              <span class="font-medium text-marketing-text text-sm">Contact Sheet Maker</span>
+              <span class="text-xs text-marketing-muted">Batch grids with exact filenames</span>
+            </a>
+            <a href="/photo-collage-maker" class="flex flex-col p-2.5 rounded-lg hover:bg-marketing-surface transition-colors">
+              <span class="font-medium text-marketing-text text-sm">Photo Collage Maker</span>
+              <span class="text-xs text-marketing-muted">Template layouts for print & social</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Templates Dropdown -->
+        <div class="relative group">
+          <button class="flex items-center gap-1 hover:text-marketing-text transition-colors py-2 cursor-pointer">
+            <span>Templates</span>
+            <Icon name="chevron-down" size={14} class="group-hover:rotate-180 transition-transform" />
+          </button>
+          <div class="absolute left-0 top-full hidden group-hover:flex flex-col bg-white border border-marketing-border rounded-xl shadow-lg p-2 min-w-[240px] z-50">
+            <a href="/contact-sheet-template" class="flex flex-col p-2.5 rounded-lg hover:bg-marketing-surface transition-colors">
+              <span class="font-medium text-marketing-text text-sm">Contact Sheet Templates</span>
+              <span class="text-xs text-marketing-muted">A4, US Letter & 16:9 review boards</span>
+            </a>
+            <a href="/collage-templates" class="flex flex-col p-2.5 rounded-lg hover:bg-marketing-surface transition-colors">
+              <span class="font-medium text-marketing-text text-sm">Collage Templates</span>
+              <span class="text-xs text-marketing-muted">Grid, strip, social & story presets</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Guides Dropdown -->
+        <div class="relative group">
+          <button class="flex items-center gap-1 hover:text-marketing-text transition-colors py-2 cursor-pointer">
+            <span>Guides</span>
+            <Icon name="chevron-down" size={14} class="group-hover:rotate-180 transition-transform" />
+          </button>
+          <div class="absolute left-0 top-full hidden group-hover:flex flex-col bg-white border border-marketing-border rounded-xl shadow-lg p-2 min-w-[260px] z-50">
+            <a href="/guides/how-to-make-a-contact-sheet" class="flex flex-col p-2.5 rounded-lg hover:bg-marketing-surface transition-colors">
+              <span class="font-medium text-marketing-text text-sm">How to Make a Contact Sheet</span>
+              <span class="text-xs text-marketing-muted">Step-by-step photography guide</span>
+            </a>
+            <a href="/guides/how-to-make-photo-collage" class="flex flex-col p-2.5 rounded-lg hover:bg-marketing-surface transition-colors">
+              <span class="font-medium text-marketing-text text-sm">How to Make a Photo Collage</span>
+              <span class="text-xs text-marketing-muted">Layout composition tutorial</span>
+            </a>
+            <a href="/guides/photo-proof-sheet-with-filenames" class="flex flex-col p-2.5 rounded-lg hover:bg-marketing-surface transition-colors">
+              <span class="font-medium text-marketing-text text-sm">Proof Sheets with Filenames</span>
+              <span class="text-xs text-marketing-muted">Client review & Lightroom workflow</span>
+            </a>
+          </div>
+        </div>
+
+        <a href="/compare/photoshop-contact-sheet-alternative" class="hover:text-marketing-text transition-colors py-2">
+          Compare
+        </a>
+      </nav>
+    ) : (
+      <div class="flex items-center gap-3 text-xs text-workspace-muted">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-workspace-surface border border-workspace-border">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>100% In-Browser · Private</span>
+        </span>
+      </div>
+    )}
+
+    <!-- Header Actions -->
+    <div class="flex items-center gap-3">
+      {!isWorkspace ? (
+        <a 
+          href="/" 
+          class="inline-flex items-center justify-center gap-2 h-9 sm:h-10 px-4 sm:px-5 rounded-lg bg-zinc-900 hover:bg-black text-white text-xs sm:text-sm font-semibold tracking-tight shadow-sm hover:shadow transition-all"
+        >
+          <span>Start Creating</span>
+          <Icon name="arrow-right" size={14} />
+        </a>
+      ) : (
+        <a 
+          href="/" 
+          class="inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-lg bg-workspace-surface hover:bg-workspace-surface-hover text-workspace-text text-xs border border-workspace-border transition-colors"
+        >
+          <Icon name="rotate-ccw" size={13} />
+          <span>New Batch</span>
+        </a>
+      )}
+
+      <!-- Mobile Menu Button (Marketing only) -->
+      {!isWorkspace && (
+        <button 
+          id="mobile-menu-toggle"
+          class="md:hidden p-2 rounded-lg text-marketing-muted hover:text-marketing-text hover:bg-marketing-surface"
+          aria-label="Toggle Navigation Menu"
+        >
+          <Icon name="columns" size={20} />
+        </button>
+      )}
+    </div>
+  </div>
+
+  <!-- Mobile Dropdown Menu -->
+  {!isWorkspace && (
+    <div id="mobile-menu" class="hidden md:hidden border-t border-marketing-border bg-white px-4 py-4 space-y-3">
+      <div class="text-xs font-semibold uppercase tracking-wider text-marketing-muted">Tools</div>
+      <div class="grid grid-cols-1 gap-2 pl-2">
+        <a href="/photo-contact-sheet-maker" class="text-sm font-medium text-marketing-text">Photo Contact Sheet Maker</a>
+        <a href="/photo-collage-maker" class="text-sm font-medium text-marketing-text">Photo Collage Maker</a>
+      </div>
+      <div class="text-xs font-semibold uppercase tracking-wider text-marketing-muted pt-2">Templates</div>
+      <div class="grid grid-cols-1 gap-2 pl-2">
+        <a href="/contact-sheet-template" class="text-sm font-medium text-marketing-text">Contact Sheet Templates</a>
+        <a href="/collage-templates" class="text-sm font-medium text-marketing-text">Collage Templates</a>
+      </div>
+      <div class="text-xs font-semibold uppercase tracking-wider text-marketing-muted pt-2">Guides</div>
+      <div class="grid grid-cols-1 gap-2 pl-2">
+        <a href="/guides/how-to-make-a-contact-sheet" class="text-sm font-medium text-marketing-text">How to Make a Contact Sheet</a>
+        <a href="/guides/how-to-make-photo-collage" class="text-sm font-medium text-marketing-text">How to Make a Photo Collage</a>
+        <a href="/guides/photo-proof-sheet-with-filenames" class="text-sm font-medium text-marketing-text">Proof Sheets with Filenames</a>
+        <a href="/compare/photoshop-contact-sheet-alternative" class="text-sm font-medium text-marketing-text">Photoshop Alternative</a>
+      </div>
+    </div>
+  )}
+</header>
+
+<script>
+  const toggleBtn = document.getElementById('mobile-menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (toggleBtn && mobileMenu) {
+    toggleBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  }
+</script>
