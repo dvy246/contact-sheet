@@ -1,0 +1,35 @@
+/* Light-Table Workspace Custom Styles */
+
+.light-table-canvas-wrap {
+  background-color: #0b0b0d;
+  background-image: 
+    radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 24px 24px, 12px 12px;
+  background-position: 0 0, 12px 12px;
+}
+
+/* Range input technical styling */
+input[type="range"] {
+  accent-color: var(--color-accent-amber);
+}
+
+/* Drag over active state */
+.drag-over-active {
+  border-color: var(--color-accent-amber) !important;
+  background-color: rgba(245, 158, 11, 0.05) !important;
+}
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  header, footer, .workspace-sidebar, .review-toolbar, .export-drawer, .zoom-controls {
+    display: none !important;
+  }
+  .light-table-canvas-wrap {
+    background: none !important;
+    padding: 0 !important;
+  }
+}
