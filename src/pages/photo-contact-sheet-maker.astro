@@ -51,30 +51,32 @@ const schemas = [
   schema={schemas}
 >
   <!-- Page Header -->
-  <div class="bg-marketing-panel border-b border-marketing-border py-8 sm:py-12 transition-colors">
+  <div class="bg-marketing-panel border-b border-marketing-border py-10 sm:py-14 transition-colors">
     <div class="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-4">
       <Breadcrumbs items={breadcrumbs} />
-      <div class="max-w-3xl">
-        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-marketing-text mb-3">
+      <div class="max-w-3xl space-y-2">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight">
           Fast Photo Contact Sheet Maker
         </h1>
-        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+        <p class="text-base text-marketing-muted leading-relaxed">
           Create professional photography proof sheets and contact prints directly in your browser. Configure grid columns, paper formats, and filename labels with instant local PDF and PNG exports.
         </p>
       </div>
     </div>
   </div>
 
-  <!-- Embedded Workspace -->
-  <section class="bg-workspace-bg border-b border-marketing-border">
-    <div class="max-w-[1400px] mx-auto">
-      <WorkspaceApp />
+  <!-- Framed Live Workspace -->
+  <section class="py-10 sm:py-14 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[1360px] mx-auto px-4 sm:px-6">
+      <div class="rounded-2xl overflow-hidden border border-workspace-border shadow-2xl bg-workspace-bg">
+        <WorkspaceApp />
+      </div>
     </div>
   </section>
 
   <!-- Editorial & Guide Content (400-600 words) -->
   <section class="py-16 sm:py-20 bg-marketing-panel border-b border-marketing-border transition-colors">
-    <div class="max-w-[900px] mx-auto px-4 sm:px-6 space-y-12">
+    <div class="max-w-[850px] mx-auto px-4 sm:px-6 space-y-12">
       
       <div class="space-y-4 prose-measure">
         <h2 class="text-2xl font-bold text-marketing-text">
@@ -101,29 +103,29 @@ const schemas = [
       </div>
 
       <!-- Quick Links to Related Guides -->
-      <div class="p-6 rounded-2xl bg-marketing-bg border border-marketing-border space-y-3 transition-colors">
+      <div class="p-6 sm:p-7 rounded-2xl bg-marketing-bg border border-marketing-border space-y-4 transition-colors">
         <h3 class="text-base font-bold text-marketing-text">Related Photography Resources</h3>
-        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs">
           <li>
-            <a href="/guides/how-to-make-a-contact-sheet" class="font-medium text-marketing-text hover:text-accent-amber flex items-center gap-1.5 transition-colors">
+            <a href="/guides/how-to-make-a-contact-sheet" class="font-medium text-marketing-text hover:text-accent-amber flex items-center gap-2 transition-colors">
               <Icon name="file-text" size={14} class="text-marketing-muted" />
               <span>How to Make a Contact Sheet: Step-by-Step</span>
             </a>
           </li>
           <li>
-            <a href="/guides/photo-proof-sheet-with-filenames" class="font-medium text-marketing-text hover:text-accent-amber flex items-center gap-1.5 transition-colors">
+            <a href="/guides/photo-proof-sheet-with-filenames" class="font-medium text-marketing-text hover:text-accent-amber flex items-center gap-2 transition-colors">
               <Icon name="file-check" size={14} class="text-marketing-muted" />
               <span>Creating Proof Sheets with Filenames</span>
             </a>
           </li>
           <li>
-            <a href="/contact-sheet-template" class="font-medium text-marketing-text hover:text-accent-amber flex items-center gap-1.5 transition-colors">
+            <a href="/contact-sheet-template" class="font-medium text-marketing-text hover:text-accent-amber flex items-center gap-2 transition-colors">
               <Icon name="grid" size={14} class="text-marketing-muted" />
               <span>Free Contact Sheet Layout Templates</span>
             </a>
           </li>
           <li>
-            <a href="/compare/photoshop-contact-sheet-alternative" class="font-medium text-marketing-text hover:text-accent-amber flex items-center gap-1.5 transition-colors">
+            <a href="/compare/photoshop-contact-sheet-alternative" class="font-medium text-marketing-text hover:text-accent-amber flex items-center gap-2 transition-colors">
               <Icon name="columns" size={14} class="text-marketing-muted" />
               <span>Photoshop Contact Sheet II Alternative</span>
             </a>

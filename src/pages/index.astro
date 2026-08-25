@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     question: 'How do I export the list of selected filenames for Lightroom?',
-    answer: 'After marking your photos with Keep (1), Flag (2), or Reject (3), open the Export drawer and choose "CSV / TXT List". You can download a structured CSV or a clean TXT list containing only your kept photos to paste directly into Lightroom or Capture One search filters.',
+    answer: 'After marking your photos with Keep (1), Flag (2), or Reject (3), open the Export drawer and choose "CSV Table" or "Lightroom TXT". You can download a structured CSV or a clean TXT list containing only your kept photos to paste directly into Lightroom or Capture One search filters.',
   },
   {
     question: 'What file formats are supported?',
@@ -57,10 +57,32 @@ const schemas = [
   <!-- Hero Section -->
   <HeroSection />
 
-  <!-- Embedded Live Workspace Section -->
-  <section id="workspace" class="border-b border-marketing-border bg-workspace-bg">
-    <div class="max-w-[1400px] mx-auto">
-      <WorkspaceApp />
+  <!-- Framed Live Workspace Section -->
+  <section id="workspace" class="py-12 sm:py-16 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[1360px] mx-auto px-4 sm:px-6">
+      
+      <!-- Section Framing Bar -->
+      <div class="mb-5 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-muted mb-2 shadow-xs">
+            <span class="w-2 h-2 rounded-full bg-accent-amber"></span>
+            <span>INTERACTIVE STUDIO WORKSPACE</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-marketing-text">
+            Instant Photo Proofing & Layout Engine
+          </h2>
+        </div>
+        <div class="flex items-center gap-2 text-xs text-marketing-muted font-mono">
+          <span>Zero install</span>
+          <span>·</span>
+          <span>Runs 100% locally</span>
+        </div>
+      </div>
+
+      <!-- Framed Workstation Island -->
+      <div class="rounded-2xl overflow-hidden border border-workspace-border shadow-2xl bg-workspace-bg">
+        <WorkspaceApp />
+      </div>
     </div>
   </section>
 
@@ -77,10 +99,10 @@ const schemas = [
   <ComparisonTable />
 
   <!-- FAQ Section -->
-  <section class="py-16 sm:py-24 bg-marketing-bg border-b border-marketing-border">
+  <section class="py-16 sm:py-24 bg-marketing-bg border-b border-marketing-border transition-colors">
     <div class="max-w-[800px] mx-auto px-4 sm:px-6">
-      <div class="text-center max-w-xl mx-auto mb-10">
-        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 mb-2">
+      <div class="text-center max-w-xl mx-auto mb-10 space-y-2">
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-marketing-text">
           Frequently Asked Questions
         </h2>
         <p class="text-sm text-marketing-muted">
