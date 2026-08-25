@@ -23,18 +23,18 @@ export class ReviewToolbar {
     const currentMode = $workspaceMode.get();
 
     this.container.innerHTML = `
-      <div class="flex flex-wrap items-center justify-between gap-3 p-3 bg-workspace-panel border-b border-workspace-border text-xs text-workspace-text select-none">
+      <div class="flex flex-wrap items-center justify-between gap-3 p-3 bg-workspace-panel border-b border-workspace-border text-xs text-workspace-text select-none transition-colors">
         <!-- Mode Switcher -->
-        <div class="flex items-center rounded-lg bg-workspace-bg p-1 border border-workspace-border">
+        <div class="flex items-center rounded-xl bg-workspace-surface p-1 border border-workspace-border">
           <button 
             id="mode-contact-sheet" 
-            class="px-3 py-1.5 rounded-md font-medium transition-all ${currentMode === 'contact-sheet' ? 'bg-workspace-surface text-workspace-text shadow-sm' : 'text-workspace-muted hover:text-workspace-text'}"
+            class="px-3.5 py-1.5 rounded-lg font-semibold text-xs transition-all cursor-pointer ${currentMode === 'contact-sheet' ? 'bg-workspace-panel text-workspace-text shadow-xs' : 'text-workspace-muted hover:text-workspace-text'}"
           >
             Contact Sheet
           </button>
           <button 
             id="mode-collage" 
-            class="px-3 py-1.5 rounded-md font-medium transition-all ${currentMode === 'collage' ? 'bg-workspace-surface text-workspace-text shadow-sm' : 'text-workspace-muted hover:text-workspace-text'}"
+            class="px-3.5 py-1.5 rounded-lg font-semibold text-xs transition-all cursor-pointer ${currentMode === 'collage' ? 'bg-workspace-panel text-workspace-text shadow-xs' : 'text-workspace-muted hover:text-workspace-text'}"
           >
             Collage
           </button>
@@ -42,32 +42,32 @@ export class ReviewToolbar {
 
         <!-- Filter Pills with Live Badges -->
         <div class="flex items-center gap-1.5 overflow-x-auto custom-scrollbar py-1">
-          <button data-filter="all" class="filter-pill px-2.5 py-1 rounded-full border transition-colors ${currentFilter === 'all' ? 'bg-workspace-surface-hover border-accent-amber text-workspace-text' : 'border-workspace-border text-workspace-muted hover:text-workspace-text'}">
+          <button data-filter="all" class="filter-pill px-3 py-1 rounded-full border transition-colors cursor-pointer text-xs ${currentFilter === 'all' ? 'bg-workspace-surface border-accent-amber text-workspace-text font-bold shadow-xs' : 'border-workspace-border text-workspace-muted hover:text-workspace-text'}">
             All <span class="ml-1 opacity-70 font-mono">(${counts.total})</span>
           </button>
-          <button data-filter="keep" class="filter-pill px-2.5 py-1 rounded-full border transition-colors ${currentFilter === 'keep' ? 'bg-emerald-950/60 border-emerald-500 text-emerald-400' : 'border-workspace-border text-workspace-muted hover:text-emerald-400'}">
+          <button data-filter="keep" class="filter-pill px-3 py-1 rounded-full border transition-colors cursor-pointer text-xs ${currentFilter === 'keep' ? 'bg-emerald-500/15 border-emerald-500 text-emerald-700 dark:text-emerald-400 font-bold' : 'border-workspace-border text-workspace-muted hover:text-emerald-600 dark:hover:text-emerald-400'}">
             ✓ Kept <span class="ml-1 opacity-70 font-mono">(${counts.keep})</span>
           </button>
-          <button data-filter="flag" class="filter-pill px-2.5 py-1 rounded-full border transition-colors ${currentFilter === 'flag' ? 'bg-amber-950/60 border-amber-500 text-amber-400' : 'border-workspace-border text-workspace-muted hover:text-amber-400'}">
+          <button data-filter="flag" class="filter-pill px-3 py-1 rounded-full border transition-colors cursor-pointer text-xs ${currentFilter === 'flag' ? 'bg-amber-500/15 border-amber-500 text-amber-700 dark:text-amber-400 font-bold' : 'border-workspace-border text-workspace-muted hover:text-amber-600 dark:hover:text-amber-400'}">
             ★ Flagged <span class="ml-1 opacity-70 font-mono">(${counts.flag})</span>
           </button>
-          <button data-filter="reject" class="filter-pill px-2.5 py-1 rounded-full border transition-colors ${currentFilter === 'reject' ? 'bg-rose-950/60 border-rose-500 text-rose-400' : 'border-workspace-border text-workspace-muted hover:text-rose-400'}">
+          <button data-filter="reject" class="filter-pill px-3 py-1 rounded-full border transition-colors cursor-pointer text-xs ${currentFilter === 'reject' ? 'bg-rose-500/15 border-rose-500 text-rose-700 dark:text-rose-400 font-bold' : 'border-workspace-border text-workspace-muted hover:text-rose-600 dark:hover:text-rose-400'}">
             ✕ Rejected <span class="ml-1 opacity-70 font-mono">(${counts.reject})</span>
           </button>
-          <button data-filter="unreviewed" class="filter-pill px-2.5 py-1 rounded-full border transition-colors ${currentFilter === 'unreviewed' ? 'bg-workspace-surface-hover border-zinc-400 text-zinc-300' : 'border-workspace-border text-workspace-muted hover:text-workspace-text'}">
+          <button data-filter="unreviewed" class="filter-pill px-3 py-1 rounded-full border transition-colors cursor-pointer text-xs ${currentFilter === 'unreviewed' ? 'bg-workspace-surface border-zinc-400 text-workspace-text font-bold' : 'border-workspace-border text-workspace-muted hover:text-workspace-text'}">
             Unreviewed <span class="ml-1 opacity-70 font-mono">(${counts.unreviewed})</span>
           </button>
         </div>
 
         <!-- Quick Batch Controls & Help -->
         <div class="flex items-center gap-2">
-          <button id="btn-batch-keep" class="px-2.5 py-1.5 rounded-lg bg-workspace-surface hover:bg-workspace-surface-hover text-emerald-400 border border-workspace-border transition-colors text-xs font-medium" title="Mark visible as Kept">
+          <button id="btn-batch-keep" class="px-3 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 transition-colors text-xs font-semibold cursor-pointer" title="Mark visible as Kept">
             Keep All
           </button>
-          <button id="btn-batch-clear" class="px-2.5 py-1.5 rounded-lg bg-workspace-surface hover:bg-workspace-surface-hover text-workspace-muted hover:text-workspace-text border border-workspace-border transition-colors text-xs" title="Reset all statuses">
+          <button id="btn-batch-clear" class="px-3 py-1.5 rounded-lg bg-workspace-surface hover:bg-workspace-surface-hover text-workspace-muted hover:text-workspace-text border border-workspace-border transition-colors text-xs cursor-pointer" title="Reset all statuses">
             Reset Status
           </button>
-          <button id="btn-help-shortcuts" class="p-1.5 rounded-lg bg-workspace-surface hover:bg-workspace-surface-hover text-workspace-muted hover:text-workspace-text border border-workspace-border transition-colors" title="Keyboard Shortcuts (?)">
+          <button id="btn-help-shortcuts" class="p-2 rounded-lg bg-workspace-surface hover:bg-workspace-surface-hover text-workspace-muted hover:text-workspace-text border border-workspace-border transition-colors cursor-pointer" title="Keyboard Shortcuts (?)">
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="10" />
               <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />

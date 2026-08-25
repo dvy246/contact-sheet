@@ -7,15 +7,15 @@
   --font-sans: "Plus Jakarta Sans", "Instrument Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-  /* The Archival Matte Workspace Palette */
-  --color-workspace-bg: #09090b;
-  --color-workspace-panel: #111114;
-  --color-workspace-surface: #18181c;
-  --color-workspace-surface-hover: #222228;
-  --color-workspace-border: #27272f;
-  --color-workspace-border-subtle: #1c1c22;
-  --color-workspace-text: #f4f4f5;
-  --color-workspace-muted: #909099;
+  /* Workspace Adaptive Palette (Driven by CSS vars) */
+  --color-workspace-bg: var(--workspace-bg);
+  --color-workspace-panel: var(--workspace-panel);
+  --color-workspace-surface: var(--workspace-surface);
+  --color-workspace-surface-hover: var(--workspace-surface-hover);
+  --color-workspace-border: var(--workspace-border);
+  --color-workspace-border-subtle: var(--workspace-border-subtle);
+  --color-workspace-text: var(--workspace-text);
+  --color-workspace-muted: var(--workspace-muted);
 
   /* Marketing Dynamic Palette (Driven by CSS vars) */
   --color-marketing-bg: var(--marketing-bg);
@@ -70,6 +70,16 @@
   --marketing-border-subtle: #f0f0f2;
   --marketing-text: #18181b;
   --marketing-muted: #71717a;
+
+  /* Light Workspace Tokens (White Mode Light-Table) */
+  --workspace-bg: #f4f4f7;
+  --workspace-panel: #ffffff;
+  --workspace-surface: #f4f4f6;
+  --workspace-surface-hover: #eaebee;
+  --workspace-border: #dcdcde;
+  --workspace-border-subtle: #eaeaea;
+  --workspace-text: #18181b;
+  --workspace-muted: #64748b;
 }
 
 html.dark {
@@ -81,6 +91,16 @@ html.dark {
   --marketing-border-subtle: #1c1c22;
   --marketing-text: #f4f4f5;
   --marketing-muted: #a1a1aa;
+
+  /* Dark Workspace Tokens (Obsidian Dark Light-Table) */
+  --workspace-bg: #09090b;
+  --workspace-panel: #111114;
+  --workspace-surface: #18181c;
+  --workspace-surface-hover: #222228;
+  --workspace-border: #27272f;
+  --workspace-border-subtle: #1c1c22;
+  --workspace-text: #f4f4f5;
+  --workspace-muted: #909099;
 }
 
 /* Custom Base Styles */
@@ -132,12 +152,12 @@ p {
   height: 6px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.1);
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(120, 120, 130, 0.25);
   border-radius: 3px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(120, 120, 130, 0.4);
 }
