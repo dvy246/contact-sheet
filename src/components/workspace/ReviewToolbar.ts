@@ -1,5 +1,4 @@
 import { 
-  $images, 
   $filterStatus, 
   $reviewCounts, 
   $workspaceMode, 

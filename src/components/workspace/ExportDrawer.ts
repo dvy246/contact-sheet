@@ -1,6 +1,5 @@
 import { 
   $images, 
-  $filteredImages, 
   $layoutConfig, 
   $workspaceMode, 
   $activeTemplateId,
@@ -13,7 +12,7 @@ import { calculateCollageLayout } from '../../lib/engine/collageEngine';
 import { COLLAGE_TEMPLATES } from '../../lib/engine/templates';
 import { exportLayoutAsImage } from '../../lib/export/imageExporter';
 import { exportContactSheetPagesToPDF } from '../../lib/export/pdfExporter';
-import { exportFilenamesAsCSV, exportFilenamesAsTXT } from '../../lib/export/filenameExporter';
+import { exportFilenamesAsCSV } from '../../lib/export/filenameExporter';
 import { exportProjectManifest } from '../../lib/export/projectManifest';
 import type { ExportFormat, FilterStatus } from '../../lib/types';
 
@@ -33,7 +32,6 @@ export class ExportDrawer {
   private render() {
     const isExporting = $isExporting.get();
     const progress = $exportProgress.get();
-    const mode = $workspaceMode.get();
     const images = $images.get();
     const keptCount = images.filter(img => img.status === 'keep').length;
 

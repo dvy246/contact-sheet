@@ -1,0 +1,60 @@
+---
+import Icon from '../common/Icon.astro';
+---
+
+<section class="relative pt-12 pb-16 sm:pt-20 sm:pb-24 overflow-hidden border-b border-marketing-border bg-white">
+  <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+    <div class="max-w-3xl mx-auto text-center space-y-6">
+      
+      <!-- Trust Indicator Tag -->
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-zinc-800 text-xs font-medium">
+        <span class="w-2 h-2 rounded-full bg-accent-amber animate-pulse"></span>
+        <span>Browser-First Photo Workspace</span>
+      </div>
+
+      <!-- Hero Headline (No kickers, no gradient text) -->
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-900 leading-[1.15]">
+        Contact sheets and collages that keep your filenames, selections, and privacy.
+      </h1>
+
+      <!-- Supporting Value Statement -->
+      <p class="text-base sm:text-lg text-marketing-muted leading-relaxed max-w-2xl mx-auto">
+        Drop your photos, choose a template, review and mark your picks, and export a clean sheet with exact filenames. All processed locally in your browser — nothing is uploaded.
+      </p>
+
+      <!-- Primary CTA & Action Row -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+        <a 
+          href="/#workspace" 
+          class="w-full sm:w-auto h-12 px-8 rounded-xl bg-zinc-900 hover:bg-black text-white font-semibold text-sm tracking-tight shadow-md hover:shadow-xl transition-all flex items-center justify-center gap-2 group"
+        >
+          <span>Start creating — it's free</span>
+          <Icon name="arrow-right" size={16} class="group-hover:translate-x-0.5 transition-transform" />
+        </a>
+        
+        <a 
+          href="/photo-contact-sheet-maker" 
+          class="w-full sm:w-auto h-12 px-6 rounded-xl bg-marketing-surface hover:bg-zinc-200/70 text-zinc-900 font-medium text-sm border border-marketing-border transition-all flex items-center justify-center gap-2"
+        >
+          <span>Explore Templates</span>
+        </a>
+      </div>
+
+      <!-- Trust Sub-copy -->
+      <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs text-marketing-muted pt-2">
+        <span class="flex items-center gap-1.5">
+          <Icon name="check" size={14} class="text-emerald-600" />
+          No signup required
+        </span>
+        <span class="flex items-center gap-1.5">
+          <Icon name="check" size={14} class="text-emerald-600" />
+          Zero server uploads
+        </span>
+        <span class="flex items-center gap-1.5">
+          <Icon name="check" size={14} class="text-emerald-600" />
+          Files stay on your device
+        </span>
+      </div>
+    </div>
+  </div>
+</section>

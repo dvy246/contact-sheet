@@ -1,0 +1,69 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../components/common/Breadcrumbs.astro';
+import Icon from '../components/common/Icon.astro';
+import { METADATA_REGISTRY } from '../lib/seo/metadata';
+
+const meta = METADATA_REGISTRY['/contact-us'];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Contact Us' },
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+>
+  <div class="bg-white border-b border-marketing-border py-12 sm:py-16">
+    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900">
+        Contact Us
+      </h1>
+      <p class="text-base text-marketing-muted leading-relaxed">
+        Have questions, template requests, or workflow suggestions? We'd love to hear from you.
+      </p>
+    </div>
+  </div>
+
+  <section class="py-16 sm:py-20 bg-marketing-bg border-b border-marketing-border">
+    <div class="max-w-[800px] mx-auto px-4 sm:px-6">
+      <div class="bg-white border border-marketing-border rounded-2xl p-6 sm:p-10 space-y-6 shadow-xs">
+        <div class="space-y-2">
+          <h2 class="text-xl font-bold text-zinc-900">Get in Touch</h2>
+          <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
+            FrameProof is developed and maintained for the photographic and visual creator community. Reach out with bug reports, feature ideas, or collaboration inquiries.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+          <div class="p-5 rounded-xl bg-marketing-bg border border-marketing-border space-y-2">
+            <div class="flex items-center gap-2 font-bold text-zinc-900 text-sm">
+              <Icon name="help" size={16} class="text-accent-amber" />
+              <span>General & Support Inquiries</span>
+            </div>
+            <p class="text-xs text-marketing-muted">For help using FrameProof or reporting browser compatibility bugs:</p>
+            <div class="text-xs font-mono text-zinc-900 pt-1 font-semibold">support@frameproof.com</div>
+          </div>
+
+          <div class="p-5 rounded-xl bg-marketing-bg border border-marketing-border space-y-2">
+            <div class="flex items-center gap-2 font-bold text-zinc-900 text-sm">
+              <Icon name="layout" size={16} class="text-accent-amber" />
+              <span>Template & Feature Requests</span>
+            </div>
+            <p class="text-xs text-marketing-muted">Suggesting a new contact sheet preset or collage layout:</p>
+            <div class="text-xs font-mono text-zinc-900 pt-1 font-semibold">features@frameproof.com</div>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-marketing-border text-xs text-marketing-muted">
+          We review all community feedback and respond to inquiries within 1–2 business days.
+        </div>
+      </div>
+    </div>
+  </section>
+</MarketingLayout>

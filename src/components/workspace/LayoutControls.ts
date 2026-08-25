@@ -6,7 +6,7 @@ import {
   setActiveTemplate 
 } from '../../lib/store';
 import { CONTACT_SHEET_PRESETS, COLLAGE_TEMPLATES } from '../../lib/engine/templates';
-import type { PageOrientation, PageSize, ImageFit, LabelType } from '../../lib/types';
+import type { PageSize, LabelType } from '../../lib/types';
 
 export class LayoutControls {
   private container: HTMLElement;

@@ -136,7 +136,7 @@ import '../../styles/workspace.css';
 
     if (dropzoneEl && thumbMount && layoutMount && canvasMount && reviewMount && exportMount) {
       // 1. Instantiate modules
-      const dropzone = new DropZone(dropzoneEl);
+      new DropZone(dropzoneEl);
       if (sidebarAddBtn) {
         new DropZone(sidebarAddBtn);
       }

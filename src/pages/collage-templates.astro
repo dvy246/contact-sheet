@@ -1,0 +1,118 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../components/common/Breadcrumbs.astro';
+import FaqAccordion from '../components/common/FaqAccordion.astro';
+import { COLLAGE_TEMPLATES } from '../lib/engine/templates';
+import { METADATA_REGISTRY } from '../lib/seo/metadata';
+import { buildFAQSchema } from '../lib/seo/schemaGenerator';
+
+const meta = METADATA_REGISTRY['/collage-templates'];
+
+const faqs = [
+  {
+    question: 'Can I change the spacing between photos in a collage template?',
+    answer: 'Yes. Every template allows custom gutter spacing (from 0px borderless seamless tiles up to 40px wide separators) and outer margin adjustments in the workspace.',
+  },
+  {
+    question: 'How do I fit photos with different aspect ratios?',
+    answer: 'FrameProof allows you to choose between "Cover" (smart center crop that fills each cell completely) and "Contain" (which preserves the full uncropped image with letterboxing).',
+  },
+  {
+    question: 'Are collage templates free to download and use?',
+    answer: 'Yes. All templates in FrameProof are completely free with zero watermark restrictions or signup requirements.',
+  },
+];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Collage Templates' },
+];
+
+const schemas = [
+  buildFAQSchema(faqs),
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+  schema={schemas}
+>
+  <div class="bg-white border-b border-marketing-border py-10 sm:py-14">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="max-w-3xl">
+        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 mb-3">
+          Custom Photo Collage Templates
+        </h1>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          Explore clean, structured photo collage layouts for social media, portfolios, and print. Arrange your photos with professional proportions in seconds.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <section class="py-12 sm:py-16 bg-marketing-bg border-b border-marketing-border">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {COLLAGE_TEMPLATES.map((template) => (
+          <div class="bg-white border border-marketing-border rounded-2xl p-6 sm:p-7 flex flex-col justify-between space-y-5 shadow-xs hover:border-zinc-300 transition-all">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-accent-amber font-mono">
+                  {template.category}
+                </span>
+                <span class="text-xs px-2 py-0.5 rounded bg-zinc-100 font-mono text-zinc-700">
+                  {template.cells.length} Photo Cells
+                </span>
+              </div>
+              <h2 class="text-lg font-bold text-zinc-900">{template.name}</h2>
+              <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
+                {template.description}
+              </p>
+
+              <div class="pt-3 border-t border-marketing-border space-y-1.5 text-xs text-zinc-600 font-mono">
+                <div class="flex justify-between">
+                  <span>Aspect Ratio:</span>
+                  <span class="font-bold text-zinc-900">{template.aspectRatio >= 1 ? `${template.aspectRatio.toFixed(2)}:1` : `1:${(1 / template.aspectRatio).toFixed(2)}`}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>Default Gap:</span>
+                  <span class="font-bold text-zinc-900">{template.defaultSpacing}px</span>
+                </div>
+              </div>
+            </div>
+
+            <a 
+              href="/#workspace" 
+              class="w-full py-2.5 px-4 rounded-xl bg-zinc-900 hover:bg-black text-white font-semibold text-xs text-center tracking-tight shadow-sm hover:shadow transition-all block"
+            >
+              Use This Template
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Editorial Section -->
+  <section class="py-16 sm:py-20 bg-white border-b border-marketing-border">
+    <div class="max-w-[900px] mx-auto px-4 sm:px-6 space-y-10">
+      <div class="space-y-4 prose-measure">
+        <h2 class="text-2xl font-bold text-zinc-900">
+          Template formats and use cases
+        </h2>
+        <p class="text-sm text-zinc-700 leading-relaxed">
+          FrameProof templates are crafted around photographic proportions rather than generic graphics. For example, our 3-photo horizontal strip is perfect for landscape panoramas and documentary sequences, while our 9:16 vertical story format lets you combine portrait shots with detail insets for mobile platforms.
+        </p>
+      </div>
+
+      <div class="space-y-6">
+        <h2 class="text-2xl font-bold text-zinc-900">Collage Template FAQs</h2>
+        <FaqAccordion faqs={faqs} />
+      </div>
+    </div>
+  </section>
+</MarketingLayout>

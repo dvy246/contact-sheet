@@ -1,0 +1,76 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../components/common/Breadcrumbs.astro';
+import { METADATA_REGISTRY } from '../lib/seo/metadata';
+
+const meta = METADATA_REGISTRY['/privacy-policy'];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Privacy Policy' },
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+>
+  <div class="bg-white border-b border-marketing-border py-12 sm:py-16">
+    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900">
+        Privacy Policy
+      </h1>
+      <p class="text-xs font-mono text-marketing-muted">Last Updated: August 2026</p>
+    </div>
+  </div>
+
+  <article class="py-16 sm:py-20 bg-marketing-bg border-b border-marketing-border">
+    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-8 text-sm text-zinc-700 leading-relaxed prose-measure">
+      
+      <div class="space-y-3">
+        <h2 class="text-xl font-bold text-zinc-900">1. Overview & Core Privacy Guarantee</h2>
+        <p>
+          At FrameProof, privacy is not a marketing setting—it is the foundational engineering principle of our software. FrameProof operates as a browser-first client-side application. When you drop images, contact sheets, or collages into FrameProof, all image decoding, resizing, layout generation, and PDF document exports happen directly within your browser's local memory sandbox.
+        </p>
+        <p>
+          <strong>Your photos, image pixels, original camera filenames, and EXIF metadata are never transmitted to our servers or stored in any remote database.</strong>
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        <h2 class="text-xl font-bold text-zinc-900">2. Information We Do Not Collect</h2>
+        <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
+          <li>We do not collect or store user accounts, passwords, or login credentials.</li>
+          <li>We do not collect, view, or retain uploaded image files or photos.</li>
+          <li>We do not inspect or transmit embedded EXIF camera data (GPS, camera serials, timestamps).</li>
+          <li>We do not track individual photo selections or client review statuses.</li>
+        </ul>
+      </div>
+
+      <div class="space-y-3">
+        <h2 class="text-xl font-bold text-zinc-900">3. Local Storage and Session Manifests</h2>
+        <p>
+          If you choose to export a project manifest (<code>.frameproof.json</code>), this file is generated client-side and saved directly to your local file system. When re-opened, it is read entirely within your browser to restore layout parameters.
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        <h2 class="text-xl font-bold text-zinc-900">4. Third-Party Services & Analytics</h2>
+        <p>
+          We may use minimal, privacy-respecting website analytics to track coarse aggregated statistics (such as total page visits and browser operating systems). No media files or user identifiers are ever included in telemetry events.
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        <h2 class="text-xl font-bold text-zinc-900">5. Contact Regarding Privacy</h2>
+        <p>
+          For any questions or verifications regarding FrameProof's local architecture, contact us at <code>privacy@frameproof.com</code>.
+        </p>
+      </div>
+
+    </div>
+  </article>
+</MarketingLayout>

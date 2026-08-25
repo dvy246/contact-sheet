@@ -1,0 +1,31 @@
+---
+import Icon from './Icon.astro';
+
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  faqs: FAQItem[];
+  class?: string;
+}
+
+const { faqs, class: className = '' } = Astro.props;
+---
+
+<div class={`space-y-3 ${className}`}>
+  {faqs.map((faq) => (
+    <details class="group bg-white border border-marketing-border rounded-xl p-4 sm:p-5 transition-all open:shadow-xs open:border-zinc-300">
+      <summary class="flex items-center justify-between font-semibold text-sm sm:text-base text-zinc-900 cursor-pointer list-none select-none">
+        <span class="pr-4">{faq.question}</span>
+        <div class="w-6 h-6 rounded-md bg-marketing-surface flex items-center justify-center text-marketing-muted group-open:rotate-180 transition-transform">
+          <Icon name="chevron-down" size={14} />
+        </div>
+      </summary>
+      <div class="mt-3 pt-3 border-t border-marketing-border text-xs sm:text-sm text-marketing-muted leading-relaxed">
+        <p>{faq.answer}</p>
+      </div>
+    </details>
+  ))}
+</div>

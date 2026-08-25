@@ -1,0 +1,62 @@
+---
+import Icon from '../common/Icon.astro';
+---
+
+<section class="py-16 sm:py-24 bg-white border-b border-marketing-border">
+  <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+    <div class="max-w-2xl mb-12">
+      <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 mb-3">
+        Precision tools engineered for visual professionals
+      </h2>
+      <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+        Everything you need to review and present photo batches without the bloat of subscription suites or privacy risks of cloud uploaders.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+      <!-- Feature 1: Privacy by Design -->
+      <div class="bg-marketing-bg border border-marketing-border rounded-2xl p-7 space-y-4">
+        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center">
+          <Icon name="shield" size={20} />
+        </div>
+        <h3 class="text-lg font-bold text-zinc-900">Zero Uploads. True Local Privacy.</h3>
+        <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
+          Unreleased client shoots and confidential commercial photos remain strictly on your machine. All image decoding, resizing, layout calculations, and PDF generation occur in your browser's local sandbox.
+        </p>
+      </div>
+
+      <!-- Feature 2: Filename Handoff -->
+      <div class="bg-marketing-bg border border-marketing-border rounded-2xl p-7 space-y-4">
+        <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center">
+          <Icon name="file-check" size={20} />
+        </div>
+        <h3 class="text-lg font-bold text-zinc-900">Filename Accuracy is Trust</h3>
+        <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
+          Generic collage makers strip filenames. FrameProof keeps original camera filenames attached to every thumbnail and provides 1-click CSV/TXT exports to match client choices back in Lightroom.
+        </p>
+      </div>
+
+      <!-- Feature 3: Two Modes One Engine -->
+      <div class="bg-marketing-bg border border-marketing-border rounded-2xl p-7 space-y-4">
+        <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center">
+          <Icon name="layout" size={20} />
+        </div>
+        <h3 class="text-lg font-bold text-zinc-900">Contact Sheets & Collages in One Workspace</h3>
+        <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
+          Switch seamlessly between multi-photo proof sheets and creative template-based collages (side-by-side comparisons, 3-strips, 2×2 grids, 9:16 stories) without reloading your batch.
+        </p>
+      </div>
+
+      <!-- Feature 4: Studio Print Engine -->
+      <div class="bg-marketing-bg border border-marketing-border rounded-2xl p-7 space-y-4">
+        <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-800 flex items-center justify-center">
+          <Icon name="file-text" size={20} />
+        </div>
+        <h3 class="text-lg font-bold text-zinc-900">High-DPI Print-Ready PDF Generation</h3>
+        <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
+          Export vector-wrapped multi-page PDFs formatted for standard A4 and US Letter paper with custom margins, pagination headers, index numbers, and customizable background tones.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

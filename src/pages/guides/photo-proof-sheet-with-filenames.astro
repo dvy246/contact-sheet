@@ -1,0 +1,152 @@
+---
+import MarketingLayout from '../../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
+import FaqAccordion from '../../components/common/FaqAccordion.astro';
+import Icon from '../../components/common/Icon.astro';
+import { METADATA_REGISTRY } from '../../lib/seo/metadata';
+import { buildHowToSchema, buildFAQSchema } from '../../lib/seo/schemaGenerator';
+
+const meta = METADATA_REGISTRY['/guides/photo-proof-sheet-with-filenames'];
+
+const steps = [
+  {
+    name: 'Import your batch into FrameProof',
+    text: 'Drag your camera files into FrameProof. The original camera filenames (such as DSC_4821.JPG or _MG_9022.CR3) are indexed and stored with zero risk of truncation.',
+  },
+  {
+    name: 'Enable filename and numbering labels',
+    text: 'Set the label configuration to "Index Number & Filename". This displays both a human-friendly sequence number (#12) and the exact file identifier below each thumbnail.',
+  },
+  {
+    name: 'Export the client proof PDF',
+    text: 'Download a clean, branded multi-page PDF proof sheet to send to your client for initial review and image culling.',
+  },
+  {
+    name: 'Import client selects into Lightroom or Capture One',
+    text: 'When your client returns their selections, mark those items in FrameProof and click "Export CSV / TXT List". Paste the comma-separated filename string directly into Lightroom\'s Library Filter (Text > Filename > Contains).',
+  },
+];
+
+const faqs = [
+  {
+    question: 'How do I use exported filenames in Adobe Lightroom?',
+    answer: 'In Lightroom Classic, open the Library module (shortcut G), press "\\" to open the Library Filter bar, click "Text", set the dropdown to "Filename -> Contains", and paste your exported filename list. Lightroom will instantly isolate only the client-approved photos.',
+  },
+  {
+    question: 'Why do other online tools strip filenames?',
+    answer: 'Most consumer photo collage generators rename images sequentially (e.g. image_1.png) or discard file metadata during canvas upload. FrameProof is built specifically for photography workflows and strictly preserves all original filenames.',
+  },
+  {
+    question: 'Can I export a list of only the "Kept" photos?',
+    answer: 'Yes. In the FrameProof export drawer, set the scope to "Kept Only" and select CSV or TXT format. It will generate a clean list containing only the approved files.',
+  },
+];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Guides', url: '/guides/photo-proof-sheet-with-filenames' },
+  { name: 'Proof Sheets with Filenames' },
+];
+
+const schemas = [
+  buildHowToSchema(
+    'Create Photo Proof Sheets with Filenames',
+    meta.description,
+    steps
+  ),
+  buildFAQSchema(faqs),
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+  ogType={meta.ogType}
+  schema={schemas}
+>
+  <article class="py-12 sm:py-16 bg-white border-b border-marketing-border">
+    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-8">
+      
+      <Breadcrumbs items={breadcrumbs} />
+
+      <header class="space-y-4">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-900 leading-[1.2]">
+          How to Create Photo Proof Sheets with Filenames Intact
+        </h1>
+        <p class="text-base text-marketing-muted leading-relaxed">
+          The complete workflow for photographers to eliminate client selection confusion, preserve original camera filenames, and automate post-shoot Lightroom culling.
+        </p>
+      </header>
+
+      <!-- Direct Answer / AEO Definition Block -->
+      <div class="p-6 rounded-2xl bg-amber-50/60 border border-amber-200/80 text-zinc-800 space-y-2">
+        <div class="text-xs font-bold uppercase tracking-wider text-amber-900 font-mono">Direct Answer</div>
+        <p class="text-sm leading-relaxed font-medium">
+          To create a photo proof sheet with filenames, import your image batch into FrameProof, enable the "Filename Only" or "Index & Filename" label option under Layout controls, and export as a multi-page PDF or PNG. Every thumbnail displays its verifiable camera filename, and you can export a CSV or TXT list of selected filenames for Lightroom culling.
+        </p>
+      </div>
+
+      <!-- Step-by-Step Guide -->
+      <div class="space-y-8 pt-4">
+        <h2 class="text-2xl font-bold text-zinc-900">
+          The 4-Step Professional Handoff Workflow
+        </h2>
+
+        <div class="space-y-6">
+          {steps.map((step, idx) => (
+            <div class="flex gap-4 p-5 rounded-xl border border-marketing-border bg-marketing-bg">
+              <div class="w-8 h-8 rounded-lg bg-zinc-900 text-white flex-shrink-0 flex items-center justify-center font-bold text-sm">
+                {idx + 1}
+              </div>
+              <div class="space-y-1">
+                <h3 class="text-base font-bold text-zinc-900">{step.name}</h3>
+                <p class="text-sm text-zinc-600 leading-relaxed">{step.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Professional Context -->
+      <div class="space-y-6 pt-6 border-t border-marketing-border text-sm text-zinc-700 leading-relaxed prose-measure">
+        <h2 class="text-2xl font-bold text-zinc-900">
+          The Problem with Traditional Client Photo Proofing
+        </h2>
+        <p>
+          Every working photographer knows the pain of client feedback via email: "We love the 4th photo in the second row, the one where the groom is smiling, and the photo near the bottom with the bouquet." Translating these subjective descriptions back into raw file numbers (e.g. DSC_8492.NEF) consumes hours of frustrating manual searching.
+        </p>
+
+        <h3 class="text-lg font-bold text-zinc-900 pt-3">
+          How Filename-Accurate Proof Sheets Solve This
+        </h3>
+        <p>
+          By sending a proof sheet where every thumbnail is clearly labeled with its index number and source filename, you establish an unambiguous common language with your client. When they reply with "Please edit #4, #18, and #22", you can mark those in FrameProof and instantly copy the exact filename string into Lightroom to begin editing immediately.
+        </p>
+      </div>
+
+      <!-- Action CTA Box -->
+      <div class="p-8 rounded-2xl bg-zinc-900 text-white text-center space-y-4 shadow-xl">
+        <h2 class="text-xl font-bold">Create your proof sheet with filenames now</h2>
+        <p class="text-xs text-zinc-400 max-w-md mx-auto">
+          Free, fast, and 100% private in your browser.
+        </p>
+        <a 
+          href="/photo-contact-sheet-maker" 
+          class="inline-flex items-center gap-2 h-11 px-6 rounded-xl bg-accent-amber hover:bg-accent-amber-hover text-black font-semibold text-xs tracking-tight shadow-md transition-all"
+        >
+          <span>Start Proofing Photos</span>
+          <Icon name="arrow-right" size={15} />
+        </a>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="space-y-6 pt-6 border-t border-marketing-border">
+        <h2 class="text-2xl font-bold text-zinc-900">Frequently Asked Questions</h2>
+        <FaqAccordion faqs={faqs} />
+      </div>
+
+    </div>
+  </article>
+</MarketingLayout>

@@ -1,0 +1,156 @@
+---
+import MarketingLayout from '../../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
+import FaqAccordion from '../../components/common/FaqAccordion.astro';
+import Icon from '../../components/common/Icon.astro';
+import { METADATA_REGISTRY } from '../../lib/seo/metadata';
+import { buildHowToSchema, buildFAQSchema } from '../../lib/seo/schemaGenerator';
+
+const meta = METADATA_REGISTRY['/guides/how-to-make-a-contact-sheet'];
+
+const steps = [
+  {
+    name: 'Select and import your photo batch',
+    text: 'Drag your folder or batch of image files directly into the FrameProof workspace dropzone. FrameProof decodes images locally in your browser without uploading any files to remote servers.',
+  },
+  {
+    name: 'Choose a contact sheet layout preset',
+    text: 'Select your target output format, such as A4 Portrait Proof Sheet (for international standard paper) or US Letter (for North American printing). Adjust columns and rows to fit between 12 and 24 images per page.',
+  },
+  {
+    name: 'Configure filename and numbering labels',
+    text: 'Ensure filename labels are enabled so each thumbnail displays its exact camera source name. You can also display sequential index numbers (#1, #2) to make client communication easy.',
+  },
+  {
+    name: 'Review, cull, and mark selections',
+    text: 'Use keyboard shortcuts 1 (Keep), 2 (Flag), and 3 (Reject) to review and categorize your photo proofs directly on the dark workspace light table.',
+  },
+  {
+    name: 'Export your print PDF or filename list',
+    text: 'Open the export drawer to download a multi-page 300 DPI PDF proof sheet or generate a clean CSV file containing the exact filenames of your kept selections.',
+  },
+];
+
+const faqs = [
+  {
+    question: 'How do you make a contact sheet in Lightroom vs FrameProof?',
+    answer: 'In Adobe Lightroom, you must navigate to the Print module, create a custom page template, adjust margin sliders, and render to PDF. FrameProof eliminates this friction by letting you drag photos directly into a web browser to get an instant, verified contact sheet with zero setup or software subscriptions.',
+  },
+  {
+    question: 'What is the optimal grid size for a proof sheet?',
+    answer: 'A 4×5 grid (20 photos per page) on A4 or US Letter paper provides the ideal balance between thumbnail clarity and page density for photography proofing.',
+  },
+  {
+    question: 'Can I export proof sheets on black backgrounds?',
+    answer: 'Yes. FrameProof allows switching between "The Archival Matte" dark slate, deep black, clean gallery white, and light gray background tones.',
+  },
+];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Guides', url: '/guides/how-to-make-a-contact-sheet' },
+  { name: 'How to Make a Contact Sheet' },
+];
+
+const schemas = [
+  buildHowToSchema(
+    'How to Make a Contact Sheet: Step-by-Step Guide',
+    meta.description,
+    steps
+  ),
+  buildFAQSchema(faqs),
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+  ogType={meta.ogType}
+  schema={schemas}
+>
+  <article class="py-12 sm:py-16 bg-white border-b border-marketing-border">
+    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-8">
+      
+      <Breadcrumbs items={breadcrumbs} />
+
+      <header class="space-y-4">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-900 leading-[1.2]">
+          How to Make a Contact Sheet: Step-by-Step Guide
+        </h1>
+        <p class="text-base text-marketing-muted leading-relaxed">
+          Learn how to make a professional photo contact sheet in under a minute. This guide covers grid layouts, filename preservation, paper sizing, and client review workflows.
+        </p>
+      </header>
+
+      <!-- Direct Answer / AEO Definition Block -->
+      <div class="p-6 rounded-2xl bg-amber-50/60 border border-amber-200/80 text-zinc-800 space-y-2">
+        <div class="text-xs font-bold uppercase tracking-wider text-amber-900 font-mono">Direct Answer</div>
+        <p class="text-sm leading-relaxed font-medium">
+          A contact sheet is created by arranging a batch of thumbnail photos into a structured grid on a single or multi-page document with original camera filenames displayed below each image. You can make one for free in FrameProof by dropping your image files, selecting a grid preset (such as 4×5 A4), and exporting as a print-ready PDF or high-resolution PNG.
+        </p>
+      </div>
+
+      <!-- Main Step-by-Step Guide -->
+      <div class="space-y-8 pt-4">
+        <h2 class="text-2xl font-bold text-zinc-900">
+          5 Steps to Create a Photography Proof Sheet
+        </h2>
+
+        <div class="space-y-6">
+          {steps.map((step, idx) => (
+            <div class="flex gap-4 p-5 rounded-xl border border-marketing-border bg-marketing-bg">
+              <div class="w-8 h-8 rounded-lg bg-zinc-900 text-white flex-shrink-0 flex items-center justify-center font-bold text-sm">
+                {idx + 1}
+              </div>
+              <div class="space-y-1">
+                <h3 class="text-base font-bold text-zinc-900">{step.name}</h3>
+                <p class="text-sm text-zinc-600 leading-relaxed">{step.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- In-Depth Content Sections -->
+      <div class="space-y-6 pt-6 border-t border-marketing-border text-sm text-zinc-700 leading-relaxed prose-measure">
+        <h2 class="text-2xl font-bold text-zinc-900">
+          Why Contact Sheets Remain Essential in Modern Photography
+        </h2>
+        <p>
+          Despite the transition from darkroom film strips to digital sensors, the contact sheet remains one of the most effective tools in visual storytelling. When viewing photos one-by-one in full screen, it is easy to lose context between takes. A contact sheet places an entire sequence in front of your eyes at once, making lighting shifts, model expressions, and compositional nuances immediately obvious.
+        </p>
+
+        <h3 class="text-lg font-bold text-zinc-900 pt-3">
+          Best Practices for Client Proofing
+        </h3>
+        <p>
+          When preparing proofs for commercial clients, portrait sessions, or weddings, avoid sending raw un-annotated images. A structured contact sheet provides clear sequential index numbers (#1, #2, #3) alongside original filenames, eliminating the common confusion where clients describe images vaguely (such as "the one where she looks left").
+        </p>
+      </div>
+
+      <!-- Action CTA Box -->
+      <div class="p-8 rounded-2xl bg-zinc-900 text-white text-center space-y-4 shadow-xl">
+        <h2 class="text-xl font-bold">Ready to create your contact sheet?</h2>
+        <p class="text-xs text-zinc-400 max-w-md mx-auto">
+          No signups, no installations, and 100% private in-browser processing.
+        </p>
+        <a 
+          href="/photo-contact-sheet-maker" 
+          class="inline-flex items-center gap-2 h-11 px-6 rounded-xl bg-accent-amber hover:bg-accent-amber-hover text-black font-semibold text-xs tracking-tight shadow-md transition-all"
+        >
+          <span>Open Contact Sheet Maker</span>
+          <Icon name="arrow-right" size={15} />
+        </a>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="space-y-6 pt-6 border-t border-marketing-border">
+        <h2 class="text-2xl font-bold text-zinc-900">Frequently Asked Questions</h2>
+        <FaqAccordion faqs={faqs} />
+      </div>
+
+    </div>
+  </article>
+</MarketingLayout>

@@ -1,0 +1,63 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../components/common/Breadcrumbs.astro';
+import { METADATA_REGISTRY } from '../lib/seo/metadata';
+
+const meta = METADATA_REGISTRY['/terms-and-conditions'];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Terms & Conditions' },
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+>
+  <div class="bg-white border-b border-marketing-border py-12 sm:py-16">
+    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900">
+        Terms and Conditions
+      </h1>
+      <p class="text-xs font-mono text-marketing-muted">Last Updated: August 2026</p>
+    </div>
+  </div>
+
+  <article class="py-16 sm:py-20 bg-marketing-bg border-b border-marketing-border">
+    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-8 text-sm text-zinc-700 leading-relaxed prose-measure">
+      
+      <div class="space-y-3">
+        <h2 class="text-xl font-bold text-zinc-900">1. Acceptance of Terms</h2>
+        <p>
+          By accessing or using FrameProof (the "Service"), you agree to be bound by these Terms and Conditions. If you disagree with any part of these terms, you may not use the Service.
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        <h2 class="text-xl font-bold text-zinc-900">2. Description of Service & Intellectual Property</h2>
+        <p>
+          FrameProof provides browser-based tools for photo contact sheet generation, collage assembly, and client selection review. You retain 100% full ownership and intellectual property rights to all photographs, images, and content you process using the Service.
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        <h2 class="text-xl font-bold text-zinc-900">3. Disclaimer of Warranties</h2>
+        <p>
+          The Service is provided on an "AS IS" and "AS AVAILABLE" basis without warranties of any kind, whether express or implied. FrameProof does not warrant that the Service will be uninterrupted, bug-free, or compatible with every browser hardware configuration.
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        <h2 class="text-xl font-bold text-zinc-900">4. Limitation of Liability</h2>
+        <p>
+          In no event shall FrameProof or its contributors be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Service or any loss of photographic data.
+        </p>
+      </div>
+
+    </div>
+  </article>
+</MarketingLayout>

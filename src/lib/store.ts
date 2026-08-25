@@ -4,8 +4,7 @@ import type {
   LayoutConfig, 
   WorkspaceMode, 
   FilterStatus, 
-  ReviewStatus,
-  ProjectManifest
+  ReviewStatus
 } from './types';
 
 export const DEFAULT_LAYOUT_CONFIG: LayoutConfig = {

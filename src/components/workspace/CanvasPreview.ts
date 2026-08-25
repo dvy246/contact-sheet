@@ -5,8 +5,7 @@ import {
   $workspaceMode, 
   $selectedImageId, 
   $activeTemplateId,
-  $activePage,
-  setImageStatus
+  $activePage
 } from '../../lib/store';
 import { calculateContactSheetPages } from '../../lib/engine/contactSheetEngine';
 import { calculateCollageLayout } from '../../lib/engine/collageEngine';

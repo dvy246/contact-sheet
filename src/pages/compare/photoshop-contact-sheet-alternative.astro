@@ -1,0 +1,115 @@
+---
+import MarketingLayout from '../../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
+import ComparisonTable from '../../components/marketing/ComparisonTable.astro';
+import FaqAccordion from '../../components/common/FaqAccordion.astro';
+import Icon from '../../components/common/Icon.astro';
+import { METADATA_REGISTRY } from '../../lib/seo/metadata';
+import { buildFAQSchema } from '../../lib/seo/schemaGenerator';
+
+const meta = METADATA_REGISTRY['/compare/photoshop-contact-sheet-alternative'];
+
+const faqs = [
+  {
+    question: 'How do I make a contact sheet in Photoshop?',
+    answer: 'In Adobe Photoshop, go to File > Automate > Contact Sheet II. You must choose a folder, select page dimensions in inches/pixels, configure column and row counts, and let Photoshop open and tile each image sequentially. This process can take several minutes for large raw batches.',
+  },
+  {
+    question: 'Why choose FrameProof over Photoshop Contact Sheet II?',
+    answer: 'FrameProof is instant and runs directly in your browser without requiring a Creative Cloud subscription or heavy installation. Additionally, FrameProof includes built-in Keep/Flag/Reject review states and 1-click CSV filename export, which Photoshop lacks.',
+  },
+  {
+    question: 'When should I still use Adobe Photoshop?',
+    answer: 'Photoshop remains the standard tool if you need advanced CMYK press profiles, custom ICC color management scripts, or complex multi-layer raster adjustments.',
+  },
+];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Compare', url: '/compare/photoshop-contact-sheet-alternative' },
+  { name: 'Photoshop Alternative' },
+];
+
+const schemas = [
+  buildFAQSchema(faqs),
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+  ogType={meta.ogType}
+  schema={schemas}
+>
+  <div class="bg-white border-b border-marketing-border py-10 sm:py-14">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="max-w-3xl">
+        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 mb-3">
+          The Best Lightweight Alternative to Photoshop Contact Sheet II
+        </h1>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          Compare Adobe Photoshop’s Contact Sheet II automation with FrameProof’s browser-first photo review and proofing workspace.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comparison Matrix Component -->
+  <ComparisonTable />
+
+  <!-- Detailed Editorial Breakdown -->
+  <section class="py-16 sm:py-20 bg-white border-b border-marketing-border">
+    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-10">
+      
+      <div class="space-y-4 prose-measure">
+        <h2 class="text-2xl font-bold text-zinc-900">
+          Understanding Photoshop Contact Sheet II
+        </h2>
+        <p class="text-sm text-zinc-700 leading-relaxed">
+          For over two decades, Adobe Photoshop’s built-in <em>Contact Sheet II</em> script (File > Automate > Contact Sheet II) has been the default choice for photographers who need to print image proofs. While capable, the tool has changed little since CS3: it opens each image one-by-one, renders a static flattened raster document, and provides zero interactive review, culling, or selection export capabilities.
+        </p>
+      </div>
+
+      <div class="space-y-4 prose-measure">
+        <h2 class="text-2xl font-bold text-zinc-900">
+          Where FrameProof Excels
+        </h2>
+        <p class="text-sm text-zinc-700 leading-relaxed">
+          FrameProof was designed from the ground up for modern digital culling and client handoffs:
+        </p>
+        <ul class="space-y-2 text-sm text-zinc-700 list-disc pl-5">
+          <li><strong>Instant Web Processing:</strong> No Creative Cloud app to launch or update. Drag your folder and start reviewing immediately.</li>
+          <li><strong>Integrated Review States:</strong> Mark Keep (1), Flag (2), or Reject (3) directly while viewing the contact sheet layout.</li>
+          <li><strong>Filename Handoff:</strong> Export structured CSV and TXT filename lists for 1-click filtering in Lightroom.</li>
+          <li><strong>Collage Dual-Mode:</strong> Seamlessly switch from contact sheets to creative collage templates without leaving the workspace.</li>
+          <li><strong>Free & Private:</strong> 100% in-browser processing with no subscription fee.</li>
+        </ul>
+      </div>
+
+      <!-- Action CTA Box -->
+      <div class="p-8 rounded-2xl bg-zinc-900 text-white text-center space-y-4 shadow-xl">
+        <h2 class="text-xl font-bold">Try the faster contact sheet workflow</h2>
+        <p class="text-xs text-zinc-400 max-w-md mx-auto">
+          Create print-ready contact sheets in seconds without opening Photoshop.
+        </p>
+        <a 
+          href="/photo-contact-sheet-maker" 
+          class="inline-flex items-center gap-2 h-11 px-6 rounded-xl bg-accent-amber hover:bg-accent-amber-hover text-black font-semibold text-xs tracking-tight shadow-md transition-all"
+        >
+          <span>Open FrameProof Free</span>
+          <Icon name="arrow-right" size={15} />
+        </a>
+      </div>
+
+      <!-- FAQs -->
+      <div class="space-y-6 pt-6 border-t border-marketing-border">
+        <h2 class="text-2xl font-bold text-zinc-900">Comparison FAQs</h2>
+        <FaqAccordion faqs={faqs} />
+      </div>
+
+    </div>
+  </section>
+</MarketingLayout>

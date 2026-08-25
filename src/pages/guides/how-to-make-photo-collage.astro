@@ -1,0 +1,156 @@
+---
+import MarketingLayout from '../../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
+import FaqAccordion from '../../components/common/FaqAccordion.astro';
+import Icon from '../../components/common/Icon.astro';
+import { METADATA_REGISTRY } from '../../lib/seo/metadata';
+import { buildHowToSchema, buildFAQSchema } from '../../lib/seo/schemaGenerator';
+
+const meta = METADATA_REGISTRY['/guides/how-to-make-photo-collage'];
+
+const steps = [
+  {
+    name: 'Choose a purposeful collage aspect ratio',
+    text: 'Select an aspect ratio suited for your target medium: 1:1 square for portfolio feeds, 4:5 portrait for vertical posts, 9:16 for mobile stories, or 16:9 for widescreen web banners.',
+  },
+  {
+    name: 'Select your photo collection',
+    text: 'Gather 2 to 9 complementary photos with harmonized lighting, color grading, or subject matter. Drag them into the FrameProof workspace.',
+  },
+  {
+    name: 'Assign photos to template cells',
+    text: 'Arrange your strongest hero shot in the primary cell and balance secondary detail shots in surrounding tiles. Drag to reorder photos easily.',
+  },
+  {
+    name: 'Adjust borders, gutters, and background color',
+    text: 'Tune the spacing between images (from 0px seamless tiles to 24px wide gallery borders) and pick a background tone that flatters your photography.',
+  },
+  {
+    name: 'Export at full studio resolution',
+    text: 'Download your finalized collage as a lossless PNG or optimized JPEG ready for social sharing or physical printing.',
+  },
+];
+
+const faqs = [
+  {
+    question: 'How do I combine photos without losing image quality?',
+    answer: 'FrameProof renders collages using client-side Canvas acceleration at native source resolutions up to 4K / 300 DPI, avoiding the aggressive compression artifacts introduced by cloud collage websites.',
+  },
+  {
+    question: 'Can I make a collage with different size photos?',
+    answer: 'Yes. Templates such as our "Hero + 2 Stacked" and "Portfolio Mosaic Wall" feature asymmetrical grids specifically designed to mix large landscape shots with vertical portraits.',
+  },
+  {
+    question: 'Is there a watermark on downloaded collages?',
+    answer: 'No. All collages generated in FrameProof are 100% watermark-free.',
+  },
+];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Guides', url: '/guides/how-to-make-photo-collage' },
+  { name: 'How to Make a Photo Collage' },
+];
+
+const schemas = [
+  buildHowToSchema(
+    'How to Make a Photo Collage Online',
+    meta.description,
+    steps
+  ),
+  buildFAQSchema(faqs),
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+  ogType={meta.ogType}
+  schema={schemas}
+>
+  <article class="py-12 sm:py-16 bg-white border-b border-marketing-border">
+    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-8">
+      
+      <Breadcrumbs items={breadcrumbs} />
+
+      <header class="space-y-4">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-900 leading-[1.2]">
+          How to Make a Photo Collage Online: Complete Guide
+        </h1>
+        <p class="text-base text-marketing-muted leading-relaxed">
+          Learn how to compose clean, high-impact photo collages without complicated design software or privacy-compromising cloud uploads.
+        </p>
+      </header>
+
+      <!-- Direct Answer / AEO Definition Block -->
+      <div class="p-6 rounded-2xl bg-amber-50/60 border border-amber-200/80 text-zinc-800 space-y-2">
+        <div class="text-xs font-bold uppercase tracking-wider text-amber-900 font-mono">Direct Answer</div>
+        <p class="text-sm leading-relaxed font-medium">
+          To make a photo collage online, select a template matching your desired aspect ratio (e.g. 1:1, 4:5, or 16:9), import your images into the browser workspace, arrange hero and detail shots into complementary cells, and export the composite image as a high-resolution PNG or JPG.
+        </p>
+      </div>
+
+      <!-- Step-by-Step Guide -->
+      <div class="space-y-8 pt-4">
+        <h2 class="text-2xl font-bold text-zinc-900">
+          5 Steps to Build a Polished Photo Collage
+        </h2>
+
+        <div class="space-y-6">
+          {steps.map((step, idx) => (
+            <div class="flex gap-4 p-5 rounded-xl border border-marketing-border bg-marketing-bg">
+              <div class="w-8 h-8 rounded-lg bg-zinc-900 text-white flex-shrink-0 flex items-center justify-center font-bold text-sm">
+                {idx + 1}
+              </div>
+              <div class="space-y-1">
+                <h3 class="text-base font-bold text-zinc-900">{step.name}</h3>
+                <p class="text-sm text-zinc-600 leading-relaxed">{step.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Composition Principles -->
+      <div class="space-y-6 pt-6 border-t border-marketing-border text-sm text-zinc-700 leading-relaxed prose-measure">
+        <h2 class="text-2xl font-bold text-zinc-900">
+          Key Principles of Photographic Layout Design
+        </h2>
+        <p>
+          Creating an engaging collage is an exercise in visual hierarchy. Rather than treating all images equally, establish one visual anchor (the largest or most striking photograph) that draws the viewer's eye first. Complementary photos should offer context, detail, or alternate angles.
+        </p>
+
+        <h3 class="text-lg font-bold text-zinc-900 pt-3">
+          Maintaining Color and Tonal Consistency
+        </h3>
+        <p>
+          Collages look cohesive when all photos share a unified color temperature and exposure balance. If one photo is warm and golden while an adjacent photo is cool and blue, the layout will look disjointed. Grouping images from the same shoot or lighting condition creates an effortless, editorial result.
+        </p>
+      </div>
+
+      <!-- Action CTA Box -->
+      <div class="p-8 rounded-2xl bg-zinc-900 text-white text-center space-y-4 shadow-xl">
+        <h2 class="text-xl font-bold">Start making your collage now</h2>
+        <p class="text-xs text-zinc-400 max-w-md mx-auto">
+          Free, watermark-free, and processed locally on your computer.
+        </p>
+        <a 
+          href="/photo-collage-maker" 
+          class="inline-flex items-center gap-2 h-11 px-6 rounded-xl bg-accent-amber hover:bg-accent-amber-hover text-black font-semibold text-xs tracking-tight shadow-md transition-all"
+        >
+          <span>Open Collage Maker</span>
+          <Icon name="arrow-right" size={15} />
+        </a>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="space-y-6 pt-6 border-t border-marketing-border">
+        <h2 class="text-2xl font-bold text-zinc-900">Frequently Asked Questions</h2>
+        <FaqAccordion faqs={faqs} />
+      </div>
+
+    </div>
+  </article>
+</MarketingLayout>

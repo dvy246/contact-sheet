@@ -1,5 +1,4 @@
 import { 
-  $images, 
   $filteredImages, 
   $selectedImageId, 
   removeImage, 
@@ -7,7 +6,6 @@ import {
   setImageStatus 
 } from '../../lib/store';
 import { formatBytes } from '../../lib/media/fileSanitizer';
-import type { ImageItem, ReviewStatus } from '../../lib/types';
 
 export class ThumbnailGrid {
   private container: HTMLElement;

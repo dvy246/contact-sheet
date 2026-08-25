@@ -1,0 +1,89 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../components/common/Breadcrumbs.astro';
+import Icon from '../components/common/Icon.astro';
+import { METADATA_REGISTRY } from '../lib/seo/metadata';
+import { buildOrganizationSchema } from '../lib/seo/schemaGenerator';
+
+const meta = METADATA_REGISTRY['/about-us'];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'About FrameProof' },
+];
+
+const schemas = [
+  buildOrganizationSchema(),
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+  schema={schemas}
+>
+  <div class="bg-white border-b border-marketing-border py-12 sm:py-16">
+    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900">
+        About FrameProof
+      </h1>
+      <p class="text-base text-marketing-muted leading-relaxed">
+        Building the fastest, most private browser-first workspace for photo contact sheets, collages, and client proofing.
+      </p>
+    </div>
+  </div>
+
+  <article class="py-16 sm:py-20 bg-marketing-bg border-b border-marketing-border">
+    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-10 text-sm text-zinc-700 leading-relaxed prose-measure">
+      
+      <div class="space-y-4">
+        <h2 class="text-2xl font-bold text-zinc-900">Our Mission</h2>
+        <p>
+          FrameProof was created to solve a persistent frustration in professional photography: why does creating a simple, filename-accurate contact sheet or client proof pack require expensive subscriptions, slow desktop scripts, or privacy-compromising cloud uploaders?
+        </p>
+        <p>
+          We believe photographers and visual creators deserve lightweight, dedicated studio instruments that respect their privacy, run at the speed of their hardware, and get out of the way of the work.
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        <h2 class="text-2xl font-bold text-zinc-900">The Privacy-First Principle</h2>
+        <p>
+          Unlike modern web apps that funnel user assets into centralized databases, FrameProof is architected as a true client-side application. When you drop a 500-photo wedding shoot into FrameProof, every single byte of pixel data, filename text, and EXIF tag is processed directly in your browser's local memory sandbox. No photos are transmitted over the wire.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-white border border-marketing-border space-y-3 shadow-xs">
+        <h3 class="text-base font-bold text-zinc-900">Core Architecture Commitments</h3>
+        <ul class="space-y-2 text-xs text-zinc-600">
+          <li class="flex items-center gap-2">
+            <Icon name="check" size={14} class="text-emerald-600" />
+            <span>Zero account creation required to access full workspace features.</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="check" size={14} class="text-emerald-600" />
+            <span>100% in-browser Canvas 2D and Web Worker execution.</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="check" size={14} class="text-emerald-600" />
+            <span>Zero media telemetry or pixel logging.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="pt-6 border-t border-marketing-border">
+        <a 
+          href="/contact-us" 
+          class="inline-flex items-center gap-2 text-zinc-900 font-semibold hover:text-accent-amber transition-colors"
+        >
+          <span>Have feedback or questions? Contact our team</span>
+          <Icon name="arrow-right" size={14} />
+        </a>
+      </div>
+
+    </div>
+  </article>
+</MarketingLayout>

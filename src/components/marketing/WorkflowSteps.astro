@@ -1,0 +1,87 @@
+---
+import Icon from '../common/Icon.astro';
+---
+
+<section class="py-16 sm:py-24 bg-marketing-bg border-b border-marketing-border">
+  <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+    <div class="max-w-2xl mb-12">
+      <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 mb-3">
+        Built for the photographer's real selection workflow
+      </h2>
+      <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+        From a memory card dump to a verified client select list in minutes. Everything happens on your machine without cloud lag or upload wait times.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Step 1 -->
+      <div class="bg-white border border-marketing-border rounded-2xl p-6 sm:p-8 space-y-4 shadow-xs">
+        <div class="w-10 h-10 rounded-xl bg-zinc-900 text-white flex items-center justify-center font-bold text-sm">
+          1
+        </div>
+        <h3 class="text-lg font-bold text-zinc-900">
+          Batch Import & Auto-Layout
+        </h3>
+        <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
+          Drop hundreds of JPG, PNG, or WebP files. FrameProof instantly generates working previews, parses image dimensions, and arranges them into standard A4, Letter, or 16:9 contact sheets.
+        </p>
+        <ul class="space-y-1.5 text-xs text-zinc-700 pt-2 border-t border-marketing-border">
+          <li class="flex items-center gap-2">
+            <Icon name="check" size={13} class="text-emerald-600 flex-shrink-0" />
+            <span>Exact original filenames preserved</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="check" size={13} class="text-emerald-600 flex-shrink-0" />
+            <span>Folder and multi-file drag support</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="bg-white border border-marketing-border rounded-2xl p-6 sm:p-8 space-y-4 shadow-xs">
+        <div class="w-10 h-10 rounded-xl bg-zinc-900 text-white flex items-center justify-center font-bold text-sm">
+          2
+        </div>
+        <h3 class="text-lg font-bold text-zinc-900">
+          Rapid Review & Culling
+        </h3>
+        <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
+          Evaluate color and framing on a dark light table. Mark favorites, flags, or rejects using fast <kbd class="px-1.5 py-0.5 rounded bg-zinc-100 border text-xs font-mono">1</kbd>, <kbd class="px-1.5 py-0.5 rounded bg-zinc-100 border text-xs font-mono">2</kbd>, and <kbd class="px-1.5 py-0.5 rounded bg-zinc-100 border text-xs font-mono">3</kbd> keyboard shortcuts with auto-advance.
+        </p>
+        <ul class="space-y-1.5 text-xs text-zinc-700 pt-2 border-t border-marketing-border">
+          <li class="flex items-center gap-2">
+            <Icon name="check" size={13} class="text-emerald-600 flex-shrink-0" />
+            <span>Keep / Flag / Reject status badges</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="check" size={13} class="text-emerald-600 flex-shrink-0" />
+            <span>Live status counts and filter views</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="bg-white border border-marketing-border rounded-2xl p-6 sm:p-8 space-y-4 shadow-xs">
+        <div class="w-10 h-10 rounded-xl bg-zinc-900 text-white flex items-center justify-center font-bold text-sm">
+          3
+        </div>
+        <h3 class="text-lg font-bold text-zinc-900">
+          Clean Export & Filename Handoff
+        </h3>
+        <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
+          Export print-ready multi-page PDFs, high-res visual sheets, and structured CSV / TXT filename lists that plug directly into Adobe Lightroom or Capture One search filters.
+        </p>
+        <ul class="space-y-1.5 text-xs text-zinc-700 pt-2 border-t border-marketing-border">
+          <li class="flex items-center gap-2">
+            <Icon name="check" size={13} class="text-emerald-600 flex-shrink-0" />
+            <span>High-DPI PDF & PNG outputs</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <Icon name="check" size={13} class="text-emerald-600 flex-shrink-0" />
+            <span>Export all or only kept selects</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

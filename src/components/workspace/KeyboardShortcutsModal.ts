@@ -1,5 +1,4 @@
 import { 
-  $images, 
   $filteredImages, 
   $selectedImageId, 
   setImageStatus, 

@@ -1,0 +1,142 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../components/common/Breadcrumbs.astro';
+import WorkspaceApp from '../components/workspace/WorkspaceApp.astro';
+import FaqAccordion from '../components/common/FaqAccordion.astro';
+import Icon from '../components/common/Icon.astro';
+import { METADATA_REGISTRY } from '../lib/seo/metadata';
+import { buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
+
+const meta = METADATA_REGISTRY['/photo-contact-sheet-maker'];
+
+const faqs = [
+  {
+    question: 'How do I create a photo contact sheet in FrameProof?',
+    answer: 'Simply drag and drop your photo batch into the workspace. Select your desired columns, rows, paper format (such as A4 or US Letter), and label preferences. FrameProof automatically arranges your images into a structured proof sheet ready for export as a PDF or high-resolution image.',
+  },
+  {
+    question: 'Can I include original filenames on every thumbnail?',
+    answer: 'Yes. FrameProof preserves original camera filenames by default and renders them below each image. You can also display index numbers or both.',
+  },
+  {
+    question: 'How many photos can I add to a single contact sheet?',
+    answer: 'FrameProof handles batches ranging from 10 to over 300 photos smoothly using Web Worker incremental decoding. For large batches, FrameProof automatically splits items into multiple cleanly numbered pages.',
+  },
+  {
+    question: 'Is this contact sheet generator private?',
+    answer: 'Yes. Unlike cloud upload tools, FrameProof processes all photos locally in your browser. No files, thumbnails, or metadata ever leave your computer.',
+  },
+];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Photo Contact Sheet Maker' },
+];
+
+const schemas = [
+  buildSoftwareApplicationSchema(
+    'Photo Contact Sheet Maker',
+    meta.description,
+    'https://www.frameproof.com/photo-contact-sheet-maker'
+  ),
+  buildFAQSchema(faqs),
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+  schema={schemas}
+>
+  <!-- Page Header -->
+  <div class="bg-white border-b border-marketing-border py-8 sm:py-12">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="max-w-3xl">
+        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-900 mb-3">
+          Fast Photo Contact Sheet Maker
+        </h1>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          Create professional photography proof sheets and contact prints directly in your browser. Configure grid columns, paper formats, and filename labels with instant local PDF and PNG exports.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Embedded Workspace -->
+  <section class="bg-workspace-bg border-b border-marketing-border">
+    <div class="max-w-[1400px] mx-auto">
+      <WorkspaceApp />
+    </div>
+  </section>
+
+  <!-- Editorial & Guide Content (400-600 words) -->
+  <section class="py-16 sm:py-20 bg-white border-b border-marketing-border">
+    <div class="max-w-[900px] mx-auto px-4 sm:px-6 space-y-12">
+      
+      <div class="space-y-4 prose-measure">
+        <h2 class="text-2xl font-bold text-zinc-900">
+          What is a photo contact sheet?
+        </h2>
+        <p class="text-sm text-zinc-700 leading-relaxed">
+          A photo contact sheet (historically known as a proof sheet or contact print) is a grid arrangement of thumbnail images compiled onto a single page or multi-page document. In traditional darkroom photography, a contact print was created by placing photographic negative strips directly onto light-sensitive paper under glass.
+        </p>
+        <p class="text-sm text-zinc-700 leading-relaxed">
+          In modern digital workflows, contact sheets serve as the standard tool for photographers, editors, and studios to scan an entire shoot, evaluate framing and color consistency, share proofs with clients, and archive photo batches with verifiable camera filenames intact.
+        </p>
+      </div>
+
+      <div class="space-y-4 prose-measure">
+        <h2 class="text-2xl font-bold text-zinc-900">
+          Why use a browser-based contact sheet generator?
+        </h2>
+        <p class="text-sm text-zinc-700 leading-relaxed">
+          Traditional desktop software like Adobe Photoshop or Lightroom requires heavy subscriptions, installation, and complex catalog setups for a task that should take thirty seconds. Meanwhile, generic online collage apps strip camera filenames, upload unreleased client work to unknown cloud servers, and force users to create accounts.
+        </p>
+        <p class="text-sm text-zinc-700 leading-relaxed">
+          FrameProof bridges this gap by offering a dedicated, studio-grade contact sheet workspace that operates entirely inside your browser. Your images are rendered locally with hardware acceleration, preserving 100% data privacy while providing professional export options including multi-page print PDFs and Lightroom-ready filename lists.
+        </p>
+      </div>
+
+      <!-- Quick Links to Related Guides -->
+      <div class="p-6 rounded-2xl bg-marketing-bg border border-marketing-border space-y-3">
+        <h3 class="text-base font-bold text-zinc-900">Related Photography Resources</h3>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <li>
+            <a href="/guides/how-to-make-a-contact-sheet" class="font-medium text-zinc-900 hover:text-accent-amber flex items-center gap-1.5">
+              <Icon name="file-text" size={14} class="text-zinc-500" />
+              <span>How to Make a Contact Sheet: Step-by-Step</span>
+            </a>
+          </li>
+          <li>
+            <a href="/guides/photo-proof-sheet-with-filenames" class="font-medium text-zinc-900 hover:text-accent-amber flex items-center gap-1.5">
+              <Icon name="file-check" size={14} class="text-zinc-500" />
+              <span>Creating Proof Sheets with Filenames</span>
+            </a>
+          </li>
+          <li>
+            <a href="/contact-sheet-template" class="font-medium text-zinc-900 hover:text-accent-amber flex items-center gap-1.5">
+              <Icon name="grid" size={14} class="text-zinc-500" />
+              <span>Free Contact Sheet Layout Templates</span>
+            </a>
+          </li>
+          <li>
+            <a href="/compare/photoshop-contact-sheet-alternative" class="font-medium text-zinc-900 hover:text-accent-amber flex items-center gap-1.5">
+              <Icon name="columns" size={14} class="text-zinc-500" />
+              <span>Photoshop Contact Sheet II Alternative</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- FAQ Accordion -->
+      <div class="space-y-6 pt-4">
+        <h2 class="text-2xl font-bold text-zinc-900">Contact Sheet FAQs</h2>
+        <FaqAccordion faqs={faqs} />
+      </div>
+
+    </div>
+  </section>
+</MarketingLayout>
