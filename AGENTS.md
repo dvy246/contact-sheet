@@ -10,7 +10,8 @@
 - Modified the project manifest `generator` field to be a free‑form string and renamed exported manifest files to `.makecontactsheet.json`.
 - Added HEIC/HEIF MIME types and extensions to the allowed‑image allowlist (`src/lib/media/fileSanitizer.ts`).
 - Implemented EXIF orientation handling via `createImageBitmap(..., { imageOrientation: 'from-image' })` in `src/lib/media/imageLoader.ts`.
-- Fixed collage PDF export to correctly use the collage renderer (`exportCollageLayoutToPDF`).
+- Fixed collage PDF export to correctly use the collage renderer (`exportCollageLayoutToPDF`) and verified empty cell handling without fallback/substitution bugs.
+- Converted `jsPDF` and `pdfExporter` to asynchronous dynamic imports in `ExportDrawer.ts` and `pdfExporter.ts`, removing `jsPDF` (~360kB+ raw / ~118kB gz) from the initial bundle.
 - Updated SEO metadata (`src/lib/seo/metadata.ts`) and related docs (`design.md`, `seo.md`) to reflect the new brand name and site URL.
 - Adjusted UI labels in the Export Drawer for the new manifest filename.
 - Ran `npm run check` and `npm run build`; all TypeScript checks pass and the site builds successfully with 15 pages.
@@ -275,7 +276,6 @@ Do not "discover" these again; do not let them decay further. Fix on request.
 
 | Defect | Location |
 |---|---|
-| jsPDF is eagerly bundled into the homepage workspace script (~427 kB raw / ~136 kB gz) — should be a dynamic import | `src/components/workspace/ExportDrawer.ts` → `src/lib/export/pdfExporter.ts` |
 | Window-level drop handler registered per `DropZone` instance; the homepage builds two, so a body drop imports twice | `src/components/workspace/DropZone.ts` |
 | `decoder.worker.ts` is never instantiated; decoding is on the main thread and full-res images are reused as 48px thumbnails | `src/lib/media/decoder.worker.ts`, `src/lib/media/imageLoader.ts` |
 | Missing `ads.txt` | `public/` |

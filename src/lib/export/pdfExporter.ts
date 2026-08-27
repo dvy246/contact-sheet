@@ -1,5 +1,4 @@
-import { jsPDF } from 'jspdf';
-import type { PageLayoutResult, LayoutConfig } from '../types';
+import type { PageLayoutResult, CollageLayoutResult, LayoutConfig } from '../types';
 import { renderContactSheetToCanvas, renderCollageToCanvas } from '../engine/canvasRenderer';
 import { PX_PER_MM } from '../engine/contactSheetEngine';
 
@@ -27,6 +26,8 @@ export async function exportContactSheetPagesToPDF(
   // jsPDF reorders an explicit [w, h] to match the orientation it is given, so
   // the two have to agree or the page comes out transposed.
   const orientation: 'portrait' | 'landscape' = widthMm > heightMm ? 'landscape' : 'portrait';
+
+  const { jsPDF } = await import('jspdf');
 
   const doc = new jsPDF({
     orientation,
@@ -61,12 +62,16 @@ export async function exportContactSheetPagesToPDF(
 
 /** Export a single collage layout as PDF */
 export async function exportCollageLayoutToPDF(
-  layout: any, // CollageLayoutResult type but import to avoid circular deps
+  layout: CollageLayoutResult,
   config: LayoutConfig,
-  _onProgress?: PDFExportProgress,
+  onProgress?: PDFExportProgress,
   filename = 'makecontactsheet-collage'
 ): Promise<void> {
-  // Render collage to canvas, then add to PDF similar to contact sheet export
+  if (onProgress) {
+    onProgress(1, 1);
+  }
+
+  // Render collage to canvas, then add to PDF using the collage renderer
   const offscreen = document.createElement('canvas');
   await renderCollageToCanvas(offscreen, layout, config, null, true);
 
@@ -74,6 +79,8 @@ export async function exportCollageLayoutToPDF(
   const heightMm = round2(offscreen.height / PX_PER_MM);
   const format: [number, number] = [widthMm, heightMm];
   const orientation: 'portrait' | 'landscape' = widthMm > heightMm ? 'landscape' : 'portrait';
+
+  const { jsPDF } = await import('jspdf');
 
   const doc = new jsPDF({ orientation, unit: 'mm', format, compress: true });
   const imgData = offscreen.toDataURL('image/jpeg', 0.88);
