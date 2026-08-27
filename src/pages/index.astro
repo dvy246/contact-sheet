@@ -15,7 +15,7 @@ const meta = METADATA_REGISTRY['/'];
 const faqs = [
   {
     question: 'Are my photos uploaded to a cloud server?',
-    answer: 'No. FrameProof processes 100% of your images locally in your web browser using HTML5 Canvas and Web Worker technologies. Your files, pixels, filenames, and EXIF metadata never leave your computer.',
+    answer: 'No. Make Contact Sheet processes 100% of your images locally in your web browser using HTML5 Canvas. Your files, pixels, filenames, and EXIF metadata never leave your computer.',
   },
   {
     question: 'How do I export the list of selected filenames for Lightroom?',
@@ -23,15 +23,15 @@ const faqs = [
   },
   {
     question: 'What file formats are supported?',
-    answer: 'FrameProof supports all standard browser-decodable image formats including JPG/JPEG, PNG, WebP, AVIF, GIF, and BMP.',
+    answer: 'Make Contact Sheet supports all standard browser-decodable image formats including JPG/JPEG, PNG, WebP, AVIF, GIF, and BMP.',
   },
   {
     question: 'Can I print or save high-resolution PDFs?',
-    answer: 'Yes. FrameProof includes a print-ready PDF generator that builds standard A4 and US Letter multi-page proof sheets formatted with clean margins, headers, and filename labels at 300 DPI.',
+    answer: 'Yes. Make Contact Sheet includes a print-ready PDF generator that builds standard A4 and US Letter multi-page proof sheets formatted with clean margins, headers, and filename labels at 300 DPI.',
   },
   {
-    question: 'Is FrameProof free to use?',
-    answer: 'Yes. FrameProof is completely free with no account creation or subscription required.',
+    question: 'Is Make Contact Sheet free to use?',
+    answer: 'Yes. Make Contact Sheet is completely free with no account creation or subscription required.',
   },
 ];
 
@@ -39,9 +39,9 @@ const schemas = [
   buildWebSiteSchema(),
   buildOrganizationSchema(),
   buildSoftwareApplicationSchema(
-    'FrameProof Photo Contact Sheet & Collage Maker',
+    'Make Contact Sheet Photo Contact Sheet & Collage Maker',
     meta.description,
-    'https://www.frameproof.com/'
+    'https://makecontactsheet.com/'
   ),
   buildFAQSchema(faqs),
 ];
@@ -58,29 +58,45 @@ const schemas = [
   <HeroSection />
 
   <!-- Framed Live Workspace Section -->
-  <section id="workspace" class="py-12 sm:py-16 bg-marketing-bg border-b border-marketing-border transition-colors">
-    <div class="max-w-[1360px] mx-auto px-4 sm:px-6">
+  <section id="workspace" class="py-16 sm:py-24 lg:py-28 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
       
       <!-- Section Framing Bar -->
-      <div class="mb-5 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
-        <div>
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-muted mb-2 shadow-xs">
-            <span class="w-2 h-2 rounded-full bg-accent-amber"></span>
-            <span>INTERACTIVE STUDIO WORKSPACE</span>
+      <div class="mb-10 sm:mb-12 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+        <div class="max-w-2xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs mb-3.5">
+            <span class="w-2 h-2 rounded-full bg-accent"></span>
+            <span>LIVE WORKSPACE INSTRUMENT</span>
           </div>
-          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-marketing-text">
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
             Instant Photo Proofing & Layout Engine
           </h2>
+          <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+            Drag image batches directly into the light table. Organize contact sheets, cull selects with instant keyboard shortcuts, and export print-ready PDFs without uploading files to the cloud.
+          </p>
         </div>
-        <div class="flex items-center gap-2 text-xs text-marketing-muted font-mono">
-          <span>Zero install</span>
-          <span>·</span>
-          <span>Runs 100% locally</span>
+
+        <div class="flex flex-wrap items-center gap-2 sm:gap-2.5 text-xs font-mono text-marketing-muted shrink-0">
+          <span class="px-3 py-1.5 rounded-lg bg-marketing-surface border border-marketing-border text-marketing-text/80 shadow-xs">Zero Install</span>
+          <span class="px-3 py-1.5 rounded-lg bg-marketing-surface border border-marketing-border text-marketing-text/80 shadow-xs">100% Local</span>
+          <span class="px-3 py-1.5 rounded-lg bg-marketing-surface border border-marketing-border text-marketing-text/80 shadow-xs">Hardware Accelerated</span>
         </div>
       </div>
 
-      <!-- Framed Workstation Island -->
+      <!-- Framed Workstation Island (Window Shell) -->
       <div class="rounded-2xl overflow-hidden border border-workspace-border shadow-2xl bg-workspace-bg">
+        <!-- Window Chrome Top Bar -->
+        <div class="px-4 py-2.5 bg-workspace-panel border-b border-workspace-border flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 rounded-full bg-rose-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+          </div>
+          <div class="text-[11px] font-mono text-workspace-muted font-medium">Make Contact Sheet Light-Table · v1.0</div>
+          <div class="w-12"></div>
+        </div>
+
+        <!-- Live Workspace Core -->
         <WorkspaceApp />
       </div>
     </div>
@@ -99,13 +115,13 @@ const schemas = [
   <ComparisonTable />
 
   <!-- FAQ Section -->
-  <section class="py-16 sm:py-24 bg-marketing-bg border-b border-marketing-border transition-colors">
-    <div class="max-w-[800px] mx-auto px-4 sm:px-6">
-      <div class="text-center max-w-xl mx-auto mb-10 space-y-2">
-        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-marketing-text">
+  <section class="py-16 sm:py-24 lg:py-28 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[840px] mx-auto px-4 sm:px-6">
+      <div class="text-center max-w-xl mx-auto mb-12 sm:mb-14">
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-marketing-text mb-4">
           Frequently Asked Questions
         </h2>
-        <p class="text-sm text-marketing-muted">
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
           Direct answers regarding privacy, file formats, and client selection workflows.
         </p>
       </div>

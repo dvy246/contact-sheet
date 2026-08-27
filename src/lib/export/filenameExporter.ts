@@ -1,6 +1,6 @@
 import type { ImageItem } from '../types';
 
-export function exportFilenamesAsCSV(images: ImageItem[], filename = 'frameproof-selected-filenames'): void {
+export function exportFilenamesAsCSV(images: ImageItem[], filename = 'makecontactsheet-selected-filenames'): void {
   const header = ['Index', 'Filename', 'Status', 'Width', 'Height', 'SizeBytes', 'FileType'];
   const rows = images.map((img, idx) => [
     idx + 1,
@@ -20,7 +20,7 @@ export function exportFilenamesAsCSV(images: ImageItem[], filename = 'frameproof
   downloadTextBlob(csvContent, `${filename}.csv`, 'text/csv;charset=utf-8;');
 }
 
-export function exportFilenamesAsTXT(images: ImageItem[], format: 'newline' | 'comma' = 'newline', filename = 'frameproof-filenames'): void {
+export function exportFilenamesAsTXT(images: ImageItem[], format: 'newline' | 'comma' = 'newline', filename = 'makecontactsheet-filenames'): void {
   const content = format === 'comma' 
     ? images.map(img => img.name).join(', ')
     : images.map(img => img.name).join('\n');

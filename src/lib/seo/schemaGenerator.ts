@@ -8,13 +8,13 @@ export interface HowToStep {
   text: string;
 }
 
-export const SITE_URL = 'https://www.frameproof.com';
+export const SITE_URL = 'https://makecontactsheet.com';
 
 export function buildWebSiteSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    'name': 'FrameProof',
+    'name': 'Make Contact Sheet',
     'url': `${SITE_URL}/`,
     'description': 'Browser-first photo contact-sheet, collage, and review workspace.',
   };
@@ -24,7 +24,7 @@ export function buildOrganizationSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    'name': 'FrameProof',
+    'name': 'Make Contact Sheet',
     'url': `${SITE_URL}/`,
     'logo': `${SITE_URL}/favicon.svg`,
   };

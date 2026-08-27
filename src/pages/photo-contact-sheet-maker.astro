@@ -11,20 +11,20 @@ const meta = METADATA_REGISTRY['/photo-contact-sheet-maker'];
 
 const faqs = [
   {
-    question: 'How do I create a photo contact sheet in FrameProof?',
-    answer: 'Simply drag and drop your photo batch into the workspace. Select your desired columns, rows, paper format (such as A4 or US Letter), and label preferences. FrameProof automatically arranges your images into a structured proof sheet ready for export as a PDF or high-resolution image.',
+    question: 'How do I create a photo contact sheet in Make Contact Sheet?',
+    answer: 'Simply drag and drop your photo batch into the workspace. Select your desired columns, rows, paper format (such as A4 or US Letter), and label preferences. Make Contact Sheet automatically arranges your images into a structured proof sheet ready for export as a PDF or high-resolution image.',
   },
   {
     question: 'Can I include original filenames on every thumbnail?',
-    answer: 'Yes. FrameProof preserves original camera filenames by default and renders them below each image. You can also display index numbers or both.',
+    answer: 'Yes. Make Contact Sheet preserves original camera filenames by default and renders them below each image. You can also display index numbers or both.',
   },
   {
     question: 'How many photos can I add to a single contact sheet?',
-    answer: 'FrameProof handles batches ranging from 10 to over 300 photos smoothly using Web Worker incremental decoding. For large batches, FrameProof automatically splits items into multiple cleanly numbered pages.',
+    answer: 'Make Contact Sheet handles batches ranging from 10 to over 300 photos smoothly in your browser. For large batches, Make Contact Sheet automatically splits items into multiple cleanly numbered pages.',
   },
   {
     question: 'Is this contact sheet generator private?',
-    answer: 'Yes. Unlike cloud upload tools, FrameProof processes all photos locally in your browser. No files, thumbnails, or metadata ever leave your computer.',
+    answer: 'Yes. Unlike cloud upload tools, Make Contact Sheet processes all photos locally in your browser. No files, thumbnails, or metadata ever leave your computer.',
   },
 ];
 
@@ -37,7 +37,7 @@ const schemas = [
   buildSoftwareApplicationSchema(
     'Photo Contact Sheet Maker',
     meta.description,
-    'https://www.frameproof.com/photo-contact-sheet-maker'
+    'https://makecontactsheet.com/photo-contact-sheet-maker'
   ),
   buildFAQSchema(faqs),
 ];
@@ -51,32 +51,55 @@ const schemas = [
   schema={schemas}
 >
   <!-- Page Header -->
-  <div class="bg-marketing-panel border-b border-marketing-border py-10 sm:py-14 transition-colors">
-    <div class="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-4">
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
       <Breadcrumbs items={breadcrumbs} />
-      <div class="max-w-3xl space-y-2">
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight">
+      <div class="max-w-3xl">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
           Fast Photo Contact Sheet Maker
         </h1>
-        <p class="text-base text-marketing-muted leading-relaxed">
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
           Create professional photography proof sheets and contact prints directly in your browser. Configure grid columns, paper formats, and filename labels with instant local PDF and PNG exports.
         </p>
+
+        <!-- The embedded workspace below is framed inside the page, so the sheet
+             renders small. Offer the full-screen studio up front for anyone who
+             is here to lay out a real batch rather than to read. -->
+        <a
+          href="/studio/contact-sheet"
+          class="mt-6 inline-flex items-center gap-2 h-11 px-6 rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold text-sm tracking-tight shadow-lg shadow-accent/25 active:scale-[0.98] transition-all"
+        >
+          <Icon name="maximize" size={15} />
+          <span>Open the full-screen Contact Sheet Studio</span>
+          <Icon name="arrow-right" size={15} />
+        </a>
       </div>
     </div>
   </div>
 
   <!-- Framed Live Workspace -->
-  <section class="py-10 sm:py-14 bg-marketing-bg border-b border-marketing-border transition-colors">
-    <div class="max-w-[1360px] mx-auto px-4 sm:px-6">
+  <section class="py-12 sm:py-16 lg:py-20 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
       <div class="rounded-2xl overflow-hidden border border-workspace-border shadow-2xl bg-workspace-bg">
+        <!-- Window Chrome Top Bar -->
+        <div class="px-4 py-2.5 bg-workspace-panel border-b border-workspace-border flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 rounded-full bg-rose-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+          </div>
+          <div class="text-[11px] font-mono text-workspace-muted font-medium">Make Contact Sheet Light-Table · Contact Sheet Mode</div>
+          <div class="w-12"></div>
+        </div>
+
         <WorkspaceApp />
       </div>
     </div>
   </section>
 
   <!-- Editorial & Guide Content (400-600 words) -->
-  <section class="py-16 sm:py-20 bg-marketing-panel border-b border-marketing-border transition-colors">
-    <div class="max-w-[850px] mx-auto px-4 sm:px-6 space-y-12">
+  <section class="py-16 sm:py-24 lg:py-28 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[850px] mx-auto px-4 sm:px-6 space-y-14">
       
       <div class="space-y-4 prose-measure">
         <h2 class="text-2xl font-bold text-marketing-text">
@@ -98,7 +121,7 @@ const schemas = [
           Traditional desktop software like Adobe Photoshop or Lightroom requires heavy subscriptions, installation, and complex catalog setups for a task that should take thirty seconds. Meanwhile, generic online collage apps strip camera filenames, upload unreleased client work to unknown cloud servers, and force users to create accounts.
         </p>
         <p class="text-sm text-marketing-text/90 leading-relaxed">
-          FrameProof bridges this gap by offering a dedicated, studio-grade contact sheet workspace that operates entirely inside your browser. Your images are rendered locally with hardware acceleration, preserving 100% data privacy while providing professional export options including multi-page print PDFs and Lightroom-ready filename lists.
+          Make Contact Sheet bridges this gap by offering a dedicated, studio-grade contact sheet workspace that operates entirely inside your browser. Your images are rendered locally with hardware acceleration, preserving 100% data privacy while providing professional export options including multi-page print PDFs and Lightroom-ready filename lists.
         </p>
       </div>
 
@@ -107,25 +130,25 @@ const schemas = [
         <h3 class="text-base font-bold text-marketing-text">Related Photography Resources</h3>
         <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs">
           <li>
-            <a href="/guides/how-to-make-a-contact-sheet" class="font-medium text-marketing-text hover:text-accent-amber flex items-center gap-2 transition-colors">
+            <a href="/guides/how-to-make-a-contact-sheet" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
               <Icon name="file-text" size={14} class="text-marketing-muted" />
               <span>How to Make a Contact Sheet: Step-by-Step</span>
             </a>
           </li>
           <li>
-            <a href="/guides/photo-proof-sheet-with-filenames" class="font-medium text-marketing-text hover:text-accent-amber flex items-center gap-2 transition-colors">
+            <a href="/guides/photo-proof-sheet-with-filenames" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
               <Icon name="file-check" size={14} class="text-marketing-muted" />
               <span>Creating Proof Sheets with Filenames</span>
             </a>
           </li>
           <li>
-            <a href="/contact-sheet-template" class="font-medium text-marketing-text hover:text-accent-amber flex items-center gap-2 transition-colors">
+            <a href="/contact-sheet-template" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
               <Icon name="grid" size={14} class="text-marketing-muted" />
               <span>Free Contact Sheet Layout Templates</span>
             </a>
           </li>
           <li>
-            <a href="/compare/photoshop-contact-sheet-alternative" class="font-medium text-marketing-text hover:text-accent-amber flex items-center gap-2 transition-colors">
+            <a href="/compare/photoshop-contact-sheet-alternative" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
               <Icon name="columns" size={14} class="text-marketing-muted" />
               <span>Photoshop Contact Sheet II Alternative</span>
             </a>

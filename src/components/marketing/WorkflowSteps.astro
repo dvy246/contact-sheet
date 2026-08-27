@@ -2,10 +2,16 @@
 import Icon from '../common/Icon.astro';
 ---
 
-<section class="py-16 sm:py-24 bg-marketing-bg border-b border-marketing-border transition-colors">
-  <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
-    <div class="max-w-2xl mb-12">
-      <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-marketing-text mb-3">
+<section class="py-16 sm:py-24 lg:py-28 bg-marketing-panel border-b border-marketing-border transition-colors">
+  <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Section Introduction Header -->
+    <div class="max-w-2xl mb-12 sm:mb-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs mb-3.5">
+        <span class="w-2 h-2 rounded-full bg-accent"></span>
+        <span>THREE-STEP WORKFLOW</span>
+      </div>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
         Built for the photographer's real selection workflow
       </h2>
       <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
@@ -13,75 +19,107 @@ import Icon from '../common/Icon.astro';
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <!-- Step 1 -->
-      <div class="bg-marketing-panel border border-marketing-border rounded-2xl p-6 sm:p-8 space-y-4 shadow-xs transition-colors">
-        <div class="w-10 h-10 rounded-xl bg-zinc-900 text-white dark:bg-accent-amber dark:text-black flex items-center justify-center font-bold text-sm">
-          1
+    <!-- 3-Column Structured Workflow System -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+
+      <!-- Step 01: Ingest -->
+      <div class="bg-marketing-surface border border-marketing-border rounded-2xl p-7 sm:p-8 flex flex-col justify-between transition-all group card-surface card-interactive">
+        <div>
+          <!-- Step Header with Number + Icon -->
+          <div class="flex items-center justify-between mb-6">
+            <span class="px-2.5 py-1 rounded-md bg-accent/10 border border-accent/20 text-xs font-mono font-bold text-accent-ink">
+              01 / INGEST
+            </span>
+            <div class="w-9 h-9 rounded-xl bg-marketing-surface border border-marketing-border flex items-center justify-center text-accent-ink group-hover:scale-105 transition-transform shadow-xs">
+              <Icon name="upload" size={18} />
+            </div>
+          </div>
+
+          <h3 class="text-lg sm:text-xl font-bold text-marketing-text leading-snug tracking-tight mb-4">
+            Batch Import & Auto-Layout
+          </h3>
+          <p class="text-sm text-marketing-muted leading-relaxed mb-6">
+            Drop hundreds of JPG, PNG, or WebP files. Make Contact Sheet instantly parses image dimensions and arranges them into standard A4, Letter, or 16:9 contact sheets.
+          </p>
         </div>
-        <h3 class="text-lg font-bold text-marketing-text">
-          Batch Import & Auto-Layout
-        </h3>
-        <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
-          Drop hundreds of JPG, PNG, or WebP files. FrameProof instantly generates working previews, parses image dimensions, and arranges them into standard A4, Letter, or 16:9 contact sheets.
-        </p>
-        <ul class="space-y-1.5 text-xs text-marketing-text pt-2 border-t border-marketing-border">
-          <li class="flex items-center gap-2">
-            <Icon name="check" size={13} class="text-emerald-500 flex-shrink-0" />
+
+        <!-- Anchored Feature List -->
+        <div class="pt-5 border-t border-marketing-border space-y-2.5 text-xs text-marketing-text/90">
+          <div class="flex items-center gap-2">
+            <Icon name="check" size={14} class="text-emerald-500 shrink-0" />
             <span>Exact original filenames preserved</span>
-          </li>
-          <li class="flex items-center gap-2">
-            <Icon name="check" size={13} class="text-emerald-500 flex-shrink-0" />
+          </div>
+          <div class="flex items-center gap-2">
+            <Icon name="check" size={14} class="text-emerald-500 shrink-0" />
             <span>Folder and multi-file drag support</span>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
 
-      <!-- Step 2 -->
-      <div class="bg-marketing-panel border border-marketing-border rounded-2xl p-6 sm:p-8 space-y-4 shadow-xs transition-colors">
-        <div class="w-10 h-10 rounded-xl bg-zinc-900 text-white dark:bg-accent-amber dark:text-black flex items-center justify-center font-bold text-sm">
-          2
+      <!-- Step 02: Culling -->
+      <div class="bg-marketing-surface border border-marketing-border rounded-2xl p-7 sm:p-8 flex flex-col justify-between transition-all group card-surface card-interactive">
+        <div>
+          <!-- Step Header with Number + Icon -->
+          <div class="flex items-center justify-between mb-6">
+            <span class="px-2.5 py-1 rounded-md bg-accent/10 border border-accent/20 text-xs font-mono font-bold text-accent-ink">
+              02 / CULLING
+            </span>
+            <div class="w-9 h-9 rounded-xl bg-marketing-surface border border-marketing-border flex items-center justify-center text-accent-ink group-hover:scale-105 transition-transform shadow-xs">
+              <Icon name="eye" size={18} />
+            </div>
+          </div>
+
+          <h3 class="text-lg sm:text-xl font-bold text-marketing-text leading-snug tracking-tight mb-4">
+            Rapid Review & Shortcuts
+          </h3>
+          <p class="text-sm text-marketing-muted leading-relaxed mb-6">
+            Evaluate framing and color consistency on an archival light-table. Mark favorites, flags, or rejects using fast <kbd class="px-1.5 py-0.5 rounded bg-marketing-surface border border-marketing-border text-xs font-mono">1</kbd>, <kbd class="px-1.5 py-0.5 rounded bg-marketing-surface border border-marketing-border text-xs font-mono">2</kbd>, and <kbd class="px-1.5 py-0.5 rounded bg-marketing-surface border border-marketing-border text-xs font-mono">3</kbd> keyboard keys.
+          </p>
         </div>
-        <h3 class="text-lg font-bold text-marketing-text">
-          Rapid Review & Culling
-        </h3>
-        <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
-          Evaluate color and framing on a dark light table. Mark favorites, flags, or rejects using fast <kbd class="px-1.5 py-0.5 rounded bg-marketing-surface border border-marketing-border text-xs font-mono">1</kbd>, <kbd class="px-1.5 py-0.5 rounded bg-marketing-surface border border-marketing-border text-xs font-mono">2</kbd>, and <kbd class="px-1.5 py-0.5 rounded bg-marketing-surface border border-marketing-border text-xs font-mono">3</kbd> keyboard shortcuts with auto-advance.
-        </p>
-        <ul class="space-y-1.5 text-xs text-marketing-text pt-2 border-t border-marketing-border">
-          <li class="flex items-center gap-2">
-            <Icon name="check" size={13} class="text-emerald-500 flex-shrink-0" />
-            <span>Keep / Flag / Reject status badges</span>
-          </li>
-          <li class="flex items-center gap-2">
-            <Icon name="check" size={13} class="text-emerald-500 flex-shrink-0" />
+
+        <!-- Anchored Feature List -->
+        <div class="pt-5 border-t border-marketing-border space-y-2.5 text-xs text-marketing-text/90">
+          <div class="flex items-center gap-2">
+            <Icon name="check" size={14} class="text-emerald-500 shrink-0" />
+            <span>Keep / Flag / Reject status tagging</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <Icon name="check" size={14} class="text-emerald-500 shrink-0" />
             <span>Live status counts and filter views</span>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
 
-      <!-- Step 3 -->
-      <div class="bg-marketing-panel border border-marketing-border rounded-2xl p-6 sm:p-8 space-y-4 shadow-xs transition-colors">
-        <div class="w-10 h-10 rounded-xl bg-zinc-900 text-white dark:bg-accent-amber dark:text-black flex items-center justify-center font-bold text-sm">
-          3
+      <!-- Step 03: Export -->
+      <div class="bg-marketing-surface border border-marketing-border rounded-2xl p-7 sm:p-8 flex flex-col justify-between transition-all group card-surface card-interactive">
+        <div>
+          <!-- Step Header with Number + Icon -->
+          <div class="flex items-center justify-between mb-6">
+            <span class="px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono font-bold text-emerald-500">
+              03 / EXPORT
+            </span>
+            <div class="w-9 h-9 rounded-xl bg-marketing-surface border border-marketing-border flex items-center justify-center text-emerald-500 group-hover:scale-105 transition-transform shadow-xs">
+              <Icon name="download" size={18} />
+            </div>
+          </div>
+
+          <h3 class="text-lg sm:text-xl font-bold text-marketing-text leading-snug tracking-tight mb-4">
+            Lightroom & PDF Handoff
+          </h3>
+          <p class="text-sm text-marketing-muted leading-relaxed mb-6">
+            Export print-ready multi-page PDFs, high-res visual sheets, and structured CSV/TXT filename lists that plug directly into Adobe Lightroom search filters.
+          </p>
         </div>
-        <h3 class="text-lg font-bold text-marketing-text">
-          Clean Export & Filename Handoff
-        </h3>
-        <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
-          Export print-ready multi-page PDFs, high-res visual sheets, and structured CSV / TXT filename lists that plug directly into Adobe Lightroom or Capture One search filters.
-        </p>
-        <ul class="space-y-1.5 text-xs text-marketing-text pt-2 border-t border-marketing-border">
-          <li class="flex items-center gap-2">
-            <Icon name="check" size={13} class="text-emerald-500 flex-shrink-0" />
-            <span>High-DPI PDF & PNG outputs</span>
-          </li>
-          <li class="flex items-center gap-2">
-            <Icon name="check" size={13} class="text-emerald-500 flex-shrink-0" />
-            <span>Export all or only kept selects</span>
-          </li>
-        </ul>
+
+        <!-- Format Chips Row -->
+        <div class="pt-5 border-t border-marketing-border flex flex-wrap gap-1.5">
+          <span class="px-2.5 py-1 rounded-lg bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-muted">PNG</span>
+          <span class="px-2.5 py-1 rounded-lg bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-muted">JPEG</span>
+          <span class="px-2.5 py-1 rounded-lg bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-muted">PDF</span>
+          <span class="px-2.5 py-1 rounded-lg bg-accent/10 border border-accent/30 text-[11px] font-mono text-accent-ink font-semibold">Lightroom TXT</span>
+        </div>
       </div>
+
     </div>
   </div>
 </section>

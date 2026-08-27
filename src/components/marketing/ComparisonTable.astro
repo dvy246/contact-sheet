@@ -1,99 +1,106 @@
 ---
 ---
 
-<section class="py-16 sm:py-24 bg-marketing-panel border-b border-marketing-border transition-colors">
-  <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
-    <div class="max-w-2xl mb-12">
-      <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-marketing-text mb-3">
-        How FrameProof compares to alternatives
+<section class="py-16 sm:py-24 lg:py-28 bg-marketing-bg border-b border-marketing-border transition-colors w-full max-w-full overflow-hidden">
+  <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 w-full min-w-0">
+    
+    <!-- Section Introduction Header -->
+    <div class="max-w-2xl mb-12 sm:mb-14">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs mb-3.5">
+        <span class="w-2 h-2 rounded-full bg-accent"></span>
+        <span>BENCHMARK & PRIVACY</span>
+      </div>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
+        How Make Contact Sheet compares to alternatives
       </h2>
       <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
         An honest look at how browser-first review compares with heavy desktop software and generic cloud design apps.
       </p>
     </div>
 
-    <div class="overflow-x-auto custom-scrollbar border border-marketing-border rounded-2xl shadow-xs">
-      <table class="w-full text-left text-xs sm:text-sm border-collapse">
+    <!-- Responsive Comparison Table Container -->
+    <div class="w-full max-w-full overflow-x-auto custom-scrollbar border border-marketing-border rounded-2xl bg-marketing-panel card-surface">
+      <table class="w-full text-left text-xs sm:text-sm border-collapse min-w-[600px]">
         <thead>
           <tr class="bg-marketing-surface border-b border-marketing-border text-marketing-text font-bold">
             <th class="p-4 sm:p-5">Capability / Feature</th>
-            <th class="p-4 sm:p-5 bg-amber-500/10 text-marketing-text border-x border-amber-500/30 font-bold">
-              FrameProof
+            <th class="p-4 sm:p-5 bg-accent/10 text-marketing-text border-x border-accent/30 font-bold">
+              Make Contact Sheet
             </th>
-            <th class="p-4 sm:p-5 text-marketing-muted">Photoshop (Contact Sheet II)</th>
-            <th class="p-4 sm:p-5 text-marketing-muted">Canva</th>
-            <th class="p-4 sm:p-5 text-marketing-muted">Vizua</th>
+            <th class="p-4 sm:p-5 text-marketing-muted font-semibold">Photoshop (Contact Sheet II)</th>
+            <th class="p-4 sm:p-5 text-marketing-muted font-semibold">Canva</th>
+            <th class="p-4 sm:p-5 text-marketing-muted font-semibold">Vizua</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-marketing-border text-marketing-text">
           <tr>
             <td class="p-4 sm:p-5 font-medium">Account / Signup Required</td>
-            <td class="p-4 sm:p-5 bg-amber-500/5 border-x border-amber-500/20 font-semibold text-emerald-500">
+            <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold text-emerald-600 dark:text-emerald-400">
               No (Instant Access)
             </td>
             <td class="p-4 sm:p-5 text-marketing-muted">Yes (Adobe ID)</td>
-            <td class="p-4 sm:p-5 text-rose-500">Yes (Mandatory)</td>
-            <td class="p-4 sm:p-5 text-emerald-500">No</td>
+            <td class="p-4 sm:p-5 text-rose-600 dark:text-rose-400">Yes (Mandatory)</td>
+            <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400">No</td>
           </tr>
 
           <tr>
             <td class="p-4 sm:p-5 font-medium">Privacy / File Transfer</td>
-            <td class="p-4 sm:p-5 bg-amber-500/5 border-x border-amber-500/20 font-semibold text-emerald-500">
+            <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold text-emerald-600 dark:text-emerald-400">
               100% In-Browser Local
             </td>
-            <td class="p-4 sm:p-5 text-emerald-500">Local Desktop</td>
-            <td class="p-4 sm:p-5 text-rose-500">Uploaded to Cloud</td>
-            <td class="p-4 sm:p-5 text-emerald-500">Local Browser</td>
+            <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400">Local Desktop</td>
+            <td class="p-4 sm:p-5 text-rose-600 dark:text-rose-400">Uploaded to Cloud</td>
+            <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400">Local Browser</td>
           </tr>
 
           <tr>
             <td class="p-4 sm:p-5 font-medium">Filename Preservation</td>
-            <td class="p-4 sm:p-5 bg-amber-500/5 border-x border-amber-500/20 font-semibold text-emerald-500">
+            <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold text-emerald-600 dark:text-emerald-400">
               Always Preserved & Verified
             </td>
             <td class="p-4 sm:p-5 text-marketing-muted">Preserved in Print</td>
-            <td class="p-4 sm:p-5 text-rose-500">Stripped / Lost</td>
+            <td class="p-4 sm:p-5 text-rose-600 dark:text-rose-400">Stripped / Lost</td>
             <td class="p-4 sm:p-5 text-marketing-muted">Preserved in Grid</td>
           </tr>
 
           <tr>
             <td class="p-4 sm:p-5 font-medium">Keep / Reject / Flag Culling</td>
-            <td class="p-4 sm:p-5 bg-amber-500/5 border-x border-amber-500/20 font-semibold text-emerald-500">
+            <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold text-emerald-600 dark:text-emerald-400">
               Yes (Shortcuts 1, 2, 3)
             </td>
-            <td class="p-4 sm:p-5 text-zinc-500">None</td>
-            <td class="p-4 sm:p-5 text-zinc-500">None</td>
-            <td class="p-4 sm:p-5 text-zinc-500">None</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">None</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">None</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">None</td>
           </tr>
 
           <tr>
             <td class="p-4 sm:p-5 font-medium">Filename CSV / TXT Export</td>
-            <td class="p-4 sm:p-5 bg-amber-500/5 border-x border-amber-500/20 font-semibold text-emerald-500">
+            <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold text-emerald-600 dark:text-emerald-400">
               Yes (Lightroom Ready)
             </td>
-            <td class="p-4 sm:p-5 text-zinc-500">None</td>
-            <td class="p-4 sm:p-5 text-zinc-500">None</td>
-            <td class="p-4 sm:p-5 text-zinc-500">None</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">None</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">None</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">None</td>
           </tr>
 
           <tr>
             <td class="p-4 sm:p-5 font-medium">Collage Mode + Templates</td>
-            <td class="p-4 sm:p-5 bg-amber-500/5 border-x border-amber-500/20 font-semibold text-emerald-500">
+            <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold text-emerald-600 dark:text-emerald-400">
               Built-in Siblings
             </td>
-            <td class="p-4 sm:p-5 text-zinc-500">None</td>
-            <td class="p-4 sm:p-5 text-emerald-500">Extensive Templates</td>
-            <td class="p-4 sm:p-5 text-zinc-500">None</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">None</td>
+            <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400">Extensive Templates</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">None</td>
           </tr>
 
           <tr>
             <td class="p-4 sm:p-5 font-medium">Pricing Model</td>
-            <td class="p-4 sm:p-5 bg-amber-500/5 border-x border-amber-500/20 font-semibold text-emerald-500">
+            <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold text-emerald-600 dark:text-emerald-400">
               Free & Open
             </td>
-            <td class="p-4 sm:p-5 text-marketing-muted">~$20–$55/month</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">~$20-$55/month</td>
             <td class="p-4 sm:p-5 text-marketing-muted">Freemium ($13/mo)</td>
-            <td class="p-4 sm:p-5 text-emerald-500">Free (50 imgs max)</td>
+            <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400">Free (50 imgs max)</td>
           </tr>
         </tbody>
       </table>
