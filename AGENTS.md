@@ -2,6 +2,12 @@
 
 ## 11. Recent changes (Rebranding & Improvements)
 
+- Implemented **Portable Review Workflow** (Task 3):
+  - Updated `src/lib/export/projectManifest.ts` with `buildProjectManifest`, `exportProjectManifest`, `parseProjectManifest`, `relinkProjectManifest`, `applyManifestToImageItems`, and `restoreProjectSession` capturing full review states (`status`, `rating`, `notes`, `tags`, original filenames, byte sizes, dimensions, timestamps, layout config, filter status, sort key).
+  - Built multi-tier matching in `relinkProjectManifest` matching user-imported files to manifest items by exact filename & size (1.0), name match (0.85), or size match (0.50), providing match rate and unmatched item diagnostics.
+  - Added project session relinking and "Reopen Project" action in `src/components/workspace/DropZone.ts` and `ImportPanel.astro`, supporting instant restore when dropping manifests and source photos together or sequentially via `$pendingManifest`.
+  - Enhanced `src/lib/export/filenameExporter.ts` to export exact source filenames for CSV, TSV, and TXT with comprehensive scope filtering (All, Kept Only, Flagged, Rejected, Unreviewed, Exclude Rejected).
+  - Updated `src/components/workspace/ExportDrawer.ts` with complete scope selection, live photo counts, and manifest session export.
 - Rebranded the project from **FrameProof** to **Make Contact Sheet** across all pages, UI copy, metadata, schemas, and documentation.
 - Removed false "Web Worker" claims from FAQ schema, JSON-LD, and marketing copy (`src/pages/index.astro`, `src/pages/photo-contact-sheet-maker.astro`, `FeatureGrid.astro`, `about-us.astro`).
 - Created high-resolution 1200x630 `public/og-image.png` OpenGraph preview card.

@@ -5,7 +5,10 @@ import {
   $activeTemplateId,
   $isExporting,
   $exportProgress,
-  $activePage
+  $activePage,
+  $filterStatus,
+  $reviewCounts,
+  $sortKey
 } from '../../lib/store';
 import { calculateContactSheetPages } from '../../lib/engine/contactSheetEngine';
 import { calculateCollageLayout } from '../../lib/engine/collageEngine';
@@ -32,7 +35,7 @@ export class ExportDrawer {
     const isExporting = $isExporting.get();
     const progress = $exportProgress.get();
     const images = $images.get();
-    const keptCount = images.filter(img => img.status === 'keep').length;
+    const counts = $reviewCounts.get();
 
     this.container.innerHTML = `
       <div class="flex flex-col gap-4 p-4 sm:p-5 bg-workspace-panel border-t border-workspace-border text-xs text-workspace-text w-full min-w-0">
@@ -46,9 +49,12 @@ export class ExportDrawer {
           <div class="flex items-center gap-2">
             <label class="text-[11px] text-workspace-muted font-medium">Scope:</label>
             <select id="export-scope-select" class="bg-workspace-surface border border-workspace-border rounded-lg px-3 py-1.5 text-xs text-workspace-text focus:border-accent transition-colors cursor-pointer">
-              <option value="all" ${this.exportScope === 'all' ? 'selected' : ''}>All Images (${images.length})</option>
-              <option value="keep" ${this.exportScope === 'keep' ? 'selected' : ''}>Kept Only (${keptCount})</option>
-              <option value="exclude-rejected" ${this.exportScope === 'exclude-rejected' ? 'selected' : ''}>Exclude Rejected</option>
+              <option value="all" ${this.exportScope === 'all' ? 'selected' : ''}>All Images (${counts.total})</option>
+              <option value="keep" ${this.exportScope === 'keep' ? 'selected' : ''}>Kept Only (${counts.keep})</option>
+              <option value="flag" ${this.exportScope === 'flag' ? 'selected' : ''}>Flagged Only (${counts.flag})</option>
+              <option value="reject" ${this.exportScope === 'reject' ? 'selected' : ''}>Rejected (${counts.reject})</option>
+              <option value="unreviewed" ${this.exportScope === 'unreviewed' ? 'selected' : ''}>Unreviewed (${counts.unreviewed})</option>
+              <option value="exclude-rejected" ${this.exportScope === 'exclude-rejected' ? 'selected' : ''}>Exclude Rejected (${counts.total - counts.reject})</option>
             </select>
           </div>
         </div>
@@ -85,7 +91,7 @@ export class ExportDrawer {
         <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-workspace-border">
           <div class="flex items-center gap-3">
             <span class="text-xs text-workspace-muted">
-              ${this.selectedFormat === 'pdf' ? 'Multi-page 300 DPI print document with metadata headers' : this.selectedFormat === 'txt' ? 'Comma-separated filename string ready to paste into Lightroom search' : this.selectedFormat === 'csv' ? 'Lightroom-compatible structured metadata table' : 'Export rendered at 2x studio quality'}
+              ${this.selectedFormat === 'pdf' ? 'Multi-page 300 DPI print document with metadata headers' : this.selectedFormat === 'txt' ? 'Comma-separated filename string ready to paste into Lightroom search' : this.selectedFormat === 'csv' ? 'Lightroom-compatible structured metadata table with review statuses and ratings' : this.selectedFormat === 'json' ? 'Portable JSON review session manifest with full layout config and statuses' : 'Export rendered at 2x studio quality'}
             </span>
           </div>
 
@@ -143,6 +149,12 @@ export class ExportDrawer {
 
     if (this.exportScope === 'keep') {
       targetImages = rawImages.filter(img => img.status === 'keep');
+    } else if (this.exportScope === 'flag') {
+      targetImages = rawImages.filter(img => img.status === 'flag');
+    } else if (this.exportScope === 'reject') {
+      targetImages = rawImages.filter(img => img.status === 'reject');
+    } else if (this.exportScope === 'unreviewed') {
+      targetImages = rawImages.filter(img => img.status === 'unreviewed');
     } else if (this.exportScope === 'exclude-rejected') {
       targetImages = rawImages.filter(img => img.status !== 'reject');
     }
@@ -160,13 +172,21 @@ export class ExportDrawer {
 
     try {
       if (this.selectedFormat === 'csv') {
-        exportFilenamesAsCSV(targetImages);
+        exportFilenamesAsCSV(targetImages, 'makecontactsheet-selected-filenames');
         $exportProgress.set(100);
       } else if (this.selectedFormat === 'txt') {
-        exportFilenamesAsTXT(targetImages, 'comma');
+        exportFilenamesAsTXT(targetImages, 'comma', 'makecontactsheet-filenames');
         $exportProgress.set(100);
       } else if (this.selectedFormat === 'json') {
-        exportProjectManifest(targetImages, mode, config, $activeTemplateId.get());
+        exportProjectManifest(
+          targetImages,
+          mode,
+          config,
+          $activeTemplateId.get(),
+          'makecontactsheet-session',
+          $filterStatus.get(),
+          $sortKey.get()
+        );
         $exportProgress.set(100);
       } else if (this.selectedFormat === 'pdf') {
         const { exportContactSheetPagesToPDF, exportCollageLayoutToPDF } = await import('../../lib/export/pdfExporter');
@@ -212,7 +232,9 @@ export class ExportDrawer {
 
   private setupStoreSubscriptions() {
     $images.subscribe(() => this.render());
+    $reviewCounts.subscribe(() => this.render());
     $isExporting.subscribe(() => this.render());
     $exportProgress.subscribe(() => this.render());
   }
 }
+
