@@ -8,6 +8,7 @@ import type {
   SortKey,
   ProjectManifest
 } from './types';
+import { clearImageElementCache } from './engine/canvasRenderer';
 
 export const DEFAULT_LAYOUT_CONFIG: LayoutConfig = {
   columns: 4,
@@ -107,8 +108,10 @@ export function removeImage(id: string) {
   const target = current.find(img => img.id === id);
   if (target) {
     URL.revokeObjectURL(target.previewUrl);
+    clearImageElementCache(target.previewUrl);
     if (target.thumbnailUrl && target.thumbnailUrl !== target.previewUrl) {
       URL.revokeObjectURL(target.thumbnailUrl);
+      clearImageElementCache(target.thumbnailUrl);
     }
   }
   const filtered = current.filter(img => img.id !== id).map((img, idx) => ({
@@ -166,8 +169,10 @@ export function replaceImages(
     for (const idx of indices) {
       const target = current[idx];
       URL.revokeObjectURL(target.previewUrl);
+      clearImageElementCache(target.previewUrl);
       if (target.thumbnailUrl && target.thumbnailUrl !== target.previewUrl) {
         URL.revokeObjectURL(target.thumbnailUrl);
+        clearImageElementCache(target.thumbnailUrl);
       }
     }
     const kept = current.filter((img) => !idSet.has(img.id));
@@ -317,10 +322,13 @@ export function resetWorkspace() {
   const current = $images.get();
   for (const img of current) {
     URL.revokeObjectURL(img.previewUrl);
+    clearImageElementCache(img.previewUrl);
     if (img.thumbnailUrl && img.thumbnailUrl !== img.previewUrl) {
       URL.revokeObjectURL(img.thumbnailUrl);
+      clearImageElementCache(img.thumbnailUrl);
     }
   }
+  clearImageElementCache();
   $images.set([]);
   $selectedImageId.set(null);
   $layoutConfig.set({ ...DEFAULT_LAYOUT_CONFIG });
@@ -357,8 +365,10 @@ export function setImages(images: ImageItem[]) {
   for (const img of current) {
     if (!images.some(n => n.id === img.id)) {
       URL.revokeObjectURL(img.previewUrl);
+      clearImageElementCache(img.previewUrl);
       if (img.thumbnailUrl && img.thumbnailUrl !== img.previewUrl) {
         URL.revokeObjectURL(img.thumbnailUrl);
+        clearImageElementCache(img.thumbnailUrl);
       }
     }
   }

@@ -2,6 +2,14 @@
 
 ## 11. Recent changes (Rebranding & Improvements)
 
+- Implemented **Memory and Format Compatibility** (Task 4):
+  - Added full HEIC/HEIF MIME type support (`image/heic`, `image/heif`, `image/heic-sequence`, `image/heif-sequence`) and extension allowlisting with `isHeicFile` helper in `src/lib/media/fileSanitizer.ts`.
+  - Implemented robust EXIF orientation correction via `createImageBitmap(file, { imageOrientation: 'from-image' })` with graceful fallback across `src/lib/media/imageLoader.ts` and `src/lib/media/imageEditor.ts`.
+  - Built bounded thumbnail generation (max 480px) in `src/lib/media/imageLoader.ts` using `OffscreenCanvas` / canvas, immediately invoking `bitmap.close()` to release full-resolution uncompressed pixel memory.
+  - Implemented progressive batched decoding (batch size 4 with async yielding) to prevent browser tab OOM crashes and UI freeze during 50–100+ high-res image drops.
+  - Enhanced `src/components/workspace/ThumbnailGrid.ts`, `PhotoTray.ts`, and `CanvasPreview.ts` to render lightweight `thumbnailUrl` blobs instead of full-res images.
+  - Added bounded LRU cache (capped at 120 elements) and `clearImageElementCache` in `src/lib/engine/canvasRenderer.ts`, synchronized with `src/lib/store.ts` URL revocation lifecycle.
+  - Implemented graceful HEIC error handling with actionable browser compatibility warnings without stalling or failing the entire import batch.
 - Implemented **Portable Review Workflow** (Task 3):
   - Updated `src/lib/export/projectManifest.ts` with `buildProjectManifest`, `exportProjectManifest`, `parseProjectManifest`, `relinkProjectManifest`, `applyManifestToImageItems`, and `restoreProjectSession` capturing full review states (`status`, `rating`, `notes`, `tags`, original filenames, byte sizes, dimensions, timestamps, layout config, filter status, sort key).
   - Built multi-tier matching in `relinkProjectManifest` matching user-imported files to manifest items by exact filename & size (1.0), name match (0.85), or size match (0.50), providing match rate and unmatched item diagnostics.
@@ -14,8 +22,6 @@
 - Verified canonical domains across `src/lib/seo/metadata.ts` point to `https://makecontactsheet.com`.
 - Updated export artifact filenames to use the `makecontactsheet` prefix (e.g., `makecontactsheet-contact-sheet.pdf`, `makecontactsheet-session.makecontactsheet.json`, `makecontactsheet-selected-filenames.csv`, `makecontactsheet-filenames.txt`).
 - Modified the project manifest `generator` field to be a free‑form string and renamed exported manifest files to `.makecontactsheet.json`.
-- Added HEIC/HEIF MIME types and extensions to the allowed‑image allowlist (`src/lib/media/fileSanitizer.ts`).
-- Implemented EXIF orientation handling via `createImageBitmap(..., { imageOrientation: 'from-image' })` in `src/lib/media/imageLoader.ts`.
 - Fixed collage PDF export to correctly use the collage renderer (`exportCollageLayoutToPDF`) and verified empty cell handling without fallback/substitution bugs.
 - Converted `jsPDF` and `pdfExporter` to asynchronous dynamic imports in `ExportDrawer.ts` and `pdfExporter.ts`, removing `jsPDF` (~360kB+ raw / ~118kB gz) from the initial bundle.
 - Updated SEO metadata (`src/lib/seo/metadata.ts`) and related docs (`design.md`, `seo.md`) to reflect the new brand name and site URL.
@@ -283,7 +289,7 @@ Do not "discover" these again; do not let them decay further. Fix on request.
 | Defect | Location |
 |---|---|
 | Window-level drop handler registered per `DropZone` instance; the homepage builds two, so a body drop imports twice | `src/components/workspace/DropZone.ts` |
-| `decoder.worker.ts` is never instantiated; decoding is on the main thread and full-res images are reused as 48px thumbnails | `src/lib/media/decoder.worker.ts`, `src/lib/media/imageLoader.ts` |
+| [Resolved in Task 4] Decoding generates bounded thumbnails (max 480px) and releases full-res ImageBitmap memory immediately to prevent tab OOM | `src/lib/media/imageLoader.ts` |
 | Missing `ads.txt` | `public/` |
 | Export drawer copy promises PDF "metadata headers" unconditionally, but the title band only draws when `showHeader` is on | `src/components/workspace/ExportDrawer.ts` |
 | `portfolio-wall` template is described as 5 photos but defines 4 cells | `src/lib/engine/templates.ts` |

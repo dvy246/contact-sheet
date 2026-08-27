@@ -38,8 +38,8 @@ export class ThumbnailGrid {
             <div 
               class="group relative flex items-center gap-2.5 p-2 rounded-xl border transition-all cursor-pointer ${
                 isSelected 
-                  ? 'bg-workspace-surface border-accent-amber shadow-xs' 
-                  : 'bg-workspace-surface/50 border-workspace-border hover:border-zinc-400 dark:hover:border-zinc-600'
+                  ? 'bg-workspace-surface border-accent shadow-xs' 
+                  : 'bg-workspace-surface/50 border-workspace-border hover:border-stone-400 dark:hover:border-stone-600'
               }"
               data-id="${img.id}"
               data-index="${index}"
@@ -52,7 +52,7 @@ export class ThumbnailGrid {
 
               <!-- Thumbnail Preview -->
               <div class="w-12 h-12 rounded-lg overflow-hidden bg-black/10 dark:bg-black/40 flex-shrink-0 flex items-center justify-center border border-workspace-border">
-                <img src="${img.previewUrl}" alt="${img.sanitizedName}" class="w-full h-full object-cover" loading="lazy" />
+                <img src="${img.thumbnailUrl || img.previewUrl}" alt="${img.sanitizedName}" class="w-full h-full object-cover" loading="lazy" />
               </div>
 
               <!-- Metadata & Filename -->
@@ -72,7 +72,7 @@ export class ThumbnailGrid {
                 <button 
                   data-action="keep" 
                   data-id="${img.id}" 
-                  class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold transition-all cursor-pointer ${img.status === 'keep' ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-500' : 'text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-400'}"
+                  class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold transition-all cursor-pointer ${img.status === 'keep' ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-500' : 'text-stone-400 hover:text-emerald-600 dark:hover:text-emerald-400'}"
                   title="Keep (1)"
                 >
                   ✓
@@ -80,7 +80,7 @@ export class ThumbnailGrid {
                 <button 
                   data-action="flag" 
                   data-id="${img.id}" 
-                  class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold transition-all cursor-pointer ${img.status === 'flag' ? 'bg-amber-500/20 text-amber-700 dark:text-amber-400 border border-amber-500' : 'text-zinc-400 hover:text-amber-600 dark:hover:text-amber-400'}"
+                  class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold transition-all cursor-pointer ${img.status === 'flag' ? 'bg-amber-500/20 text-amber-700 dark:text-amber-400 border border-amber-500' : 'text-stone-400 hover:text-amber-600 dark:hover:text-amber-400'}"
                   title="Flag (2)"
                 >
                   ★
@@ -88,7 +88,7 @@ export class ThumbnailGrid {
                 <button 
                   data-action="reject" 
                   data-id="${img.id}" 
-                  class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold transition-all cursor-pointer ${img.status === 'reject' ? 'bg-rose-500/20 text-rose-700 dark:text-rose-400 border border-rose-500' : 'text-zinc-400 hover:text-rose-600 dark:hover:text-rose-400'}"
+                  class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold transition-all cursor-pointer ${img.status === 'reject' ? 'bg-rose-500/20 text-rose-700 dark:text-rose-400 border border-rose-500' : 'text-stone-400 hover:text-rose-600 dark:hover:text-rose-400'}"
                   title="Reject (3)"
                 >
                   ✕
@@ -96,7 +96,7 @@ export class ThumbnailGrid {
                 <button 
                   data-action="remove" 
                   data-id="${img.id}" 
-                  class="w-6 h-6 rounded-md flex items-center justify-center text-zinc-400 hover:text-rose-600 dark:hover:text-rose-400 text-xs transition-colors opacity-0 group-hover:opacity-100 cursor-pointer"
+                  class="w-6 h-6 rounded-md flex items-center justify-center text-stone-400 hover:text-rose-600 dark:hover:text-rose-400 text-xs transition-colors opacity-0 group-hover:opacity-100 cursor-pointer"
                   title="Remove Image"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

@@ -9,6 +9,10 @@ const ALLOWED_MIME_TYPES = new Set([
   'image/avif',
   'image/gif',
   'image/bmp',
+  'image/heic',
+  'image/heif',
+  'image/heic-sequence',
+  'image/heif-sequence',
 ]);
 
 const ALLOWED_EXTENSIONS = new Set([
@@ -19,6 +23,8 @@ const ALLOWED_EXTENSIONS = new Set([
   'avif',
   'gif',
   'bmp',
+  'heic',
+  'heif',
 ]);
 
 export function isAllowedImage(file: File): boolean {
@@ -27,6 +33,16 @@ export function isAllowedImage(file: File): boolean {
   }
   const ext = file.name.split('.').pop()?.toLowerCase();
   return ext ? ALLOWED_EXTENSIONS.has(ext) : false;
+}
+
+/**
+ * Checks if a file is a HEIC or HEIF image based on MIME type or extension.
+ */
+export function isHeicFile(file: File): boolean {
+  const type = (file.type || '').toLowerCase();
+  if (type.includes('heic') || type.includes('heif')) return true;
+  const ext = file.name.split('.').pop()?.toLowerCase();
+  return ext === 'heic' || ext === 'heif';
 }
 
 /**
