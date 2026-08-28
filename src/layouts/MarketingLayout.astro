@@ -16,9 +16,30 @@ const props = Astro.props;
 ---
 
 <BaseLayout {...props}>
+  <!-- Global Scroll Progress Indicator -->
+  <div
+    id="scroll-progress-bar"
+    class="fixed top-0 left-0 right-0 h-[2px] bg-accent z-50 origin-left scale-x-0 transition-transform duration-75 pointer-events-none"
+    aria-hidden="true"
+  ></div>
+
   <Header variant="marketing" />
   <main class="flex-1 flex flex-col w-full min-w-0">
     <slot />
   </main>
   <Footer />
 </BaseLayout>
+
+<script>
+  import { initSmoothScroll } from '../lib/motion/smoothScroll';
+
+  let cleanup: (() => void) | undefined;
+  function startScroll() {
+    cleanup?.();
+    cleanup = initSmoothScroll();
+  }
+
+  startScroll();
+  document.addEventListener('astro:page-load', startScroll);
+  document.addEventListener('astro:before-swap', () => cleanup?.());
+</script>
