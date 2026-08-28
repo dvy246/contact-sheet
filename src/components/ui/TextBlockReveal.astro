@@ -1,0 +1,98 @@
+---
+interface Props {
+  blockColor?: string;
+  delay?: string;
+  duration?: string;
+  class?: string;
+}
+
+const {
+  blockColor = 'var(--color-accent, #c96442)',
+  delay = '0.1s',
+  duration = '0.7s',
+  class: className = ''
+} = Astro.props;
+---
+
+<span class={`relative inline-block overflow-hidden align-top text-block-reveal-wrap ${className}`}>
+  <span class="text-block-content block opacity-0">
+    <slot />
+  </span>
+  <span
+    class="text-block-curtain absolute inset-0 z-10 pointer-events-none scale-x-0 origin-left"
+    style={`background-color: ${blockColor}; --reveal-delay: ${delay}; --reveal-duration: ${duration};`}
+    aria-hidden="true"
+  ></span>
+</span>
+
+<style>
+  @keyframes curtainWipe {
+    0% {
+      transform: scaleX(0);
+      transform-origin: left center;
+    }
+    50% {
+      transform: scaleX(1);
+      transform-origin: left center;
+    }
+    50.01% {
+      transform: scaleX(1);
+      transform-origin: right center;
+    }
+    100% {
+      transform: scaleX(0);
+      transform-origin: right center;
+    }
+  }
+
+  @keyframes textReveal {
+    0%, 49.9% {
+      opacity: 0;
+    }
+    50%, 100% {
+      opacity: 1;
+    }
+  }
+
+  .text-block-reveal-wrap.is-visible .text-block-curtain {
+    animation: curtainWipe var(--reveal-duration, 0.7s) cubic-bezier(0.77, 0, 0.175, 1) var(--reveal-delay, 0.1s) forwards;
+  }
+
+  .text-block-reveal-wrap.is-visible .text-block-content {
+    animation: textReveal var(--reveal-duration, 0.7s) step-end var(--reveal-delay, 0.1s) forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .text-block-content {
+      opacity: 1 !important;
+      animation: none !important;
+    }
+    .text-block-curtain {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  function setupBlockReveals() {
+    const wraps = document.querySelectorAll<HTMLElement>('.text-block-reveal-wrap:not(.is-visible)');
+    if (wraps.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    wraps.forEach((el) => observer.observe(el));
+  }
+
+  setupBlockReveals();
+  document.addEventListener('astro:page-load', setupBlockReveals);
+</script>
