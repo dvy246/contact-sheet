@@ -6,11 +6,16 @@ export interface PDFExportProgress {
   (current: number, total: number): void;
 }
 
+export interface PDFExportOptions {
+  password?: string;
+}
+
 export async function exportContactSheetPagesToPDF(
   pages: PageLayoutResult[],
   config: LayoutConfig,
   onProgress?: PDFExportProgress,
-  filename = 'makecontactsheet-contact-sheet'
+  filename = 'makecontactsheet-contact-sheet',
+  options?: PDFExportOptions
 ): Promise<void> {
   if (pages.length === 0) return;
 
@@ -29,12 +34,22 @@ export async function exportContactSheetPagesToPDF(
 
   const { jsPDF } = await import('jspdf');
 
-  const doc = new jsPDF({
+  const pdfOptions: any = {
     orientation,
     unit: 'mm',
     format,
     compress: true,
-  });
+  };
+
+  if (options?.password) {
+    pdfOptions.encryption = {
+      userPassword: options.password,
+      ownerPassword: options.password,
+      userPermissions: ['print', 'modify', 'copy', 'annot-forms'],
+    };
+  }
+
+  const doc = new jsPDF(pdfOptions);
 
   const offscreen = document.createElement('canvas');
 
@@ -60,12 +75,15 @@ export async function exportContactSheetPagesToPDF(
   doc.save(`${filename}.pdf`);
 }
 
+export const exportContactSheetToPDF = exportContactSheetPagesToPDF;
+
 /** Export a single collage layout as PDF */
 export async function exportCollageLayoutToPDF(
   layout: CollageLayoutResult,
   config: LayoutConfig,
   onProgress?: PDFExportProgress,
-  filename = 'makecontactsheet-collage'
+  filename = 'makecontactsheet-collage',
+  options?: PDFExportOptions
 ): Promise<void> {
   if (onProgress) {
     onProgress(1, 1);
@@ -82,7 +100,22 @@ export async function exportCollageLayoutToPDF(
 
   const { jsPDF } = await import('jspdf');
 
-  const doc = new jsPDF({ orientation, unit: 'mm', format, compress: true });
+  const pdfOptions: any = {
+    orientation,
+    unit: 'mm',
+    format,
+    compress: true,
+  };
+
+  if (options?.password) {
+    pdfOptions.encryption = {
+      userPassword: options.password,
+      ownerPassword: options.password,
+      userPermissions: ['print', 'modify', 'copy', 'annot-forms'],
+    };
+  }
+
+  const doc = new jsPDF(pdfOptions);
   const imgData = offscreen.toDataURL('image/jpeg', 0.88);
   const pdfWidth = doc.internal.pageSize.getWidth();
   const pdfHeight = doc.internal.pageSize.getHeight();
