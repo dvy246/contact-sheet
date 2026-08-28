@@ -1,5 +1,12 @@
 # AGENTS.md
 
+- Implemented **Hardware-Accelerated Momentum Smooth Scrolling & Dynamic Parallax Engine**:
+  - Integrated `Lenis` momentum scroll engine with physical exponential deceleration (`duration: 1.1`, $f(t) = 1.001 - 2^{-10t}$), non-blocking passive listeners, and instant native fallback for `prefers-reduced-motion`.
+  - Implemented zero layout thrashing GPU-accelerated transforms (`translate3d`, `scale`) for multi-depth parallax and viewport reveals with active culling.
+  - Added sleek top scroll progress indicator bar in `MarketingLayout.astro`.
+  - Refactored `StudioShowcase.astro` with complete single-frame aspect-calibrated layout and high-res Apple Pro Lightbox modal.
+  - Successfully built (15/15 pages) and deployed to Cloudflare Pages (`https://frameproof-4fw.pages.dev`).
+
 - Implemented **Apple Keynote-Style Studio Showcase Demo Section**:
   - Created `src/components/marketing/StudioShowcase.astro` and integrated into `src/pages/index.astro`.
   - Built an interactive, high-craft proofing showcase featuring 3 switchable presentation views: **Technical EXIF & Film Proof** (Hasselblad medium format 120 proof look with live aperture, shutter speed, ISO, and focal length badges), **Archival Gallery Fine Art** (warm cotton museum rag paper aesthetic with 300 DPI vector margins), and **Client Proofing Portal** (interactive culling cards with Keep/Flag/Reject tags, client notes, and selection counters).
