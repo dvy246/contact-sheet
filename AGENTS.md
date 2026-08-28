@@ -1,11 +1,11 @@
 # AGENTS.md
 
-- Implemented **Hardware-Accelerated Momentum Smooth Scrolling & Dynamic Parallax Engine**:
-  - Integrated `Lenis` momentum scroll engine with physical exponential deceleration (`duration: 1.1`, $f(t) = 1.001 - 2^{-10t}$), non-blocking passive listeners, and instant native fallback for `prefers-reduced-motion`.
-  - Implemented zero layout thrashing GPU-accelerated transforms (`translate3d`, `scale`) for multi-depth parallax and viewport reveals with active culling.
-  - Added sleek top scroll progress indicator bar in `MarketingLayout.astro`.
-  - Refactored `StudioShowcase.astro` with complete single-frame aspect-calibrated layout and high-res Apple Pro Lightbox modal.
-  - Successfully built (15/15 pages) and deployed to Cloudflare Pages (`https://frameproof-4fw.pages.dev`).
+- Implemented **120 FPS Zero-Overhead GPU Compositor Scroll-Driven Animations**:
+  - Completely removed external JavaScript scroll libraries (`lenis`) and layout-querying rAF listeners to eliminate all main-thread overhead and CPU drag.
+  - Implemented modern CSS `@keyframes` scroll-driven animations (`animation-timeline: view()` and `animation-timeline: scroll()`) running 100% on the GPU compositor thread with instant native browser scrolling.
+  - Added subtle entry lift and ambient glow drift across hero showcase, bento pillars, and feature cards.
+  - Added non-blocking passive top scroll progress indicator bar in `MarketingLayout.astro`.
+  - Re-verified static build (15/15 pages) and deployed to Cloudflare Pages (`https://frameproof-4fw.pages.dev`).
 
 - Implemented **Apple Keynote-Style Studio Showcase Demo Section**:
   - Created `src/components/marketing/StudioShowcase.astro` and integrated into `src/pages/index.astro`.
