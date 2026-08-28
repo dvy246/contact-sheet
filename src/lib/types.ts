@@ -27,6 +27,21 @@ export type FilterStatus = 'all' | 'keep' | 'flag' | 'reject' | 'unreviewed' | '
 
 export type ExportFormat = 'png' | 'jpeg' | 'pdf' | 'csv' | 'txt' | 'json';
 
+export interface ImageExifData {
+  dateTimeOriginal?: string;
+  captureDate?: Date;
+  cameraMake?: string;
+  cameraModel?: string;
+  lensModel?: string;
+  focalLength?: string;
+  fNumber?: string;
+  exposureTime?: string;
+  iso?: number;
+  exposureBias?: string;
+  rating?: number;
+  copyright?: string;
+}
+
 export interface ImageItem {
   id: string;
   file: File;
@@ -46,7 +61,14 @@ export interface ImageItem {
   rating?: number;
   tags?: string[];
   lastModified?: number;
+  /** Optional custom user-defined label overriding the camera filename */
+  customLabel?: string;
+  exif?: ImageExifData;
 }
+
+export type WatermarkStyle = 'diagonal' | 'tiled' | 'center';
+export type WatermarkType = 'text' | 'image';
+export type WatermarkImagePosition = 'center' | 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left' | 'tiled';
 
 export interface LayoutConfig {
   columns: number;
@@ -89,6 +111,17 @@ export interface LayoutConfig {
   labelAlign: 'center' | 'left';
   /** Corner radius on each photo, in unscaled px. 0 keeps square corners. */
   cellRadius: number;
+  /** Optional protective watermark on photo frames */
+  showWatermark: boolean;
+  watermarkType: WatermarkType;
+  watermarkText: string;
+  watermarkStyle: WatermarkStyle;
+  watermarkOpacity: number;
+  watermarkColor: string;
+  /** Custom logo/image watermark properties */
+  watermarkImageUrl?: string;
+  watermarkImageScale?: number;
+  watermarkImagePosition?: WatermarkImagePosition;
 }
 
 export interface CollageTemplateCell {
@@ -182,6 +215,8 @@ export interface ProjectManifestItem {
   notes?: string;
   rating?: number;
   tags?: string[];
+  customLabel?: string;
+  exif?: ImageExifData;
 }
 
 export interface ProjectManifest {

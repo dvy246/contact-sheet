@@ -48,6 +48,8 @@ export function buildProjectManifest(
       notes: img.notes ?? img.note,
       rating: img.rating,
       tags: img.tags ? [...img.tags] : undefined,
+      customLabel: img.customLabel,
+      exif: img.exif,
     })),
   };
 }
@@ -123,6 +125,8 @@ export function parseProjectManifest(jsonText: string): ProjectManifest | null {
         notes: typeof item?.notes === 'string' ? item.notes : typeof item?.note === 'string' ? item.note : undefined,
         rating: typeof item?.rating === 'number' ? item.rating : undefined,
         tags: Array.isArray(item?.tags) ? item.tags.filter((t: any) => typeof t === 'string') : undefined,
+        customLabel: typeof item?.customLabel === 'string' ? item.customLabel : undefined,
+        exif: item?.exif && typeof item.exif === 'object' ? item.exif : undefined,
       };
     });
 
@@ -262,6 +266,8 @@ export function applyManifestToImageItems(
         notes: mItem.notes ?? mItem.note ?? img.notes,
         rating: mItem.rating ?? img.rating,
         tags: mItem.tags ? [...mItem.tags] : img.tags,
+        customLabel: mItem.customLabel ?? img.customLabel,
+        exif: mItem.exif ?? img.exif,
         order: typeof mItem.order === 'number' ? mItem.order : defaultIndex,
       };
     }

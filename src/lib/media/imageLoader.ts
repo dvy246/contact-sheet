@@ -1,5 +1,6 @@
 import type { ImageItem } from '../types';
 import { isAllowedImage, sanitizeFilename, isHeicFile } from './fileSanitizer';
+import { extractMetadataWithTwoStageSlicing } from './metadataExtractor';
 
 export interface LoadProgressCallback {
   (loaded: number, total: number, currentFileName: string): void;
@@ -133,13 +134,16 @@ async function generateThumbnailBlob(
 
 /**
  * Decodes a single file using createImageBitmap with EXIF orientation correction,
- * falling back gracefully to HTMLImageElement. Immediately generates a lightweight thumbnail
- * and releases uncompressed bitmap memory.
+ * falling back gracefully to HTMLImageElement. Immediately generates a lightweight thumbnail,
+ * extracts EXIF metadata via two-stage slicing, and releases uncompressed bitmap memory.
  */
-async function decodeSingleImage(file: File): Promise<ImageItem> {
+export async function decodeSingleImage(file: File): Promise<ImageItem> {
   const id = `img_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
   const sanitizedName = sanitizeFilename(file.name);
   const isHeic = isHeicFile(file);
+
+  // Concurrently extract metadata with two-stage byte range slicing
+  const exifPromise = extractMetadataWithTwoStageSlicing(file).catch(() => undefined);
 
   let width = 0;
   let height = 0;
@@ -196,6 +200,7 @@ async function decodeSingleImage(file: File): Promise<ImageItem> {
   const previewUrl = URL.createObjectURL(file);
   const thumbnailUrl = thumbnailBlob ? URL.createObjectURL(thumbnailBlob) : previewUrl;
   const aspectRatio = width / (height || 1);
+  const exif = await exifPromise;
 
   return {
     id,
@@ -212,8 +217,12 @@ async function decodeSingleImage(file: File): Promise<ImageItem> {
     status: 'unreviewed',
     order: 0,
     lastModified: file.lastModified,
+    exif,
   };
 }
+
+/** Alias for decodeSingleImage */
+export const loadImageFile = decodeSingleImage;
 
 function loadImageElement(url: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {

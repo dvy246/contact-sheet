@@ -254,13 +254,10 @@ export function reorderImages(fromIndex: number, toIndex: number) {
 
 /**
  * Reorders the sheet. Filenames are compared with `localeCompare` and the
- * numeric collator, so DSC_2.jpg sorts before DSC_10.jpg — plain string
- * comparison puts "10" first, which is the classic contact-sheet complaint.
+ * numeric collator, so DSC_2.jpg sorts before DSC_10.jpg.
  *
- * `date-*` uses File.lastModified. That is the filesystem timestamp, not EXIF
- * DateTimeOriginal: EXIF is not parsed anywhere in this codebase yet, and a
- * copied or re-saved file loses its original mtime. Labelled "file date" in the
- * UI for that reason.
+ * `date-*` prioritizes the camera's EXIF capture date (DateTimeOriginal), falling back
+ * gracefully to the filesystem last modified timestamp.
  */
 export function sortImages(key: SortKey) {
   $sortKey.set(key);
@@ -268,15 +265,22 @@ export function sortImages(key: SortKey) {
 
   const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
   const sorted = [...$images.get()].sort((a, b) => {
+    const getDate = (img: ImageItem): number => {
+      if (img.exif?.captureDate && !isNaN(img.exif.captureDate.getTime())) {
+        return img.exif.captureDate.getTime();
+      }
+      return img.file?.lastModified || img.lastModified || 0;
+    };
+
     switch (key) {
       case 'name-asc':
         return collator.compare(a.name, b.name);
       case 'name-desc':
         return collator.compare(b.name, a.name);
       case 'date-asc':
-        return (a.file.lastModified || 0) - (b.file.lastModified || 0);
+        return getDate(a) - getDate(b);
       case 'date-desc':
-        return (b.file.lastModified || 0) - (a.file.lastModified || 0);
+        return getDate(b) - getDate(a);
       case 'size-asc':
         return a.size - b.size;
       case 'size-desc':

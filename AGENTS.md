@@ -2,6 +2,13 @@
 
 ## 11. Recent changes (Rebranding & Improvements)
 
+- Implemented **Client-Side EXIF Metadata Extraction & Store Integration** (Task 1):
+  - Created `src/lib/media/metadataExtractor.ts` with `extractMetadataWithTwoStageSlicing` using `ExifReader` with 128KB initial slice and 512KB fallback to keep memory footprint strictly bounded and zero-upload.
+  - Added `ImageExifData` interface to `src/lib/types.ts` capturing `dateTimeOriginal`, `captureDate`, `cameraMake`, `cameraModel`, `lensModel`, `focalLength`, `fNumber`, `exposureTime`, `iso`, `exposureBias`, `rating`, and `copyright`.
+  - Updated `ImageItem` and `ProjectManifestItem` in `src/lib/types.ts` and `src/lib/export/projectManifest.ts` to store, serialize, and restore EXIF metadata.
+  - Wired metadata extraction into `decodeSingleImage` / `loadImageFile` in `src/lib/media/imageLoader.ts` and improved `sortImages` in `src/lib/store.ts` to prioritize EXIF capture dates with graceful filesystem fallback.
+  - Maintained strict 0 errors, 0 warnings, 0 hints on `astro check` and 15-page static build.
+
 - Implemented **Integrated Batch Rename & Label Recipe Builder** (Task 3):
   - Added collapsible Batch Rename recipe builder to `src/components/workspace/ThumbnailGrid.ts` supporting custom prefixes, start index, configurable zero-padding (e.g. 001, 0001), optional suffixes, and live formatted badge preview.
   - Added "Apply Recipe" (with dynamic target photo counts) and 1-click "Reset All" labels action directly in the photo tray.
