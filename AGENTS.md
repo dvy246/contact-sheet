@@ -2,6 +2,13 @@
 
 ## 11. Recent changes (Rebranding & Improvements)
 
+- Implemented **Integrated Batch Rename & Label Recipe Builder** (Task 3):
+  - Added collapsible Batch Rename recipe builder to `src/components/workspace/ThumbnailGrid.ts` supporting custom prefixes, start index, configurable zero-padding (e.g. 001, 0001), optional suffixes, and live formatted badge preview.
+  - Added "Apply Recipe" (with dynamic target photo counts) and 1-click "Reset All" labels action directly in the photo tray.
+  - Added `batchSetCustomLabels` and `batchClearCustomLabels` helpers to `src/lib/store.ts` for atomic state mutations.
+  - Preserved non-destructive event synchronization adhering to strict focus-retention guidelines.
+  - Maintained strict 0 errors, 0 warnings, 0 hints on `astro check`.
+
 - Implemented **Export Drawer Password Protection UI** (Task 2):
   - Added PDF password input field to `src/components/workspace/ExportDrawer.ts` dynamically displayed when PDF format is active.
   - Linked password state to both contact sheet and collage layout PDF exporters without causing UI layout thrashing.
