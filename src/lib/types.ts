@@ -70,6 +70,8 @@ export type WatermarkStyle = 'diagonal' | 'tiled' | 'center';
 export type WatermarkType = 'text' | 'image';
 export type WatermarkImagePosition = 'center' | 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left' | 'tiled';
 
+export type MetadataBadgeStyle = 'plain-text' | 'dark-pill' | 'subtle-badge';
+
 export interface LayoutConfig {
   columns: number;
   rows: number;
@@ -122,6 +124,10 @@ export interface LayoutConfig {
   watermarkImageUrl?: string;
   watermarkImageScale?: number;
   watermarkImagePosition?: WatermarkImagePosition;
+  /** EXIF / Metadata overlay settings */
+  showExifOverlay?: boolean;
+  exifTokenTemplate?: string;
+  exifBadgeStyle?: MetadataBadgeStyle;
 }
 
 export interface CollageTemplateCell {

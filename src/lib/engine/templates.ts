@@ -1,12 +1,62 @@
 import type { CollageTemplate, LayoutConfig } from '../types';
 
+export type ContactSheetCategory = 'standard' | 'film' | 'client' | 'digital';
+
 export interface ContactSheetPreset {
   id: string;
   name: string;
   description: string;
-  category: 'standard' | 'digital' | 'client';
+  category: ContactSheetCategory;
   config: Partial<LayoutConfig>;
 }
+
+/** Human labels for the sidebar group headings, in display order. */
+export const CONTACT_SHEET_CATEGORY_LABELS: Record<ContactSheetCategory, string> = {
+  standard: 'Print standards',
+  film: 'Film & index sheets',
+  client: 'Client review',
+  digital: 'Screen & social',
+};
+
+/**
+ * Structural fields a preset is responsible for. Applied underneath the
+ * preset's own config so switching from a preset that turns on a title band to
+ * one that doesn't actually turns the band back off, instead of leaving it on
+ * from the previous choice.
+ *
+ * `bg` / `textColor` are deliberately absent: those are a taste choice the user
+ * makes once, and a preset should only override them when it explicitly says so
+ * (as the white gallery sheet does).
+ */
+export const PRESET_STRUCTURAL_BASE: Partial<LayoutConfig> = {
+  fit: 'contain',
+  showLabels: true,
+  labelType: 'filename',
+  labelPosition: 'below',
+  fontSize: 11,
+  showStatusBadges: false,
+  showHeader: false,
+  headerText: '',
+  showPageNumbers: false,
+  cellBorderWidth: 0,
+  cellRadius: 0,
+  fillOrder: 'row',
+  labelUppercase: false,
+  labelHideExtension: false,
+  labelAlign: 'center',
+  showWatermark: false,
+  watermarkType: 'text',
+  watermarkText: 'PROOF',
+  watermarkStyle: 'diagonal',
+  watermarkOpacity: 20,
+  watermarkColor: '#ffffff',
+  watermarkImageUrl: '',
+  watermarkImageScale: 30,
+  watermarkImagePosition: 'bottom-right',
+  showExifOverlay: false,
+  exifTokenTemplate: '{basename} · {focal} {fstop} {shutter} ISO {iso}',
+  exifBadgeStyle: 'plain-text',
+};
 
 export const CONTACT_SHEET_PRESETS: ContactSheetPreset[] = [
   {
@@ -136,6 +186,173 @@ export const CONTACT_SHEET_PRESETS: ContactSheetPreset[] = [
       labelPosition: 'below',
     },
   },
+  {
+    id: 'gallery-white-print',
+    name: 'Gallery White Print Sheet',
+    description: 'White paper, hairline keylines, titled band — for printing and filing',
+    category: 'standard',
+    config: {
+      pageSize: 'a4',
+      orientation: 'portrait',
+      columns: 3,
+      rows: 4,
+      spacing: 18,
+      margin: 36,
+      fit: 'contain',
+      bg: '#ffffff',
+      textColor: '#2a1a12',
+      showLabels: true,
+      labelType: 'filename',
+      labelPosition: 'below',
+      cellBorderWidth: 1,
+      cellBorderColor: '#e0d3c4',
+      showHeader: true,
+      showPageNumbers: true,
+    },
+  },
+  {
+    id: 'film-strip-index',
+    name: '35mm Strip Index',
+    description: 'Very dense 5×7 index in frame order, numbers only — the darkroom proof habit',
+    category: 'film',
+    config: {
+      pageSize: 'letter',
+      orientation: 'portrait',
+      columns: 5,
+      rows: 7,
+      spacing: 4,
+      margin: 16,
+      fit: 'cover',
+      showLabels: true,
+      labelType: 'number',
+      labelPosition: 'below',
+      fontSize: 8,
+      showPageNumbers: true,
+    },
+  },
+  {
+    id: 'square-6x6-proof',
+    name: 'Square 6×6 Proof',
+    description: 'Square page, 4×4 cropped frames — medium-format and square-crop work',
+    category: 'film',
+    config: {
+      pageSize: 'square',
+      orientation: 'portrait',
+      columns: 4,
+      rows: 4,
+      spacing: 10,
+      margin: 24,
+      fit: 'cover',
+      showLabels: true,
+      labelType: 'number',
+      labelPosition: 'below',
+      fontSize: 10,
+    },
+  },
+  {
+    id: 'dense-thumbnail-index',
+    name: 'Full Shoot Index',
+    description: '6×8 = 48 frames per page. Fits a whole card on one or two sheets',
+    category: 'film',
+    config: {
+      pageSize: 'a4',
+      orientation: 'portrait',
+      columns: 6,
+      rows: 8,
+      spacing: 4,
+      margin: 14,
+      fit: 'cover',
+      showLabels: true,
+      labelType: 'number',
+      labelPosition: 'below',
+      fontSize: 7,
+      showHeader: true,
+      showPageNumbers: true,
+    },
+  },
+  {
+    id: 'wedding-client-proof',
+    name: 'Client Proof — Titled',
+    description: '4×3 landscape with a titled band, page numbers and keep/reject marks',
+    category: 'client',
+    config: {
+      pageSize: 'a4',
+      orientation: 'landscape',
+      columns: 4,
+      rows: 3,
+      spacing: 18,
+      margin: 32,
+      fit: 'contain',
+      showLabels: true,
+      labelType: 'both',
+      labelPosition: 'below',
+      fontSize: 12,
+      showStatusBadges: true,
+      showHeader: true,
+      showPageNumbers: true,
+    },
+  },
+  {
+    id: 'casting-sheet',
+    name: 'Casting / Talent Sheet',
+    description: '3×3 large frames with the name printed inside the photo',
+    category: 'client',
+    config: {
+      pageSize: 'a4',
+      orientation: 'portrait',
+      columns: 3,
+      rows: 3,
+      spacing: 14,
+      margin: 28,
+      fit: 'cover',
+      showLabels: true,
+      labelType: 'both',
+      labelPosition: 'overlay',
+      fontSize: 13,
+      showHeader: true,
+      cellBorderWidth: 1,
+      cellBorderColor: '#4a352b',
+    },
+  },
+  {
+    id: 'instagram-grid-preview',
+    name: 'Instagram Grid Preview',
+    description: 'Square 3×3 of cropped frames, no labels — check a feed before posting',
+    category: 'digital',
+    config: {
+      pageSize: 'square',
+      orientation: 'portrait',
+      columns: 3,
+      rows: 3,
+      spacing: 6,
+      margin: 6,
+      fit: 'cover',
+      showLabels: false,
+      labelType: 'none',
+      labelPosition: 'none',
+    },
+  },
+  {
+    id: 'storyboard-6up',
+    name: 'Storyboard 6-Up',
+    description: '3×2 landscape with numbered panels and a titled band',
+    category: 'digital',
+    config: {
+      pageSize: '16-9',
+      orientation: 'landscape',
+      columns: 3,
+      rows: 2,
+      spacing: 20,
+      margin: 36,
+      fit: 'cover',
+      showLabels: true,
+      labelType: 'number',
+      labelPosition: 'overlay',
+      fontSize: 16,
+      showHeader: true,
+      showPageNumbers: true,
+    },
+  },
 ];
 
 export const COLLAGE_TEMPLATES: CollageTemplate[] = [
@@ -259,7 +476,7 @@ export const COLLAGE_TEMPLATES: CollageTemplate[] = [
   {
     id: 'portfolio-wall',
     name: 'Portfolio Mosaic Wall',
-    description: 'Dynamic 5-photo asymmetrical architectural collage',
+    description: 'Asymmetrical 4-photo architectural collage: one tall, two small, one wide',
     category: 'showcase',
     aspectRatio: 16 / 9,
     defaultSpacing: 12,

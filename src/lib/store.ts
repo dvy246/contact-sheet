@@ -48,6 +48,9 @@ export const DEFAULT_LAYOUT_CONFIG: LayoutConfig = {
   watermarkImageUrl: '',
   watermarkImageScale: 30,
   watermarkImagePosition: 'bottom-right',
+  showExifOverlay: false,
+  exifTokenTemplate: '{basename} · {focal} {fstop} {shutter} ISO {iso}',
+  exifBadgeStyle: 'plain-text',
 };
 
 // Core Reactive Atoms

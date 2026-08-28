@@ -2,6 +2,13 @@
 
 ## 11. Recent changes (Rebranding & Improvements)
 
+- Implemented **Dynamic Token Resolving & Canvas Overlay Badge** (Task 2):
+  - Added `MetadataBadgeStyle` (`'plain-text' | 'dark-pill' | 'subtle-badge'`) and `LayoutConfig` fields (`showExifOverlay`, `exifTokenTemplate`, `exifBadgeStyle`) in `src/lib/types.ts`, `src/lib/store.ts`, `src/lib/engine/templates.ts`, and `src/lib/engine/gridPresets.ts`.
+  - Implemented `resolveMetadataTokens` and `drawExifBadge` in `src/lib/engine/canvasRenderer.ts` supporting `{name}`, `{filename}`, `{basename}`, `{ext}`, `{index}` (with optional zero-padding like `{index:03}`), `{camera}`, `{lens}`, `{focal}`, `{fstop}`/`{aperture}`, `{shutter}`/`{exposure}`, `{iso}`, `{date}`, `{rating}`, and `{customlabel}`/`{custom}`, with smart separator cleanup and negative lookahead for missing numeric EXIF prefixes.
+  - Implemented canvas badge rendering scaled by `scale` with text truncation/clipping to cell bounds and collision avoidance against overlay labels.
+  - Added collapsible "Photo metadata & EXIF" control section in `src/components/workspace/LayoutControls.ts` with live preview readouts, 1-click token insertion chips, badge style selection, and non-destructive event synchronization.
+  - Maintained strict 0 errors, 0 warnings, 0 hints on `astro check` and 15-page static build.
+
 - Implemented **Client-Side EXIF Metadata Extraction & Store Integration** (Task 1):
   - Created `src/lib/media/metadataExtractor.ts` with `extractMetadataWithTwoStageSlicing` using `ExifReader` with 128KB initial slice and 512KB fallback to keep memory footprint strictly bounded and zero-upload.
   - Added `ImageExifData` interface to `src/lib/types.ts` capturing `dateTimeOriginal`, `captureDate`, `cameraMake`, `cameraModel`, `lensModel`, `focalLength`, `fNumber`, `exposureTime`, `iso`, `exposureBias`, `rating`, and `copyright`.

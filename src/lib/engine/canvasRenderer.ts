@@ -1,4 +1,4 @@
-import type { PageLayoutResult, CollageLayoutResult, LayoutConfig, ReviewStatus } from '../types';
+import type { PageLayoutResult, CollageLayoutResult, LayoutConfig, ReviewStatus, ImageItem } from '../types';
 
 // In-memory cache for loaded Image elements with size bounding to prevent memory leaks
 const MAX_IMAGE_CACHE_SIZE = 120;
@@ -75,7 +75,16 @@ export async function renderContactSheetToCanvas(
   const loadPromises = page.cells.map(cell =>
     getCachedImage(cell.image.previewUrl).catch(() => null)
   );
-  const loadedImages = await Promise.all(loadPromises);
+
+  // Pre-load optional custom logo watermark if configured
+  const watermarkPromise = (config.showWatermark && config.watermarkType === 'image' && config.watermarkImageUrl)
+    ? getCachedImage(config.watermarkImageUrl).catch(() => null)
+    : Promise.resolve(null);
+
+  const [loadedImages, watermarkImg] = await Promise.all([
+    Promise.all(loadPromises),
+    watermarkPromise,
+  ]);
 
   // 2. Draw each photo cell
   for (let i = 0; i < page.cells.length; i++) {
@@ -109,6 +118,11 @@ export async function renderContactSheetToCanvas(
       } else {
         ctx.fillRect(cell.x, cell.y, cell.width, cell.height);
       }
+    }
+
+    // Optional protective watermark
+    if (config.showWatermark) {
+      drawWatermark(ctx, cell.x, cell.y, cell.width, cell.height, radius, config, scale, watermarkImg);
     }
 
     // Optional keyline around the photo. Drawn inset by half the stroke so the
@@ -182,6 +196,11 @@ export async function renderContactSheetToCanvas(
         );
       }
     }
+
+    // Optional dynamic EXIF / metadata badge overlay
+    if (config.showExifOverlay) {
+      drawExifBadge(ctx, cell, config, scale, i + 1);
+    }
   }
 
   // 3. Title and page-number bands, drawn last so nothing overlaps them.
@@ -214,7 +233,16 @@ export async function renderCollageToCanvas(
   const loadPromises = layout.cells.map(cell => 
     cell.image ? getCachedImage(cell.image.previewUrl).catch(() => null) : Promise.resolve(null)
   );
-  const loadedImages = await Promise.all(loadPromises);
+
+  // Pre-load optional custom logo watermark if configured
+  const watermarkPromise = (config.showWatermark && config.watermarkType === 'image' && config.watermarkImageUrl)
+    ? getCachedImage(config.watermarkImageUrl).catch(() => null)
+    : Promise.resolve(null);
+
+  const [loadedImages, watermarkImg] = await Promise.all([
+    Promise.all(loadPromises),
+    watermarkPromise,
+  ]);
 
   for (let i = 0; i < layout.cells.length; i++) {
     const cell = layout.cells[i];
@@ -237,6 +265,12 @@ export async function renderCollageToCanvas(
         ctx.restore();
       } else {
         drawImageWithFit(ctx, imgEl, cell.x, cell.y, cell.width, cell.height, cell.fit);
+      }
+      if (config.showWatermark) {
+        drawWatermark(ctx, cell.x, cell.y, cell.width, cell.height, radius, config, 1, watermarkImg);
+      }
+      if (config.showExifOverlay) {
+        drawExifBadge(ctx, cell, config, 1, i + 1);
       }
     } else {
       // Empty cell placeholder
@@ -537,3 +571,428 @@ function traceRoundedRect(
   ctx.arcTo(x, y, x + w, y, radius);
   ctx.closePath();
 }
+
+/**
+ * Draws an optional protective watermark over a photo cell.
+ * Supports both uploaded logo/image watermarks and text watermarks
+ * (single diagonal stamp, repeating multi-line tiled grid, or center stamp).
+ */
+function drawWatermark(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  radius: number,
+  config: LayoutConfig,
+  scale = 1,
+  watermarkImg?: HTMLImageElement | null
+) {
+  if (!config.showWatermark) return;
+  const opacity = Math.max(0.01, Math.min(1, (config.watermarkOpacity ?? 20) / 100));
+
+  // --- Image / Logo Watermark Branch ---
+  if (config.watermarkType === 'image' && watermarkImg && watermarkImg.naturalWidth > 0) {
+    const scaleFactor = Math.max(0.05, Math.min(1, (config.watermarkImageScale ?? 30) / 100));
+    const pos = config.watermarkImagePosition || 'bottom-right';
+
+    const maxBoxW = w * scaleFactor;
+    const maxBoxH = h * scaleFactor;
+    const aspect = watermarkImg.naturalWidth / (watermarkImg.naturalHeight || 1);
+
+    let logoW = maxBoxW;
+    let logoH = maxBoxW / aspect;
+    if (logoH > maxBoxH) {
+      logoH = maxBoxH;
+      logoW = maxBoxH * aspect;
+    }
+
+    ctx.save();
+
+    // Clip watermark strictly within the photo bounds and rounded corner radius
+    if (radius > 0) {
+      traceRoundedRect(ctx, x, y, w, h, radius);
+    } else {
+      ctx.beginPath();
+      ctx.rect(x, y, w, h);
+    }
+    ctx.clip();
+
+    ctx.globalAlpha = opacity;
+
+    if (pos === 'tiled') {
+      const centerX = x + w / 2;
+      const centerY = y + h / 2;
+      ctx.translate(centerX, centerY);
+      ctx.rotate(-Math.PI / 6);
+
+      const diag = Math.hypot(w, h);
+      const stepX = Math.max(logoW * 1.4, 40 * scale);
+      const stepY = Math.max(logoH * 1.4, 30 * scale);
+
+      const startX = -diag / 2 - stepX;
+      const endX = diag / 2 + stepX;
+      const startY = -diag / 2 - stepY;
+      const endY = diag / 2 + stepY;
+
+      let rowIndex = 0;
+      for (let curY = startY; curY <= endY; curY += stepY) {
+        const offsetX = rowIndex % 2 === 0 ? 0 : stepX / 2;
+        for (let curX = startX; curX <= endX; curX += stepX) {
+          ctx.drawImage(watermarkImg, curX + offsetX, curY, logoW, logoH);
+        }
+        rowIndex++;
+      }
+    } else if (pos === 'center') {
+      const destX = x + (w - logoW) / 2;
+      const destY = y + (h - logoH) / 2;
+      ctx.drawImage(watermarkImg, destX, destY, logoW, logoH);
+    } else {
+      const pad = Math.max(4 * scale, Math.min(16 * scale, w * 0.04));
+      let destX = x + pad;
+      let destY = y + pad;
+
+      if (pos === 'bottom-right') {
+        destX = x + w - logoW - pad;
+        destY = y + h - logoH - pad;
+      } else if (pos === 'bottom-left') {
+        destX = x + pad;
+        destY = y + h - logoH - pad;
+      } else if (pos === 'top-right') {
+        destX = x + w - logoW - pad;
+        destY = y + pad;
+      } else if (pos === 'top-left') {
+        destX = x + pad;
+        destY = y + pad;
+      }
+
+      ctx.drawImage(watermarkImg, destX, destY, logoW, logoH);
+    }
+
+    ctx.restore();
+    return;
+  }
+
+  // --- Text Watermark Branch ---
+  const rawText = (config.watermarkText || '').trim();
+  if (!rawText) return;
+
+  const text = config.labelUppercase ? rawText.toUpperCase() : rawText;
+  const color = config.watermarkColor || '#ffffff';
+  const style = config.watermarkStyle || 'diagonal';
+
+  ctx.save();
+
+  // Clip watermark strictly within the photo bounds and rounded corner radius
+  if (radius > 0) {
+    traceRoundedRect(ctx, x, y, w, h, radius);
+  } else {
+    ctx.beginPath();
+    ctx.rect(x, y, w, h);
+  }
+  ctx.clip();
+
+  ctx.globalAlpha = opacity;
+  ctx.fillStyle = color;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  const centerX = x + w / 2;
+  const centerY = y + h / 2;
+
+  if (style === 'center') {
+    // Single centered stamp
+    const fontSize = Math.max(10, Math.min(w * 0.18, h * 0.18, 36 * scale));
+    ctx.font = `700 ${fontSize}px system-ui, -apple-system, sans-serif`;
+    ctx.fillText(text, centerX, centerY);
+  } else if (style === 'tiled') {
+    // Repeating diagonal tiled grid across cell — highest resistance against AI inpainting
+    const fontSize = Math.max(8, Math.min(w * 0.08, h * 0.08, 15 * scale));
+    ctx.font = `600 ${fontSize}px system-ui, -apple-system, sans-serif`;
+
+    ctx.translate(centerX, centerY);
+    ctx.rotate(-Math.PI / 6); // -30 degrees
+
+    const diag = Math.hypot(w, h);
+    const stepX = Math.max(40 * scale, ctx.measureText(text).width + 24 * scale);
+    const stepY = Math.max(20 * scale, fontSize * 2.6);
+
+    const startX = -diag / 2 - stepX;
+    const endX = diag / 2 + stepX;
+    const startY = -diag / 2 - stepY;
+    const endY = diag / 2 + stepY;
+
+    let rowIndex = 0;
+    for (let curY = startY; curY <= endY; curY += stepY) {
+      const offsetX = rowIndex % 2 === 0 ? 0 : stepX / 2;
+      for (let curX = startX; curX <= endX; curX += stepX) {
+        ctx.fillText(text, curX + offsetX, curY);
+      }
+      rowIndex++;
+    }
+  } else {
+    // 'diagonal': single bold angled line across the cell
+    const fontSize = Math.max(10, Math.min(w * 0.15, h * 0.15, 30 * scale));
+    ctx.font = `700 ${fontSize}px system-ui, -apple-system, sans-serif`;
+
+    const angle = Math.atan2(-h, w) * 0.65;
+    ctx.translate(centerX, centerY);
+    ctx.rotate(angle);
+    ctx.fillText(text, 0, 0);
+  }
+
+  ctx.restore();
+}
+
+/**
+ * Resolves dynamic metadata / EXIF token strings for an image.
+ * Supported tokens:
+ * - {name}, {filename}: Original or sanitized filename
+ * - {basename}: Filename without extension
+ * - {ext}: File extension without dot
+ * - {index}: 1-based index (supports {index:02}, {index:03}, {index:04}, etc.)
+ * - {camera}: Camera Make + Model (deduplicated)
+ * - {lens}: Lens model name
+ * - {focal}: Focal length (e.g. 50mm)
+ * - {fstop}, {aperture}: F-number / aperture (e.g. f/1.8)
+ * - {shutter}, {exposure}: Shutter / exposure time (e.g. 1/500s)
+ * - {iso}: ISO sensitivity (e.g. 100)
+ * - {date}: Capture date formatted as YYYY-MM-DD
+ * - {rating}: Star rating (e.g. ★★★★★)
+ * - {customlabel}, {custom}: Custom user-defined label
+ */
+export function resolveMetadataTokens(
+  template: string,
+  image: ImageItem,
+  index = 1
+): string {
+  if (!template || !image) return '';
+
+  const exif = image.exif || {};
+
+  // 1. Camera string normalization
+  let cameraStr = '';
+  const make = (exif.cameraMake || '').trim();
+  const model = (exif.cameraModel || '').trim();
+  if (make && model) {
+    if (model.toLowerCase().startsWith(make.toLowerCase())) {
+      cameraStr = model;
+    } else {
+      cameraStr = `${make} ${model}`;
+    }
+  } else {
+    cameraStr = model || make || '';
+  }
+
+  // 2. Focal length
+  let focalStr = (exif.focalLength || '').trim();
+  if (focalStr && /^\d+(\.\d+)?$/.test(focalStr)) {
+    focalStr = `${focalStr}mm`;
+  }
+
+  // 3. F-number / aperture
+  let fstopStr = (exif.fNumber || '').trim();
+  if (fstopStr && /^\d+(\.\d+)?$/.test(fstopStr)) {
+    fstopStr = `f/${fstopStr}`;
+  }
+
+  // 4. Exposure / shutter speed
+  const shutterStr = (exif.exposureTime || '').trim();
+
+  // 5. ISO
+  const isoStr = exif.iso ? String(exif.iso) : '';
+
+  // 6. Lens model
+  const lensStr = (exif.lensModel || '').trim();
+
+  // 7. Date formatting (YYYY-MM-DD)
+  let dateStr = '';
+  if (exif.captureDate) {
+    try {
+      const d = new Date(exif.captureDate);
+      if (!isNaN(d.getTime())) {
+        dateStr = d.toISOString().slice(0, 10);
+      }
+    } catch {
+      // fallback
+    }
+  }
+  if (!dateStr && exif.dateTimeOriginal) {
+    const match = exif.dateTimeOriginal.match(/^(\d{4})[:\-](\d{2})[:\-](\d{2})/);
+    if (match) {
+      dateStr = `${match[1]}-${match[2]}-${match[3]}`;
+    } else {
+      dateStr = exif.dateTimeOriginal.split(' ')[0] || '';
+    }
+  }
+  if (!dateStr && image.lastModified) {
+    try {
+      dateStr = new Date(image.lastModified).toISOString().slice(0, 10);
+    } catch {
+      // fallback
+    }
+  }
+
+  // 8. Filename components
+  const rawName = image.sanitizedName || image.name || '';
+  const extMatch = rawName.match(/\.([^./\\]+)$/);
+  const extStr = extMatch ? extMatch[1] : '';
+  const basenameStr = extMatch ? rawName.slice(0, -extMatch[0].length) : rawName;
+
+  // 9. Star rating
+  const ratingVal = image.rating ?? exif.rating;
+  const ratingStr = ratingVal && ratingVal > 0 ? '★'.repeat(Math.min(5, Math.max(1, Math.round(ratingVal)))) : '';
+
+  // 10. Custom label
+  const customStr = (image.customLabel || '').trim();
+
+  const tokenMap: Record<string, string> = {
+    name: rawName,
+    filename: rawName,
+    basename: basenameStr,
+    ext: extStr,
+    camera: cameraStr,
+    lens: lensStr,
+    focal: focalStr,
+    fstop: fstopStr,
+    aperture: fstopStr,
+    shutter: shutterStr,
+    exposure: shutterStr,
+    iso: isoStr,
+    date: dateStr,
+    rating: ratingStr,
+    customlabel: customStr,
+    custom: customStr,
+  };
+
+  // Replace tokens including padded index
+  let result = template.replace(/\{([a-zA-Z0-9_:]+)\}/g, (match, rawKey: string) => {
+    const lowerKey = rawKey.toLowerCase();
+    if (lowerKey === 'index' || lowerKey.startsWith('index:')) {
+      const parts = rawKey.split(':');
+      if (parts.length > 1) {
+        const padSpec = parts[1];
+        const padWidth = parseInt(padSpec, 10);
+        if (Number.isFinite(padWidth) && padWidth > 0) {
+          return String(index).padStart(padWidth, '0');
+        }
+      }
+      return String(index);
+    }
+
+    if (lowerKey in tokenMap) {
+      return tokenMap[lowerKey];
+    }
+
+    return match;
+  });
+
+  // Clean up dangling labels / prefixes when EXIF values are absent
+  result = result.replace(/\bISO\b(?!\s*\d)/gi, '');
+  result = result.replace(/\bf\/(?!\s*\d)/gi, '');
+
+  // Normalize repeated spaces
+  result = result.replace(/[ \t]+/g, ' ');
+
+  // Remove redundant consecutive separators
+  result = result.replace(/(?:[ \t]*[·|•,\-/][ \t]*){2,}/g, ' · ');
+
+  // Trim leading/trailing separators and whitespace
+  result = result.replace(/^[ \t·|•,\-/]+|[ \t·|•,\-/]+$/g, '').trim();
+
+  return result;
+}
+
+/**
+ * Draws the dynamic EXIF / metadata badge on a photo cell.
+ * Supports plain-text (with drop-shadow), dark-pill, and subtle-badge styles.
+ * Clips text to cell width and scales font and padding with `scale`.
+ */
+function drawExifBadge(
+  ctx: CanvasRenderingContext2D,
+  cell: { x: number; y: number; width: number; height: number; image?: ImageItem; indexNumber?: number; label?: string },
+  config: LayoutConfig,
+  scale = 1,
+  index = 1
+) {
+  if (!config.showExifOverlay || !cell.image) return;
+
+  const template = config.exifTokenTemplate || '{basename} · {focal} {fstop} {shutter} ISO {iso}';
+  const text = resolveMetadataTokens(template, cell.image, cell.indexNumber ?? index);
+  if (!text) return;
+
+  const style = config.exifBadgeStyle || 'plain-text';
+  const fontSize = Math.max(7, Math.min(config.fontSize * scale * 0.85, cell.height * 0.14, 12 * scale));
+
+  ctx.save();
+  ctx.font = `500 ${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace`;
+
+  const isPill = style === 'dark-pill' || style === 'subtle-badge';
+  const padX = isPill ? Math.max(5 * scale, 7 * scale) : 0;
+  const padY = isPill ? Math.max(2 * scale, 3.5 * scale) : 0;
+
+  // Clip text to cell width minus margins
+  const maxBadgeWidth = Math.max(20, cell.width - 12 * scale);
+  const maxTextWidth = Math.max(10, maxBadgeWidth - padX * 2);
+
+  const displayText = truncateToWidth(ctx, text, maxTextWidth);
+  const textMetrics = ctx.measureText(displayText);
+  const textWidth = textMetrics.width;
+
+  const badgeWidth = textWidth + padX * 2;
+  const badgeHeight = fontSize + padY * 2;
+
+  const bottomMargin = 6 * scale;
+  let badgeY = cell.y + cell.height - badgeHeight - bottomMargin;
+
+  // If overlay label is drawn at the bottom, shift badge above it
+  if (config.showLabels && config.labelPosition === 'overlay' && cell.label) {
+    const labelBandHeight = Math.min(cell.height, (Math.max(6, config.fontSize * scale)) * 2.2);
+    badgeY = cell.y + cell.height - labelBandHeight - badgeHeight - 3 * scale;
+  }
+
+  const badgeX = cell.x + (cell.width - badgeWidth) / 2;
+
+  if (style === 'dark-pill') {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
+    traceRoundedRect(ctx, badgeX, badgeY, badgeWidth, badgeHeight, badgeHeight / 2);
+    ctx.fill();
+
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.18)';
+    ctx.lineWidth = Math.max(1, scale);
+    ctx.stroke();
+
+    ctx.fillStyle = '#f9fafb';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(displayText, badgeX + badgeWidth / 2, badgeY + badgeHeight / 2);
+  } else if (style === 'subtle-badge') {
+    ctx.fillStyle = 'rgba(24, 24, 27, 0.5)';
+    traceRoundedRect(ctx, badgeX, badgeY, badgeWidth, badgeHeight, 4 * scale);
+    ctx.fill();
+
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.22)';
+    ctx.lineWidth = Math.max(1, scale);
+    ctx.stroke();
+
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(displayText, badgeX + badgeWidth / 2, badgeY + badgeHeight / 2);
+  } else {
+    // plain-text
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.9)';
+    ctx.shadowBlur = 3 * scale;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 1 * scale;
+
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(displayText, badgeX + badgeWidth / 2, badgeY + badgeHeight / 2);
+  }
+
+  ctx.restore();
+}
+
+
