@@ -1,0 +1,417 @@
+---
+import Icon from '../common/Icon.astro';
+---
+
+<section class="py-20 sm:py-28 lg:py-32 bg-marketing-bg border-b border-marketing-border relative overflow-hidden transition-colors">
+  <!-- Subtle Ambient Glow -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-accent/5 dark:bg-accent/10 rounded-full blur-[140px] opacity-70"></div>
+  </div>
+
+  <div class="relative z-10 max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Apple Keynote Style Section Header -->
+    <div class="text-center max-w-3xl mx-auto mb-14 sm:mb-18 lg:mb-20">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono font-medium tracking-[0.15em] text-accent-ink shadow-xs mb-5">
+        <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
+        <span>STUDIO GRADE OUTPUT</span>
+      </div>
+
+      <h2 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-[-0.03em] text-marketing-text leading-[1.08] mb-6 text-balance">
+        The Masterpiece Contact Sheet.
+      </h2>
+
+      <p class="text-base sm:text-xl text-marketing-muted leading-relaxed max-w-2xl mx-auto text-balance">
+        Engineered for commercial photographers, film labs, and cinematography DITs. Uncompromising typographic fidelity, live EXIF extraction, and serverless client proofing.
+      </p>
+
+      <!-- Interactive View Mode Switcher (Apple Segmented Pill Style) -->
+      <div class="inline-flex p-1.5 rounded-2xl bg-marketing-panel border border-marketing-border shadow-inner mt-8 sm:mt-10 max-w-full overflow-x-auto" id="showcase-tabs" role="tablist">
+        <button 
+          type="button"
+          data-tab="exif" 
+          class="showcase-tab-btn active px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold tracking-tight transition-all duration-200 cursor-pointer flex items-center gap-2 shrink-0 bg-marketing-surface text-marketing-text shadow-sm border border-marketing-border/80"
+          role="tab"
+          aria-selected="true"
+        >
+          <Icon name="camera" size={15} class="text-accent" />
+          <span>Technical EXIF & Film Proof</span>
+        </button>
+        <button 
+          type="button"
+          data-tab="gallery" 
+          class="showcase-tab-btn px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold tracking-tight transition-all duration-200 cursor-pointer flex items-center gap-2 shrink-0 text-marketing-muted hover:text-marketing-text"
+          role="tab"
+          aria-selected="false"
+        >
+          <Icon name="grid" size={15} />
+          <span>Archival Gallery Fine Art</span>
+        </button>
+        <button 
+          type="button"
+          data-tab="proofing" 
+          class="showcase-tab-btn px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold tracking-tight transition-all duration-200 cursor-pointer flex items-center gap-2 shrink-0 text-marketing-muted hover:text-marketing-text"
+          role="tab"
+          aria-selected="false"
+        >
+          <Icon name="file-check" size={15} />
+          <span>Client Proofing Portal</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- The Master Artifact Stage (Hero Contact Sheet Preview) -->
+    <div class="relative max-w-[1080px] mx-auto rounded-3xl p-3 sm:p-6 lg:p-8 bg-linear-to-b from-marketing-surface via-marketing-panel to-marketing-surface border border-marketing-border shadow-2xl transition-all duration-300">
+      
+      <!-- Stage Atmosphere Frame -->
+      <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 bg-[#0d0d0f]">
+        
+        <!-- View 1: Technical EXIF & Medium Format Film Proof -->
+        <div id="view-exif" class="showcase-view transition-opacity duration-300 p-6 sm:p-10 lg:p-12 text-[#e4e4e7] bg-[#121113]">
+          <!-- Studio Proof Header -->
+          <div class="border-b border-white/10 pb-6 mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4 font-mono">
+            <div>
+              <div class="text-[10px] tracking-[0.2em] uppercase text-accent font-bold mb-1">HASSELBLAD X2D 100C · ROLL PROOF #04</div>
+              <h3 class="text-lg sm:text-2xl font-bold tracking-tight text-white font-sans">Autumn Editorial Series · Lookbook 2026</h3>
+            </div>
+            <div class="text-[11px] text-zinc-400 text-left sm:text-right space-y-0.5">
+              <div>Date: 2026-08-28 · 100MP 16-Bit RAW</div>
+              <div>Lens: XCD 80mm f/1.9 & XCD 55mm f/2.5</div>
+            </div>
+          </div>
+
+          <!-- 6-Photo Contact Grid with EXIF Pill Badges -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+            
+            <!-- Photo 1 -->
+            <div class="group relative rounded-lg overflow-hidden bg-zinc-900 border border-white/10 p-2.5 space-y-2.5">
+              <div class="relative aspect-4/5 rounded bg-zinc-800 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" 
+                  alt="Editorial Portrait A" 
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+                <span class="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-black/70 backdrop-blur-md text-[9px] font-mono text-zinc-300 font-bold border border-white/10">01</span>
+                <span class="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-emerald-500/90 backdrop-blur-md text-[9px] font-mono text-white font-bold tracking-wide">KEEP</span>
+              </div>
+              <div class="space-y-1 font-mono">
+                <div class="text-[11px] font-bold text-zinc-200 truncate">LOOKBOOK_001.RAW</div>
+                <div class="inline-flex items-center px-2 py-0.5 rounded-full bg-white/10 text-[9px] text-zinc-300 border border-white/5 truncate max-w-full">
+                  80mm · f/1.9 · 1/800s · ISO 64
+                </div>
+              </div>
+            </div>
+
+            <!-- Photo 2 -->
+            <div class="group relative rounded-lg overflow-hidden bg-zinc-900 border border-white/10 p-2.5 space-y-2.5">
+              <div class="relative aspect-4/5 rounded bg-zinc-800 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80" 
+                  alt="Editorial Portrait B" 
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+                <span class="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-black/70 backdrop-blur-md text-[9px] font-mono text-zinc-300 font-bold border border-white/10">02</span>
+                <span class="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-emerald-500/90 backdrop-blur-md text-[9px] font-mono text-white font-bold tracking-wide">KEEP</span>
+              </div>
+              <div class="space-y-1 font-mono">
+                <div class="text-[11px] font-bold text-zinc-200 truncate">LOOKBOOK_002.RAW</div>
+                <div class="inline-flex items-center px-2 py-0.5 rounded-full bg-white/10 text-[9px] text-zinc-300 border border-white/5 truncate max-w-full">
+                  80mm · f/2.8 · 1/1000s · ISO 100
+                </div>
+              </div>
+            </div>
+
+            <!-- Photo 3 -->
+            <div class="group relative rounded-lg overflow-hidden bg-zinc-900 border border-white/10 p-2.5 space-y-2.5">
+              <div class="relative aspect-4/5 rounded bg-zinc-800 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80" 
+                  alt="Editorial Portrait C" 
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+                <span class="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-black/70 backdrop-blur-md text-[9px] font-mono text-zinc-300 font-bold border border-white/10">03</span>
+                <span class="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-amber-500/90 backdrop-blur-md text-[9px] font-mono text-white font-bold tracking-wide">FLAG</span>
+              </div>
+              <div class="space-y-1 font-mono">
+                <div class="text-[11px] font-bold text-zinc-200 truncate">LOOKBOOK_003.RAW</div>
+                <div class="inline-flex items-center px-2 py-0.5 rounded-full bg-white/10 text-[9px] text-zinc-300 border border-white/5 truncate max-w-full">
+                  55mm · f/2.5 · 1/500s · ISO 200
+                </div>
+              </div>
+            </div>
+
+            <!-- Photo 4 -->
+            <div class="group relative rounded-lg overflow-hidden bg-zinc-900 border border-white/10 p-2.5 space-y-2.5">
+              <div class="relative aspect-4/5 rounded bg-zinc-800 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80" 
+                  alt="Editorial Portrait D" 
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+                <span class="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-black/70 backdrop-blur-md text-[9px] font-mono text-zinc-300 font-bold border border-white/10">04</span>
+                <span class="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-emerald-500/90 backdrop-blur-md text-[9px] font-mono text-white font-bold tracking-wide">KEEP</span>
+              </div>
+              <div class="space-y-1 font-mono">
+                <div class="text-[11px] font-bold text-zinc-200 truncate">LOOKBOOK_004.RAW</div>
+                <div class="inline-flex items-center px-2 py-0.5 rounded-full bg-white/10 text-[9px] text-zinc-300 border border-white/5 truncate max-w-full">
+                  80mm · f/1.9 · 1/640s · ISO 64
+                </div>
+              </div>
+            </div>
+
+            <!-- Photo 5 -->
+            <div class="group relative rounded-lg overflow-hidden bg-zinc-900 border border-white/10 p-2.5 space-y-2.5">
+              <div class="relative aspect-4/5 rounded bg-zinc-800 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" 
+                  alt="Editorial Portrait E" 
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+                <span class="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-black/70 backdrop-blur-md text-[9px] font-mono text-zinc-300 font-bold border border-white/10">05</span>
+                <span class="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-emerald-500/90 backdrop-blur-md text-[9px] font-mono text-white font-bold tracking-wide">KEEP</span>
+              </div>
+              <div class="space-y-1 font-mono">
+                <div class="text-[11px] font-bold text-zinc-200 truncate">LOOKBOOK_005.RAW</div>
+                <div class="inline-flex items-center px-2 py-0.5 rounded-full bg-white/10 text-[9px] text-zinc-300 border border-white/5 truncate max-w-full">
+                  55mm · f/2.5 · 1/1250s · ISO 100
+                </div>
+              </div>
+            </div>
+
+            <!-- Photo 6 -->
+            <div class="group relative rounded-lg overflow-hidden bg-zinc-900 border border-white/10 p-2.5 space-y-2.5">
+              <div class="relative aspect-4/5 rounded bg-zinc-800 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80" 
+                  alt="Editorial Portrait F" 
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+                <span class="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-black/70 backdrop-blur-md text-[9px] font-mono text-zinc-300 font-bold border border-white/10">06</span>
+                <span class="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-emerald-500/90 backdrop-blur-md text-[9px] font-mono text-white font-bold tracking-wide">KEEP</span>
+              </div>
+              <div class="space-y-1 font-mono">
+                <div class="text-[11px] font-bold text-zinc-200 truncate">LOOKBOOK_006.RAW</div>
+                <div class="inline-flex items-center px-2 py-0.5 rounded-full bg-white/10 text-[9px] text-zinc-300 border border-white/5 truncate max-w-full">
+                  80mm · f/2.0 · 1/1000s · ISO 64
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Studio Footer Strip -->
+          <div class="border-t border-white/10 pt-5 mt-8 flex flex-col sm:flex-row items-center justify-between text-[10px] font-mono text-zinc-400 gap-3">
+            <div class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span>100% Client-Side Engine · Zero Upload Privacy</span>
+            </div>
+            <div>Sheet 1 of 1 · 300 DPI Master Print Ready</div>
+          </div>
+        </div>
+
+        <!-- View 2: Archival Gallery Fine Art (Warm Cotton Museum Rag Paper) -->
+        <div id="view-gallery" class="showcase-view hidden transition-opacity duration-300 p-6 sm:p-10 lg:p-12 text-zinc-900 bg-[#f9f8f5]">
+          <div class="border-b border-zinc-200 pb-6 mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+              <div class="text-[11px] uppercase tracking-[0.2em] text-zinc-600 font-serif font-bold mb-1">SOLO EXHIBITION · MONOCHROME & LIGHT</div>
+              <h3 class="text-xl sm:text-3xl font-serif font-bold tracking-tight text-zinc-900">Fine Art Archival Portfolio</h3>
+            </div>
+            <div class="text-xs font-mono text-zinc-600">A4 Print Layout · 300 DPI Vector Margins</div>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-8">
+            <div class="p-3 bg-white shadow-xs border border-zinc-200/80 rounded-sm space-y-2">
+              <div class="aspect-3/4 bg-zinc-100 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80" alt="Fine Art 1" class="w-full h-full object-cover" />
+              </div>
+              <div class="text-center font-serif text-[11px] text-zinc-700 italic">Plate I · Studio Vignette</div>
+            </div>
+            <div class="p-3 bg-white shadow-xs border border-zinc-200/80 rounded-sm space-y-2">
+              <div class="aspect-3/4 bg-zinc-100 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" alt="Fine Art 2" class="w-full h-full object-cover" />
+              </div>
+              <div class="text-center font-serif text-[11px] text-zinc-700 italic">Plate II · Shadow Study</div>
+            </div>
+            <div class="p-3 bg-white shadow-xs border border-zinc-200/80 rounded-sm space-y-2">
+              <div class="aspect-3/4 bg-zinc-100 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80" alt="Fine Art 3" class="w-full h-full object-cover" />
+              </div>
+              <div class="text-center font-serif text-[11px] text-zinc-700 italic">Plate III · High-Key Natural</div>
+            </div>
+          </div>
+
+          <div class="border-t border-zinc-200 pt-5 mt-8 text-center text-xs font-serif text-zinc-600 italic">
+            Make Contact Sheet · Archival Cotton Print Profile
+          </div>
+        </div>
+
+        <!-- View 3: Client Proofing Portal (Serverless Interactive Review) -->
+        <div id="view-proofing" class="showcase-view hidden transition-opacity duration-300 p-6 sm:p-10 lg:p-12 text-white bg-[#18181b]">
+          <!-- Portal Top Navigation Bar -->
+          <div class="flex items-center justify-between pb-6 mb-8 border-b border-zinc-800">
+            <div>
+              <div class="text-[10px] uppercase font-mono tracking-widest text-emerald-400 font-bold mb-1">CLIENT REVIEW ENCLAVE · READY</div>
+              <h3 class="text-lg sm:text-2xl font-bold tracking-tight text-white">Vogue Commercial Shoot · Selects</h3>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-400 font-mono text-xs font-semibold border border-emerald-500/30">
+                5 of 6 Selected
+              </span>
+              <span class="px-3 py-1.5 rounded-lg bg-accent text-white font-sans text-xs font-bold shadow-md cursor-pointer">
+                Export Manifest (.json)
+              </span>
+            </div>
+          </div>
+
+          <!-- Interactive Review Cards with Notes -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <div class="p-4 rounded-xl bg-zinc-900/90 border border-zinc-800 space-y-3">
+              <div class="aspect-4/5 rounded-lg bg-zinc-800 overflow-hidden relative">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" alt="Client Proof A" class="w-full h-full object-cover" />
+                <div class="absolute top-2 right-2 px-2 py-1 rounded bg-emerald-500 text-[10px] font-bold font-mono">APPROVED</div>
+              </div>
+              <div class="text-xs font-mono text-zinc-300">VOGUE_FRAME_01.CR3</div>
+              <div class="p-2 rounded bg-zinc-800/80 text-[11px] text-zinc-400 italic">"Client Note: Retouch flyaway hairs for cover print."</div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-zinc-900/90 border border-zinc-800 space-y-3">
+              <div class="aspect-4/5 rounded-lg bg-zinc-800 overflow-hidden relative">
+                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80" alt="Client Proof B" class="w-full h-full object-cover" />
+                <div class="absolute top-2 right-2 px-2 py-1 rounded bg-emerald-500 text-[10px] font-bold font-mono">APPROVED</div>
+              </div>
+              <div class="text-xs font-mono text-zinc-300">VOGUE_FRAME_02.CR3</div>
+              <div class="p-2 rounded bg-zinc-800/80 text-[11px] text-zinc-400 italic">"Client Note: Perfect expression for two-page spread."</div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-zinc-900/90 border border-zinc-800 space-y-3">
+              <div class="aspect-4/5 rounded-lg bg-zinc-800 overflow-hidden relative">
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80" alt="Client Proof C" class="w-full h-full object-cover" />
+                <div class="absolute top-2 right-2 px-2 py-1 rounded bg-amber-500 text-[10px] font-bold font-mono">FLAGGED</div>
+              </div>
+              <div class="text-xs font-mono text-zinc-300">VOGUE_FRAME_03.CR3</div>
+              <div class="p-2 rounded bg-zinc-800/80 text-[11px] text-zinc-400 italic">"Client Note: Keep as alternate backup option."</div>
+            </div>
+          </div>
+
+          <div class="border-t border-zinc-800 pt-4 mt-8 flex items-center justify-between text-xs font-mono text-zinc-400">
+            <div>Self-Contained Single-File HTML Exporter</div>
+            <div>2-Way Lightroom & Manifest Sync Ready</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action Button to Open Studio -->
+      <div class="mt-8 text-center">
+        <a 
+          href="/studio/contact-sheet" 
+          class="inline-flex items-center gap-2.5 h-12 px-8 rounded-xl bg-accent hover:bg-accent-hover text-white font-bold text-sm tracking-tight shadow-xl shadow-accent/25 hover:shadow-accent/40 active:scale-[0.98] transition-all cursor-pointer"
+        >
+          <Icon name="maximize" size={16} />
+          <span>Launch Full-Screen Studio</span>
+          <Icon name="arrow-right" size={16} />
+        </a>
+      </div>
+    </div>
+
+    <!-- Apple-Style Bento Technical Pillars -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mt-16 sm:mt-20">
+      
+      <!-- Bento Pillar 1 -->
+      <div class="p-7 sm:p-8 rounded-3xl bg-marketing-surface border border-marketing-border hover:border-accent/40 transition-all duration-300 flex flex-col justify-between space-y-6 shadow-xs">
+        <div class="space-y-3.5">
+          <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent">
+            <Icon name="camera" size={20} />
+          </div>
+          <h3 class="text-lg font-bold text-marketing-text tracking-tight">Dynamic EXIF Token Engine</h3>
+          <p class="text-sm text-marketing-muted leading-relaxed">
+            Automatically parses aperture, shutter speed, ISO, focal length, and lens profiles in ~150ms. No catalog imports required.
+          </p>
+        </div>
+        <div class="pt-4 border-t border-marketing-border/60 text-xs font-mono text-accent-ink font-semibold flex items-center gap-1.5">
+          <span>{`{focal} {aperture} {shutter} ISO {iso}`}</span>
+        </div>
+      </div>
+
+      <!-- Bento Pillar 2 -->
+      <div class="p-7 sm:p-8 rounded-3xl bg-marketing-surface border border-marketing-border hover:border-accent/40 transition-all duration-300 flex flex-col justify-between space-y-6 shadow-xs">
+        <div class="space-y-3.5">
+          <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent">
+            <Icon name="file-check" size={20} />
+          </div>
+          <h3 class="text-lg font-bold text-marketing-text tracking-tight">Serverless Client Proofing Portal</h3>
+          <p class="text-sm text-marketing-muted leading-relaxed">
+            Export a standalone HTML webapp with embedded compressed thumbnails. Clients review, rate, and export manifests offline or online.
+          </p>
+        </div>
+        <div class="pt-4 border-t border-marketing-border/60 text-xs font-mono text-accent-ink font-semibold flex items-center gap-1.5">
+          <span>100% Self-Contained · Single .html File</span>
+        </div>
+      </div>
+
+      <!-- Bento Pillar 3 -->
+      <div class="p-7 sm:p-8 rounded-3xl bg-marketing-surface border border-marketing-border hover:border-accent/40 transition-all duration-300 flex flex-col justify-between space-y-6 shadow-xs">
+        <div class="space-y-3.5">
+          <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent">
+            <Icon name="shield" size={20} />
+          </div>
+          <h3 class="text-lg font-bold text-marketing-text tracking-tight">Zero-Upload Privacy Enclave</h3>
+          <p class="text-sm text-marketing-muted leading-relaxed">
+            Your high-res commercial files, RAW shoots, and client NDA work never leave your device. All processing executes inside your browser sandbox.
+          </p>
+        </div>
+        <div class="pt-4 border-t border-marketing-border/60 text-xs font-mono text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1.5">
+          <span>Zero Server Uploads Guaranteed</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  function setupShowcaseTabs() {
+    const tabButtons = document.querySelectorAll<HTMLButtonElement>('.showcase-tab-btn');
+    const views = {
+      exif: document.getElementById('view-exif'),
+      gallery: document.getElementById('view-gallery'),
+      proofing: document.getElementById('view-proofing')
+    };
+
+    tabButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const tab = btn.getAttribute('data-tab');
+        if (!tab || !views[tab as keyof typeof views]) return;
+
+        tabButtons.forEach((b) => {
+          b.classList.remove('active', 'bg-marketing-surface', 'text-marketing-text', 'shadow-sm', 'border-marketing-border/80');
+          b.classList.add('text-marketing-muted');
+          b.setAttribute('aria-selected', 'false');
+        });
+
+        btn.classList.add('active', 'bg-marketing-surface', 'text-marketing-text', 'shadow-sm', 'border-marketing-border/80');
+        btn.classList.remove('text-marketing-muted');
+        btn.setAttribute('aria-selected', 'true');
+
+        Object.values(views).forEach((v) => {
+          if (v) v.classList.add('hidden');
+        });
+
+        const activeView = views[tab as keyof typeof views];
+        if (activeView) {
+          activeView.classList.remove('hidden');
+        }
+      });
+    });
+  }
+
+  setupShowcaseTabs();
+  document.addEventListener('astro:page-load', setupShowcaseTabs);
+</script>
