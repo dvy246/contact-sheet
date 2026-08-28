@@ -405,45 +405,104 @@ body {
   background: rgba(120, 120, 130, 0.4);
 }
 
-/* Lenis Smooth Momentum Scrolling Rules */
-html.lenis, html.lenis body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-.lenis.lenis-smooth iframe {
-  pointer-events: none;
-}
-
-/* GPU-Accelerated Viewport Reveal & Parallax */
-.reveal-init {
-  opacity: 0;
-  transform: translate3d(0, 24px, 0);
-  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
-}
-
-.reveal-init.is-revealed {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
+/* Native Smooth Scroll */
+html {
+  scroll-behavior: smooth;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal-init {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
+  html {
+    scroll-behavior: auto;
   }
 }
+
+/* GPU-Accelerated Scroll-Driven Animations (120 FPS Compositor Thread) */
+@keyframes scrollEntryLift {
+  0% {
+    opacity: 0.2;
+    transform: translate3d(0, 36px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes scrollParallaxSlow {
+  0% {
+    transform: translate3d(0, 35px, 0);
+  }
+  100% {
+    transform: translate3d(0, -35px, 0);
+  }
+}
+
+@keyframes scrollParallaxFast {
+  0% {
+    transform: translate3d(0, 55px, 0);
+  }
+  100% {
+    transform: translate3d(0, -55px, 0);
+  }
+}
+
+@keyframes scrollGlowDrift {
+  0% {
+    transform: translate(-50%, -40%) scale(0.95);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(-50%, -60%) scale(0.95);
+    opacity: 0.5;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .scroll-reveal {
+    animation: scrollEntryLift cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-timeline: view();
+    animation-range: entry 5% cover 30%;
+  }
+
+  .scroll-parallax-slow {
+    animation: scrollParallaxSlow linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+  }
+
+  .scroll-parallax-fast {
+    animation: scrollParallaxFast linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+  }
+
+  .scroll-parallax-glow {
+    animation: scrollGlowDrift linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+  }
+}
+
+@supports not (animation-timeline: view()) {
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal,
+  .scroll-parallax-slow,
+  .scroll-parallax-fast,
+  .scroll-parallax-glow {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
 
