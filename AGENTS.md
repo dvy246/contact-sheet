@@ -2,6 +2,31 @@
 
 ## 11. Recent changes (Rebranding & Improvements)
 
+- Implemented **Client-Side PDF Password Protection & Exporter Options** (Task 1):
+  - Updated `src/lib/export/pdfExporter.ts` to export `PDFExportOptions { password?: string; }`.
+  - Added optional `options?: PDFExportOptions` to `exportContactSheetPagesToPDF` and `exportCollageLayoutToPDF`.
+  - Integrated dynamic `jsPDF` encryption engine (`userPassword`, `ownerPassword`, `userPermissions: ['print', 'modify', 'copy', 'annot-forms']`) providing 100% local, zero-upload PDF password protection.
+  - Exported alias `exportContactSheetToPDF` for clean ergonomics.
+  - Maintained 0 errors, 0 warnings, 0 hints on `astro check`.
+
+- Implemented **3-Pane Studio Ergonomics, Custom Logo Watermarks, Designer Palettes & Custom Labels**:
+  - **Ergonomic 3-Pane Workspace Shell**: Separated the studio into **Sheet Configuration & Presets on the LEFT**, **Interactive Canvas Light-Table in the CENTER** (with floating zoom, pagination, and toggle controls), and **Photos Tray & Tools on the RIGHT** (`src/components/workspace/StudioApp.astro`), resolving UI clutter.
+  - **Fluid Drag-and-Drop Photo Arrangement**: Added visual grip drag handles (`⋮⋮`), active dragging states, drop insertion indicators, and seamless reordering via `reorderImages` in `src/components/workspace/ThumbnailGrid.ts`.
+  - **Per-Photo Custom Labels**: Added `customLabel` support in `src/lib/types.ts`, `store.ts` (`setImageCustomLabel`), `contactSheetEngine.ts`, `projectManifest.ts` (`.makecontactsheet.json` export/restore), and inline interactive editing in `src/components/workspace/ThumbnailGrid.ts` with quick revert to original filename.
+  - **Custom Logo / Stamp Watermark Upload**: Added support for uploading custom watermark logos (PNG transparent, JPG, SVG, WebP), positioning (`bottom-right`, `bottom-left`, `top-right`, `top-left`, `center`, `tiled`), scale slider (10%–80%), and opacity controls in `src/lib/types.ts`, `store.ts`, `templates.ts`, `canvasRenderer.ts`, and `src/components/workspace/LayoutControls.ts`.
+  - **Expanded Designer Color Palette**: Implemented 20 curated designer color swatches across 4 aesthetic collections (**Studio Darks**, **Gallery & Paper**, **Earth & Editorial**, **Pastels & Vibrant**) plus native color pickers with real-time hex readouts in `src/components/workspace/LayoutControls.ts`.
+  - Maintained strict 0 errors, 0 warnings, 0 hints on `astro check` and successful 15-page static build.
+- Completed **SEO/AEO/GEO Launch Audit & Cloudflare Deployment**:
+  - Ran sequential pre-launch audit via `/seo-aeo-geo-launch-checklist` with **`LAUNCH: PASS`** across all 15 static routes (0 errors on sitemaps, canonicals, schema JSON-LD, E-E-A-T, robots.txt, and Search Essentials compliance).
+  - Updated header brand markup to consistently display **Make Contact Sheet** matching footer and metadata.
+  - Successfully built and deployed static distribution to Cloudflare Pages (`frameproof` project / `https://frameproof-4fw.pages.dev`).
+- Implemented **Optional Protective Watermarking** (Flagship Feature):
+  - Added optional, customizable watermarking support with `showWatermark`, `watermarkText`, `watermarkStyle` (`'diagonal'` | `'tiled'` | `'center'`), `watermarkOpacity`, and `watermarkColor` in `src/lib/types.ts`, `store.ts`, and `templates.ts`.
+  - Implemented `drawWatermark` in `src/lib/engine/canvasRenderer.ts` supporting single diagonal angled stamps, repeating multi-line tiled grids (optimized for resistance against AI inpainting/extraction), and centered stamps, clipped strictly to photo bounds and rounded corners.
+  - Integrated watermark rendering across both contact sheet (`renderContactSheetToCanvas`) and collage layouts (`renderCollageToCanvas`), scaling typography accurately with `scale` for crisp 300 DPI exports (PDF, PNG, JPEG).
+  - Added dedicated "Watermark & proof protection" sidebar UI controls in `src/components/workspace/LayoutControls.ts` with live preview syncing, opacity slider, style selector, and color customization.
+  - Integrated watermark config into project manifests (`.makecontactsheet.json`), ensuring seamless export and restoration.
+  - Confirmed 0 errors, 0 warnings, 0 hints on `astro check` and successful 15-page static build.
 - Implemented **Memory and Format Compatibility** (Task 4):
   - Added full HEIC/HEIF MIME type support (`image/heic`, `image/heif`, `image/heic-sequence`, `image/heif-sequence`) and extension allowlisting with `isHeicFile` helper in `src/lib/media/fileSanitizer.ts`.
   - Implemented robust EXIF orientation correction via `createImageBitmap(file, { imageOrientation: 'from-image' })` with graceful fallback across `src/lib/media/imageLoader.ts` and `src/lib/media/imageEditor.ts`.
