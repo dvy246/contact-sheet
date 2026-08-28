@@ -24,6 +24,7 @@ export class ExportDrawer {
   private exportScope: FilterStatus = 'all';
   private quality = 0.92;
   private scale = 2; // 2x high-resolution by default
+  private pdfPassword = '';
 
   constructor(container: HTMLElement) {
     this.container = container;
@@ -87,11 +88,29 @@ export class ExportDrawer {
           </button>
         </div>
 
+        <!-- Password Protection (PDF only) -->
+        <div id="export-password-group" class="${this.selectedFormat === 'pdf' ? 'block' : 'hidden'} p-3 rounded-xl bg-workspace-surface border border-workspace-border">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <label for="export-pdf-password" class="flex items-center gap-1.5 text-xs font-medium text-workspace-text">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent shrink-0"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span>PDF Password Protection <span class="text-workspace-muted font-normal">(Optional)</span></span>
+            </label>
+            <input 
+              type="password" 
+              id="export-pdf-password" 
+              placeholder="Leave empty for no password" 
+              autocomplete="new-password"
+              class="w-full sm:w-72 bg-workspace-panel border border-workspace-border rounded-lg px-3 py-1.5 text-xs text-workspace-text placeholder:text-workspace-muted focus:border-accent focus:outline-none transition-colors" 
+              value="${this.pdfPassword}" 
+            />
+          </div>
+        </div>
+
         <!-- Action Row -->
         <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-workspace-border">
           <div class="flex items-center gap-3">
             <span class="text-xs text-workspace-muted">
-              ${this.selectedFormat === 'pdf' ? 'Multi-page 300 DPI print document with metadata headers' : this.selectedFormat === 'txt' ? 'Comma-separated filename string ready to paste into Lightroom search' : this.selectedFormat === 'csv' ? 'Lightroom-compatible structured metadata table with review statuses and ratings' : this.selectedFormat === 'json' ? 'Portable JSON review session manifest with full layout config and statuses' : 'Export rendered at 2x studio quality'}
+              ${this.selectedFormat === 'pdf' ? 'Multi-page 300 DPI print document' : this.selectedFormat === 'txt' ? 'Comma-separated filename string ready to paste into Lightroom search' : this.selectedFormat === 'csv' ? 'Lightroom-compatible structured metadata table with review statuses and ratings' : this.selectedFormat === 'json' ? 'Portable JSON review session manifest with full layout config and statuses' : 'Export rendered at 2x studio quality'}
             </span>
           </div>
 
@@ -129,6 +148,12 @@ export class ExportDrawer {
           this.render();
         }
       });
+    });
+
+    // Password input
+    const passwordInput = document.getElementById('export-pdf-password') as HTMLInputElement | null;
+    passwordInput?.addEventListener('input', (e) => {
+      this.pdfPassword = (e.target as HTMLInputElement).value;
     });
 
     // Scope select
@@ -190,16 +215,29 @@ export class ExportDrawer {
         $exportProgress.set(100);
       } else if (this.selectedFormat === 'pdf') {
         const { exportContactSheetPagesToPDF, exportCollageLayoutToPDF } = await import('../../lib/export/pdfExporter');
+        const pdfOptions = { password: this.pdfPassword.trim() || undefined };
         if (mode === 'contact-sheet') {
           const pages = calculateContactSheetPages(targetImages, config, this.scale);
-          await exportContactSheetPagesToPDF(pages, config, (cur, tot) => {
-            $exportProgress.set(Math.round((cur / tot) * 90));
-          });
+          await exportContactSheetPagesToPDF(
+            pages,
+            config,
+            (cur, tot) => {
+              $exportProgress.set(Math.round((cur / tot) * 90));
+            },
+            'makecontactsheet-contact-sheet',
+            pdfOptions
+          );
         } else {
            // Collage PDF
            const template = COLLAGE_TEMPLATES.find(t => t.id === $activeTemplateId.get()) || COLLAGE_TEMPLATES[0];
            const collageLayout = calculateCollageLayout(targetImages, template, config, this.scale);
-           await exportCollageLayoutToPDF(collageLayout, config, undefined, `makecontactsheet-collage-${template.id}`);
+           await exportCollageLayoutToPDF(
+             collageLayout, 
+             config, 
+             undefined, 
+             `makecontactsheet-collage-${template.id}`,
+             pdfOptions
+           );
         }
         $exportProgress.set(100);
       } else {
