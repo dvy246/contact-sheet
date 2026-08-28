@@ -2,6 +2,10 @@
 
 ## 11. Recent changes (Rebranding & Improvements)
 
+- Implemented **Export Drawer Password Protection UI** (Task 2):
+  - Added PDF password input field to `src/components/workspace/ExportDrawer.ts` dynamically displayed when PDF format is active.
+  - Linked password state to both contact sheet and collage layout PDF exporters without causing UI layout thrashing.
+  - Maintained strict 0 errors, 0 warnings, 0 hints on `astro check`.
 - Implemented **Client-Side PDF Password Protection & Exporter Options** (Task 1):
   - Updated `src/lib/export/pdfExporter.ts` to export `PDFExportOptions { password?: string; }`.
   - Added optional `options?: PDFExportOptions` to `exportContactSheetPagesToPDF` and `exportCollageLayoutToPDF`.
