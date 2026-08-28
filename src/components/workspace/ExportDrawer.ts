@@ -25,6 +25,7 @@ export class ExportDrawer {
   private quality = 0.92;
   private scale = 2; // 2x high-resolution by default
   private pdfPassword = '';
+  private isRendered = false;
 
   constructor(container: HTMLElement) {
     this.container = container;
@@ -33,117 +34,164 @@ export class ExportDrawer {
   }
 
   private render() {
+    if (!this.isRendered) {
+      this.container.innerHTML = `
+        <div class="flex flex-col gap-4 p-4 sm:p-5 bg-workspace-panel border-t border-workspace-border text-xs text-workspace-text w-full min-w-0">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-sm tracking-tight">Export Artifact</span>
+              <span class="text-[11px] text-workspace-muted">- Generates locally in browser</span>
+            </div>
+
+            <!-- Scope Selection -->
+            <div class="flex items-center gap-2">
+              <label class="text-[11px] text-workspace-muted font-medium">Scope:</label>
+              <select id="export-scope-select" class="bg-workspace-surface border border-workspace-border rounded-lg px-3 py-1.5 text-xs text-workspace-text focus:border-accent transition-colors cursor-pointer">
+                <option value="all">All Images</option>
+                <option value="keep">Kept Only</option>
+                <option value="flag">Flagged Only</option>
+                <option value="reject">Rejected</option>
+                <option value="unreviewed">Unreviewed</option>
+                <option value="exclude-rejected">Exclude Rejected</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Format Selector Tabs -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2 sm:gap-2.5">
+            <button data-format="png" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer">
+              <div class="font-medium text-xs">PNG Image</div>
+              <div class="text-[10px] text-workspace-muted mt-0.5">High-Res Lossless</div>
+            </button>
+            <button data-format="jpeg" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer">
+              <div class="font-medium text-xs">JPEG Image</div>
+              <div class="text-[10px] text-workspace-muted mt-0.5">Compressed Photo</div>
+            </button>
+            <button data-format="pdf" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer">
+              <div class="font-medium text-xs">PDF Document</div>
+              <div class="text-[10px] text-workspace-muted mt-0.5">Print Proof Sheet</div>
+            </button>
+            <button data-format="html" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer">
+              <div class="font-medium text-xs">HTML Portal</div>
+              <div class="text-[10px] text-workspace-muted mt-0.5">Client Proofing</div>
+            </button>
+            <button data-format="csv" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer">
+              <div class="font-medium text-xs">CSV Table</div>
+              <div class="text-[10px] text-workspace-muted mt-0.5">Filename Handoff</div>
+            </button>
+            <button data-format="txt" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer">
+              <div class="font-medium text-xs">Lightroom TXT</div>
+              <div class="text-[10px] text-workspace-muted mt-0.5">Search Filter List</div>
+            </button>
+            <button data-format="json" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer">
+              <div class="font-medium text-xs">Manifest</div>
+              <div class="text-[10px] text-workspace-muted mt-0.5">.makecontactsheet.json</div>
+            </button>
+          </div>
+
+          <!-- Password Protection (PDF only) -->
+          <div id="export-password-group" class="p-3 rounded-xl bg-workspace-surface border border-workspace-border">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <label for="export-pdf-password" class="flex items-center gap-1.5 text-xs font-medium text-workspace-text">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent shrink-0"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <span>PDF Password Protection <span class="text-workspace-muted font-normal">(Optional)</span></span>
+              </label>
+              <input 
+                type="password" 
+                id="export-pdf-password" 
+                placeholder="Leave empty for no password" 
+                autocomplete="new-password"
+                class="w-full sm:w-72 bg-workspace-panel border border-workspace-border rounded-lg px-3 py-1.5 text-xs text-workspace-text placeholder:text-workspace-muted focus:border-accent focus:outline-none transition-colors" 
+              />
+            </div>
+          </div>
+
+          <!-- Action Row -->
+          <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-workspace-border">
+            <div class="flex items-center gap-3">
+              <span id="export-desc" class="text-xs text-workspace-muted"></span>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <button 
+                id="btn-trigger-export"
+                class="inline-flex items-center justify-center gap-2 h-9 px-5 rounded-lg bg-accent hover:bg-accent-hover text-white font-semibold text-xs tracking-tight shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+              ></button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      this.attachEvents();
+      this.isRendered = true;
+    }
+    
+    this.sync();
+  }
+
+  private sync() {
     const isExporting = $isExporting.get();
     const progress = $exportProgress.get();
     const images = $images.get();
     const counts = $reviewCounts.get();
 
-    this.container.innerHTML = `
-      <div class="flex flex-col gap-4 p-4 sm:p-5 bg-workspace-panel border-t border-workspace-border text-xs text-workspace-text w-full min-w-0">
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <div class="flex items-center gap-2">
-            <span class="font-bold text-sm tracking-tight">Export Artifact</span>
-            <span class="text-[11px] text-workspace-muted">- Generates locally in browser</span>
-          </div>
+    const scopeSelect = document.getElementById('export-scope-select') as HTMLSelectElement | null;
+    if (scopeSelect) {
+      if (document.activeElement !== scopeSelect) {
+        scopeSelect.value = this.exportScope;
+      }
+      Array.from(scopeSelect.options).forEach(opt => {
+        if (opt.value === 'all') opt.textContent = `All Images (${counts.total})`;
+        if (opt.value === 'keep') opt.textContent = `Kept Only (${counts.keep})`;
+        if (opt.value === 'flag') opt.textContent = `Flagged Only (${counts.flag})`;
+        if (opt.value === 'reject') opt.textContent = `Rejected (${counts.reject})`;
+        if (opt.value === 'unreviewed') opt.textContent = `Unreviewed (${counts.unreviewed})`;
+        if (opt.value === 'exclude-rejected') opt.textContent = `Exclude Rejected (${counts.total - counts.reject})`;
+      });
+    }
 
-          <!-- Scope Selection -->
-          <div class="flex items-center gap-2">
-            <label class="text-[11px] text-workspace-muted font-medium">Scope:</label>
-            <select id="export-scope-select" class="bg-workspace-surface border border-workspace-border rounded-lg px-3 py-1.5 text-xs text-workspace-text focus:border-accent transition-colors cursor-pointer">
-              <option value="all" ${this.exportScope === 'all' ? 'selected' : ''}>All Images (${counts.total})</option>
-              <option value="keep" ${this.exportScope === 'keep' ? 'selected' : ''}>Kept Only (${counts.keep})</option>
-              <option value="flag" ${this.exportScope === 'flag' ? 'selected' : ''}>Flagged Only (${counts.flag})</option>
-              <option value="reject" ${this.exportScope === 'reject' ? 'selected' : ''}>Rejected (${counts.reject})</option>
-              <option value="unreviewed" ${this.exportScope === 'unreviewed' ? 'selected' : ''}>Unreviewed (${counts.unreviewed})</option>
-              <option value="exclude-rejected" ${this.exportScope === 'exclude-rejected' ? 'selected' : ''}>Exclude Rejected (${counts.total - counts.reject})</option>
-            </select>
-          </div>
-        </div>
+    this.container.querySelectorAll('.export-format-btn').forEach((btn) => {
+      const fmt = btn.getAttribute('data-format');
+      if (fmt === this.selectedFormat) {
+        btn.className = 'export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer bg-workspace-surface-hover border-accent text-workspace-text font-bold shadow-xs';
+      } else {
+        btn.className = 'export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text';
+      }
+    });
 
-        <!-- Format Selector Tabs -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2 sm:gap-2.5">
-          <button data-format="png" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer ${this.selectedFormat === 'png' ? 'bg-workspace-surface-hover border-accent text-workspace-text font-bold shadow-xs' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
-            <div class="font-medium text-xs">PNG Image</div>
-            <div class="text-[10px] text-workspace-muted mt-0.5">High-Res Lossless</div>
-          </button>
-          <button data-format="jpeg" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer ${this.selectedFormat === 'jpeg' ? 'bg-workspace-surface-hover border-accent text-workspace-text font-bold shadow-xs' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
-            <div class="font-medium text-xs">JPEG Image</div>
-            <div class="text-[10px] text-workspace-muted mt-0.5">Compressed Photo</div>
-          </button>
-          <button data-format="pdf" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer ${this.selectedFormat === 'pdf' ? 'bg-workspace-surface-hover border-accent text-workspace-text font-bold shadow-xs' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
-            <div class="font-medium text-xs">PDF Document</div>
-            <div class="text-[10px] text-workspace-muted mt-0.5">Print Proof Sheet</div>
-          </button>
-          <button data-format="html" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer ${this.selectedFormat === 'html' ? 'bg-workspace-surface-hover border-accent text-workspace-text font-bold shadow-xs' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
-            <div class="font-medium text-xs">HTML Portal</div>
-            <div class="text-[10px] text-workspace-muted mt-0.5">Client Proofing</div>
-          </button>
-          <button data-format="csv" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer ${this.selectedFormat === 'csv' ? 'bg-workspace-surface-hover border-accent text-workspace-text font-bold shadow-xs' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
-            <div class="font-medium text-xs">CSV Table</div>
-            <div class="text-[10px] text-workspace-muted mt-0.5">Filename Handoff</div>
-          </button>
-          <button data-format="txt" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer ${this.selectedFormat === 'txt' ? 'bg-workspace-surface-hover border-accent text-workspace-text font-bold shadow-xs' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
-            <div class="font-medium text-xs">Lightroom TXT</div>
-            <div class="text-[10px] text-workspace-muted mt-0.5">Search Filter List</div>
-          </button>
-          <button data-format="json" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer ${this.selectedFormat === 'json' ? 'bg-workspace-surface-hover border-accent text-workspace-text font-bold shadow-xs' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
-            <div class="font-medium text-xs">Manifest</div>
-            <div class="text-[10px] text-workspace-muted mt-0.5">.makecontactsheet.json</div>
-          </button>
-        </div>
+    const passwordGroup = document.getElementById('export-password-group');
+    if (passwordGroup) {
+      passwordGroup.className = this.selectedFormat === 'pdf' ? 'block p-3 rounded-xl bg-workspace-surface border border-workspace-border' : 'hidden p-3 rounded-xl bg-workspace-surface border border-workspace-border';
+    }
 
-        <!-- Password Protection (PDF only) -->
-        <div id="export-password-group" class="${this.selectedFormat === 'pdf' ? 'block' : 'hidden'} p-3 rounded-xl bg-workspace-surface border border-workspace-border">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <label for="export-pdf-password" class="flex items-center gap-1.5 text-xs font-medium text-workspace-text">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent shrink-0"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              <span>PDF Password Protection <span class="text-workspace-muted font-normal">(Optional)</span></span>
-            </label>
-            <input 
-              type="password" 
-              id="export-pdf-password" 
-              placeholder="Leave empty for no password" 
-              autocomplete="new-password"
-              class="w-full sm:w-72 bg-workspace-panel border border-workspace-border rounded-lg px-3 py-1.5 text-xs text-workspace-text placeholder:text-workspace-muted focus:border-accent focus:outline-none transition-colors" 
-              value="${this.pdfPassword}" 
-            />
-          </div>
-        </div>
+    const passwordInput = document.getElementById('export-pdf-password') as HTMLInputElement | null;
+    if (passwordInput && document.activeElement !== passwordInput) {
+      passwordInput.value = this.pdfPassword;
+    }
 
-        <!-- Action Row -->
-        <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-workspace-border">
-          <div class="flex items-center gap-3">
-            <span class="text-xs text-workspace-muted">
-              ${this.selectedFormat === 'pdf' ? 'Multi-page 300 DPI print document' : this.selectedFormat === 'html' ? 'Standalone offline HTML proofing gallery with client culling & review tools' : this.selectedFormat === 'txt' ? 'Comma-separated filename string ready to paste into Lightroom search' : this.selectedFormat === 'csv' ? 'Lightroom-compatible structured metadata table with review statuses and ratings' : this.selectedFormat === 'json' ? 'Portable JSON review session manifest with full layout config and statuses' : 'Export rendered at 2x studio quality'}
-            </span>
-          </div>
+    const desc = document.getElementById('export-desc');
+    if (desc) {
+      desc.textContent = this.selectedFormat === 'pdf' ? 'Multi-page 300 DPI print document' : this.selectedFormat === 'html' ? 'Standalone offline HTML proofing gallery with client culling & review tools' : this.selectedFormat === 'txt' ? 'Comma-separated filename string ready to paste into Lightroom search' : this.selectedFormat === 'csv' ? 'Lightroom-compatible structured metadata table with review statuses and ratings' : this.selectedFormat === 'json' ? 'Portable JSON review session manifest with full layout config and statuses' : 'Export rendered at 2x studio quality';
+    }
 
-          <div class="flex items-center gap-3">
-            <button 
-              id="btn-trigger-export"
-              class="inline-flex items-center justify-center gap-2 h-9 px-5 rounded-lg bg-accent hover:bg-accent-hover text-white font-semibold text-xs tracking-tight shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-              ${isExporting || images.length === 0 ? 'disabled' : ''}
-            >
-              ${isExporting ? `
-                <svg class="animate-spin -ml-1 mr-1 h-3.5 w-3.5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                <span>Exporting (${progress}%)...</span>
-              ` : `
-                <span>Download ${this.selectedFormat === 'html' ? 'HTML PORTAL' : this.selectedFormat.toUpperCase()}</span>
-              `}
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-
-    this.attachEvents();
+    const btnExport = document.getElementById('btn-trigger-export') as HTMLButtonElement | null;
+    if (btnExport) {
+      btnExport.disabled = isExporting || images.length === 0;
+      if (isExporting) {
+        btnExport.innerHTML = `
+          <svg class="animate-spin -ml-1 mr-1 h-3.5 w-3.5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <span>Exporting (${progress}%)...</span>
+        `;
+      } else {
+        btnExport.innerHTML = `<span>Download ${this.selectedFormat === 'html' ? 'HTML PORTAL' : this.selectedFormat.toUpperCase()}</span>`;
+      }
+    }
   }
 
   private attachEvents() {
-    // Format tabs
     this.container.querySelectorAll('.export-format-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
         const fmt = btn.getAttribute('data-format') as ExportFormat | 'txt';
@@ -154,19 +202,16 @@ export class ExportDrawer {
       });
     });
 
-    // Password input
     const passwordInput = document.getElementById('export-pdf-password') as HTMLInputElement | null;
     passwordInput?.addEventListener('input', (e) => {
       this.pdfPassword = (e.target as HTMLInputElement).value;
     });
 
-    // Scope select
     const scopeSelect = document.getElementById('export-scope-select') as HTMLSelectElement | null;
     scopeSelect?.addEventListener('change', () => {
       this.exportScope = scopeSelect.value as FilterStatus;
     });
 
-    // Trigger button
     document.getElementById('btn-trigger-export')?.addEventListener('click', () => {
       this.executeExport();
     });
@@ -243,7 +288,6 @@ export class ExportDrawer {
             pdfOptions
           );
         } else {
-           // Collage PDF
            const template = COLLAGE_TEMPLATES.find(t => t.id === $activeTemplateId.get()) || COLLAGE_TEMPLATES[0];
            const collageLayout = calculateCollageLayout(targetImages, template, config, this.scale);
            await exportCollageLayoutToPDF(
@@ -256,7 +300,6 @@ export class ExportDrawer {
         }
         $exportProgress.set(100);
       } else {
-        // Image export (PNG / JPEG)
         if (mode === 'contact-sheet') {
           const pages = calculateContactSheetPages(targetImages, config, this.scale);
           const currentPageIndex = Math.min($activePage.get(), pages.length - 1);
@@ -290,4 +333,3 @@ export class ExportDrawer {
     $exportProgress.subscribe(() => this.render());
   }
 }
-

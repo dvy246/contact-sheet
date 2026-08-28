@@ -6,7 +6,7 @@ export async function exportLayoutAsImage(
   config: LayoutConfig,
   format: 'png' | 'jpeg' = 'png',
   quality = 0.92,
-  filename = 'frameproof-export'
+  filename = 'makecontactsheet-export'
 ): Promise<void> {
   const offscreen = document.createElement('canvas');
   

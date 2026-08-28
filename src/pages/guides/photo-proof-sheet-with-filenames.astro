@@ -10,8 +10,8 @@ const meta = METADATA_REGISTRY['/guides/photo-proof-sheet-with-filenames'];
 
 const steps = [
   {
-    name: 'Import your batch into FrameProof',
-    text: 'Drag your camera files into FrameProof. The original camera filenames (such as DSC_4821.JPG or _MG_9022.CR3) are indexed and stored with zero risk of truncation.',
+    name: 'Import your batch into Make Contact Sheet',
+    text: 'Drag your camera files into Make Contact Sheet. The original camera filenames (such as DSC_4821.JPG or _MG_9022.CR3) are indexed and stored with zero risk of truncation.',
   },
   {
     name: 'Enable filename and numbering labels',
@@ -23,7 +23,7 @@ const steps = [
   },
   {
     name: 'Import client selects into Lightroom or Capture One',
-    text: 'When your client returns their selections, mark those items in FrameProof and click "Export CSV / TXT List". Paste the comma-separated filename string directly into Lightroom\'s Library Filter (Text > Filename > Contains).',
+    text: 'When your client returns their selections, mark those items in Make Contact Sheet and click "Export CSV / TXT List". Paste the comma-separated filename string directly into Lightroom\'s Library Filter (Text > Filename > Contains).',
   },
 ];
 
@@ -34,11 +34,11 @@ const faqs = [
   },
   {
     question: 'Why do other online tools strip filenames?',
-    answer: 'Most consumer photo collage generators rename images sequentially (e.g. image_1.png) or discard file metadata during canvas upload. FrameProof is built specifically for photography workflows and strictly preserves all original filenames.',
+    answer: 'Most consumer photo collage generators rename images sequentially (e.g. image_1.png) or discard file metadata during canvas upload. Make Contact Sheet is built specifically for photography workflows and strictly preserves all original filenames.',
   },
   {
     question: 'Can I export a list of only the "Kept" photos?',
-    answer: 'Yes. In the FrameProof export drawer, set the scope to "Kept Only" and select CSV or TXT format. It will generate a clean list containing only the approved files.',
+    answer: 'Yes. In the Make Contact Sheet export drawer, set the scope to "Kept Only" and select CSV or TXT format. It will generate a clean list containing only the approved files.',
   },
 ];
 
@@ -81,10 +81,10 @@ const schemas = [
       </header>
 
       <!-- Direct Answer / AEO Definition Block -->
-      <div class="p-6 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-marketing-text space-y-2">
-        <div class="text-xs font-bold uppercase tracking-wider text-accent-amber font-mono">Direct Answer</div>
+      <div class="p-6 rounded-2xl bg-accent/10 border border-accent/30 text-marketing-text space-y-2">
+        <div class="text-xs font-bold uppercase tracking-wider text-accent-ink font-mono">Direct Answer</div>
         <p class="text-sm leading-relaxed font-medium">
-          To create a photo proof sheet with filenames, import your image batch into FrameProof, enable the "Filename Only" or "Index & Filename" label option under Layout controls, and export as a multi-page PDF or PNG. Every thumbnail displays its verifiable camera filename, and you can export a CSV or TXT list of selected filenames for Lightroom culling.
+          To create a photo proof sheet with filenames, import your image batch into Make Contact Sheet, enable the "Filename Only" or "Index & Filename" label option under Layout controls, and export as a multi-page PDF or PNG. Every thumbnail displays its verifiable camera filename, and you can export a CSV or TXT list of selected filenames for Lightroom culling.
         </p>
       </div>
 
@@ -97,7 +97,7 @@ const schemas = [
         <div class="space-y-6">
           {steps.map((step, idx) => (
             <div class="flex gap-4 p-5 rounded-xl border border-marketing-border bg-marketing-bg transition-colors">
-              <div class="w-8 h-8 rounded-lg bg-zinc-900 text-white dark:bg-accent-amber dark:text-black flex-shrink-0 flex items-center justify-center font-bold text-sm">
+              <div class="w-8 h-8 rounded-lg bg-stone-900 text-white dark:bg-accent dark:text-white flex-shrink-0 flex items-center justify-center font-bold text-sm">
                 {idx + 1}
               </div>
               <div class="space-y-1">
@@ -122,19 +122,19 @@ const schemas = [
           How Filename-Accurate Proof Sheets Solve This
         </h3>
         <p>
-          By sending a proof sheet where every thumbnail is clearly labeled with its index number and source filename, you establish an unambiguous common language with your client. When they reply with "Please edit #4, #18, and #22", you can mark those in FrameProof and instantly copy the exact filename string into Lightroom to begin editing immediately.
+          By sending a proof sheet where every thumbnail is clearly labeled with its index number and source filename, you establish an unambiguous common language with your client. When they reply with "Please edit #4, #18, and #22", you can mark those in Make Contact Sheet and instantly copy the exact filename string into Lightroom to begin editing immediately.
         </p>
       </div>
 
       <!-- Action CTA Box -->
-      <div class="p-8 rounded-2xl bg-zinc-900 text-white text-center space-y-4 shadow-xl">
+      <div class="p-8 rounded-2xl bg-stone-900 text-white text-center space-y-4 shadow-xl">
         <h2 class="text-xl font-bold">Create your proof sheet with filenames now</h2>
-        <p class="text-xs text-zinc-400 max-w-md mx-auto">
+        <p class="text-xs text-stone-400 max-w-md mx-auto">
           Free, fast, and 100% private in your browser.
         </p>
         <a 
           href="/photo-contact-sheet-maker" 
-          class="inline-flex items-center gap-2 h-11 px-6 rounded-xl bg-accent-amber hover:bg-accent-amber-hover text-black font-semibold text-xs tracking-tight shadow-md transition-all"
+          class="inline-flex items-center gap-2 h-11 px-6 rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold text-xs tracking-tight shadow-md transition-all"
         >
           <span>Start Proofing Photos</span>
           <Icon name="arrow-right" size={15} />

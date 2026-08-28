@@ -11,16 +11,16 @@ interface Props {
 }
 
 const {
-  title = 'FrameProof — Free Contact Sheet & Collage Maker',
+  title = 'Make Contact Sheet - Free Contact Sheet & Collage Maker',
   description = 'Create professional contact sheets and photo collages directly in your browser. Fast, secure, and free. No signup required.',
-  canonical = Astro.url.href.replace(/\/$/, '') || 'https://www.frameproof.com',
+  canonical = Astro.url.href.replace(/\/$/, '') || 'https://makecontactsheet.com',
   robots = 'index, follow',
   ogType = 'website',
   schema,
 } = Astro.props;
 
-const siteName = 'FrameProof';
-const ogImageUrl = 'https://www.frameproof.com/og-image.png';
+const siteName = 'Make Contact Sheet';
+const ogImageUrl = 'https://makecontactsheet.com/og-image.png';
 ---
 
 <!doctype html>
@@ -83,7 +83,7 @@ const ogImageUrl = 'https://www.frameproof.com/og-image.png';
 
     <slot name="head" />
   </head>
-  <body class="bg-marketing-bg text-marketing-text selection:bg-accent-amber selection:text-black">
+  <body class="bg-marketing-bg text-marketing-text selection:bg-accent selection:text-white antialiased w-full min-w-0 overflow-x-hidden">
     <slot />
   </body>
 </html>

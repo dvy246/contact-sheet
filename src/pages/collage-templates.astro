@@ -15,11 +15,11 @@ const faqs = [
   },
   {
     question: 'How do I fit photos with different aspect ratios?',
-    answer: 'FrameProof allows you to choose between "Cover" (smart center crop that fills each cell completely) and "Contain" (which preserves the full uncropped image with letterboxing).',
+    answer: 'Make Contact Sheet allows you to choose between "Cover" (smart center crop that fills each cell completely) and "Contain" (which preserves the full uncropped image with letterboxing).',
   },
   {
     question: 'Are collage templates free to download and use?',
-    answer: 'Yes. All templates in FrameProof are completely free with zero watermark restrictions or signup requirements.',
+    answer: 'Yes. All templates in Make Contact Sheet are completely free with zero watermark restrictions or signup requirements.',
   },
 ];
 
@@ -40,11 +40,11 @@ const schemas = [
   robots={meta.robots}
   schema={schemas}
 >
-  <div class="bg-marketing-panel border-b border-marketing-border py-10 sm:py-14 transition-colors">
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
     <div class="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-4">
       <Breadcrumbs items={breadcrumbs} />
-      <div class="max-w-3xl">
-        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-marketing-text mb-3">
+      <div class="max-w-3xl space-y-3">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight">
           Custom Photo Collage Templates
         </h1>
         <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
@@ -54,18 +54,18 @@ const schemas = [
     </div>
   </div>
 
-  <section class="py-12 sm:py-16 bg-marketing-bg border-b border-marketing-border transition-colors">
+  <section class="py-16 sm:py-24 lg:py-28 bg-marketing-bg border-b border-marketing-border transition-colors">
     <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {COLLAGE_TEMPLATES.map((template) => (
-          <div class="bg-marketing-panel border border-marketing-border rounded-2xl p-6 sm:p-7 flex flex-col justify-between space-y-5 shadow-xs hover:border-zinc-500 transition-all">
+          <div class="bg-marketing-panel border border-marketing-border rounded-2xl p-6 sm:p-7 flex flex-col justify-between space-y-6 shadow-xs hover:border-stone-400 dark:hover:border-stone-600 transition-all">
             <div class="space-y-3">
               <div class="flex items-center justify-between">
-                <span class="text-xs font-bold uppercase tracking-wider text-accent-amber font-mono">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-accent-ink font-mono">
                   {template.category}
                 </span>
-                <span class="text-xs px-2 py-0.5 rounded bg-marketing-surface border border-marketing-border font-mono text-marketing-text">
-                  {template.cells.length} Photo Cells
+                <span class="text-[11px] px-2.5 py-1 rounded-lg bg-marketing-surface border border-marketing-border font-mono text-marketing-muted">
+                  {template.cells.length} Photos
                 </span>
               </div>
               <h2 class="text-lg font-bold text-marketing-text">{template.name}</h2>
@@ -87,7 +87,7 @@ const schemas = [
 
             <a 
               href="/#workspace" 
-              class="w-full py-2.5 px-4 rounded-xl bg-zinc-900 hover:bg-black text-white dark:bg-accent-amber dark:hover:bg-accent-amber-hover dark:text-black font-semibold text-xs text-center tracking-tight shadow-sm hover:shadow transition-all block"
+              class="w-full py-2.5 px-4 rounded-xl bg-stone-900 hover:bg-black text-white dark:bg-accent dark:hover:bg-accent-hover dark:text-white font-semibold text-xs text-center tracking-tight shadow-sm hover:shadow transition-all block"
             >
               Use This Template
             </a>
@@ -105,7 +105,7 @@ const schemas = [
           Template formats and use cases
         </h2>
         <p class="text-sm text-marketing-text/90 leading-relaxed">
-          FrameProof templates are crafted around photographic proportions rather than generic graphics. For example, our 3-photo horizontal strip is perfect for landscape panoramas and documentary sequences, while our 9:16 vertical story format lets you combine portrait shots with detail insets for mobile platforms.
+          Make Contact Sheet templates are crafted around photographic proportions rather than generic graphics. For example, our 3-photo horizontal strip is perfect for landscape panoramas and documentary sequences, while our 9:16 vertical story format lets you combine portrait shots with detail insets for mobile platforms.
         </p>
       </div>
 

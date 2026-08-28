@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 export default defineConfig({
   output: 'static',
-  site: 'https://www.frameproof.com',
+  site: 'https://makecontactsheet.com',
   trailingSlash: 'never',
   vite: {
     plugins: [tailwindcss()],

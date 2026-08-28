@@ -1,20 +1,20 @@
-# FrameProof SEO Governance
+# Make Contact Sheet SEO Governance
 
-*This document serves as the canonical, single source of truth governing all SEO decisions for FrameProof.*
+*This document serves as the canonical, single source of truth governing all SEO decisions for Make Contact Sheet.*
 
 ---
 
 ## 1. Purpose & Scope
 *Defines the authority and application of this document.*
 
-This document is the canonical SEO governance standard for FrameProof — a browser-first photo contact-sheet, collage, and review workspace. It dictates the strategy, technical requirements, content standards, and evidence policies required to maintain search visibility. Any deviations from these guidelines must be documented and justified.
+This document is the canonical SEO governance standard for Make Contact Sheet — a browser-first photo contact-sheet, collage, and review workspace. It dictates the strategy, technical requirements, content standards, and evidence policies required to maintain search visibility. Any deviations from these guidelines must be documented and justified.
 
 ---
 
 ## 2. Evidence Policy
 *Establishes strict standards for truthfulness and data verification in SEO claims.*
 
-FrameProof adheres to strict evidentiary standards for all SEO claims. We do not fabricate or inflate metrics.
+Make Contact Sheet adheres to strict evidentiary standards for all SEO claims. We do not fabricate or inflate metrics.
 
 *   **No Fabrication:** Never fabricate search volumes, keyword difficulty, rankings, traffic, or revenue.
 *   **Evidence Labels:** All SEO data and claims must be labeled with one of the following tiers:
@@ -196,12 +196,12 @@ Homepage (/)
 
 | Route | Title (≤60 chars) | Description (150-165 chars) | Index | OG |
 | :--- | :--- | :--- | :--- | :--- |
-| `/` | FrameProof — Free Contact Sheet & Collage Maker | Create professional contact sheets and photo collages directly in your browser. Fast, secure, and free. No signup required to start arranging your photos. | index, follow | Yes |
-| `/privacy-policy` | Privacy Policy · FrameProof | Read the FrameProof Privacy Policy. Learn how we handle your data securely and respect your privacy while you use our browser-based photo workspace tools. | noindex, follow | No |
-| `/terms-and-conditions` | Terms and Conditions · FrameProof | Read the FrameProof terms and conditions of use. Important legal information regarding your use of our contact sheet, collage, and photo review tools. | noindex, follow | No |
-| `/about-us` | About FrameProof | Learn about FrameProof's mission to build the fastest, most private browser-first workspace for photo contact sheets, collages, and client reviews. | index, follow | Yes |
-| `/contact-us` | Contact Us · FrameProof | Get in touch with the FrameProof team. Reach out for support, feedback, or inquiries regarding our photo contact sheet and collage making workspace. | index, follow | Yes |
-| `/404` | Page Not Found · FrameProof | We couldn't find the page you're looking for. Return to the FrameProof homepage to start creating contact sheets and photo collages for free. | noindex, follow | No |
+| `/` | Make Contact Sheet — Free Contact Sheet & Collage Maker | Create professional contact sheets and photo collages directly in your browser. Fast, secure, and free. No signup required to start arranging your photos. | index, follow | Yes |
+| `/privacy-policy` | Privacy Policy · Make Contact Sheet | Read the Make Contact Sheet Privacy Policy. Learn how we handle your data securely and respect your privacy while you use our browser-based photo workspace tools. | noindex, follow | No |
+| `/terms-and-conditions` | Terms and Conditions · Make Contact Sheet | Read the Make Contact Sheet terms and conditions of use. Important legal information regarding your use of our contact sheet, collage, and photo review tools. | noindex, follow | No |
+| `/about-us` | About Make Contact Sheet | Learn about Make Contact Sheet's mission to build the fastest, most private browser-first workspace for photo contact sheets, collages, and client reviews. | index, follow | Yes |
+| `/contact-us` | Contact Us · Make Contact Sheet | Get in touch with the Make Contact Sheet team. Reach out for support, feedback, or inquiries regarding our photo contact sheet and collage making workspace. | index, follow | Yes |
+| `/404` | Page Not Found · Make Contact Sheet | We couldn't find the page you're looking for. Return to the Make Contact Sheet homepage to start creating contact sheets and photo collages for free. | noindex, follow | No |
 | `/photo-contact-sheet-maker` | Fast Photo Contact Sheet Maker | Create professional photo contact sheets instantly in your browser. Perfect for proofing, reviewing, and exporting images with filenames intact. | index, follow | Yes |
 | `/photo-collage-maker` | Free Photo Collage Maker | Combine your images into beautiful layouts with our browser-based photo collage maker. No downloads or sign-ups required. Secure and easy to use. | index, follow | Yes |
 | `/contact-sheet-template` | Free Contact Sheet Templates | Browse our gallery of free contact sheet templates. Find the perfect layout for client proofing, photography portfolios, or printing your image collections. | index, follow | Yes |
@@ -209,7 +209,7 @@ Homepage (/)
 | `/guides/how-to-make-a-contact-sheet` | How to Make a Contact Sheet: Step-by-Step Guide | Learn how to make a professional contact sheet quickly. Our step-by-step guide covers the best practices for arranging and proofing your photography. | index, follow | Yes |
 | `/guides/how-to-make-photo-collage` | How to Make a Photo Collage Online | Discover how to make a beautiful photo collage online. Follow our simple tutorial to combine your favorite pictures into stunning layouts in minutes. | index, follow | Yes |
 | `/guides/photo-proof-sheet-with-filenames` | Create Photo Proof Sheets with Filenames | Learn the best workflow for creating photo proof sheets that include filenames. Simplify your client review process and ensure accurate image selection. | index, follow | Yes |
-| `/compare/photoshop-contact-sheet-alternative` | Best Photoshop Contact Sheet Alternative | Looking for a faster way to proof photos? Discover why FrameProof is the best lightweight alternative to Photoshop for creating contact sheets. | index, follow | Yes |
+| `/compare/photoshop-contact-sheet-alternative` | Best Photoshop Contact Sheet Alternative | Looking for a faster way to proof photos? Discover why Make Contact Sheet is the best lightweight alternative to Photoshop for creating contact sheets. | index, follow | Yes |
 
 ---
 
@@ -244,7 +244,7 @@ Homepage (/)
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "FrameProof",
+  "name": "Make Contact Sheet",
   "url": "https://www.frameproof.com/",
   "description": "Browser-first photo contact-sheet, collage, and review workspace."
 }
@@ -255,7 +255,7 @@ Homepage (/)
 {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "FrameProof",
+  "name": "Make Contact Sheet",
   "url": "https://www.frameproof.com/",
   "logo": "https://www.frameproof.com/logo.png"
 }
@@ -266,7 +266,7 @@ Homepage (/)
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "FrameProof Contact Sheet Maker",
+  "name": "Make Contact Sheet Contact Sheet Maker",
   "operatingSystem": "Web Browser",
   "applicationCategory": "MultimediaApplication",
   "offers": {
@@ -284,10 +284,10 @@ Homepage (/)
   "@type": "FAQPage",
   "mainEntity": [{
     "@type": "Question",
-    "name": "Is FrameProof free to use?",
+    "name": "Is Make Contact Sheet free to use?",
     "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Yes, FrameProof is completely free to use for creating contact sheets and collages in your browser."
+      "text": "Yes, Make Contact Sheet is completely free to use for creating contact sheets and collages in your browser."
     }
   }]
 }
@@ -354,7 +354,7 @@ Homepage (/)
 Under every question header, the first 1-2 sentences must directly and concisely answer the question. Supporting details, context, and examples follow afterward.
 
 ### 10.2 Self-Contained Statements
-Key claims and answers must be readable in isolation. Avoid vague pronoun references (e.g., replace "It is fast" with "FrameProof is fast").
+Key claims and answers must be readable in isolation. Avoid vague pronoun references (e.g., replace "It is fast" with "Make Contact Sheet is fast").
 
 ### 10.3 Question-Phrased Headers
 Format informational headers as real questions people ask (e.g., "How do I add filenames to a contact sheet?" instead of "Adding Filenames").
@@ -373,7 +373,7 @@ Use genuine HTML tags (`<ol>`, `<ul>`, `<table>`) for structured data. Do not fo
 *   Label estimates or hypotheses honestly.
 
 ### 11.2 Authorship
-*   The `/about-us` page must explain who runs FrameProof and why they are credible to build this software.
+*   The `/about-us` page must explain who runs Make Contact Sheet and why they are credible to build this software.
 *   Use real names where expertise matters (e.g., guide authorship).
 
 ### 11.3 AI Content Policy

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.frameproof.com/sitemap-index.xml
+Sitemap: https://makecontactsheet.com/sitemap-index.xml

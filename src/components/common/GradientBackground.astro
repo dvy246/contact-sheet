@@ -1,0 +1,220 @@
+---
+/**
+ * GradientBackground — animated ambient gradient field.
+ *
+ * Ported from the 21st.dev "Pipo" gradient recipe, with three deliberate
+ * changes:
+ *
+ * 1. Astro, not React. This site has no React runtime — `@astrojs/react` was
+ *    removed because its refresh wrapper crashed every dev module transform.
+ *    The original component renders one static <div> tree with no state, so
+ *    there is nothing React was buying here.
+ * 2. Palette swapped from the recipe's cream/peach (#FAF9EF / #E6B093) to the
+ *    site's chocolate-truffle range — caramel (#C98A46), deep cocoa (#6B3C12)
+ *    and a cream highlight — and the opaque base colour dropped entirely so
+ *    the section's own --marketing-* token still paints the canvas. That is
+ *    what keeps this working in both light and dark mode.
+ * 3. `filter: blur(8cqmin)` removed. A full-bleed blur is the most expensive
+ *    thing in the original: it forces an offscreen rasterisation pass, and any
+ *    animated `scale` under it re-rasterises every frame. The softness comes
+ *    from the gradients' own multi-stop alpha falloff instead, which costs
+ *    nothing. The recipe's second, live `feTurbulence` <svg> is also dropped —
+ *    the 120px tiled data-URI below produces the same grain and rasterises
+ *    once instead of over the whole viewport.
+ *
+ * Per-frame cost: three composited layers moved by `translate3d` only. No
+ * layout, no paint, no filters. Everything stops under
+ * `prefers-reduced-motion`.
+ */
+interface Props {
+  class?: string;
+  /** `bold` for hero-scale sections, `subtle` for interior bands. */
+  intensity?: 'bold' | 'subtle';
+  /** Set false to render the same field with no motion. */
+  animated?: boolean;
+}
+
+const { class: className = '', intensity = 'bold', animated = true } = Astro.props;
+---
+
+<div
+  class:list={['gb-root', className]}
+  data-intensity={intensity}
+  data-animated={animated ? 'true' : 'false'}
+  aria-hidden="true"
+>
+  <div class="gb-layer gb-layer-1"></div>
+  <div class="gb-layer gb-layer-2"></div>
+  <div class="gb-layer gb-layer-3"></div>
+  <div class="gb-grain"></div>
+</div>
+
+<style>
+  .gb-root {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    /* Confines the layers' paint to this box so the drift can never invalidate
+       anything outside the section. */
+    contain: paint;
+  }
+
+  .gb-layer {
+    position: absolute;
+    /* Oversized so a drifting layer never pulls its own falloff edge into
+       view. Amplitudes below stay well inside this bleed. */
+    inset: -35%;
+    /* Promoted by the animation; declared here so the static case
+       (animated={false} / reduced motion) is composited the same way. */
+    transform: translate3d(0, 0, 0);
+  }
+
+  /* Alpha-only stops landing on a zero-alpha value of the same hue. Ending on
+     `transparent` would band, because `transparent` is premultiplied black. */
+  .gb-layer-1 {
+    background: radial-gradient(
+      circle at 68% 46%,
+      rgba(201, 138, 70, 0.16) 0%,
+      rgba(201, 138, 70, 0.135) 10%,
+      rgba(201, 138, 70, 0.08) 21%,
+      rgba(201, 138, 70, 0.025) 31%,
+      rgba(201, 138, 70, 0) 41%
+    );
+  }
+
+  /* Deep cocoa, the darkest note in the truffle range. It sits opposite the
+     caramel layer so the field reads as two tones of the same brown rather
+     than one flat wash — and at this alpha it reads as warm shade on cream,
+     never as a second hue. */
+  .gb-layer-2 {
+    background: radial-gradient(
+      circle at 25% 76%,
+      rgba(107, 60, 18, 0.11) 0%,
+      rgba(107, 60, 18, 0.09) 11%,
+      rgba(107, 60, 18, 0.055) 22%,
+      rgba(107, 60, 18, 0.018) 33%,
+      rgba(107, 60, 18, 0) 45%
+    );
+  }
+
+  /* The cream of the palette: a top highlight that lifts the section without
+     adding a third hue. */
+  .gb-layer-3 {
+    background: radial-gradient(
+      circle at 53% 13%,
+      rgba(255, 255, 255, 0.85) 0%,
+      rgba(255, 255, 255, 0.7) 17%,
+      rgba(255, 255, 255, 0.4) 33%,
+      rgba(255, 255, 255, 0.12) 50%,
+      rgba(255, 255, 255, 0) 67%
+    );
+  }
+
+  :global(html.dark) .gb-layer-1 {
+    background: radial-gradient(
+      circle at 68% 46%,
+      rgba(201, 138, 70, 0.2) 0%,
+      rgba(201, 138, 70, 0.165) 10%,
+      rgba(201, 138, 70, 0.1) 21%,
+      rgba(201, 138, 70, 0.03) 31%,
+      rgba(201, 138, 70, 0) 41%
+    );
+  }
+
+  :global(html.dark) .gb-layer-2 {
+    background: radial-gradient(
+      circle at 25% 76%,
+      rgba(156, 90, 28, 0.22) 0%,
+      rgba(156, 90, 28, 0.18) 11%,
+      rgba(156, 90, 28, 0.1) 22%,
+      rgba(156, 90, 28, 0.03) 33%,
+      rgba(156, 90, 28, 0) 45%
+    );
+  }
+
+  /* On dark chocolate, white reads as haze. Warm cream at low alpha reads as
+     light falling on the surface. */
+  :global(html.dark) .gb-layer-3 {
+    background: radial-gradient(
+      circle at 53% 13%,
+      rgba(216, 188, 158, 0.16) 0%,
+      rgba(216, 188, 158, 0.13) 17%,
+      rgba(216, 188, 158, 0.075) 33%,
+      rgba(216, 188, 158, 0.022) 50%,
+      rgba(216, 188, 158, 0) 67%
+    );
+  }
+
+  .gb-root[data-intensity='subtle'] .gb-layer {
+    opacity: 0.55;
+  }
+
+  /* Film grain. One 120px tile, rasterised once and repeated — no live SVG
+     filter over the viewport. Static, so the blend costs one paint, not one
+     per frame. */
+  .gb-grain {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    background-size: 120px 120px;
+    opacity: 0.16;
+    mix-blend-mode: overlay;
+  }
+
+  :global(html.dark) .gb-grain {
+    opacity: 0.24;
+    mix-blend-mode: soft-light;
+  }
+
+  /* Drift. `translate3d` only — the layers are gradients, so a composited
+     transform needs no repaint. Percentages are of the layer's own oversized
+     box, and `alternate` reverses without a seam, so no keyframe has to loop
+     back to its start position. */
+  @keyframes gb-drift-1 {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(3.5%, -2.5%, 0);
+    }
+  }
+
+  @keyframes gb-drift-2 {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-3%, -3.5%, 0);
+    }
+  }
+
+  @keyframes gb-drift-3 {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(2%, 2.5%, 0);
+    }
+  }
+
+  /* Co-prime-ish durations so the three layers never resynchronise into a
+     visible pulse. */
+  .gb-root[data-animated='true'] .gb-layer-1 {
+    animation: gb-drift-1 23s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  }
+
+  .gb-root[data-animated='true'] .gb-layer-2 {
+    animation: gb-drift-2 31s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  }
+
+  .gb-root[data-animated='true'] .gb-layer-3 {
+    animation: gb-drift-3 19s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gb-root[data-animated='true'] .gb-layer {
+      animation: none;
+    }
+  }
+</style>

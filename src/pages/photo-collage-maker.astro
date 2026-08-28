@@ -12,19 +12,19 @@ const meta = METADATA_REGISTRY['/photo-collage-maker'];
 const faqs = [
   {
     question: 'How do I make a photo collage online for free?',
-    answer: 'Select a template preset in FrameProof (such as a 2×2 grid, three-photo strip, or 9:16 mobile story layout), drag your photos into the dropzone, adjust spacing or background colors, and export your high-resolution collage instantly as a PNG or JPEG.',
+    answer: 'Select a template preset in Make Contact Sheet (such as a 2×2 grid, three-photo strip, or 9:16 mobile story layout), drag your photos into the dropzone, adjust spacing or background colors, and export your high-resolution collage instantly as a PNG or JPEG.',
   },
   {
     question: 'Do I need to sign up or create an account?',
-    answer: 'No. FrameProof is completely free and requires no account, email address, or software installation.',
+    answer: 'No. Make Contact Sheet is completely free and requires no account, email address, or software installation.',
   },
   {
     question: 'Can I create before-and-after photo comparisons?',
-    answer: 'Yes. FrameProof includes dedicated side-by-side comparison templates designed for retouching portfolios, product showcases, and fitness transformations.',
+    answer: 'Yes. Make Contact Sheet includes dedicated side-by-side comparison templates designed for retouching portfolios, product showcases, and fitness transformations.',
   },
   {
     question: 'What resolution are exported collages?',
-    answer: 'FrameProof exports collages at full studio resolution (up to 4K / 300 DPI) ensuring sharp prints and crisp social media uploads.',
+    answer: 'Make Contact Sheet exports collages at full studio resolution (up to 4K / 300 DPI) ensuring sharp prints and crisp social media uploads.',
   },
 ];
 
@@ -37,7 +37,7 @@ const schemas = [
   buildSoftwareApplicationSchema(
     'Free Photo Collage Maker',
     meta.description,
-    'https://www.frameproof.com/photo-collage-maker'
+    'https://makecontactsheet.com/photo-collage-maker'
   ),
   buildFAQSchema(faqs),
 ];
@@ -51,14 +51,14 @@ const schemas = [
   schema={schemas}
 >
   <!-- Page Header -->
-  <div class="bg-marketing-panel border-b border-marketing-border py-10 sm:py-14 transition-colors">
-    <div class="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-4">
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
       <Breadcrumbs items={breadcrumbs} />
-      <div class="max-w-3xl space-y-2">
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight">
+      <div class="max-w-3xl">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
           Free Photo Collage Maker
         </h1>
-        <p class="text-base text-marketing-muted leading-relaxed">
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
           Combine multiple pictures into balanced grids, storytelling triptychs, and social formats. Fast, private, and free with no cloud uploads or signups required.
         </p>
       </div>
@@ -66,17 +66,28 @@ const schemas = [
   </div>
 
   <!-- Framed Live Workspace -->
-  <section class="py-10 sm:py-14 bg-marketing-bg border-b border-marketing-border transition-colors">
-    <div class="max-w-[1360px] mx-auto px-4 sm:px-6">
+  <section class="py-12 sm:py-16 lg:py-20 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
       <div class="rounded-2xl overflow-hidden border border-workspace-border shadow-2xl bg-workspace-bg">
+        <!-- Window Chrome Top Bar -->
+        <div class="px-4 py-2.5 bg-workspace-panel border-b border-workspace-border flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 rounded-full bg-rose-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+          </div>
+          <div class="text-[11px] font-mono text-workspace-muted font-medium">Make Contact Sheet Light-Table · Collage Mode</div>
+          <div class="w-12"></div>
+        </div>
+
         <WorkspaceApp />
       </div>
     </div>
   </section>
 
   <!-- Editorial & Educational Content (400-600 words) -->
-  <section class="py-16 sm:py-20 bg-marketing-panel border-b border-marketing-border transition-colors">
-    <div class="max-w-[850px] mx-auto px-4 sm:px-6 space-y-12">
+  <section class="py-16 sm:py-24 lg:py-28 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[850px] mx-auto px-4 sm:px-6 space-y-14">
       
       <div class="space-y-4 prose-measure">
         <h2 class="text-2xl font-bold text-marketing-text">
@@ -92,10 +103,10 @@ const schemas = [
 
       <div class="space-y-4 prose-measure">
         <h2 class="text-2xl font-bold text-marketing-text">
-          Why FrameProof is a better collage tool for creators
+          Why Make Contact Sheet is a better collage tool for creators
         </h2>
         <p class="text-sm text-marketing-text/90 leading-relaxed">
-          Most online collage makers are bloated design tools that push subscription upgrades, plaster watermarks on exports, and require you to upload your personal photos to their servers. FrameProof takes a minimalist, privacy-first approach: clean geometric templates, adjustable borders and margins, uncompromised full-resolution exports, and 100% local processing.
+          Most online collage makers are bloated design tools that push subscription upgrades, plaster watermarks on exports, and require you to upload your personal photos to their servers. Make Contact Sheet takes a minimalist, privacy-first approach: clean geometric templates, adjustable borders and margins, uncompromised full-resolution exports, and 100% local processing.
         </p>
       </div>
 
@@ -104,25 +115,25 @@ const schemas = [
         <h3 class="text-base font-bold text-marketing-text">Collage & Layout Guides</h3>
         <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs">
           <li>
-            <a href="/guides/how-to-make-photo-collage" class="font-medium text-marketing-text hover:text-accent-amber flex items-center gap-2 transition-colors">
+            <a href="/guides/how-to-make-photo-collage" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
               <Icon name="file-text" size={14} class="text-marketing-muted" />
               <span>How to Make a Photo Collage Online (Tutorial)</span>
             </a>
           </li>
           <li>
-            <a href="/collage-templates" class="font-medium text-marketing-text hover:text-accent-amber flex items-center gap-2 transition-colors">
+            <a href="/collage-templates" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
               <Icon name="layout" size={14} class="text-marketing-muted" />
               <span>Browse Customizable Collage Templates</span>
             </a>
           </li>
           <li>
-            <a href="/photo-contact-sheet-maker" class="font-medium text-marketing-text hover:text-accent-amber flex items-center gap-2 transition-colors">
+            <a href="/photo-contact-sheet-maker" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
               <Icon name="grid" size={14} class="text-marketing-muted" />
               <span>Photo Contact Sheet Maker</span>
             </a>
           </li>
           <li>
-            <a href="/guides/how-to-make-a-contact-sheet" class="font-medium text-marketing-text hover:text-accent-amber flex items-center gap-2 transition-colors">
+            <a href="/guides/how-to-make-a-contact-sheet" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
               <Icon name="file-text" size={14} class="text-marketing-muted" />
               <span>Contact Sheet Best Practices</span>
             </a>

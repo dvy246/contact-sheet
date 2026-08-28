@@ -15,7 +15,7 @@ const faqs = [
   },
   {
     question: 'Can I customize the rows and columns of these templates?',
-    answer: 'Yes. While these templates provide tested defaults, you can freely adjust columns (1-8), rows (1-10), gutter spacing, and margins inside the FrameProof workspace.',
+    answer: 'Yes. While these templates provide tested defaults, you can freely adjust columns (1-8), rows (1-10), gutter spacing, and margins inside the Make Contact Sheet workspace.',
   },
   {
     question: 'What is the best template for client selection?',
@@ -40,11 +40,11 @@ const schemas = [
   robots={meta.robots}
   schema={schemas}
 >
-  <div class="bg-marketing-panel border-b border-marketing-border py-10 sm:py-14 transition-colors">
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
     <div class="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-4">
       <Breadcrumbs items={breadcrumbs} />
-      <div class="max-w-3xl">
-        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-marketing-text mb-3">
+      <div class="max-w-3xl space-y-3">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight">
           Free Contact Sheet Templates
         </h1>
         <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
@@ -54,18 +54,18 @@ const schemas = [
     </div>
   </div>
 
-  <section class="py-12 sm:py-16 bg-marketing-bg border-b border-marketing-border transition-colors">
+  <section class="py-16 sm:py-24 lg:py-28 bg-marketing-bg border-b border-marketing-border transition-colors">
     <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {CONTACT_SHEET_PRESETS.map((preset) => (
-          <div class="bg-marketing-panel border border-marketing-border rounded-2xl p-6 sm:p-7 flex flex-col justify-between space-y-5 shadow-xs hover:border-zinc-500 transition-all">
+          <div class="bg-marketing-panel border border-marketing-border rounded-2xl p-6 sm:p-7 flex flex-col justify-between space-y-6 shadow-xs hover:border-stone-400 dark:hover:border-stone-600 transition-all">
             <div class="space-y-3">
               <div class="flex items-center justify-between">
-                <span class="text-xs font-bold uppercase tracking-wider text-accent-amber font-mono">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-accent-ink font-mono">
                   {preset.category}
                 </span>
-                <span class="text-xs px-2 py-0.5 rounded bg-marketing-surface border border-marketing-border font-mono text-marketing-text">
-                  {preset.config.columns}×{preset.config.rows} Grid
+                <span class="text-[11px] px-2.5 py-1 rounded-lg bg-marketing-surface border border-marketing-border font-mono text-marketing-muted">
+                  {preset.config.columns}x{preset.config.rows} Grid
                 </span>
               </div>
               <h2 class="text-lg font-bold text-marketing-text">{preset.name}</h2>
@@ -91,7 +91,7 @@ const schemas = [
 
             <a 
               href="/#workspace" 
-              class="w-full py-2.5 px-4 rounded-xl bg-zinc-900 hover:bg-black text-white dark:bg-accent-amber dark:hover:bg-accent-amber-hover dark:text-black font-semibold text-xs text-center tracking-tight shadow-sm hover:shadow transition-all block"
+              class="w-full py-2.5 px-4 rounded-xl bg-stone-900 hover:bg-black text-white dark:bg-accent dark:hover:bg-accent-hover dark:text-white font-semibold text-xs text-center tracking-tight shadow-sm hover:shadow transition-all block"
             >
               Open in Workspace
             </a>

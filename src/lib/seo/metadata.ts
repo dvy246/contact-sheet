@@ -7,11 +7,11 @@ export interface RouteMetadata {
   schemaType?: string[];
 }
 
-export const SITE_URL = 'https://www.frameproof.com';
+export const SITE_URL = 'https://makecontactsheet.com';
 
 export const METADATA_REGISTRY: Record<string, RouteMetadata> = {
   '/': {
-    title: 'FrameProof — Free Contact Sheet & Collage Maker',
+    title: 'Make Contact Sheet - Free Contact Sheet & Collage Maker',
     description: 'Create professional contact sheets and photo collages directly in your browser. Fast, secure, and free. No signup required to start arranging your photos.',
     canonical: `${SITE_URL}/`,
     robots: 'index, follow',
@@ -22,6 +22,20 @@ export const METADATA_REGISTRY: Record<string, RouteMetadata> = {
     title: 'Fast Photo Contact Sheet Maker',
     description: 'Create professional photo contact sheets instantly in your browser. Perfect for proofing, reviewing, and exporting images with filenames intact.',
     canonical: `${SITE_URL}/photo-contact-sheet-maker`,
+    robots: 'index, follow',
+    ogType: 'website',
+    schemaType: ['SoftwareApplication', 'FAQPage', 'BreadcrumbList'],
+  },
+  // Indexable in its own right: the route carries a full copy block under the
+  // app (how it works, every configuration field, shortcuts, formats, FAQ), so
+  // it self-canonicalises and sits in the sitemap. Its target phrasing is
+  // deliberately the *editor / full screen* wording rather than
+  // "photo contact sheet maker", which `/photo-contact-sheet-maker` owns — two
+  // pages chasing one phrase split their own signals.
+  '/studio/contact-sheet': {
+    title: 'Contact Sheet Editor — Full-Screen Studio',
+    description: 'A full-screen contact sheet editor that runs in your browser. Set any grid, page size or custom mm format, keep original filenames on every frame, review with keyboard shortcuts and export PDF, PNG, JPEG or a selection list.',
+    canonical: `${SITE_URL}/studio/contact-sheet`,
     robots: 'index, follow',
     ogType: 'website',
     schemaType: ['SoftwareApplication', 'FAQPage', 'BreadcrumbList'],
@@ -76,47 +90,47 @@ export const METADATA_REGISTRY: Record<string, RouteMetadata> = {
   },
   '/compare/photoshop-contact-sheet-alternative': {
     title: 'Best Photoshop Contact Sheet Alternative',
-    description: 'Looking for a faster way to proof photos? Discover why FrameProof is the best lightweight alternative to Photoshop for creating contact sheets.',
+    description: 'Looking for a faster way to proof photos? Discover why Make Contact Sheet is the best lightweight alternative to Photoshop for creating contact sheets.',
     canonical: `${SITE_URL}/compare/photoshop-contact-sheet-alternative`,
     robots: 'index, follow',
     ogType: 'article',
     schemaType: ['BreadcrumbList', 'FAQPage'],
   },
   '/about-us': {
-    title: 'About FrameProof',
-    description: 'Learn about FrameProof\'s mission to build the fastest, most private browser-first workspace for photo contact sheets, collages, and client reviews.',
+    title: 'About Make Contact Sheet',
+    description: 'Learn about Make Contact Sheet\'s mission to build the fastest, most private browser-first workspace for photo contact sheets, collages, and client reviews.',
     canonical: `${SITE_URL}/about-us`,
     robots: 'index, follow',
     ogType: 'website',
     schemaType: ['Organization', 'BreadcrumbList'],
   },
   '/contact-us': {
-    title: 'Contact Us · FrameProof',
-    description: 'Get in touch with the FrameProof team. Reach out for support, feedback, or inquiries regarding our photo contact sheet and collage making workspace.',
+    title: 'Contact Us · Make Contact Sheet',
+    description: 'Get in touch with the Make Contact Sheet team. Reach out for support, feedback, or inquiries regarding our photo contact sheet and collage making workspace.',
     canonical: `${SITE_URL}/contact-us`,
     robots: 'index, follow',
     ogType: 'website',
     schemaType: ['BreadcrumbList'],
   },
   '/privacy-policy': {
-    title: 'Privacy Policy · FrameProof',
-    description: 'Read the FrameProof Privacy Policy. Learn how we handle your data securely and respect your privacy while you use our browser-based photo workspace tools.',
+    title: 'Privacy Policy · Make Contact Sheet',
+    description: 'Read the Make Contact Sheet Privacy Policy. Learn how we handle your data securely and respect your privacy while you use our browser-based photo workspace tools.',
     canonical: `${SITE_URL}/privacy-policy`,
     robots: 'noindex, follow',
     ogType: 'website',
     schemaType: ['BreadcrumbList'],
   },
   '/terms-and-conditions': {
-    title: 'Terms and Conditions · FrameProof',
-    description: 'Read the FrameProof terms and conditions of use. Important legal information regarding your use of our contact sheet, collage, and photo review tools.',
+    title: 'Terms and Conditions · Make Contact Sheet',
+    description: 'Read the Make Contact Sheet terms and conditions of use. Important legal information regarding your use of our contact sheet, collage, and photo review tools.',
     canonical: `${SITE_URL}/terms-and-conditions`,
     robots: 'noindex, follow',
     ogType: 'website',
     schemaType: ['BreadcrumbList'],
   },
   '/404': {
-    title: 'Page Not Found · FrameProof',
-    description: 'We couldn\'t find the page you\'re looking for. Return to the FrameProof homepage to start creating contact sheets and photo collages for free.',
+    title: 'Page Not Found · Make Contact Sheet',
+    description: 'We couldn\'t find the page you\'re looking for. Return to the Make Contact Sheet homepage to start creating contact sheets and photo collages for free.',
     canonical: `${SITE_URL}/404`,
     robots: 'noindex, follow',
     ogType: 'website',

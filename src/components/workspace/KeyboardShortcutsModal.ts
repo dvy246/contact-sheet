@@ -41,7 +41,7 @@ export class KeyboardShortcutsManager {
             <kbd class="px-2 py-0.5 rounded bg-workspace-surface border border-workspace-border font-mono font-bold">3</kbd>
           </div>
           <div class="flex items-center justify-between p-2 rounded bg-workspace-bg border border-workspace-border">
-            <span class="text-zinc-300 font-medium">Reset Status</span>
+            <span class="text-stone-300 font-medium">Reset Status</span>
             <kbd class="px-2 py-0.5 rounded bg-workspace-surface border border-workspace-border font-mono font-bold">0</kbd>
           </div>
           <div class="flex items-center justify-between p-2 rounded bg-workspace-bg border border-workspace-border">

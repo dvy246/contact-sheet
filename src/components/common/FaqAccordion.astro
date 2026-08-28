@@ -14,16 +14,16 @@ interface Props {
 const { faqs, class: className = '' } = Astro.props;
 ---
 
-<div class={`space-y-3 ${className}`}>
+<div class={`space-y-4 ${className}`}>
   {faqs.map((faq) => (
-    <details class="group bg-marketing-panel border border-marketing-border rounded-xl p-4 sm:p-5 transition-all open:shadow-xs open:border-zinc-500">
+    <details class="group bg-marketing-panel border border-marketing-border rounded-2xl p-5 sm:p-6 transition-all open:shadow-sm open:border-stone-400 dark:open:border-stone-600">
       <summary class="flex items-center justify-between font-semibold text-sm sm:text-base text-marketing-text cursor-pointer list-none select-none">
-        <span class="pr-4">{faq.question}</span>
-        <div class="w-6 h-6 rounded-md bg-marketing-surface flex items-center justify-center text-marketing-muted group-open:rotate-180 transition-transform">
+        <span class="pr-4 leading-snug">{faq.question}</span>
+        <div class="w-7 h-7 rounded-lg bg-marketing-surface flex items-center justify-center text-marketing-muted group-open:rotate-180 transition-transform flex-shrink-0">
           <Icon name="chevron-down" size={14} />
         </div>
       </summary>
-      <div class="mt-3 pt-3 border-t border-marketing-border text-xs sm:text-sm text-marketing-muted leading-relaxed">
+      <div class="mt-4 pt-4 border-t border-marketing-border text-xs sm:text-sm text-marketing-muted leading-relaxed">
         <p>{faq.answer}</p>
       </div>
     </details>

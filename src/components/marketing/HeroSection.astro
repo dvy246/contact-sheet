@@ -1,60 +1,80 @@
 ---
 import Icon from '../common/Icon.astro';
+import GradientBackground from '../common/GradientBackground.astro';
 ---
 
-<section class="relative pt-16 pb-20 sm:pt-28 sm:pb-32 overflow-hidden border-b border-marketing-border bg-marketing-panel transition-colors">
-  <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
-    <div class="max-w-4xl mx-auto text-center flex flex-col items-center">
-      
-      <!-- Trust Indicator Tag -->
-      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-marketing-surface border border-marketing-border text-marketing-text text-xs font-mono mb-8 shadow-xs">
-        <span class="w-2 h-2 rounded-full bg-accent-amber animate-pulse"></span>
-        <span>100% LOCAL BROWSER PROCESSING</span>
+<section class="relative pt-14 pb-20 sm:pt-20 sm:pb-24 lg:pt-24 lg:pb-28 overflow-hidden bg-marketing-panel border-b border-marketing-border transition-colors">
+  <!-- Ambient gradient field. Replaces the previous static wash and the
+       blur-[120px] glow orb: that orb was a full-bleed CSS filter, which is
+       the one thing in a hero backdrop that actually costs paint. This is
+       three composited gradient layers drifting on transform alone. -->
+  <GradientBackground class="z-0" intensity="bold" />
+
+  <!-- Architectural Studio Background Grid -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+    <!-- Grid overlay with soft radial mask -->
+    <div
+      class="absolute inset-0 studio-grid-pattern opacity-40 dark:opacity-25"
+      style="mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 20%, transparent 80%); -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 20%, transparent 80%);"
+    ></div>
+  </div>
+
+  <div class="relative z-10 max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 w-full min-w-0">
+    <div class="max-w-3xl mx-auto text-center flex flex-col items-center w-full min-w-0">
+
+      <!-- Technical Eyebrow Badge -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-marketing-surface/70 backdrop-blur-sm border border-marketing-border text-[10px] sm:text-[11px] font-mono font-medium tracking-[0.13em] text-marketing-text/90 mb-3.5 sm:mb-4 lg:mb-5 shadow-xs max-w-full">
+        <span class="relative flex h-2 w-2 shrink-0">
+          <span class="animate-ping motion-reduce:animate-none absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+        </span>
+        <span>100% LOCAL IN-BROWSER ENGINE</span>
       </div>
 
-      <!-- Exact Main Keyword Headline -->
-      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-marketing-text leading-[1.08] mb-7">
-        Photo Contact Sheet & Collage Maker
+      <!-- Main Headline -->
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-marketing-text tracking-tight sm:tracking-[-0.03em] leading-[1.12] sm:leading-[1.07] text-balance mb-5 sm:mb-7 lg:mb-8">
+        Photo Contact Sheet &amp; Collage Maker
       </h1>
 
-      <!-- Elegant, Well-Spaced Subtitle -->
-      <p class="text-base sm:text-lg lg:text-xl text-marketing-muted leading-relaxed max-w-2xl mx-auto mb-10 font-normal">
-        Arrange image batches into print-ready contact sheets and custom collages. Review picks with fast keyboard shortcuts and export exact filenames — with zero server uploads.
+      <!-- Supporting Subtitle -->
+      <p class="text-[15px] sm:text-lg lg:text-xl text-marketing-muted leading-relaxed max-w-2xl mx-auto text-balance mb-7 sm:mb-9 lg:mb-10">
+        Arrange photos into print-ready contact sheets and collages. Review picks with fast keyboard shortcuts and export filenames locally.
       </p>
 
-      <!-- Primary Action Buttons Row -->
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-10 w-full sm:w-auto">
-        <a 
-          href="/#workspace" 
-          class="w-full sm:w-auto h-12 px-8 rounded-xl bg-zinc-900 hover:bg-black text-white dark:bg-accent-amber dark:hover:bg-accent-amber-hover dark:text-black font-semibold text-sm tracking-tight shadow-md hover:shadow-xl transition-all flex items-center justify-center gap-2 group cursor-pointer"
+      <!-- Action Button Group -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-3.5 mb-9 sm:mb-11 w-full sm:w-auto">
+        <a
+          href="/#workspace"
+          class="w-full sm:w-auto h-12 sm:h-[52px] px-7 sm:px-8 rounded-xl bg-accent hover:bg-accent-hover text-white font-bold text-sm sm:text-[15px] tracking-tight shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/35 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 group cursor-pointer"
         >
-          <span>Start Creating — Free</span>
+          <span>Start Creating</span>
           <Icon name="arrow-right" size={16} class="group-hover:translate-x-0.5 transition-transform" />
         </a>
-        
-        <a 
-          href="/photo-contact-sheet-maker" 
-          class="w-full sm:w-auto h-12 px-6 rounded-xl bg-marketing-surface hover:bg-marketing-border text-marketing-text font-medium text-sm border border-marketing-border transition-all flex items-center justify-center gap-2 cursor-pointer"
+
+        <a
+          href="/photo-contact-sheet-maker"
+          class="w-full sm:w-auto h-12 sm:h-[52px] px-6 sm:px-7 rounded-xl bg-marketing-surface/70 backdrop-blur-sm hover:bg-marketing-surface-hover text-marketing-text font-semibold text-sm sm:text-[15px] border border-marketing-border hover:border-marketing-text/20 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-xs"
         >
           <span>Explore Templates</span>
         </a>
       </div>
 
-      <!-- Trust Sub-copy -->
-      <div class="flex flex-wrap items-center justify-center gap-5 sm:gap-8 text-xs text-marketing-muted">
-        <span class="flex items-center gap-1.5 font-medium">
-          <Icon name="check" size={14} class="text-emerald-500" />
-          No signup required
-        </span>
-        <span class="flex items-center gap-1.5 font-medium">
-          <Icon name="check" size={14} class="text-emerald-500" />
-          Zero server uploads
-        </span>
-        <span class="flex items-center gap-1.5 font-medium">
-          <Icon name="check" size={14} class="text-emerald-500" />
-          Original filenames preserved
-        </span>
+      <!-- Trust Spec Strip -->
+      <div class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
+        <div class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-marketing-surface/70 backdrop-blur-sm border border-marketing-border text-xs sm:text-[13px] text-marketing-text font-medium shadow-xs">
+          <Icon name="shield" size={14} class="text-emerald-500 shrink-0" />
+          <span>Zero Server Uploads</span>
+        </div>
+        <div class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-marketing-surface/70 backdrop-blur-sm border border-marketing-border text-xs sm:text-[13px] text-marketing-text font-medium shadow-xs">
+          <Icon name="check" size={14} class="text-emerald-500 shrink-0" />
+          <span>Free &amp; No Signup</span>
+        </div>
+        <div class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-marketing-surface/70 backdrop-blur-sm border border-marketing-border text-xs sm:text-[13px] text-marketing-text font-medium shadow-xs">
+          <Icon name="file-check" size={14} class="text-emerald-500 shrink-0" />
+          <span>Filenames Preserved</span>
+        </div>
       </div>
+
     </div>
   </div>
 </section>

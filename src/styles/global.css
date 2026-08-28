@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@source "../src";
+@source "../**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -7,7 +7,7 @@
   --font-sans: "Plus Jakarta Sans", "Instrument Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-  /* Workspace Adaptive Palette (Driven by CSS vars) */
+  /* Workspace Adaptive Palette */
   --color-workspace-bg: var(--workspace-bg);
   --color-workspace-panel: var(--workspace-panel);
   --color-workspace-surface: var(--workspace-surface);
@@ -17,20 +17,39 @@
   --color-workspace-text: var(--workspace-text);
   --color-workspace-muted: var(--workspace-muted);
 
-  /* Marketing Dynamic Palette (Driven by CSS vars) */
+  /* Marketing Dynamic Palette */
   --color-marketing-bg: var(--marketing-bg);
   --color-marketing-panel: var(--marketing-panel);
   --color-marketing-surface: var(--marketing-surface);
+  --color-marketing-surface-hover: var(--marketing-surface-hover);
   --color-marketing-border: var(--marketing-border);
   --color-marketing-border-subtle: var(--marketing-border-subtle);
   --color-marketing-text: var(--marketing-text);
   --color-marketing-muted: var(--marketing-muted);
 
-  /* Technical Amber Accent */
-  --color-accent-amber: #f59e0b;
-  --color-accent-amber-hover: #d97706;
-  --color-accent-amber-dark: #b45309;
-  --color-accent-amber-glow: rgba(245, 158, 11, 0.15);
+  /* Caramel accent — the 10% in a 60-30-10 split.
+     60% cream / espresso canvas (--*-bg / --*-panel), 30% cocoa structure
+     (--*-text / --*-muted / --*-border), 10% this. Used only for the primary
+     CTA, active states, focus rings and the import affordance — nowhere else,
+     or it stops reading as an accent.
+
+     #9C5A1C, not a lighter toffee: white-on-#9C5A1C is 5.4:1 and
+     #9C5A1C-on-cream is 5.1:1, both clearing the 4.5:1 AA floor for body text.
+     A lighter #B4681F measures 4.25:1 against white and fails. The lighter
+     tint is kept below for translucent glows and borders, where contrast is
+     moot. */
+  --color-accent: #9c5a1c;
+  --color-accent-hover: #824a16;
+  --color-accent-dark: #6b3c12;
+  --color-accent-light: #c98a46;
+  --color-accent-glow: rgba(201, 138, 70, 0.15);
+  --color-accent-glow-border: var(--accent-glow-border);
+
+  /* Accent used as *text or icon colour* rather than as a fill. Adaptive,
+     because a single caramel cannot clear 4.5:1 against both cream and
+     espresso: #9c5a1c is 5.1:1 on cream but only 2.7:1 on #120c09, so dark
+     mode lightens to #d99a4e (7.9:1). Fills stay on --color-accent in both. */
+  --color-accent-ink: var(--accent-ink);
 
   /* Review Status Indicators */
   --color-status-keep: #10b981;
@@ -48,59 +67,96 @@
   --color-status-flag-border: #d97706;
   --color-status-flag-text: #fde68a;
 
-  /* 8-Step Spacing Scale */
-  --spacing-space-xs: 4px;
-  --spacing-space-sm: 8px;
-  --spacing-space-md: 16px;
-  --spacing-space-lg: 24px;
-  --spacing-space-xl: 32px;
-  --spacing-space-2xl: 48px;
-  --spacing-space-3xl: 80px;
-  --spacing-space-4xl: 120px;
+  /* Spacing Scale Tokens */
+  --spacing-space-1: 4px;
+  --spacing-space-2: 8px;
+  --spacing-space-3: 12px;
+  --spacing-space-4: 16px;
+  --spacing-space-5: 24px;
+  --spacing-space-6: 32px;
+  --spacing-space-7: 40px;
+  --spacing-space-8: 48px;
+  --spacing-space-9: 64px;
+  --spacing-space-10: 80px;
+  --spacing-space-11: 96px;
+  --spacing-space-12: 128px;
 }
 
 :root {
-  --content-max: 1200px;
+  --content-max: 1240px;
 
-  /* Light Marketing Tokens (White Mode) */
-  --marketing-bg: #fafaf9;
+  /* 60% — Light marketing canvas: cream, the pale end of the chocolate-truffle
+     range. Warm-tinted rather than pure grey so the neutrals share an undertone
+     with the caramel accent instead of fighting it. */
+  --marketing-bg: #fbf7f2;
   --marketing-panel: #ffffff;
-  --marketing-surface: #f4f4f5;
-  --marketing-border: #e4e4e7;
-  --marketing-border-subtle: #f0f0f2;
-  --marketing-text: #18181b;
-  --marketing-muted: #71717a;
+  --marketing-surface: #f5eee5;
+  --marketing-surface-hover: #ede2d5;
+  /* 30% — cocoa structure */
+  --marketing-border: #e7d9c9;
+  --marketing-border-subtle: #f3eae0;
+  --marketing-text: #2a1a12;
+  --marketing-muted: #7a6353;
 
-  /* Light Workspace Tokens (White Mode Light-Table) */
-  --workspace-bg: #f4f4f7;
-  --workspace-panel: #ffffff;
-  --workspace-surface: #f4f4f6;
-  --workspace-surface-hover: #eaebee;
-  --workspace-border: #dcdcde;
-  --workspace-border-subtle: #eaeaea;
-  --workspace-text: #18181b;
-  --workspace-muted: #64748b;
+  /* Light Workspace Tokens */
+  --workspace-bg: #f5eee5;
+  --workspace-panel: #fffdfa;
+  --workspace-surface: #fbf7f2;
+  --workspace-surface-hover: #ede2d5;
+  --workspace-border: #dcc9b5;
+  --workspace-border-subtle: #ede2d5;
+  --workspace-text: #2a1a12;
+  --workspace-muted: #7a6353;
+
+  /* Elevation — light. Soft, close, multi-layer: depth without grey haze. The
+     shadow is tinted with the cocoa text colour, not neutral black, so it reads
+     as shade on warm paper. */
+  --elevation-card:
+    0 1px 2px -1px rgba(59, 36, 24, 0.07),
+    0 4px 12px -4px rgba(59, 36, 24, 0.08);
+  --elevation-card-hover:
+    0 2px 4px -2px rgba(59, 36, 24, 0.1),
+    0 12px 28px -8px rgba(59, 36, 24, 0.14),
+    0 0 0 1px rgba(201, 138, 70, 0.2);
+  --accent-ink: #9c5a1c;
+  --accent-glow-border: rgba(201, 138, 70, 0.5);
 }
 
 html.dark {
-  /* Dark Marketing Tokens (Dark Mode) */
-  --marketing-bg: #09090b;
-  --marketing-panel: #111114;
-  --marketing-surface: #18181c;
-  --marketing-border: #27272f;
-  --marketing-border-subtle: #1c1c22;
-  --marketing-text: #f4f4f5;
-  --marketing-muted: #a1a1aa;
+  /* 60% — Dark marketing canvas: dark chocolate. Deep enough to stay a true
+     backdrop, but on a brown undertone so it belongs to the same family as the
+     cream neutrals and the caramel accent. */
+  --marketing-bg: #120c09;
+  --marketing-panel: #1b1310;
+  --marketing-surface: #251a15;
+  --marketing-surface-hover: #32231c;
+  /* 30% — cocoa structure */
+  --marketing-border: #3a2921;
+  --marketing-border-subtle: #1f1613;
+  --marketing-text: #fbf6f0;
+  --marketing-muted: #b39c89;
 
-  /* Dark Workspace Tokens (Obsidian Dark Light-Table) */
-  --workspace-bg: #09090b;
-  --workspace-panel: #111114;
-  --workspace-surface: #18181c;
-  --workspace-surface-hover: #222228;
-  --workspace-border: #27272f;
-  --workspace-border-subtle: #1c1c22;
-  --workspace-text: #f4f4f5;
-  --workspace-muted: #909099;
+  /* Dark Workspace Tokens (Truffle Light-Table) */
+  --workspace-bg: #120c09;
+  --workspace-panel: #1a1210;
+  --workspace-surface: #251a15;
+  --workspace-surface-hover: #32231c;
+  --workspace-border: #3a2921;
+  --workspace-border-subtle: #1f1613;
+  --workspace-text: #fbf6f0;
+  --workspace-muted: #b39c89;
+
+  /* Elevation — dark. Deeper and wider: on dark chocolate, shadow reads as
+     recession, so the lit hairline in .card-surface::before does the lifting. */
+  --elevation-card:
+    0 1px 2px 0 rgba(0, 0, 0, 0.5),
+    0 8px 24px -12px rgba(0, 0, 0, 0.7);
+  --elevation-card-hover:
+    0 2px 6px 0 rgba(0, 0, 0, 0.55),
+    0 18px 40px -14px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(217, 154, 78, 0.22);
+  --accent-ink: #d99a4e;
+  --accent-glow-border: rgba(217, 154, 78, 0.5);
 }
 
 /* Custom Base Styles */
@@ -109,6 +165,7 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
 }
 
 body {
@@ -119,34 +176,220 @@ body {
   flex-direction: column;
   background-color: var(--marketing-bg);
   color: var(--marketing-text);
+  overflow-x: clip;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* Focus Ring Utility */
 *:focus-visible {
-  outline: 2px solid var(--color-accent-amber);
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
 
-/* Typography Proportions */
-h1, h2, h3, h4, h5, h6 {
-  margin: 0;
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  color: inherit;
-}
+/* Typography Proportions
+   Must live in @layer base: unlayered rules outrank every @layer, so declaring
+   these outside a layer silently overrode mb-*, leading-*, font-* and tracking-*
+   utilities on headings and paragraphs across the whole site. */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: inherit;
+  }
 
-p {
-  margin: 0;
-  line-height: 1.6;
+  p {
+    margin: 0;
+    line-height: 1.6;
+  }
 }
 
 /* Measure limit for reading comfort */
 .prose-measure {
-  max-width: 70ch;
+  max-width: 65ch;
 }
 
-/* Custom Scrollbar for Workspace */
+/* Studio Architectural Grid Overlay */
+.studio-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+:root:not(.dark) .studio-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Premium Card Elevation & Interaction
+   Layered in @layer components so each card's own bg-* / border-* utilities
+   still win. This class supplies elevation and hover behaviour only — it must
+   not set background-color or border, or it silently overrides the utilities
+   the components declare (unlayered rules outrank every @layer). */
+@layer components {
+  .card-surface {
+    position: relative;
+    box-shadow: var(--elevation-card);
+    transition:
+      box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.28s ease,
+      background-color 0.2s ease;
+  }
+
+  /* Hairline top highlight — reads as a lit edge, not a border */
+  .card-surface::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.06) 0%,
+      rgba(255, 255, 255, 0) 40%
+    );
+    opacity: 1;
+    transition: opacity 0.28s ease;
+  }
+
+  :root:not(.dark) .card-surface::before {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 255, 255, 0) 45%
+    );
+  }
+
+  .card-surface:hover {
+    box-shadow: var(--elevation-card-hover);
+    border-color: var(--color-accent-glow-border);
+  }
+
+  .card-surface:hover::before {
+    opacity: 0.75;
+  }
+
+  /* Opt-in lift. Applied to discrete cards, never to wide containers like the
+     comparison table, where translating the whole block reads as a glitch. */
+  .card-interactive:hover {
+    transform: translateY(-2px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-surface,
+    .card-interactive:hover {
+      transform: none;
+      transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+  }
+  /* Light / Dark slider switch.
+     Layered in @layer components so the header's own utilities still win.
+     The knob moves by transform, so the animation stays off the layout path. */
+  .theme-switch {
+    display: inline-flex;
+    align-items: center;
+    border: 0;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .theme-switch-track {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 58px;
+    height: 30px;
+    padding: 0 7px;
+    border-radius: 999px;
+    background-color: var(--color-marketing-surface);
+    border: 1px solid var(--color-marketing-border);
+    box-shadow: inset 0 1px 2px rgba(59, 36, 24, 0.06);
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+  }
+
+  .theme-switch-workspace .theme-switch-track {
+    background-color: var(--color-workspace-surface);
+    border-color: var(--color-workspace-border);
+  }
+
+  .theme-switch:hover .theme-switch-track {
+    border-color: var(--color-accent);
+  }
+
+  html.dark .theme-switch-track {
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Rail icons sit under the knob and mark each end of the travel. */
+  .theme-switch-rail-icon {
+    position: relative;
+    z-index: 1;
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+    color: var(--color-marketing-muted);
+    transition: color 0.25s ease, opacity 0.25s ease;
+  }
+
+  /* Whichever end the knob is parked on dims — the lit one is the mode you get
+     by clicking. */
+  .theme-switch[aria-checked="false"] .theme-switch-rail-icon:first-of-type {
+    opacity: 0.35;
+  }
+
+  .theme-switch[aria-checked="true"] .theme-switch-rail-icon:last-of-type {
+    opacity: 0.35;
+  }
+
+  .theme-switch[aria-checked="false"] .theme-switch-rail-icon:last-of-type,
+  .theme-switch[aria-checked="true"] .theme-switch-rail-icon:first-of-type {
+    color: var(--color-accent);
+    opacity: 1;
+  }
+
+  .theme-switch-knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    z-index: 2;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #ffffff 0%, #f5eee5 100%);
+    box-shadow:
+      0 1px 2px rgba(59, 36, 24, 0.16),
+      0 2px 6px -1px rgba(59, 36, 24, 0.18);
+    transform: translateX(0);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), background 0.25s ease;
+  }
+
+  .theme-switch[aria-checked="true"] .theme-switch-knob {
+    /* 58 track - 2×3 inset - 22 knob = 28px of travel */
+    transform: translateX(28px);
+    background: linear-gradient(180deg, #d99a4e 0%, #c98a46 100%);
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.4),
+      0 2px 8px -1px rgba(201, 138, 70, 0.5);
+  }
+
+  .theme-switch:active .theme-switch-knob {
+    width: 24px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .theme-switch-knob {
+      transition: background 0.2s ease;
+    }
+  }
+}
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
   height: 6px;

@@ -1,7 +1,7 @@
 /* Light-Table Workspace Custom Styles */
 
 .light-table-canvas-wrap {
-  background-color: #e4e4e8;
+  background-color: #e8dcce;
   background-image: 
     radial-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px),
     radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px);
@@ -11,43 +11,391 @@
 }
 
 html.dark .light-table-canvas-wrap {
-  background-color: #070709;
+  background-color: #0d0806;
   background-image: 
     radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
     radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px);
 }
 
-/* Adaptive Studio Dropzone (Light by default, Dark in dark mode) */
+/* Workspace shell sizing & progressive disclosure.
+   Height lives here, not as h-[700px] utilities, so the empty state can
+   override it without a specificity fight. Before the first import the island
+   collapses to just the dropzone: no reserved void, and no dead toolbar or
+   export drawer reporting "All Images (0)" next to a disabled download. */
+#frameproof-workspace {
+  height: 700px;
+}
+
+@media (min-width: 1024px) {
+  #frameproof-workspace {
+    height: 780px;
+  }
+}
+
+#frameproof-workspace.is-empty {
+  height: auto;
+}
+
+#frameproof-workspace.is-empty #review-toolbar-mount,
+#frameproof-workspace.is-empty #export-drawer-mount,
+#frameproof-workspace.is-empty aside,
+#frameproof-workspace.is-empty .light-table-canvas-wrap {
+  display: none;
+}
+
+/* Overlay joins normal flow while empty so it gives the island its height
+   instead of floating inside a fixed-height box. It must be told to grow:
+   its parent is `md:flex-row`, so as a static flex item with no flex-grow it
+   would shrink to its content width and park against the left edge, leaving
+   the right half of the panel blank. */
+#frameproof-workspace.is-empty #empty-state-overlay {
+  position: static;
+  flex: 1 1 auto;
+  width: 100%;
+  padding: 2.5rem 1.25rem;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+@media (min-width: 640px) {
+  #frameproof-workspace.is-empty #empty-state-overlay {
+    padding: 3.5rem 2rem;
+  }
+}
+
+/* Canvas stage — the centring layer between the scroll container and the sheet.
+   `min-*: 100%` plus `max-content` means: at fit or below, the stage fills the
+   viewport and flex-centres the sheet; past fit, the stage grows to the sheet
+   plus its padding so the scroll container can reach every edge. Centring on
+   the scroll container itself clips the top and left of an oversized child with
+   no way to scroll back to them — that was why zooming used to lose photos. */
+.canvas-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: max-content;
+  height: max-content;
+  min-width: 100%;
+  min-height: 100%;
+  /* Mirrored by STAGE_PADDING in CanvasPreview.ts. Keep the two in step. */
+  padding: 24px;
+}
+
+/* The sheet itself. Width and height are set in explicit px by CanvasPreview,
+   so nothing here may cap them — a `max-height: 100%` would silently defeat
+   every zoom step past fit. */
+.canvas-sheet {
+  display: block;
+  flex: none;
+  max-width: none;
+  max-height: none;
+}
+
+/* Full-page studio shell ('/studio/contact-sheet').
+   Unlike the homepage island there is no fixed pixel height: the shell takes
+   whatever `main` has left after the header, so the sheet gets every spare
+   pixel on the display. */
+#frameproof-studio {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* One screen of app on a page that keeps scrolling into indexable copy.
+   Height must be definite for the studio's flex chain, and the only thing above
+   it is the site header — `h-16` plus its 1px bottom border. Change one and the
+   other has to follow. */
+.studio-viewport {
+  --studio-header-h: 65px;
+  height: calc(100dvh - var(--studio-header-h));
+  min-height: 520px;
+}
+
+#frameproof-studio.is-empty #review-toolbar-mount,
+#frameproof-studio.is-empty .studio-export {
+  display: none;
+}
+
+/* Safari still paints a disclosure triangle on `list-none` alone. */
+.studio-export > summary::-webkit-details-marker,
+.studio-export > summary::marker {
+  display: none;
+}
+
+.studio-sidebar.is-collapsed {
+  display: none !important;
+}
+
+/* Stacked layout below `md` — phones and narrow viewports */
+@media (max-width: 767px) {
+  .studio-config-sidebar {
+    max-height: 35vh;
+  }
+
+  .studio-photos-sidebar {
+    max-height: 28vh;
+  }
+
+  .studio-canvas-col {
+    min-height: 260px;
+  }
+}
+
+/* Import Panel (Studio Dropzone)
+   Design ported from the supplied React file-upload component, implemented in
+   CSS against the existing DropZone class. Deliberately not React: this panel
+   sits on `/`, the highest-traffic page, and pulling in react-dom + motion to
+   animate a border would ship ~90KB of JS to every visitor for effects that
+   compositor-only CSS gives for free. Every animated property below is
+   transform, opacity or box-shadow, so nothing here triggers layout. */
 .studio-dropzone {
-  background: radial-gradient(circle at 50% 30%, #ffffff 0%, #f4f4f7 100%);
-  border: 2px dashed #d1d1d6;
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08), 0 0 20px rgba(0, 0, 0, 0.04);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(201, 138, 70, 0.04) 0%, transparent 60%),
+    radial-gradient(circle at 50% 100%, rgba(107, 60, 18, 0.05) 0%, transparent 50%),
+    linear-gradient(to bottom, #ffffff 0%, #fbf7f2 100%);
+  border: 1.5px dashed #dcc9b5;
+  box-shadow:
+    0 1px 2px rgba(59, 36, 24, 0.04),
+    0 8px 24px -4px rgba(59, 36, 24, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.25s ease;
 }
 
 .studio-dropzone:hover,
+.studio-dropzone:focus-visible,
 .studio-dropzone.drag-over-active {
-  border-color: #f59e0b !important;
-  background: radial-gradient(circle at 50% 30%, #fffdfa 0%, #fbf5e8 100%) !important;
-  box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.18), 0 0 30px rgba(245, 158, 11, 0.08) !important;
+  border-color: #c98a46;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(201, 138, 70, 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 50% 100%, rgba(201, 138, 70, 0.03) 0%, transparent 50%),
+    linear-gradient(to bottom, #fffaf4 0%, #fbf2e7 100%);
+  box-shadow:
+    0 1px 2px rgba(201, 138, 70, 0.06),
+    0 12px 32px -4px rgba(201, 138, 70, 0.14),
+    0 0 0 3px rgba(201, 138, 70, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+}
+
+/* Solid border while dragging: the dashed edge reads as "empty target",
+   a solid one as "armed". */
+.studio-dropzone.drag-over-active {
+  border-style: solid;
 }
 
 html.dark .studio-dropzone {
-  background: radial-gradient(circle at 50% 30%, #15151a 0%, #08080a 100%);
-  border: 2px dashed #272732;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 0, 0, 0.5);
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(201, 138, 70, 0.05) 0%, transparent 60%),
+    radial-gradient(circle at 50% 100%, rgba(58, 41, 33, 0.45) 0%, transparent 50%),
+    linear-gradient(to bottom, #1a1210 0%, #0d0806 100%);
+  border: 1.5px dashed #3a2921;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 12px 32px -4px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 html.dark .studio-dropzone:hover,
+html.dark .studio-dropzone:focus-visible,
 html.dark .studio-dropzone.drag-over-active {
-  border-color: #f59e0b !important;
-  background: radial-gradient(circle at 50% 30%, #1a1818 0%, #08080a 100%) !important;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 35px rgba(245, 158, 11, 0.12) !important;
+  border-color: #c98a46;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(201, 138, 70, 0.1) 0%, transparent 60%),
+    radial-gradient(circle at 50% 100%, rgba(58, 41, 33, 0.45) 0%, transparent 50%),
+    linear-gradient(to bottom, #20150f 0%, #0d0806 100%);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 16px 40px -4px rgba(0, 0, 0, 0.6),
+    0 0 0 3px rgba(201, 138, 70, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Icon: lifts on hover, bounces once on drop, ring pulses while dragging. */
+.dz-icon {
+  transition:
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.studio-dropzone:hover .dz-icon {
+  transform: translateY(-2px) scale(1.04);
+  border-color: rgba(201, 138, 70, 0.6);
+}
+
+.studio-dropzone.drag-over-active .dz-icon {
+  animation: dz-bounce-drop 0.8s ease;
+}
+
+.dz-glow-ring {
+  transition: opacity 0.3s ease;
+}
+
+.studio-dropzone.drag-over-active .dz-glow-ring {
+  opacity: 1;
+  animation: dz-glow-slow 2.5s ease-in-out infinite;
+}
+
+@keyframes dz-glow-slow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.12);
+  }
+}
+
+@keyframes dz-bounce-drop {
+  0% { transform: translateY(0) scale(1); }
+  30% { transform: translateY(-10px) scale(1.06); }
+  55% { transform: translateY(0) scale(0.97); }
+  75% { transform: translateY(-4px) scale(1.02); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* Idle / dragging headline swap */
+.dz-label-drag {
+  display: none;
+}
+
+.studio-dropzone.drag-over-active .dz-label-idle {
+  display: none;
+}
+
+.studio-dropzone.drag-over-active .dz-label-drag {
+  display: inline;
+  color: var(--color-accent);
+}
+
+/* Import queue rows */
+.dz-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.75rem;
+  background-color: var(--color-workspace-surface);
+  border: 1px solid var(--color-workspace-border-subtle);
+  animation: dz-row-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.dz-row + .dz-row {
+  margin-top: 0.5rem;
+}
+
+@keyframes dz-row-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dz-row-icon {
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(201, 138, 70, 0.1);
+  color: var(--color-accent);
+}
+
+.dz-row.is-done .dz-row-icon {
+  background-color: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+}
+
+.dz-row.is-rejected .dz-row-icon {
+  background-color: rgba(244, 63, 94, 0.12);
+  color: #f43f5e;
+}
+
+.dz-row-body {
+  min-width: 0;
+  flex: 1;
+}
+
+.dz-row-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-workspace-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dz-row-meta {
+  font-size: 0.6875rem;
+  color: var(--color-workspace-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.dz-row-track {
+  margin-top: 0.375rem;
+  height: 3px;
+  border-radius: 999px;
+  background-color: var(--color-workspace-border);
+  overflow: hidden;
+}
+
+/* scaleX rather than width: width animation reflows, transform does not. */
+.dz-row-fill {
+  height: 100%;
+  border-radius: 999px;
+  background-color: var(--color-accent);
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+/* Decode is atomic per file — there is no sub-file progress to report — so a
+   pending row shows an indeterminate sweep rather than a fake percentage. */
+.dz-row:not(.is-done):not(.is-rejected) .dz-row-fill {
+  transform: scaleX(0.4);
+  animation: dz-indeterminate 1.4s ease-in-out infinite;
+}
+
+@keyframes dz-indeterminate {
+  0% { transform: translateX(-100%) scaleX(0.4); }
+  100% { transform: translateX(250%) scaleX(0.4); }
+}
+
+.dz-row.is-done .dz-row-fill {
+  background-color: #10b981;
+  transform: scaleX(1);
+  animation: none;
+}
+
+.dz-row.is-done .dz-row-track {
+  opacity: 0;
+  transition: opacity 0.3s ease 0.2s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .studio-dropzone,
+  .studio-dropzone:hover,
+  .studio-dropzone.drag-over-active,
+  .dz-icon,
+  .studio-dropzone:hover .dz-icon {
+    transform: none;
+    animation: none;
+  }
+
+  .studio-dropzone.drag-over-active .dz-glow-ring,
+  .dz-row {
+    animation: none;
+  }
 }
 
 /* Range input technical styling */
 input[type="range"] {
-  accent-color: var(--color-accent-amber);
+  accent-color: var(--color-accent);
 }
 
 @media print {

@@ -1,0 +1,320 @@
+---
+/**
+ * /studio/contact-sheet — the full-screen contact sheet studio, and an
+ * indexable page in its own right.
+ *
+ * It used to be `noindex` and canonicalised to `/photo-contact-sheet-maker` on
+ * the grounds that app UI has nothing to rank. That left the deepest tool page
+ * on the site invisible to crawlers. It now opens with one screen of studio and
+ * keeps scrolling into copy that only this route can honestly carry: every
+ * field in the left panel, the review shortcuts, what each export format
+ * writes. Target phrasing is the *editor / full screen* wording —
+ * `/photo-contact-sheet-maker` keeps "photo contact sheet maker", so the two
+ * pages do not compete for one phrase.
+ *
+ * `WorkspaceLayout contentBelow` is used rather than `MarketingLayout` because
+ * the studio still needs a definite one-screen height above the copy.
+ */
+import WorkspaceLayout from '../../layouts/WorkspaceLayout.astro';
+import StudioApp from '../../components/workspace/StudioApp.astro';
+import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
+import FaqAccordion from '../../components/common/FaqAccordion.astro';
+import { METADATA_REGISTRY } from '../../lib/seo/metadata';
+import { buildSoftwareApplicationSchema, buildFAQSchema } from '../../lib/seo/schemaGenerator';
+
+const meta = METADATA_REGISTRY['/studio/contact-sheet'];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Photo Contact Sheet Maker', url: '/photo-contact-sheet-maker' },
+  { name: 'Contact Sheet Studio' },
+];
+
+const steps = [
+  {
+    n: '01',
+    title: 'Drop a folder of photos',
+    body: 'Drag files onto the page or use Add. JPEG, PNG, WebP, AVIF, GIF and BMP are accepted. Files are read by your browser — nothing is uploaded to a server.',
+  },
+  {
+    n: '02',
+    title: 'Set the grid and the page',
+    body: 'Columns and rows from 1×1 to 10×12, A4, US Letter, 16:9, square, 9:16 story, or a custom size in millimetres. Overflow flows onto numbered extra pages automatically.',
+  },
+  {
+    n: '03',
+    title: 'Review while you lay out',
+    body: 'Click a frame and press 1, 2 or 3 to mark it Kept, Flagged or Rejected. Filter pills at the top narrow the sheet to one status so you can print just the selects.',
+  },
+  {
+    n: '04',
+    title: 'Export the sheet or the list',
+    body: 'PDF and image exports render at twice the layout scale — 300 dpi for a paper size. Or export only the filenames as CSV, a Lightroom-ready comma string, or a JSON project manifest.',
+  },
+];
+
+const settingGroups = [
+  {
+    title: 'Page',
+    items: [
+      'Page size: A4 (210 × 297 mm), US Letter, 16:9 screen, square 1:1, story 9:16, or custom',
+      'Custom size in millimetres, 40 mm to 1200 mm per edge, entered as short and long edge',
+      'Portrait or landscape, applied to every size including custom',
+      'Page border (margin) 0–96 px and gap between photos 0–60 px',
+      'Sheet background and text colour',
+    ],
+  },
+  {
+    title: 'Grid',
+    items: [
+      'Columns 1–10 and rows 1–12; the readout shows how many pages the batch needs',
+      'Fill order: across then down (how a proof sheet reads) or down then across (how a film strip is laid out)',
+      'Fit: whole photo letterboxed inside its cell, or crop to fill the cell',
+      'Keyline around each photo, 0–6 px, with its own colour',
+      'Rounded corners, 0–32 px, clipped so the photo itself is rounded rather than framed',
+      'Start from a template instead of dialling in numbers by hand',
+    ],
+  },
+  {
+    title: 'Labels',
+    items: [
+      'Label text: filename, frame number, or number + filename',
+      'Position: in a reserved strip under the photo, or printed on the photo over a scrim',
+      'Alignment for the under-photo strip: centred on the column or flush to its left edge',
+      'Hide the file extension, or print labels in capitals',
+      'Label size 6–28 px, scaled up with the export so print matches preview',
+      'A live sample shows exactly what a label will print as before you export',
+    ],
+  },
+  {
+    title: 'Bands and marks',
+    items: [
+      'Title band across the top of every page, with your own title text',
+      '“Page 2 of 5” band along the bottom',
+      'Keep / Flag / Reject badges drawn on the thumbnails, for a printed review copy',
+      'Photo order: manual drag, filename, file date, or file size — ascending or descending',
+    ],
+  },
+];
+
+const shortcuts = [
+  { keys: '1', action: 'Mark the selected frame Kept and move to the next' },
+  { keys: '2', action: 'Mark Flagged and move on' },
+  { keys: '3', action: 'Mark Rejected and move on' },
+  { keys: '0 or U', action: 'Clear the mark on the selected frame' },
+  { keys: '← → ↑ ↓', action: 'Move the selection through the sheet' },
+  { keys: 'Delete', action: 'Remove the selected photo from the sheet' },
+  { keys: '?', action: 'Open and close the shortcut list' },
+];
+
+const exports = [
+  { name: 'PDF', body: 'Every page in one document, rendered at twice the layout scale — 300 dpi at a paper size. The page format is taken from the sheet you laid out, so a square or 9:16 sheet stays square or 9:16 instead of being stretched to A4.' },
+  { name: 'PNG', body: 'The page you are viewing, lossless, at twice the layout scale.' },
+  { name: 'JPEG', body: 'The same raster, compressed, for email and messaging.' },
+  { name: 'CSV', body: 'A filename table for the photos in the current filter — the selection record, not the picture.' },
+  { name: 'Lightroom TXT', body: 'The same filenames as one comma-separated string, ready to paste into a Lightroom search field.' },
+  { name: 'JSON', body: 'A project manifest: layout settings, order, and every review mark, so a sheet can be described without shipping the photos.' },
+];
+
+const faqs = [
+  {
+    question: 'What is the difference between this studio and the contact sheet maker on the homepage?',
+    answer: 'The layout engine, the settings and the exports are identical. The difference is room: the homepage tool is an island inside a marketing page, so an A4 sheet renders a few hundred pixels tall. This route gives the sheet the whole screen and adds zoom up to 600% with scrolling, so a single frame can be inspected at close to full size.',
+  },
+  {
+    question: 'Do my photos get uploaded anywhere?',
+    answer: 'No. Files are read by the browser, decoded to canvas, and written back out as a download. There is no account, no upload step and no server-side copy of a photo, a thumbnail or a filename.',
+  },
+  {
+    question: 'Can I print a contact sheet on a page size that is not A4 or Letter?',
+    answer: 'Yes. Choose Custom size and enter the short and long edge in millimetres, from 40 mm to 1200 mm. The PDF is written at those exact millimetre dimensions rather than being fitted into a standard paper size.',
+  },
+  {
+    question: 'Are the original camera filenames kept?',
+    answer: 'Yes. Filenames are preserved and can be printed under each frame or over it, with the extension hidden and in capitals if you prefer. They are also what the CSV, TXT and JSON exports contain.',
+  },
+  {
+    question: 'What happens when there are more photos than the grid holds?',
+    answer: 'The batch splits across as many pages as it needs, and the readout under the grid controls tells you the count before you export. The PDF export writes all of them; the PNG and JPEG exports write the page currently on screen.',
+  },
+  {
+    question: 'Which file types can I add?',
+    answer: 'JPEG, PNG, WebP, AVIF, GIF and BMP. Camera raw files and HEIC from an iPhone are not supported yet — convert them to JPEG first.',
+  },
+];
+
+const schemas = [
+  buildSoftwareApplicationSchema(
+    'Make Contact Sheet Contact Sheet Studio',
+    meta.description,
+    'https://makecontactsheet.com/studio/contact-sheet'
+  ),
+  buildFAQSchema(faqs),
+];
+---
+
+<WorkspaceLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+  schema={schemas}
+  contentBelow
+>
+  <StudioApp />
+
+  <!-- Indexable copy. Marketing tokens rather than workspace ones: this is a
+       reading surface, and it sits below the app, not inside it. -->
+  <div slot="content" class="bg-marketing-bg text-marketing-text border-t border-marketing-border transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 space-y-16 sm:space-y-20">
+      <!-- Intro -->
+      <header class="space-y-4 max-w-3xl">
+        <Breadcrumbs items={breadcrumbs} />
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
+          Contact Sheet Editor
+        </h1>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          A full-screen workspace for turning a folder of photos into a proof sheet you can print,
+          send or file. Set the grid, the page size and the filename labels on the left; watch the
+          sheet redraw on the right at any zoom from fit to 600%. Everything runs in your browser,
+          so the photos never leave the machine they are on.
+        </p>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          The studio is free, needs no account, and exports both the sheet itself and the selection
+          record behind it — a PDF or image for the client, a filename list for your editor.
+        </p>
+      </header>
+
+      <!-- How it works -->
+      <section class="space-y-6">
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">How the studio works</h2>
+        <ol class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {steps.map((s) => (
+            <li class="bg-marketing-panel border border-marketing-border rounded-2xl p-5 space-y-2">
+              <span class="text-xs font-mono text-accent-ink">{s.n}</span>
+              <h3 class="text-sm sm:text-base font-semibold leading-snug">{s.title}</h3>
+              <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{s.body}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <!-- Settings reference -->
+      <section class="space-y-6">
+        <div class="max-w-3xl space-y-3">
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Every setting in the left panel</h2>
+          <p class="text-sm text-marketing-muted leading-relaxed">
+            Nothing here is behind an upgrade. Each control redraws the sheet as you change it, and
+            the numbers you set are the numbers the export uses — the page is laid out at 150 dpi and
+            written at twice that.
+          </p>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          {settingGroups.map((g) => (
+            <div class="bg-marketing-panel border border-marketing-border rounded-2xl p-5 sm:p-6 space-y-3">
+              <h3 class="text-sm sm:text-base font-bold tracking-tight">{g.title}</h3>
+              <ul class="space-y-2">
+                {g.items.map((item) => (
+                  <li class="text-xs sm:text-sm text-marketing-muted leading-relaxed flex gap-2">
+                    <span class="text-accent-ink flex-shrink-0">·</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Review + shortcuts -->
+      <section class="grid gap-6 lg:grid-cols-2 lg:gap-10">
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Review without leaving the sheet</h2>
+          <p class="text-sm text-marketing-muted leading-relaxed">
+            Marks live on the photos, not in a separate list. Kept, Flagged and Rejected each have a
+            filter pill at the top of the studio, so you can lay out a 200-frame shoot, mark it down
+            to twelve selects, then switch the sheet to Kept only and export that.
+          </p>
+          <p class="text-sm text-marketing-muted leading-relaxed">
+            The marks are also what the CSV, TXT and JSON exports carry, which is what makes the
+            sheet a selection record rather than a picture of one.
+          </p>
+        </div>
+        <div class="bg-marketing-panel border border-marketing-border rounded-2xl p-5 sm:p-6">
+          <h3 class="text-sm font-bold tracking-tight mb-4">Keyboard shortcuts</h3>
+          <dl class="space-y-2.5">
+            {shortcuts.map((s) => (
+              <div class="flex items-baseline gap-3">
+                <dt class="font-mono text-[11px] px-2 py-1 rounded-md bg-marketing-surface border border-marketing-border flex-shrink-0 min-w-[64px] text-center">
+                  {s.keys}
+                </dt>
+                <dd class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{s.action}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      <!-- Exports -->
+      <section class="space-y-6">
+        <div class="max-w-3xl space-y-3">
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">What each export writes</h2>
+          <p class="text-sm text-marketing-muted leading-relaxed">
+            Six formats, split between the sheet and the list of what is on it.
+          </p>
+        </div>
+        <dl class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {exports.map((e) => (
+            <div class="bg-marketing-panel border border-marketing-border rounded-2xl p-5 space-y-2">
+              <dt class="text-sm font-bold tracking-tight">{e.name}</dt>
+              <dd class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{e.body}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <!-- FAQ -->
+      <section class="space-y-6">
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Contact sheet studio FAQ</h2>
+        <FaqAccordion faqs={faqs} class="max-w-3xl" />
+      </section>
+
+      <!-- Internal links -->
+      <section class="space-y-4">
+        <h2 class="text-lg sm:text-xl font-bold tracking-tight">Related pages</h2>
+        <ul class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+          <li>
+            <a href="/photo-contact-sheet-maker" class="text-sm text-marketing-muted hover:text-accent-ink transition-colors">
+              Photo contact sheet maker
+            </a>
+          </li>
+          <li>
+            <a href="/contact-sheet-template" class="text-sm text-marketing-muted hover:text-accent-ink transition-colors">
+              Contact sheet templates
+            </a>
+          </li>
+          <li>
+            <a href="/guides/how-to-make-a-contact-sheet" class="text-sm text-marketing-muted hover:text-accent-ink transition-colors">
+              How to make a contact sheet
+            </a>
+          </li>
+          <li>
+            <a href="/guides/photo-proof-sheet-with-filenames" class="text-sm text-marketing-muted hover:text-accent-ink transition-colors">
+              Proof sheets with filenames
+            </a>
+          </li>
+          <li>
+            <a href="/compare/photoshop-contact-sheet-alternative" class="text-sm text-marketing-muted hover:text-accent-ink transition-colors">
+              Photoshop contact sheet alternative
+            </a>
+          </li>
+          <li>
+            <a href="/photo-collage-maker" class="text-sm text-marketing-muted hover:text-accent-ink transition-colors">
+              Photo collage maker
+            </a>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</WorkspaceLayout>

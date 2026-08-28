@@ -1,16 +1,16 @@
 <!-- SEED: established with the user before implementation; re-run $impeccable document once there's code to capture the actual tokens and components. -->
 
 ---
-name: FrameProof
+name: Make Contact Sheet
 description: Browser-first photo preparation, contact-sheet, collage, and review workspace
 ---
 
-# Design System: FrameProof
+# Design System: Make Contact Sheet
 
 ## Overview
 **Creative North Star: "The Archival Matte"**
 
-FrameProof operates as a quiet, authoritative space that honors the photographer’s work. The interface must recede entirely, allowing the photos to provide all the visual richness and color the page needs. It bridges the precision of a physical light table with the professional trust of an archival gallery matte. 
+Make Contact Sheet operates as a quiet, authoritative space that honors the photographer’s work. The interface must recede entirely, allowing the photos to provide all the visual richness and color the page needs. It bridges the precision of a physical light table with the professional trust of an archival gallery matte. 
 
 The workspace is built for a photographer reviewing work late at night—relying on dark, restrained surfaces to reduce eye strain and evaluate true color. The marketing presence, conversely, provides a crisp, well-lit gallery environment to persuade and present. Every label, control, and bounding box is functional, verifiable, and precise.
 

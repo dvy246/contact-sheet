@@ -1,0 +1,234 @@
+---
+/**
+ * StudioApp — the full-screen contact-sheet studio.
+ *
+ * Why this exists separately from `WorkspaceApp`: that one is an island inside
+ * a marketing page, capped at 700–780px tall, with the photo list and the
+ * layout controls fighting over one 320px column via tabs. At that size an A4
+ * sheet renders about 400px tall, so a 4×5 grid gives ~70px thumbnails — too
+ * small to judge a frame, which is the whole point of a proof sheet.
+ *
+ * Here the shell owns the viewport: controls are always visible in a wider
+ * left column, and the sheet gets everything left over plus real zoom
+ * (fit → 600%) with scroll, so a thumbnail can be inspected at full size.
+ *
+ * Element ids are shared with `WorkspaceApp` on purpose — `CanvasPreview`
+ * resolves its zoom and pagination controls through `document.getElementById`,
+ * so both shells must offer the same ids. Only one shell exists per page.
+ */
+import Icon from '../common/Icon.astro';
+import ImportPanel from './ImportPanel.astro';
+import '../../styles/workspace.css';
+---
+
+<div
+  id="frameproof-studio"
+  class="studio-shell is-empty flex flex-col w-full min-w-0 bg-workspace-bg text-workspace-text relative select-none"
+>
+  <!-- Review toolbar: mode, status filters, batch marks -->
+  <div id="review-toolbar-mount" class="w-full flex-shrink-0 z-20 min-w-0"></div>
+
+  <!-- 3-Pane Ergonomic Studio: Config on Left, Canvas in Center, Photos on Right -->
+  <div class="flex-1 flex flex-col md:flex-row min-h-0 relative">
+    <!-- Empty state. Covers the whole shell until the first photo lands. -->
+    <div
+      id="empty-state-overlay"
+      class="absolute inset-0 z-30 flex flex-col items-center justify-center p-6 overflow-y-auto bg-workspace-bg transition-colors"
+    >
+      <ImportPanel />
+    </div>
+
+    <!-- LEFT COLUMN: Sheet & Preset Configurations -->
+    <aside
+      id="studio-config-sidebar"
+      class="studio-sidebar studio-config-sidebar w-full md:w-[280px] lg:w-[320px] xl:w-[360px] flex-shrink-0 flex flex-col bg-workspace-panel border-b md:border-b-0 md:border-r border-workspace-border z-10 min-w-0"
+    >
+      <div class="flex items-center justify-between gap-2 px-3 py-2.5 border-b border-workspace-border bg-workspace-bg/60">
+        <div class="flex items-center gap-2 min-w-0">
+          <Icon name="settings" size={13} class="text-accent-ink" />
+          <span class="text-xs font-bold tracking-tight truncate">Sheet Configuration</span>
+        </div>
+      </div>
+      <div id="layout-controls-mount" class="flex-1 overflow-y-auto custom-scrollbar min-h-0"></div>
+    </aside>
+
+    <!-- CENTER COLUMN: Canvas Light-Table -->
+    <div class="studio-canvas-col flex-1 flex flex-col min-w-0 min-h-0 relative light-table-canvas-wrap">
+      <!-- Floating zoom & pagination bar -->
+      <div class="absolute top-3 right-4 z-20 flex items-center gap-2 bg-workspace-panel/90 backdrop-blur-xs border border-workspace-border rounded-lg p-1 text-xs text-workspace-text shadow-lg">
+        <div id="pagination-controls" class="hidden items-center gap-1 pr-2 border-r border-workspace-border">
+          <button id="btn-prev-page" class="p-1 rounded hover:bg-workspace-surface text-workspace-muted hover:text-workspace-text disabled:opacity-30 cursor-pointer" title="Previous page">
+            <Icon name="arrow-left" size={14} />
+          </button>
+          <span id="page-indicator" class="font-mono text-[11px] px-1 text-workspace-muted">Page 1 of 1</span>
+          <button id="btn-next-page" class="p-1 rounded hover:bg-workspace-surface text-workspace-muted hover:text-workspace-text disabled:opacity-30 cursor-pointer" title="Next page">
+            <Icon name="arrow-right" size={14} />
+          </button>
+        </div>
+
+        <div class="flex items-center gap-1">
+          <button id="btn-zoom-out" class="p-1 rounded hover:bg-workspace-surface text-workspace-muted hover:text-workspace-text cursor-pointer" title="Zoom out">
+            <Icon name="zoom-out" size={14} />
+          </button>
+          <span id="zoom-percentage" class="font-mono text-[11px] w-11 text-center text-workspace-muted">100%</span>
+          <button id="btn-zoom-in" class="p-1 rounded hover:bg-workspace-surface text-workspace-muted hover:text-workspace-text cursor-pointer" title="Zoom in">
+            <Icon name="zoom-in" size={14} />
+          </button>
+          <button id="btn-zoom-reset" class="px-1.5 py-0.5 rounded hover:bg-workspace-surface text-[10px] text-workspace-muted hover:text-workspace-text cursor-pointer" title="Fit sheet to window">
+            Fit
+          </button>
+        </div>
+      </div>
+
+      <!-- Panel toggle controls -->
+      <div class="absolute top-3 left-4 z-20 flex items-center gap-1.5">
+        <button
+          id="btn-toggle-config"
+          class="h-8 px-2.5 rounded-lg bg-workspace-panel/90 backdrop-blur-xs border border-workspace-border text-[11px] font-medium text-workspace-muted hover:text-workspace-text shadow-lg transition-colors cursor-pointer flex items-center gap-1.5"
+          title="Toggle Sheet Configuration"
+        >
+          <Icon name="settings" size={12} />
+          <span id="btn-toggle-config-label">Settings</span>
+        </button>
+        <button
+          id="btn-toggle-photos"
+          class="h-8 px-2.5 rounded-lg bg-workspace-panel/90 backdrop-blur-xs border border-workspace-border text-[11px] font-medium text-workspace-muted hover:text-workspace-text shadow-lg transition-colors cursor-pointer flex items-center gap-1.5"
+          title="Toggle Photos Tray"
+        >
+          <Icon name="image" size={12} />
+          <span id="btn-toggle-photos-label">Photos</span>
+        </button>
+      </div>
+
+      <!-- Scroll container for sheet canvas -->
+      <div id="canvas-mount-container" class="flex-1 min-h-0 overflow-auto custom-scrollbar"></div>
+    </div>
+
+    <!-- RIGHT COLUMN: Photos List & Editing Tools -->
+    <aside
+      id="studio-photos-sidebar"
+      class="studio-sidebar studio-photos-sidebar w-full md:w-[280px] lg:w-[320px] xl:w-[350px] flex-shrink-0 flex flex-col bg-workspace-panel border-t md:border-t-0 md:border-l border-workspace-border z-10 min-w-0"
+    >
+      <div class="flex items-center justify-between gap-2 px-3 py-2.5 border-b border-workspace-border bg-workspace-bg/60">
+        <div class="flex items-center gap-2 min-w-0">
+          <Icon name="image" size={13} class="text-accent-ink" />
+          <span class="text-xs font-bold tracking-tight truncate">Photos</span>
+          <span id="studio-photo-count" class="text-[11px] font-mono text-workspace-muted bg-workspace-surface px-1.5 py-0.5 rounded border border-workspace-border">0</span>
+        </div>
+        <button
+          id="btn-sidebar-add"
+          class="h-7 px-2.5 rounded-lg bg-accent hover:bg-accent-hover text-white text-[11px] font-medium shadow-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+        >
+          <Icon name="plus" size={12} />
+          <span>Add Photos</span>
+        </button>
+      </div>
+
+      <!-- Photos list with drag and drop reordering and inline label editing -->
+      <div
+        id="thumbnail-grid-mount"
+        class="flex-1 overflow-y-auto custom-scrollbar min-h-0"
+      ></div>
+
+      <!-- Collapsible photo editing tools -->
+      <details id="studio-photo-tools" class="studio-photo-tools flex-shrink-0 border-t border-workspace-border bg-workspace-bg/40">
+        <summary class="flex items-center justify-between gap-2 px-3 py-2 cursor-pointer list-none hover:bg-workspace-surface/40 transition-colors">
+          <span class="flex items-center gap-2 min-w-0">
+            <Icon name="crop" size={13} class="text-accent-ink" />
+            <span class="text-xs font-bold tracking-tight truncate">Edit photos</span>
+          </span>
+          <span class="text-[10px] text-workspace-muted font-mono">rotate · crop · split · merge</span>
+        </summary>
+        <div id="photo-tools-mount" class="max-h-[40vh] overflow-y-auto custom-scrollbar border-t border-workspace-border"></div>
+      </details>
+    </aside>
+  </div>
+
+  <!-- Export drawer, collapsed by default -->
+  <details
+    id="studio-export"
+    class="studio-export w-full flex-shrink-0 z-20 border-t border-workspace-border bg-workspace-panel"
+  >
+    <summary
+      class="flex items-center justify-between gap-3 px-4 py-2 cursor-pointer list-none text-[11px] text-workspace-muted font-mono hover:text-workspace-text transition-colors"
+    >
+      <span class="flex items-center gap-2">
+        <Icon name="download" size={13} class="text-accent-ink" />
+        <span class="font-sans text-xs font-bold tracking-tight text-workspace-text">Export</span>
+        <span class="hidden sm:inline">PNG · JPEG · PDF · CSV · TXT · manifest</span>
+      </span>
+      <span class="hidden md:inline">Drag to rearrange · click a frame to select · 1 keep · 2 flag · 3 reject</span>
+    </summary>
+    <div id="export-drawer-mount" class="w-full"></div>
+  </details>
+</div>
+
+<script>
+  import { $images, setWorkspaceMode } from '../../lib/store';
+  import { DropZone } from './DropZone';
+  import { ThumbnailGrid } from './ThumbnailGrid';
+  import { LayoutControls } from './LayoutControls';
+  import { CanvasPreview } from './CanvasPreview';
+  import { ReviewToolbar } from './ReviewToolbar';
+  import { ExportDrawer } from './ExportDrawer';
+  import { PhotoToolsPanel } from './PhotoToolsPanel';
+  import { KeyboardShortcutsManager } from './KeyboardShortcutsModal';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const dropzoneEl = document.getElementById('main-dropzone');
+    const thumbMount = document.getElementById('thumbnail-grid-mount');
+    const layoutMount = document.getElementById('layout-controls-mount');
+    const photoToolsMount = document.getElementById('photo-tools-mount');
+    const canvasMount = document.getElementById('canvas-mount-container');
+    const reviewMount = document.getElementById('review-toolbar-mount');
+    const exportMount = document.getElementById('export-drawer-mount');
+    const exportDetails = document.getElementById('studio-export');
+    const emptyOverlay = document.getElementById('empty-state-overlay');
+    const sidebarAddBtn = document.getElementById('btn-sidebar-add');
+    const shell = document.getElementById('frameproof-studio');
+    const configSidebar = document.getElementById('studio-config-sidebar');
+    const photosSidebar = document.getElementById('studio-photos-sidebar');
+    const toggleConfigBtn = document.getElementById('btn-toggle-config');
+    const toggleConfigLabel = document.getElementById('btn-toggle-config-label');
+    const togglePhotosBtn = document.getElementById('btn-toggle-photos');
+    const togglePhotosLabel = document.getElementById('btn-toggle-photos-label');
+    const photoCount = document.getElementById('studio-photo-count');
+
+    if (!dropzoneEl || !thumbMount || !layoutMount || !canvasMount || !reviewMount || !exportMount) return;
+
+    // This route is the contact-sheet studio.
+    setWorkspaceMode('contact-sheet');
+
+    new DropZone(dropzoneEl);
+    if (sidebarAddBtn) new DropZone(sidebarAddBtn);
+    new ThumbnailGrid(thumbMount);
+    new LayoutControls(layoutMount);
+    if (photoToolsMount) new PhotoToolsPanel(photoToolsMount);
+    const canvas = new CanvasPreview(canvasMount);
+    new ReviewToolbar(reviewMount);
+    new ExportDrawer(exportMount);
+    new KeyboardShortcutsManager();
+
+    $images.subscribe((images) => {
+      const empty = images.length === 0;
+      shell?.classList.toggle('is-empty', empty);
+      emptyOverlay?.classList.toggle('hidden', !empty);
+      if (photoCount) photoCount.textContent = String(images.length);
+    });
+
+    toggleConfigBtn?.addEventListener('click', () => {
+      const hidden = configSidebar?.classList.toggle('is-collapsed') ?? false;
+      if (toggleConfigLabel) toggleConfigLabel.textContent = hidden ? 'Show Settings' : 'Settings';
+      canvas.refit();
+    });
+
+    togglePhotosBtn?.addEventListener('click', () => {
+      const hidden = photosSidebar?.classList.toggle('is-collapsed') ?? false;
+      if (togglePhotosLabel) togglePhotosLabel.textContent = hidden ? 'Show Photos' : 'Photos';
+      canvas.refit();
+    });
+
+    // Opening the drawer takes height away from the sheet; refit recalculates.
+    exportDetails?.addEventListener('toggle', () => canvas.refit());
+  });
+</script>

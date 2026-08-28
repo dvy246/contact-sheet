@@ -12,13 +12,13 @@ const isWorkspace = variant === 'workspace';
 <header class={`w-full z-40 transition-colors ${
   isWorkspace 
     ? 'bg-workspace-panel border-b border-workspace-border text-workspace-text' 
-    : 'bg-marketing-panel/95 backdrop-blur-md border-b border-marketing-border text-marketing-text sticky top-0'
+    : 'bg-marketing-panel/90 backdrop-blur-md border-b border-marketing-border text-marketing-text sticky top-0'
 }`}>
-  <div class="max-w-[1200px] mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
+  <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
     <!-- Brand Logo -->
-    <a href="/" class="flex items-center gap-2.5 group">
-      <div class="w-8 h-8 rounded-lg bg-workspace-surface flex items-center justify-center border border-workspace-border group-hover:border-accent-amber transition-colors shadow-xs">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <a href="/" class="flex items-center gap-2.5 group shrink-0">
+      <div class="w-8 h-8 rounded-lg bg-marketing-surface flex items-center justify-center border border-marketing-border group-hover:border-accent transition-colors shadow-xs">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#c98a46" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect width="18" height="18" x="3" y="3" rx="2" />
           <path d="M3 9h18" />
           <path d="M9 21V9" />
@@ -26,19 +26,19 @@ const isWorkspace = variant === 'workspace';
       </div>
       <div class="flex flex-col">
         <span class={`font-bold tracking-tight text-base sm:text-lg leading-tight ${isWorkspace ? 'text-workspace-text' : 'text-marketing-text'}`}>
-          Frame<span class="text-accent-amber">Proof</span>
+          Make Contact <span class="text-accent-ink">Sheet</span>
         </span>
       </div>
     </a>
 
     <!-- Desktop Navigation Links -->
     {!isWorkspace ? (
-      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-marketing-muted">
+      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-marketing-muted">
         <!-- Tools Dropdown -->
         <div class="relative group">
-          <button class="flex items-center gap-1 hover:text-marketing-text transition-colors py-2 cursor-pointer">
+          <button class="flex items-center gap-1.5 hover:text-marketing-text transition-colors py-2 cursor-pointer">
             <span>Tools</span>
-            <Icon name="chevron-down" size={14} class="group-hover:rotate-180 transition-transform" />
+            <Icon name="chevron-down" size={14} class="group-hover:rotate-180 transition-transform text-marketing-muted group-hover:text-marketing-text" />
           </button>
           <div class="absolute left-0 top-full hidden group-hover:flex flex-col bg-marketing-panel border border-marketing-border rounded-xl shadow-xl p-2 min-w-[240px] z-50 animate-in fade-in slide-in-from-top-1 duration-150">
             <a href="/photo-contact-sheet-maker" class="flex flex-col p-2.5 rounded-lg hover:bg-marketing-surface transition-colors">
@@ -49,14 +49,19 @@ const isWorkspace = variant === 'workspace';
               <span class="font-medium text-marketing-text text-sm">Photo Collage Maker</span>
               <span class="text-xs text-marketing-muted">Template layouts for print & social</span>
             </a>
+            <div class="my-1 border-t border-marketing-border"></div>
+            <a href="/studio/contact-sheet" class="flex flex-col p-2.5 rounded-lg hover:bg-marketing-surface transition-colors">
+              <span class="font-medium text-accent-ink text-sm">Contact Sheet Studio</span>
+              <span class="text-xs text-marketing-muted">Full-screen sheet, zoom to 600%</span>
+            </a>
           </div>
         </div>
 
         <!-- Templates Dropdown -->
         <div class="relative group">
-          <button class="flex items-center gap-1 hover:text-marketing-text transition-colors py-2 cursor-pointer">
+          <button class="flex items-center gap-1.5 hover:text-marketing-text transition-colors py-2 cursor-pointer">
             <span>Templates</span>
-            <Icon name="chevron-down" size={14} class="group-hover:rotate-180 transition-transform" />
+            <Icon name="chevron-down" size={14} class="group-hover:rotate-180 transition-transform text-marketing-muted group-hover:text-marketing-text" />
           </button>
           <div class="absolute left-0 top-full hidden group-hover:flex flex-col bg-marketing-panel border border-marketing-border rounded-xl shadow-xl p-2 min-w-[240px] z-50">
             <a href="/contact-sheet-template" class="flex flex-col p-2.5 rounded-lg hover:bg-marketing-surface transition-colors">
@@ -72,9 +77,9 @@ const isWorkspace = variant === 'workspace';
 
         <!-- Guides Dropdown -->
         <div class="relative group">
-          <button class="flex items-center gap-1 hover:text-marketing-text transition-colors py-2 cursor-pointer">
+          <button class="flex items-center gap-1.5 hover:text-marketing-text transition-colors py-2 cursor-pointer">
             <span>Guides</span>
-            <Icon name="chevron-down" size={14} class="group-hover:rotate-180 transition-transform" />
+            <Icon name="chevron-down" size={14} class="group-hover:rotate-180 transition-transform text-marketing-muted group-hover:text-marketing-text" />
           </button>
           <div class="absolute left-0 top-full hidden group-hover:flex flex-col bg-marketing-panel border border-marketing-border rounded-xl shadow-xl p-2 min-w-[260px] z-50">
             <a href="/guides/how-to-make-a-contact-sheet" class="flex flex-col p-2.5 rounded-lg hover:bg-marketing-surface transition-colors">
@@ -100,54 +105,59 @@ const isWorkspace = variant === 'workspace';
       <div class="flex items-center gap-3 text-xs text-workspace-muted">
         <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-workspace-surface border border-workspace-border">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span>100% In-Browser · Private</span>
+          <span>100% In-Browser - Private</span>
         </span>
       </div>
     )}
 
     <!-- Header Actions & Theme Toggle -->
-    <div class="flex items-center gap-2 sm:gap-3">
+    <div class="flex items-center gap-2 sm:gap-3 shrink-0">
       
-      <!-- Theme Switcher (Dark / Light) -->
-      <button 
+      <!-- Theme Switcher (Light / Dark slider) -->
+      <button
         id="theme-toggle-btn"
-        class={`p-2 rounded-lg border transition-all cursor-pointer ${
-          isWorkspace 
-            ? 'bg-workspace-surface hover:bg-workspace-surface-hover border-workspace-border text-workspace-text' 
-            : 'bg-marketing-surface hover:bg-marketing-border border-marketing-border text-marketing-text'
-        }`}
-        aria-label="Toggle Dark / Light Theme"
-        title="Toggle Theme"
+        type="button"
+        role="switch"
+        aria-checked="false"
+        class={`theme-switch ${isWorkspace ? 'theme-switch-workspace' : ''}`}
+        aria-label="Toggle light and dark theme"
+        title="Toggle light / dark theme"
       >
-        <!-- Sun icon (shown in dark mode) -->
-        <svg id="theme-sun-icon" class="hidden w-4 h-4 text-amber-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="4" />
-          <path d="M12 2v2" />
-          <path d="M12 20v2" />
-          <path d="m4.93 4.93 1.41 1.41" />
-          <path d="m17.66 17.66 1.41 1.41" />
-          <path d="M2 12h2" />
-          <path d="M20 12h2" />
-          <path d="m6.34 17.66-1.41 1.41" />
-          <path d="m19.07 4.93-1.41 1.41" />
-        </svg>
-        <!-- Moon icon (shown in light mode) -->
-        <svg id="theme-moon-icon" class="w-4 h-4 text-zinc-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-        </svg>
+        <span class="theme-switch-track">
+          <!-- Sun icon (left rail — the light end) -->
+          <svg class="theme-switch-rail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2" />
+            <path d="M12 20v2" />
+            <path d="m4.93 4.93 1.41 1.41" />
+            <path d="m17.66 17.66 1.41 1.41" />
+            <path d="M2 12h2" />
+            <path d="M20 12h2" />
+            <path d="m6.34 17.66-1.41 1.41" />
+            <path d="m19.07 4.93-1.41 1.41" />
+          </svg>
+          <!-- Moon icon (right rail — the dark end) -->
+          <svg class="theme-switch-rail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+          </svg>
+          <span class="theme-switch-knob"></span>
+        </span>
       </button>
 
       {!isWorkspace ? (
         <a 
           href="/#workspace" 
-          class="inline-flex items-center justify-center gap-2 h-9 sm:h-10 px-4 sm:px-5 rounded-lg bg-zinc-900 hover:bg-black text-white dark:bg-accent-amber dark:hover:bg-accent-amber-hover dark:text-black text-xs sm:text-sm font-semibold tracking-tight shadow-sm hover:shadow transition-all"
+          class="hidden sm:inline-flex items-center justify-center gap-2 h-9 sm:h-10 px-4 sm:px-5 rounded-xl bg-accent hover:bg-accent-hover text-white text-xs sm:text-sm font-bold tracking-tight shadow-sm hover:shadow active:scale-[0.98] transition-all"
         >
           <span>Start Creating</span>
           <Icon name="arrow-right" size={14} />
         </a>
       ) : (
-        <a 
-          href="/" 
+        <!-- Reloading the studio is what actually clears the batch: the image
+             store lives in memory only, so a fresh document is a fresh batch.
+             The brand logo above is the way back to the marketing site. -->
+        <a
+          href="/studio/contact-sheet"
           class="inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-lg bg-workspace-surface hover:bg-workspace-surface-hover text-workspace-text text-xs border border-workspace-border transition-colors"
         >
           <Icon name="rotate-ccw" size={13} />
@@ -159,7 +169,7 @@ const isWorkspace = variant === 'workspace';
       {!isWorkspace && (
         <button 
           id="mobile-menu-toggle"
-          class="md:hidden p-2 rounded-lg text-marketing-muted hover:text-marketing-text hover:bg-marketing-surface"
+          class="md:hidden p-2 rounded-xl text-marketing-muted hover:text-marketing-text hover:bg-marketing-surface border border-transparent hover:border-marketing-border transition-colors"
           aria-label="Toggle Navigation Menu"
         >
           <Icon name="columns" size={20} />
@@ -170,23 +180,37 @@ const isWorkspace = variant === 'workspace';
 
   <!-- Mobile Dropdown Menu -->
   {!isWorkspace && (
-    <div id="mobile-menu" class="hidden md:hidden border-t border-marketing-border bg-marketing-panel px-4 py-4 space-y-3">
-      <div class="text-xs font-semibold uppercase tracking-wider text-marketing-muted">Tools</div>
-      <div class="grid grid-cols-1 gap-2 pl-2">
-        <a href="/photo-contact-sheet-maker" class="text-sm font-medium text-marketing-text">Photo Contact Sheet Maker</a>
-        <a href="/photo-collage-maker" class="text-sm font-medium text-marketing-text">Photo Collage Maker</a>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-marketing-border bg-marketing-panel px-4 py-5 space-y-4">
+      <a 
+        href="/#workspace" 
+        class="flex items-center justify-center gap-2 w-full h-11 rounded-xl bg-accent hover:bg-accent-hover text-white font-bold text-sm shadow-sm active:scale-[0.98] transition-all"
+      >
+        <span>Start Creating</span>
+        <Icon name="arrow-right" size={16} />
+      </a>
+      <div>
+        <div class="text-xs font-semibold uppercase tracking-wider text-marketing-muted mb-2">Tools</div>
+        <div class="grid grid-cols-1 gap-1 pl-1">
+          <a href="/photo-contact-sheet-maker" class="py-1.5 text-sm font-medium text-marketing-text hover:text-accent-ink transition-colors">Photo Contact Sheet Maker</a>
+          <a href="/photo-collage-maker" class="py-1.5 text-sm font-medium text-marketing-text hover:text-accent-ink transition-colors">Photo Collage Maker</a>
+          <a href="/studio/contact-sheet" class="py-1.5 text-sm font-semibold text-accent-ink transition-colors">Contact Sheet Studio (full screen)</a>
+        </div>
       </div>
-      <div class="text-xs font-semibold uppercase tracking-wider text-marketing-muted pt-2">Templates</div>
-      <div class="grid grid-cols-1 gap-2 pl-2">
-        <a href="/contact-sheet-template" class="text-sm font-medium text-marketing-text">Contact Sheet Templates</a>
-        <a href="/collage-templates" class="text-sm font-medium text-marketing-text">Collage Templates</a>
+      <div>
+        <div class="text-xs font-semibold uppercase tracking-wider text-marketing-muted mb-2">Templates</div>
+        <div class="grid grid-cols-1 gap-1 pl-1">
+          <a href="/contact-sheet-template" class="py-1.5 text-sm font-medium text-marketing-text hover:text-accent-ink transition-colors">Contact Sheet Templates</a>
+          <a href="/collage-templates" class="py-1.5 text-sm font-medium text-marketing-text hover:text-accent-ink transition-colors">Collage Templates</a>
+        </div>
       </div>
-      <div class="text-xs font-semibold uppercase tracking-wider text-marketing-muted pt-2">Guides</div>
-      <div class="grid grid-cols-1 gap-2 pl-2">
-        <a href="/guides/how-to-make-a-contact-sheet" class="text-sm font-medium text-marketing-text">How to Make a Contact Sheet</a>
-        <a href="/guides/how-to-make-photo-collage" class="text-sm font-medium text-marketing-text">How to Make a Photo Collage</a>
-        <a href="/guides/photo-proof-sheet-with-filenames" class="text-sm font-medium text-marketing-text">Proof Sheets with Filenames</a>
-        <a href="/compare/photoshop-contact-sheet-alternative" class="text-sm font-medium text-marketing-text">Photoshop Alternative</a>
+      <div>
+        <div class="text-xs font-semibold uppercase tracking-wider text-marketing-muted mb-2">Guides & Alternatives</div>
+        <div class="grid grid-cols-1 gap-1 pl-1">
+          <a href="/guides/how-to-make-a-contact-sheet" class="py-1.5 text-sm font-medium text-marketing-text hover:text-accent-ink transition-colors">How to Make a Contact Sheet</a>
+          <a href="/guides/how-to-make-photo-collage" class="py-1.5 text-sm font-medium text-marketing-text hover:text-accent-ink transition-colors">How to Make a Photo Collage</a>
+          <a href="/guides/photo-proof-sheet-with-filenames" class="py-1.5 text-sm font-medium text-marketing-text hover:text-accent-ink transition-colors">Proof Sheets with Filenames</a>
+          <a href="/compare/photoshop-contact-sheet-alternative" class="py-1.5 text-sm font-medium text-marketing-text hover:text-accent-ink transition-colors">Photoshop Alternative</a>
+        </div>
       </div>
     </div>
   )}
@@ -202,31 +226,22 @@ const isWorkspace = variant === 'workspace';
     });
   }
 
-  // Dark / White Mode Toggle Controller
+  // Light / Dark slider controller.
+  // The <html class="dark"> flip is done by the inline script in BaseLayout so
+  // it lands before first paint; this only keeps the switch in sync with it and
+  // persists the user's choice.
   const themeBtn = document.getElementById('theme-toggle-btn');
-  const sunIcon = document.getElementById('theme-sun-icon');
-  const moonIcon = document.getElementById('theme-moon-icon');
 
-  function updateThemeUI(isDark: boolean) {
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-      sunIcon?.classList.remove('hidden');
-      moonIcon?.classList.add('hidden');
-    } else {
-      document.documentElement.classList.remove('dark');
-      sunIcon?.classList.add('hidden');
-      moonIcon?.classList.remove('hidden');
-    }
+  function syncSwitch(isDark: boolean) {
+    document.documentElement.classList.toggle('dark', isDark);
+    themeBtn?.setAttribute('aria-checked', String(isDark));
   }
 
-  // Initial sync with DOM state
-  const isCurrentlyDark = document.documentElement.classList.contains('dark');
-  updateThemeUI(isCurrentlyDark);
+  syncSwitch(document.documentElement.classList.contains('dark'));
 
   themeBtn?.addEventListener('click', () => {
-    const isDark = document.documentElement.classList.contains('dark');
-    const newTheme = isDark ? 'light' : 'dark';
-    localStorage.setItem('theme', newTheme);
-    updateThemeUI(!isDark);
+    const nextIsDark = !document.documentElement.classList.contains('dark');
+    localStorage.setItem('theme', nextIsDark ? 'dark' : 'light');
+    syncSwitch(nextIsDark);
   });
 </script>
