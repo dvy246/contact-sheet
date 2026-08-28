@@ -39,6 +39,15 @@ export const DEFAULT_LAYOUT_CONFIG: LayoutConfig = {
   labelHideExtension: false,
   labelAlign: 'center',
   cellRadius: 0,
+  showWatermark: false,
+  watermarkType: 'text',
+  watermarkText: 'PROOF',
+  watermarkStyle: 'diagonal',
+  watermarkOpacity: 20,
+  watermarkColor: '#ffffff',
+  watermarkImageUrl: '',
+  watermarkImageScale: 30,
+  watermarkImagePosition: 'bottom-right',
 };
 
 // Core Reactive Atoms
@@ -285,6 +294,34 @@ export function setImageStatus(id: string, status: ReviewStatus) {
   const current = $images.get();
   $images.set(
     current.map(img => (img.id === id ? { ...img, status } : img))
+  );
+}
+
+export function setImageCustomLabel(id: string, customLabel: string) {
+  const current = $images.get();
+  const trimmed = customLabel.trim();
+  $images.set(
+    current.map(img => (img.id === id ? { ...img, customLabel: trimmed ? trimmed : undefined } : img))
+  );
+}
+
+export function batchSetCustomLabels(labels: Record<string, string> | Map<string, string>) {
+  const current = $images.get();
+  const isMap = labels instanceof Map;
+  $images.set(
+    current.map(img => {
+      const val = isMap ? labels.get(img.id) : labels[img.id];
+      if (val === undefined) return img;
+      const trimmed = val.trim();
+      return { ...img, customLabel: trimmed ? trimmed : undefined };
+    })
+  );
+}
+
+export function batchClearCustomLabels() {
+  const current = $images.get();
+  $images.set(
+    current.map(img => ({ ...img, customLabel: undefined }))
   );
 }
 
