@@ -25,7 +25,7 @@ export type SortKey =
 
 export type FilterStatus = 'all' | 'keep' | 'flag' | 'reject' | 'unreviewed' | 'exclude-rejected';
 
-export type ExportFormat = 'png' | 'jpeg' | 'pdf' | 'csv' | 'txt' | 'json';
+export type ExportFormat = 'png' | 'jpeg' | 'pdf' | 'csv' | 'txt' | 'json' | 'html';
 
 export interface ImageExifData {
   dateTimeOriginal?: string;

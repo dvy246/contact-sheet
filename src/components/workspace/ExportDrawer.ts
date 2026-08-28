@@ -61,7 +61,7 @@ export class ExportDrawer {
         </div>
 
         <!-- Format Selector Tabs -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-2.5">
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2 sm:gap-2.5">
           <button data-format="png" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer ${this.selectedFormat === 'png' ? 'bg-workspace-surface-hover border-accent text-workspace-text font-bold shadow-xs' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
             <div class="font-medium text-xs">PNG Image</div>
             <div class="text-[10px] text-workspace-muted mt-0.5">High-Res Lossless</div>
@@ -73,6 +73,10 @@ export class ExportDrawer {
           <button data-format="pdf" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer ${this.selectedFormat === 'pdf' ? 'bg-workspace-surface-hover border-accent text-workspace-text font-bold shadow-xs' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
             <div class="font-medium text-xs">PDF Document</div>
             <div class="text-[10px] text-workspace-muted mt-0.5">Print Proof Sheet</div>
+          </button>
+          <button data-format="html" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer ${this.selectedFormat === 'html' ? 'bg-workspace-surface-hover border-accent text-workspace-text font-bold shadow-xs' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
+            <div class="font-medium text-xs">HTML Portal</div>
+            <div class="text-[10px] text-workspace-muted mt-0.5">Client Proofing</div>
           </button>
           <button data-format="csv" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer ${this.selectedFormat === 'csv' ? 'bg-workspace-surface-hover border-accent text-workspace-text font-bold shadow-xs' : 'bg-workspace-surface border-workspace-border text-workspace-muted hover:text-workspace-text'}">
             <div class="font-medium text-xs">CSV Table</div>
@@ -110,7 +114,7 @@ export class ExportDrawer {
         <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-workspace-border">
           <div class="flex items-center gap-3">
             <span class="text-xs text-workspace-muted">
-              ${this.selectedFormat === 'pdf' ? 'Multi-page 300 DPI print document' : this.selectedFormat === 'txt' ? 'Comma-separated filename string ready to paste into Lightroom search' : this.selectedFormat === 'csv' ? 'Lightroom-compatible structured metadata table with review statuses and ratings' : this.selectedFormat === 'json' ? 'Portable JSON review session manifest with full layout config and statuses' : 'Export rendered at 2x studio quality'}
+              ${this.selectedFormat === 'pdf' ? 'Multi-page 300 DPI print document' : this.selectedFormat === 'html' ? 'Standalone offline HTML proofing gallery with client culling & review tools' : this.selectedFormat === 'txt' ? 'Comma-separated filename string ready to paste into Lightroom search' : this.selectedFormat === 'csv' ? 'Lightroom-compatible structured metadata table with review statuses and ratings' : this.selectedFormat === 'json' ? 'Portable JSON review session manifest with full layout config and statuses' : 'Export rendered at 2x studio quality'}
             </span>
           </div>
 
@@ -127,7 +131,7 @@ export class ExportDrawer {
                 </svg>
                 <span>Exporting (${progress}%)...</span>
               ` : `
-                <span>Download ${this.selectedFormat.toUpperCase()}</span>
+                <span>Download ${this.selectedFormat === 'html' ? 'HTML PORTAL' : this.selectedFormat.toUpperCase()}</span>
               `}
             </button>
           </div>
@@ -211,6 +215,17 @@ export class ExportDrawer {
           'makecontactsheet-session',
           $filterStatus.get(),
           $sortKey.get()
+        );
+        $exportProgress.set(100);
+      } else if (this.selectedFormat === 'html') {
+        const { exportClientProofingPortal } = await import('../../lib/export/htmlPortalExporter');
+        await exportClientProofingPortal(
+          targetImages,
+          config,
+          'makecontactsheet-proofing-portal',
+          (loaded, total) => {
+            $exportProgress.set(Math.round((loaded / total) * 90));
+          }
         );
         $exportProgress.set(100);
       } else if (this.selectedFormat === 'pdf') {

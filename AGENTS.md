@@ -2,6 +2,14 @@
 
 ## 11. Recent changes (Rebranding & Improvements)
 
+- Implemented **Serverless Client Proofing Portal HTML Exporter** (Task 3):
+  - Created `src/lib/export/htmlPortalExporter.ts` and implemented `exportClientProofingPortal(images, config, customFilename, onProgress)` generating 100% self-contained single-file HTML proofing galleries with zero server dependencies.
+  - Implemented progressive batch conversion of thumbnail/preview blobs into compressed, bounded base64 JPEG data URLs (< 480px, ~0.82 quality) for offline viewing and ultra-compact file bundles (~2-5MB for 100 photos).
+  - Built interactive, responsive dark/light client proofing gallery with full-screen Lightbox zoom, keyboard culling shortcuts (`1`/`K` Keep, `2`/`F` Flag, `3`/`R` Reject, `0`/`U` Clear, `←`/`→` navigation), 5-star ratings, per-photo notes, and search/filtering.
+  - Integrated 2-way sync feedback modal supporting 1-click download of `.makecontactsheet.json` review manifests (directly importable back into Make Contact Sheet via `relinkProjectManifest`) and multi-format filename export (comma, newline, space).
+  - Added HTML Portal option to `src/components/workspace/ExportDrawer.ts` with asynchronous dynamic chunk loading and progress tracking.
+  - Maintained strict 0 errors, 0 warnings, 0 hints on `astro check` and 15-page static build.
+
 - Implemented **Dynamic Token Resolving & Canvas Overlay Badge** (Task 2):
   - Added `MetadataBadgeStyle` (`'plain-text' | 'dark-pill' | 'subtle-badge'`) and `LayoutConfig` fields (`showExifOverlay`, `exifTokenTemplate`, `exifBadgeStyle`) in `src/lib/types.ts`, `src/lib/store.ts`, `src/lib/engine/templates.ts`, and `src/lib/engine/gridPresets.ts`.
   - Implemented `resolveMetadataTokens` and `drawExifBadge` in `src/lib/engine/canvasRenderer.ts` supporting `{name}`, `{filename}`, `{basename}`, `{ext}`, `{index}` (with optional zero-padding like `{index:03}`), `{camera}`, `{lens}`, `{focal}`, `{fstop}`/`{aperture}`, `{shutter}`/`{exposure}`, `{iso}`, `{date}`, `{rating}`, and `{customlabel}`/`{custom}`, with smart separator cleanup and negative lookahead for missing numeric EXIF prefixes.
