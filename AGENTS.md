@@ -1,6 +1,10 @@
 # AGENTS.md
 
-## 11. Recent changes (Rebranding & Improvements)
+- Implemented **Apple Keynote-Style Studio Showcase Demo Section**:
+  - Created `src/components/marketing/StudioShowcase.astro` and integrated into `src/pages/index.astro`.
+  - Built an interactive, high-craft proofing showcase featuring 3 switchable presentation views: **Technical EXIF & Film Proof** (Hasselblad medium format 120 proof look with live aperture, shutter speed, ISO, and focal length badges), **Archival Gallery Fine Art** (warm cotton museum rag paper aesthetic with 300 DPI vector margins), and **Client Proofing Portal** (interactive culling cards with Keep/Flag/Reject tags, client notes, and selection counters).
+  - Designed Apple-style bento technical pillars highlighting sub-pixel print precision, dynamic metadata token engine, and zero-upload privacy enclave.
+  - Verified with 0 errors on `astro check`, 0 design lint findings with `impeccable`, and a successful 15-page static build.
 
 - Implemented **Serverless Client Proofing Portal HTML Exporter** (Task 3):
   - Created `src/lib/export/htmlPortalExporter.ts` and implemented `exportClientProofingPortal(images, config, customFilename, onProgress)` generating 100% self-contained single-file HTML proofing galleries with zero server dependencies.
