@@ -416,28 +416,28 @@ html {
   }
 }
 
-/* GPU-Accelerated Scroll-Driven Animations (120 FPS Compositor Thread) */
-@keyframes scrollEntryLift {
+/* ==========================================================================
+   UPWARD ASCENSION & MULTI-PLANE FLOATING SCROLL SYSTEM
+   Runs 100% on the GPU Compositor Thread via CSS animation-timeline (120 FPS)
+   ========================================================================== */
+
+/* Upward Floating Lift Animation for Cards & Containers */
+@keyframes scrollFloatUpward {
   0% {
-    opacity: 0.2;
-    transform: translate3d(0, 36px, 0);
+    opacity: 0.25;
+    transform: translate3d(0, 48px, 0) scale(0.975);
+  }
+  35% {
+    opacity: 1;
   }
   100% {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0, -36px, 0) scale(1.0);
   }
 }
 
-@keyframes scrollParallaxSlow {
-  0% {
-    transform: translate3d(0, 35px, 0);
-  }
-  100% {
-    transform: translate3d(0, -35px, 0);
-  }
-}
-
-@keyframes scrollParallaxFast {
+/* Staggered Differential Upward Parallax Layers */
+@keyframes scrollAscendFast {
   0% {
     transform: translate3d(0, 55px, 0);
   }
@@ -446,49 +446,83 @@ html {
   }
 }
 
-@keyframes scrollGlowDrift {
+@keyframes scrollAscendMedium {
   0% {
-    transform: translate(-50%, -40%) scale(0.95);
-    opacity: 0.5;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.05);
-    opacity: 0.85;
+    transform: translate3d(0, 35px, 0);
   }
   100% {
-    transform: translate(-50%, -60%) scale(0.95);
-    opacity: 0.5;
+    transform: translate3d(0, -35px, 0);
+  }
+}
+
+@keyframes scrollAscendSlow {
+  0% {
+    transform: translate3d(0, 20px, 0);
+  }
+  100% {
+    transform: translate3d(0, -20px, 0);
+  }
+}
+
+/* Ambient Glow Upward Shift */
+@keyframes scrollGlowAscend {
+  0% {
+    transform: translate(-50%, -30%) scale(0.95);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(-50%, -70%) scale(0.95);
+    opacity: 0.6;
   }
 }
 
 @supports (animation-timeline: view()) {
-  .scroll-reveal {
-    animation: scrollEntryLift cubic-bezier(0.16, 1, 0.3, 1) both;
+  .scroll-reveal,
+  .scroll-float-card {
+    animation: scrollFloatUpward cubic-bezier(0.16, 1, 0.3, 1) both;
     animation-timeline: view();
-    animation-range: entry 5% cover 30%;
+    animation-range: entry 5% cover 95%;
   }
 
-  .scroll-parallax-slow {
-    animation: scrollParallaxSlow linear both;
+  .scroll-ascend-fast,
+  .scroll-parallax-fast {
+    animation: scrollAscendFast linear both;
     animation-timeline: view();
     animation-range: entry 0% exit 100%;
   }
 
-  .scroll-parallax-fast {
-    animation: scrollParallaxFast linear both;
+  .scroll-ascend-medium {
+    animation: scrollAscendMedium linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+  }
+
+  .scroll-ascend-slow,
+  .scroll-parallax-slow {
+    animation: scrollAscendSlow linear both;
     animation-timeline: view();
     animation-range: entry 0% exit 100%;
   }
 
   .scroll-parallax-glow {
-    animation: scrollGlowDrift linear both;
+    animation: scrollGlowAscend linear both;
     animation-timeline: view();
     animation-range: entry 0% exit 100%;
   }
 }
 
 @supports not (animation-timeline: view()) {
-  .scroll-reveal {
+  .scroll-reveal,
+  .scroll-float-card,
+  .scroll-ascend-fast,
+  .scroll-ascend-medium,
+  .scroll-ascend-slow,
+  .scroll-parallax-slow,
+  .scroll-parallax-fast {
     opacity: 1;
     transform: none;
   }
@@ -496,6 +530,10 @@ html {
 
 @media (prefers-reduced-motion: reduce) {
   .scroll-reveal,
+  .scroll-float-card,
+  .scroll-ascend-fast,
+  .scroll-ascend-medium,
+  .scroll-ascend-slow,
   .scroll-parallax-slow,
   .scroll-parallax-fast,
   .scroll-parallax-glow {
