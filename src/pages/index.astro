@@ -12,14 +12,14 @@ import HighlightText from '../components/ui/HighlightText.astro';
 import Icon from '../components/common/Icon.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
 
-import { buildWebSiteSchema, buildOrganizationSchema, buildSoftwareApplicationSchema } from '../lib/seo/schemaGenerator';
+import { buildWebSiteSchema, buildOrganizationSchema, buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/'];
 
 const faqs = [
   {
     question: 'Are my photos uploaded to a cloud server?',
-    answer: 'No. Make Contact Sheet processes 100% of your images locally in your web browser using HTML5 Canvas. Your files, pixels, filenames, and EXIF metadata never leave your computer.',
+    answer: 'No. Make Contact Sheet processes 100% of your images locally in your web browser using HTML5 Canvas and Web Workers. Your files, raw pixel bitmaps, filenames, and EXIF metadata never leave your computer.',
   },
   {
     question: 'How do I export the list of selected filenames for Lightroom?',
@@ -30,16 +30,28 @@ const faqs = [
     answer: 'Yes! Our new Freeform Mood Board Maker allows you to freely arrange photos, position color swatches, write sticky notes, and align assets with magnetic snapping guides, exporting up to 300 DPI fine-art prints.',
   },
   {
+    question: 'How does Make Contact Sheet differ from Adobe Photoshop Contact Sheet II?',
+    answer: 'Unlike Photoshop Contact Sheet II which requires an expensive Creative Cloud subscription and generates static uneditable rasters one image at a time, Make Contact Sheet runs instantly in your browser, offers real-time grid adjustments, and provides built-in client selection shortcuts and 1-click filename export.',
+  },
+  {
     question: 'What file formats are supported?',
-    answer: 'Make Contact Sheet supports all standard browser-decodable image formats including JPG/JPEG, PNG, WebP, AVIF, GIF, and BMP.',
+    answer: 'Make Contact Sheet supports all standard browser-decodable image formats including JPG/JPEG, PNG, WebP, AVIF, GIF, and BMP, plus camera RAW previews.',
   },
   {
     question: 'Can I print or save high-resolution PDFs?',
     answer: 'Yes. Make Contact Sheet includes a print-ready PDF generator that builds standard A4 and US Letter multi-page proof sheets formatted with clean margins, headers, and filename labels at 300 DPI.',
   },
   {
+    question: 'Can I customize contact sheet grids and thumbnail spacing?',
+    answer: 'Yes. You can adjust column and row counts, cell aspect ratios, gutter spacing (0px to 24px), page margins, background colors, header text, and watermark logo placement in real time with instant preview.',
+  },
+  {
+    question: 'Does Make Contact Sheet extract camera EXIF metadata and exposure settings?',
+    answer: 'Yes. Our browser engine extracts camera make/model, focal length, aperture (f/stop), shutter speed, and ISO directly from EXIF headers and lets you render technical badges below each thumbnail.',
+  },
+  {
     question: 'Is Make Contact Sheet free to use?',
-    answer: 'Yes. Make Contact Sheet is completely free with no account creation or subscription required.',
+    answer: 'Yes. Make Contact Sheet is completely free with no account creation, no subscription paywalls, and no watermarks required.',
   },
 ];
 
@@ -51,6 +63,7 @@ const schemas = [
     meta.description,
     'https://makecontactsheet.com/'
   ),
+  buildFAQSchema(faqs),
 ];
 ---
 

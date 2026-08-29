@@ -267,6 +267,48 @@ const isWorkspace = variant === 'workspace';
         <a href="/compare/photoshop-contact-sheet-alternative" class="px-3.5 py-1.5 rounded-full text-marketing-muted hover:text-marketing-text hover:bg-marketing-panel/90 transition-all">
           Compare
         </a>
+
+        <!-- About & Company Dropdown -->
+        <div class="relative group">
+          <button 
+            type="button"
+            class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-marketing-muted hover:text-marketing-text hover:bg-marketing-panel/90 group-hover:text-marketing-text group-hover:bg-marketing-panel/90 transition-all duration-200 cursor-pointer"
+          >
+            <span>About</span>
+            <Icon name="chevron-down" size={13} class="group-hover:rotate-180 transition-transform duration-200 text-marketing-muted group-hover:text-marketing-text" />
+          </button>
+          
+          <div class="absolute left-0 top-[calc(100%+8px)] pointer-events-none group-hover:pointer-events-auto opacity-0 -translate-y-2 scale-95 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 transition-all duration-200 ease-out origin-top-left flex flex-col bg-marketing-panel/98 dark:bg-[#1A1512]/98 backdrop-blur-2xl border border-marketing-border rounded-2xl shadow-2xl p-2 min-w-[260px] z-50">
+            <a href="/about-us" class="group/item flex items-start gap-3 p-2.5 rounded-xl hover:bg-marketing-surface transition-colors">
+              <div class="w-8 h-8 rounded-lg bg-marketing-surface border border-marketing-border flex items-center justify-center shrink-0 text-marketing-text group-hover/item:text-accent shadow-xs">
+                <Icon name="help" size={16} />
+              </div>
+              <div class="flex flex-col">
+                <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">About Us</span>
+                <span class="text-[11px] text-marketing-muted">Our mission &amp; local architecture</span>
+              </div>
+            </a>
+
+            <a href="/contact-us" class="group/item flex items-start gap-3 p-2.5 rounded-xl hover:bg-marketing-surface transition-colors">
+              <div class="w-8 h-8 rounded-lg bg-marketing-surface border border-marketing-border flex items-center justify-center shrink-0 text-marketing-text group-hover/item:text-accent shadow-xs">
+                <Icon name="file-text" size={16} />
+              </div>
+              <div class="flex flex-col">
+                <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">Contact &amp; Support</span>
+                <span class="text-[11px] text-marketing-muted">Get support &amp; submit feedback</span>
+              </div>
+            </a>
+
+            <div class="my-1 border-t border-marketing-border"></div>
+
+            <a href="/privacy-policy" class="group/item flex items-start gap-3 px-2.5 py-2 rounded-xl hover:bg-marketing-surface transition-colors">
+              <span class="text-xs text-marketing-muted group-hover/item:text-marketing-text font-medium">Privacy Policy</span>
+            </a>
+            <a href="/terms-and-conditions" class="group/item flex items-start gap-3 px-2.5 py-2 rounded-xl hover:bg-marketing-surface transition-colors">
+              <span class="text-xs text-marketing-muted group-hover/item:text-marketing-text font-medium">Terms of Service</span>
+            </a>
+          </div>
+        </div>
       </nav>
     ) : (
       <div class="flex items-center gap-3 text-xs text-workspace-muted">
@@ -438,6 +480,28 @@ const isWorkspace = variant === 'workspace';
           </a>
           <a href="/compare/photoshop-contact-sheet-alternative" class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
             <span>Photoshop Alternative</span>
+            <Icon name="chevron-right" size={14} class="text-marketing-muted" />
+          </a>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <div class="text-[11px] font-mono uppercase tracking-wider text-accent-ink font-bold">Company & Legal</div>
+        <div class="grid grid-cols-1 gap-1">
+          <a href="/about-us" class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
+            <span>About Make Contact Sheet</span>
+            <Icon name="chevron-right" size={14} class="text-marketing-muted" />
+          </a>
+          <a href="/contact-us" class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
+            <span>Contact & Support</span>
+            <Icon name="chevron-right" size={14} class="text-marketing-muted" />
+          </a>
+          <a href="/privacy-policy" class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
+            <span>Privacy Policy</span>
+            <Icon name="chevron-right" size={14} class="text-marketing-muted" />
+          </a>
+          <a href="/terms-and-conditions" class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
+            <span>Terms of Service</span>
             <Icon name="chevron-right" size={14} class="text-marketing-muted" />
           </a>
         </div>

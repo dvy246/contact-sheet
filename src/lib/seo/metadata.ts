@@ -12,7 +12,7 @@ export const SITE_URL = 'https://makecontactsheet.com';
 export const METADATA_REGISTRY: Record<string, RouteMetadata> = {
   '/': {
     title: 'Contact Sheet Maker — Free Photo Proof Sheets Online',
-    description: 'Create photo contact sheets online for free. Arrange proof sheets with original filenames intact, review picks with fast shortcuts, and export print-ready PDFs.',
+    description: 'Create photo contact sheets online for free. Arrange proof sheets with filenames intact, review picks with fast shortcuts, and export 300 DPI print PDFs.',
     canonical: `${SITE_URL}/`,
     robots: 'index, follow',
     ogType: 'website',
