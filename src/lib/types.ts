@@ -2,7 +2,7 @@ export type ReviewStatus = 'unreviewed' | 'keep' | 'reject' | 'flag';
 
 export type WorkspaceMode = 'contact-sheet' | 'collage' | 'mood-board';
 
-export type PageSize = 'a4' | 'letter' | '8x10' | '16-9' | 'auto' | 'square' | 'story' | 'custom';
+export type PageSize = 'a4' | 'letter' | '8x10' | '11x14' | '16x20' | '24x36' | '12x18' | '16-9' | 'auto' | 'square' | 'story' | 'custom';
 
 export type PageOrientation = 'portrait' | 'landscape';
 

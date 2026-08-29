@@ -34,6 +34,18 @@ export function getPagePixelDimensions(
   } else if (pageSize === '8x10') {
     w = orientation === 'portrait' ? 1200 : 1500;
     h = orientation === 'portrait' ? 1500 : 1200;
+  } else if (pageSize === '11x14') {
+    w = orientation === 'portrait' ? 1650 : 2100;
+    h = orientation === 'portrait' ? 2100 : 1650;
+  } else if (pageSize === '16x20') {
+    w = orientation === 'portrait' ? 2400 : 3000;
+    h = orientation === 'portrait' ? 3000 : 2400;
+  } else if (pageSize === '24x36') {
+    w = orientation === 'portrait' ? 3600 : 5400;
+    h = orientation === 'portrait' ? 5400 : 3600;
+  } else if (pageSize === '12x18') {
+    w = orientation === 'portrait' ? 1800 : 2700;
+    h = orientation === 'portrait' ? 2700 : 1800;
   } else if (pageSize === '16-9') {
     w = orientation === 'portrait' ? 1080 : 1920;
     h = orientation === 'portrait' ? 1920 : 1080;

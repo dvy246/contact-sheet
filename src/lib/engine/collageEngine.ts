@@ -30,10 +30,15 @@ export function calculateCollageLayout(
     const rawH = cellDef.h * innerH;
 
     // Apply half-spacing adjustments between cells
-    const adjustedX = rawX + (cellDef.x > 0 ? spacing / 2 : 0);
-    const adjustedY = rawY + (cellDef.y > 0 ? spacing / 2 : 0);
-    const adjustedW = rawW - (cellDef.x > 0 && cellDef.x + cellDef.w < 1 ? spacing : spacing / 2);
-    const adjustedH = rawH - (cellDef.y > 0 && cellDef.y + cellDef.h < 1 ? spacing : spacing / 2);
+    const leftInset = cellDef.x > 0.0001 ? spacing / 2 : 0;
+    const rightInset = (cellDef.x + cellDef.w) < 0.9999 ? spacing / 2 : 0;
+    const topInset = cellDef.y > 0.0001 ? spacing / 2 : 0;
+    const bottomInset = (cellDef.y + cellDef.h) < 0.9999 ? spacing / 2 : 0;
+
+    const adjustedX = rawX + leftInset;
+    const adjustedY = rawY + topInset;
+    const adjustedW = rawW - (leftInset + rightInset);
+    const adjustedH = rawH - (topInset + bottomInset);
 
     const assignedImage = images[index];
 

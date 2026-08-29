@@ -1,0 +1,321 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../components/common/Breadcrumbs.astro';
+import WorkspaceApp from '../components/workspace/WorkspaceApp.astro';
+import FaqAccordion from '../components/common/FaqAccordion.astro';
+import SeoToolProse from '../components/marketing/SeoToolProse.astro';
+import Icon from '../components/common/Icon.astro';
+import HighlightText from '../components/ui/HighlightText.astro';
+import { METADATA_REGISTRY } from '../lib/seo/metadata';
+import { buildSoftwareApplicationSchema, buildFAQSchema, buildHowToSchema } from '../lib/seo/schemaGenerator';
+
+const meta = METADATA_REGISTRY['/large-photo-prints'];
+
+const faqs = [
+  {
+    question: 'What pixel dimensions and DPI do I need for 16×20 and 24×36 poster prints?',
+    answer: 'For standard poster viewing distances (3+ feet), 150 DPI is standard (2400×3000 px for 16×20, 3600×5400 px for 24×36). For gallery-quality fine art prints viewed up close, 300 DPI is the gold standard (4800×6000 px for 16×20, 7200×10800 px for 24×36). Make Contact Sheet allows you to export at 150 DPI or full 300 DPI resolution with zero compression artifacts.',
+  },
+  {
+    question: 'How much money can I save with the multi-photo gang sheet poster hack?',
+    answer: 'Commercial photo labs (like Walgreens, CVS, and Walmart) frequently charge $3.99 to $8.99 for individual 5×7 or 8×10 prints, but offer 24×36 or 16×20 poster prints for $15–$30 (often discounted 40% to 50% with coupons). By ganging 6 to 12 photos onto a single poster canvas and trimming them at home, you save between $30 and $70+ per batch.',
+  },
+  {
+    question: 'Which file format and color profile should I upload to Walgreens, CVS, or Walmart?',
+    answer: 'Almost all pharmacy and retail photo kiosks (Walgreens, CVS, Walmart) require 8-bit JPEG or PNG files in standard sRGB color space. Make Contact Sheet renders directly in standard sRGB with accurate sub-pixel clipping, ensuring the physical print colors match your screen.',
+  },
+  {
+    question: 'Can I create custom large poster dimensions (e.g. 12×18, 18×24, 20×30)?',
+    answer: 'Yes! In addition to built-in presets for 11×14, 12×18, 16×20, and 24×36 posters, the studio supports custom millimeter and inch dimensions. You can enter any custom width and height up to large-format architectural sizes, and the engine will calculate the exact aspect ratios and pixel bounds.',
+  },
+  {
+    question: 'Will generating a 7200×10800 pixel canvas crash my browser or run out of memory?',
+    answer: 'No. Make Contact Sheet is engineered with memory-bounded offscreen canvas streaming. Thumbnails are rendered for real-time interactive previews, and full-resolution uncompressed pixels are drawn during the export phase and immediately released from memory, preventing browser tab crashes.',
+  },
+];
+
+const howToSteps = [
+  {
+    name: 'Import High-Resolution Photos',
+    text: 'Drag and drop your photos into the Make Contact Sheet workspace. They load instantly into the local browser enclave with zero server uploads.',
+  },
+  {
+    name: 'Select a Large Poster Preset',
+    text: 'In the sidebar, choose a large poster size (e.g. 24×36 Twelve-Up Gang Sheet, 16×20 Six-Up, or 11×14 Print Saver) or enter custom dimensions.',
+  },
+  {
+    name: 'Adjust Spacing, Borders & Framing',
+    text: 'Set your photo fit (cover or contain), cell padding, outer margins, and background color (paper white, studio black, or neutral grey).',
+  },
+  {
+    name: 'Export at 300 DPI High-Resolution',
+    text: 'Click Export and choose PNG or JPEG. Select 300 DPI to render the crisp master file (up to 7200×10800 pixels) calibrated for commercial poster printers.',
+  },
+  {
+    name: 'Print at Local Lab & Slice at Home',
+    text: 'Upload the exported poster file to Walgreens, CVS, or Walmart photo center. Apply a coupon code, pick up your print, and trim the individual frames using a ruler or paper cutter.',
+  },
+];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Large Photo Prints' },
+];
+
+const posterSpecs = [
+  {
+    name: '11 × 14 in',
+    metric: '27.9 × 35.6 cm',
+    ratio: '11:14',
+    dpi150: '1650 × 2100 px',
+    dpi300: '3300 × 4200 px (13.9 MP)',
+    capacity: '4 Photos (4×5 / 5×7)',
+    labs: 'Walgreens, CVS, Walmart',
+    badge: 'Small Poster',
+    tagVariant: 'border-zinc-500/20 text-zinc-400',
+  },
+  {
+    name: '12 × 18 in',
+    metric: '30.5 × 45.7 cm',
+    ratio: '2:3 (Native DSLR)',
+    dpi150: '1800 × 2700 px',
+    dpi300: '3600 × 5400 px (19.4 MP)',
+    capacity: '6 Photos (4×6 native)',
+    labs: 'Pro Labs, Mpix, Shutterfly',
+    badge: 'DSLR Ratio',
+    tagVariant: 'border-blue-500/30 text-blue-400 bg-blue-500/5',
+  },
+  {
+    name: '16 × 20 in',
+    metric: '40.6 × 50.8 cm',
+    ratio: '4:5 (Standard Art)',
+    dpi150: '2400 × 3000 px',
+    dpi300: '4800 × 6000 px (28.8 MP)',
+    capacity: '6 Photos (5×7 Gang Sheet)',
+    labs: 'Walgreens, CVS, Costco',
+    badge: 'Popular Wall Art',
+    tagVariant: 'border-accent/40 text-accent-ink bg-accent/10',
+  },
+  {
+    name: '24 × 36 in',
+    metric: '61.0 × 91.4 cm',
+    ratio: '2:3 (Grand Poster)',
+    dpi150: '3600 × 5400 px',
+    dpi300: '7200 × 10800 px (77.8 MP)',
+    capacity: '12 Photos (Gang Print Saver)',
+    labs: 'Walgreens, CVS, Walmart Kiosks',
+    badge: 'Maximum Savings',
+    tagVariant: 'border-emerald-500/40 text-emerald-400 bg-emerald-500/10',
+  },
+];
+
+const schemas = [
+  buildSoftwareApplicationSchema(
+    'Large Photo Print Layout Maker',
+    meta.description,
+    meta.canonical
+  ),
+  buildFAQSchema(faqs),
+  buildHowToSchema(
+    'How to Gang Multiple Photos onto One 24×36 Poster to Save $50+',
+    'Learn how to format and arrange multiple photos on a single 16x20 or 24x36 large poster print for CVS, Walgreens, or custom labs.',
+    howToSteps
+  ),
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+  schema={schemas}
+>
+  <!-- Page Header -->
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="max-w-3xl">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
+          Large Photo Print Layouts &amp; <HighlightText variant="lime">Poster Gang Sheets</HighlightText>
+        </h1>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          Format and arrange photos for 11×14, 16×20, and 24×36 large poster prints online. Create multi-photo collages and 300 DPI gang sheets for CVS, Walgreens, and pro labs. 100% free &amp; private in your browser.
+        </p>
+
+        <a
+          href="/studio/contact-sheet"
+          class="mt-6 inline-flex items-center gap-2 h-11 px-6 rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold text-sm tracking-tight shadow-lg shadow-accent/25 active:scale-[0.98] transition-all"
+        >
+          <Icon name="maximize" size={15} />
+          <span>Open Full-Screen Poster Studio</span>
+          <Icon name="arrow-right" size={15} />
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Framed Live Workspace -->
+  <section class="py-12 sm:py-16 lg:py-20 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="rounded-2xl overflow-hidden border border-workspace-border shadow-2xl bg-workspace-bg">
+        <!-- Window Chrome Top Bar -->
+        <div class="px-4 py-2.5 bg-workspace-panel border-b border-workspace-border flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 rounded-full bg-rose-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+          </div>
+          <div class="text-[11px] font-mono text-workspace-muted font-medium">Large Print Studio · 11×14, 16×20 &amp; 24×36 Presets</div>
+          <div class="w-12"></div>
+        </div>
+
+        <WorkspaceApp />
+      </div>
+    </div>
+  </section>
+
+  <!-- Dimension Reference Guide Cards -->
+  <section class="py-16 sm:py-20 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <div class="max-w-3xl space-y-3">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/25 text-accent-ink text-xs font-mono font-semibold">
+          <Icon name="printer" size={13} />
+          <span>Print Lab Resolution Specs</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-marketing-text">
+          Large Photo Print <HighlightText variant="yellow">Dimension &amp; DPI Guide</HighlightText>
+        </h2>
+        <p class="text-sm sm:text-base text-marketing-muted">
+          Compare pixel requirements across standard commercial photo poster sizes. Ensure your camera resolution meets the strict minimums for sharp printing at Walgreens, CVS, Walmart, or fine art print houses.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {posterSpecs.map((spec) => (
+          <div class="p-6 rounded-2xl bg-marketing-surface border border-marketing-border hover:border-accent/40 shadow-xs flex flex-col justify-between transition-all group">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border ${spec.tagVariant}`}>
+                  {spec.badge}
+                </span>
+                <span class="text-xs font-mono text-marketing-muted">{spec.ratio}</span>
+              </div>
+              <div>
+                <h3 class="text-2xl font-bold text-marketing-text group-hover:text-accent-ink transition-colors">{spec.name}</h3>
+                <p class="text-xs font-mono text-marketing-muted mt-0.5">{spec.metric}</p>
+              </div>
+
+              <div class="space-y-2.5 pt-3 border-t border-marketing-border text-xs">
+                <div>
+                  <div class="text-[11px] text-marketing-muted font-medium">Fine Art (300 DPI):</div>
+                  <div class="font-mono font-semibold text-marketing-text">{spec.dpi300}</div>
+                </div>
+                <div>
+                  <div class="text-[11px] text-marketing-muted font-medium">Standard Lab (150 DPI):</div>
+                  <div class="font-mono text-marketing-muted">{spec.dpi150}</div>
+                </div>
+                <div>
+                  <div class="text-[11px] text-marketing-muted font-medium">Gang Capacity:</div>
+                  <div class="font-semibold text-accent-ink">{spec.capacity}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-marketing-border/60 text-[11px] text-marketing-muted flex items-center gap-1.5">
+              <Icon name="check" size={13} class="text-emerald-500 shrink-0" />
+              <span>{spec.labs}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Step-by-Step HowTo Guide -->
+  <section class="py-16 sm:py-24 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[850px] mx-auto px-4 sm:px-6 space-y-12">
+      <div class="space-y-4">
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text">
+          How to <HighlightText variant="cyan">Gang Multiple Photos</HighlightText> on One 24×36 Poster to Save $50+
+        </h2>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          Follow this 5-step workflow to combine multiple smaller photos onto a single 24×36 or 16×20 poster sheet, saving substantial money at retail photo labs.
+        </p>
+      </div>
+
+      <div class="space-y-6">
+        {howToSteps.map((step, index) => (
+          <div class="flex gap-4 p-5 rounded-2xl bg-marketing-panel border border-marketing-border shadow-xs hover:border-accent/30 transition-colors">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center font-bold text-sm shadow-xs">
+              {index + 1}
+            </div>
+            <div class="space-y-1">
+              <h3 class="text-base font-bold text-marketing-text">{step.name}</h3>
+              <p class="text-sm text-marketing-muted leading-relaxed">{step.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Comprehensive SEO Prose Section -->
+  <SeoToolProse currentUrl="/large-photo-prints">
+    <h2 class="mt-0">The Economics of Large Photo Prints: The Gang Sheet Advantage</h2>
+    <p>
+      When ordering photo prints from commercial labs such as <strong>Walgreens, CVS, Walmart, or Shutterfly</strong>, individual smaller prints carry high unit markups. For example, ordering twelve individual 5×7 prints often costs between $35 and $60. In contrast, retail photo labs frequently offer massive <strong>24×36 inch poster prints</strong> for $20 to $30—and frequently discount them by 40% to 50% with weekly promotional coupon codes.
+    </p>
+    <p>
+      By using a <strong>gang sheet layout</strong> (a commercial printing technique where multiple images are tiled onto a single master substrate), you can arrange twelve 5×7 photos onto one 24×36 poster sheet. After printing for as little as $12 to $15, a quick pass with a rotary paper trimmer or craft knife yields a full dozen high-grade prints at a fraction of the standard retail cost.
+    </p>
+
+    <h3>Pixel Density &amp; Resolution Math: 150 DPI vs. 300 DPI</h3>
+    <p>
+      Understanding pixel density (PPI/DPI) is critical when stepping up to large-format photo printing. While small handheld 4×6 prints require 300 DPI because they are inspected at close range (10–12 inches), larger posters are typically viewed from a distance of 3 to 6 feet:
+    </p>
+    <ul>
+      <li>
+        <strong>150 DPI (Standard Lab Baseline):</strong> A 24×36 inch print at 150 DPI requires a $3600 \times 5400$ pixel canvas (19.4 Megapixels). At standard wall-hanging viewing distances, 150 DPI is perceptually sharp and virtually indistinguishable from higher densities to the human eye.
+      </li>
+      <li>
+        <strong>300 DPI (Gallery &amp; Fine Art Standard):</strong> A 24×36 inch print at 300 DPI requires a $7200 \times 10800$ pixel canvas (77.8 Megapixels). This resolution is ideal for fine art exhibitions, close-up gallery inspection, and multi-photo gang sheets where each smaller sub-image demands maximum optical sharpness.
+      </li>
+      <li>
+        <strong>16×20 in (4:5 Ratio):</strong> Requires $2400 \times 3000$ px at 150 DPI, and $4800 \times 6000$ px at 300 DPI. This is the most popular standard frame size in North America.
+      </li>
+      <li>
+        <strong>11×14 in (Small Poster):</strong> Requires $1650 \times 2100$ px at 150 DPI, and $3300 \times 4200$ px at 300 DPI. Perfect for compact home office gallery walls.
+      </li>
+    </ul>
+
+    <h3>Avoiding Digital Interpolation &amp; Upscaling Artifacts</h3>
+    <p>
+      Many online collage generators quietly downsample or compress your photos when generating large canvases, causing muddy gradients, pixelation, and blurry edges on physical prints. 
+    </p>
+    <p>
+      <strong>Make Contact Sheet</strong> renders your layout using high-precision Canvas 2D rasterization. Images are composited directly from their original decoded source bitmaps without intermediate lossy JPEG compression. When you click Export, the canvas is rendered at full sub-pixel accuracy, preserving every ounce of optical sharpness captured by your camera sensor and lens.
+    </p>
+
+    <h3>100% In-Browser Privacy for Professional &amp; Personal Work</h3>
+    <p>
+      Large photo prints frequently feature sensitive, high-value assets—such as unreleased commercial product photography, wedding portfolios, boudoir shoots, or personal family archives.
+    </p>
+    <p>
+      Unlike traditional web-based graphic tools that upload every high-resolution photo to cloud servers for server-side rendering, <strong>Make Contact Sheet operates entirely inside your local browser memory enclave</strong>. Your photos never leave your device, never touch a remote server, and are never indexed by AI training datasets.
+    </p>
+  </SeoToolProse>
+
+  <!-- FAQ Section -->
+  <section class="py-14 sm:py-20 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl space-y-6">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text">Frequently Asked Questions</h2>
+          <p class="text-sm text-marketing-muted mt-2">Everything you need to know about preparing large photo prints, poster gang sheets, and lab resolution requirements.</p>
+        </div>
+        <FaqAccordion faqs={faqs} />
+      </div>
+    </div>
+  </section>
+</MarketingLayout>

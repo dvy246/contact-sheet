@@ -42,7 +42,7 @@ import { extractForensicWatermark } from '../../lib/engine/forensicWatermark';
 
 /** Sizes whose dimensions the user thinks about in mm, so a mm readout next to
  *  the px one is useful. Screen sizes are px-native and get px only. */
-const MM_SIZES = new Set(['a4', 'letter', 'custom']);
+const MM_SIZES = new Set(['a4', 'letter', '8x10', '11x14', '16x20', '24x36', '12x18', 'custom']);
 
 const NUMERIC_KEYS = new Set([
   'columns',
@@ -168,6 +168,11 @@ export class LayoutControls {
               <select data-cfg="pageSize" class="${INPUT_CLASS} cursor-pointer">
                 <option value="a4">A4 (210 × 297 mm)</option>
                 <option value="letter">US Letter (8.5 × 11 in)</option>
+                <option value="8x10">8×10 in (Print Saver)</option>
+                <option value="11x14">11×14 in (Small Poster)</option>
+                <option value="16x20">16×20 in (Standard Poster)</option>
+                <option value="24x36">24×36 in (Large Poster)</option>
+                <option value="12x18">12×18 in (Art Print)</option>
                 <option value="16-9">16:9 screen</option>
                 <option value="square">Square 1:1</option>
                 <option value="story">Story 9:16</option>

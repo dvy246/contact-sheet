@@ -176,6 +176,14 @@ export const METADATA_REGISTRY: Record<string, RouteMetadata> = {
     ogType: 'website',
     schemaType: ['SoftwareApplication', 'HowTo', 'FAQPage', 'BreadcrumbList'],
   },
+  '/large-photo-prints': {
+    title: 'Large Photo Print Layout Maker — Free 16x20 & 24x36 Poster Collages',
+    description: 'Format and arrange photos for 11x14, 16x20, and 24x36 large poster prints online. Create multi-photo collages and 300 DPI gang sheets for CVS and Walgreens. 100% free & private.',
+    canonical: `${SITE_URL}/large-photo-prints`,
+    robots: 'index, follow',
+    ogType: 'website',
+    schemaType: ['SoftwareApplication', 'HowTo', 'FAQPage', 'BreadcrumbList'],
+  },
   '/lightroom-client-selection-workflow': {
     title: 'Lightroom Client Selection Workflow — Sync Proof Selections with XMP',
     description: 'Step-by-step guide and zero-click XMP sidecar generator for syncing client photo selections directly into Lightroom Classic and Capture One without plugins.',

@@ -1,5 +1,11 @@
 # AGENTS.md
 
+- Implemented **Large Photo Print Layout Suite & SEO Landing Page (`/large-photo-prints`)**:
+  - Registered `/large-photo-prints` in `src/lib/seo/metadata.ts` and `public/sitemap-index.xml` with complete OpenGraph metadata and structured schemas (`SoftwareApplication`, `HowTo`, `FAQPage`, `BreadcrumbList`).
+  - Created high-craft landing page `src/pages/large-photo-prints.astro` featuring an integrated live studio launcher, visual dimension & DPI reference cards (11×14, 12×18, 16×20, 24×36 at 150 & 300 DPI), step-by-step gang sheet HowTo guide, entity-dense SEO prose detailing print mathematics and zero-upload privacy, and comprehensive FAQ accordion.
+  - Linked new route across `src/components/common/Header.astro` (desktop Tools mega menu & mobile drawer), `src/components/common/Footer.astro` (Workspace Tools), and `src/components/common/SeoRelatedLinks.astro`.
+  - Maintained strict `0 errors / 0 warnings / 0 hints` on `astro check` and confirmed successful 24-page static build.
+
 - Executed **Pre-Launch UI/UX Audit & Comprehensive SEO Content Injection**:
   - Performed rigorous code-level visual review against `web-design-reviewer` standards, verifying WCAG AA 4.5:1 contrast compliance for the custom `--color-accent` adaptive palette, proper touch targets, and robust `max-w-[1240px]` responsive fluidity that prevents horizontal overflow on mobile.
   - Confirmed custom domain deployment readiness (Cloudflare Pages), validating canonical domains, sitemaps, and absolute Open Graph URLs.
