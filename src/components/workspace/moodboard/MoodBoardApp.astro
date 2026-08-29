@@ -1,0 +1,342 @@
+---
+/**
+ * MoodBoardApp — Tactical, full-screen and embedded Mood Board & Visual Concept Studio.
+ *
+ * Provides a freeform drag-and-drop workspace with magnetic snapping guides,
+ * contextual floating action toolbar, 4-tab responsive sidebar (photos tray, curated templates,
+ * assets & elements, and canvas settings), live undo/redo history, and high-DPI exports.
+ *
+ * 100% Client-side processing with zero cloud uploads.
+ */
+import Icon from '../../common/Icon.astro';
+import '../../../styles/workspace.css';
+---
+
+<div
+  id="moodboard-studio-shell"
+  class="moodboard-studio flex flex-col w-full h-full min-h-[640px] lg:min-h-[720px] bg-workspace-bg text-workspace-text relative select-none rounded-2xl overflow-hidden border border-workspace-border shadow-2xl transition-colors"
+>
+  <!-- Top App Navigation & Studio Control Header -->
+  <header class="studio-header flex items-center justify-between gap-3 px-3.5 py-2.5 bg-workspace-panel border-b border-workspace-border z-30 flex-shrink-0 min-w-0">
+    
+    <!-- Left Section: Brand & Sidebar Toggle -->
+    <div class="flex items-center gap-2.5 min-w-0">
+      <button
+        id="btn-mb-toggle-sidebar"
+        type="button"
+        class="h-8 px-2.5 rounded-lg bg-workspace-surface hover:bg-workspace-surface-hover border border-workspace-border text-xs font-semibold text-workspace-text flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
+        title="Toggle Assets Sidebar"
+      >
+        <Icon name="columns" size={13} class="text-accent-ink" />
+        <span id="btn-mb-toggle-sidebar-label" class="hidden sm:inline">Sidebar</span>
+      </button>
+
+      <div class="h-4 w-[1px] bg-workspace-border hidden sm:block"></div>
+
+      <div class="flex items-center gap-2 min-w-0">
+        <div class="w-6 h-6 rounded-lg bg-accent/15 border border-accent/30 flex items-center justify-center text-accent">
+          <Icon name="layout" size={13} />
+        </div>
+        <span class="text-xs font-bold tracking-tight text-workspace-text truncate hidden md:inline">
+          Mood Board Studio
+        </span>
+        <span
+          id="mb-elements-badge"
+          class="px-2 py-0.5 rounded-full bg-workspace-surface border border-workspace-border text-[10px] font-mono text-workspace-muted font-medium"
+        >
+          0 elements
+        </span>
+      </div>
+    </div>
+
+    <!-- Center Section: Undo / Redo & Zoom Viewport Controls -->
+    <div class="flex items-center gap-1 sm:gap-2">
+      <!-- Undo / Redo buttons -->
+      <div class="flex items-center bg-workspace-surface/80 rounded-lg p-0.5 border border-workspace-border">
+        <button
+          id="btn-mb-undo"
+          type="button"
+          class="w-7 h-7 rounded-md flex items-center justify-center text-workspace-muted hover:text-workspace-text disabled:opacity-30 disabled:pointer-events-none hover:bg-workspace-bg/60 transition-colors cursor-pointer"
+          title="Undo (Cmd+Z)"
+          disabled
+        >
+          <Icon name="rotate-ccw" size={13} />
+        </button>
+        <button
+          id="btn-mb-redo"
+          type="button"
+          class="w-7 h-7 rounded-md flex items-center justify-center text-workspace-muted hover:text-workspace-text disabled:opacity-30 disabled:pointer-events-none hover:bg-workspace-bg/60 transition-colors cursor-pointer"
+          title="Redo (Cmd+Shift+Z)"
+          disabled
+        >
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12a9 9 0 1 1-9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+            <path d="M21 3v5h-5" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="h-4 w-[1px] bg-workspace-border hidden sm:block"></div>
+
+      <!-- Zoom Bar -->
+      <div class="flex items-center bg-workspace-surface/80 rounded-lg p-0.5 border border-workspace-border">
+        <button
+          id="btn-mb-zoom-out"
+          type="button"
+          class="w-7 h-7 rounded-md flex items-center justify-center text-workspace-muted hover:text-workspace-text hover:bg-workspace-bg/60 transition-colors cursor-pointer"
+          title="Zoom Out (Scroll or Cmd+-)"
+        >
+          <Icon name="zoom-out" size={13} />
+        </button>
+        <span
+          id="mb-zoom-percentage"
+          class="font-mono text-[11px] px-2 text-center text-workspace-muted font-medium select-none min-w-[42px]"
+        >
+          100%
+        </span>
+        <button
+          id="btn-mb-zoom-in"
+          type="button"
+          class="w-7 h-7 rounded-md flex items-center justify-center text-workspace-muted hover:text-workspace-text hover:bg-workspace-bg/60 transition-colors cursor-pointer"
+          title="Zoom In (Scroll or Cmd++)"
+        >
+          <Icon name="zoom-in" size={13} />
+        </button>
+        <button
+          id="btn-mb-zoom-fit"
+          type="button"
+          class="px-2 h-7 rounded-md text-[11px] font-semibold text-workspace-muted hover:text-workspace-text hover:bg-workspace-bg/60 transition-colors cursor-pointer"
+          title="Fit Canvas to Viewport"
+        >
+          Fit
+        </button>
+      </div>
+
+      <div class="h-4 w-[1px] bg-workspace-border hidden md:block"></div>
+
+      <!-- Canvas Size Badge -->
+      <div
+        id="mb-header-canvas-size"
+        class="hidden md:flex items-center gap-1 px-2.5 py-1 rounded-lg bg-workspace-surface border border-workspace-border text-[11px] font-mono text-workspace-muted"
+        title="Canvas Resolution"
+      >
+        <Icon name="maximize" size={11} class="text-accent-ink" />
+        <span id="mb-header-canvas-size-text">1920 × 1080</span>
+      </div>
+    </div>
+
+    <!-- Right Section: Quick Export Action Group -->
+    <div class="flex items-center gap-2">
+      <!-- Manifest download -->
+      <button
+        id="btn-mb-download-manifest"
+        type="button"
+        class="h-8 px-2.5 rounded-lg bg-workspace-surface hover:bg-workspace-surface-hover border border-workspace-border text-xs font-semibold text-workspace-muted hover:text-workspace-text hidden lg:flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
+        title="Save Project Manifest (.json)"
+      >
+        <Icon name="file-text" size={13} class="text-accent-ink" />
+        <span>Save Project</span>
+      </button>
+
+      <!-- Export Dropdown Button -->
+      <div class="relative">
+        <button
+          id="btn-mb-export"
+          type="button"
+          class="h-8 px-3.5 rounded-lg bg-accent hover:bg-accent-hover text-white text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+          title="Export Mood Board (PNG / JPEG / PDF)"
+        >
+          <Icon name="download" size={13} />
+          <span>Export Board</span>
+        </button>
+      </div>
+    </div>
+
+  </header>
+
+  <!-- Studio Workspace Main Stage: Left Sidebar + Center Freeform Canvas -->
+  <div class="flex-1 flex flex-col md:flex-row min-h-0 relative overflow-hidden">
+    
+    <!-- LEFT COLUMN: 4-Tab Responsive Sidebar Mount -->
+    <aside
+      id="moodboard-sidebar-mount"
+      class="studio-sidebar studio-photos-sidebar w-full md:w-[320px] lg:w-[350px] xl:w-[380px] flex-shrink-0 flex flex-col bg-workspace-panel border-b md:border-b-0 md:border-r border-workspace-border z-20 min-w-0 transition-all duration-200"
+    >
+      <!-- Mount container for MoodBoardSidebar.ts -->
+    </aside>
+
+    <!-- CENTER COLUMN: Canvas Stage & Contextual Floating Toolbar -->
+    <main
+      id="moodboard-canvas-viewport"
+      class="studio-canvas-col flex-1 relative flex flex-col min-w-0 min-h-0 bg-[#120c09] overflow-hidden"
+    >
+      <!-- Canvas Stage Mounting Target -->
+      <div id="moodboard-canvas-stage" class="w-full h-full relative"></div>
+
+      <!-- Floating Toolbar Mounting Target -->
+      <div
+        id="moodboard-floating-toolbar-container"
+        class="absolute inset-0 pointer-events-none z-40 overflow-hidden"
+      ></div>
+
+      <!-- Empty State Quick Prompt (Fades out once elements are added) -->
+      <div
+        id="moodboard-empty-prompt"
+        class="absolute inset-0 pointer-events-none flex flex-col items-center justify-center p-6 text-center z-10 transition-opacity duration-300"
+      >
+        <div class="p-6 rounded-2xl bg-black/70 backdrop-blur-md border border-white/10 max-w-sm space-y-3 pointer-events-auto shadow-2xl">
+          <div class="w-12 h-12 mx-auto rounded-xl bg-[#c98a46]/20 border border-[#c98a46]/30 flex items-center justify-center text-[#c98a46]">
+            <Icon name="image" size={24} />
+          </div>
+          <div class="space-y-1">
+            <h3 class="text-sm font-bold text-white">Assemble Your Mood Board</h3>
+            <p class="text-xs text-stone-300 leading-relaxed">
+              Drag &amp; drop photos from the tray, apply a curated template, or add color swatches and text notes.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center justify-center gap-2 pt-1">
+            <button
+              id="btn-prompt-template"
+              type="button"
+              class="px-3 py-1.5 rounded-lg bg-[#c98a46] hover:bg-[#b57635] text-white text-xs font-semibold transition-colors cursor-pointer shadow-sm"
+            >
+              Choose Template
+            </button>
+            <button
+              id="btn-prompt-text"
+              type="button"
+              class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-medium border border-white/15 transition-colors cursor-pointer"
+            >
+              Add Headline
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </div>
+</div>
+
+<script>
+  import {
+    $moodboardConfig,
+    $moodboardElements,
+    $moodboardStats,
+    $canUndo,
+    $canRedo,
+    undo,
+    redo,
+    addTextElement,
+    downloadMoodBoardManifest,
+  } from '../../../lib/moodboardStore';
+  import { BoardCanvas } from './BoardCanvas';
+  import { MoodBoardSidebar } from './MoodBoardSidebar';
+  import { FloatingToolbar } from './FloatingToolbar';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const canvasStage = document.getElementById('moodboard-canvas-stage');
+    const sidebarMount = document.getElementById('moodboard-sidebar-mount');
+    const toolbarMount = document.getElementById('moodboard-floating-toolbar-container');
+
+    if (!canvasStage || !sidebarMount || !toolbarMount) return;
+
+    // 1. Initialize Core Canvas Engine
+    const boardCanvas = new BoardCanvas(canvasStage);
+
+    // 2. Initialize Sidebar & Floating Contextual Toolbar
+    const sidebar = new MoodBoardSidebar(sidebarMount, boardCanvas);
+    new FloatingToolbar(toolbarMount, boardCanvas);
+
+    // 3. UI Header Element Bindings
+    const undoBtn = document.getElementById('btn-mb-undo') as HTMLButtonElement | null;
+    const redoBtn = document.getElementById('btn-mb-redo') as HTMLButtonElement | null;
+    const zoomInBtn = document.getElementById('btn-mb-zoom-in');
+    const zoomOutBtn = document.getElementById('btn-mb-zoom-out');
+    const zoomFitBtn = document.getElementById('btn-mb-zoom-fit');
+    const zoomReadout = document.getElementById('mb-zoom-percentage');
+    const elementsBadge = document.getElementById('mb-elements-badge');
+    const canvasSizeText = document.getElementById('mb-header-canvas-size-text');
+    const toggleSidebarBtn = document.getElementById('btn-mb-toggle-sidebar');
+    const toggleSidebarLabel = document.getElementById('btn-mb-toggle-sidebar-label');
+    const downloadManifestBtn = document.getElementById('btn-mb-download-manifest');
+    const exportBtn = document.getElementById('btn-mb-export');
+    const emptyPrompt = document.getElementById('moodboard-empty-prompt');
+    const promptTemplateBtn = document.getElementById('btn-prompt-template');
+    const promptTextBtn = document.getElementById('btn-prompt-text');
+
+    // Header Actions
+    undoBtn?.addEventListener('click', () => undo());
+    redoBtn?.addEventListener('click', () => redo());
+    zoomInBtn?.addEventListener('click', () => boardCanvas.zoomIn());
+    zoomOutBtn?.addEventListener('click', () => boardCanvas.zoomOut());
+    zoomFitBtn?.addEventListener('click', () => boardCanvas.fitToScreen());
+
+    toggleSidebarBtn?.addEventListener('click', () => {
+      const isCollapsed = sidebarMount.classList.toggle('is-collapsed');
+      if (toggleSidebarLabel) {
+        toggleSidebarLabel.textContent = isCollapsed ? 'Show Sidebar' : 'Sidebar';
+      }
+      setTimeout(() => boardCanvas.fitToScreen(), 220);
+    });
+
+    downloadManifestBtn?.addEventListener('click', () => {
+      downloadMoodBoardManifest();
+    });
+
+    exportBtn?.addEventListener('click', () => {
+      // Direct Manifest download or prompt for Task 5 exporter integration
+      downloadMoodBoardManifest();
+    });
+
+    // Empty Prompt Quick Start Actions
+    promptTemplateBtn?.addEventListener('click', () => {
+      sidebar.switchTab('templates');
+    });
+
+    promptTextBtn?.addEventListener('click', () => {
+      addTextElement({
+        content: 'EDITORIAL MOOD',
+        fontSize: 36,
+        fontWeight: '700',
+        width: 440,
+        height: 60,
+      });
+    });
+
+    // 4. Reactive Store Subscriptions for Studio Shell
+    $canUndo.subscribe((can) => {
+      if (undoBtn) undoBtn.disabled = !can;
+    });
+
+    $canRedo.subscribe((can) => {
+      if (redoBtn) redoBtn.disabled = !can;
+    });
+
+    $moodboardStats.subscribe((stats) => {
+      if (elementsBadge) {
+        elementsBadge.textContent = `${stats.total} element${stats.total === 1 ? '' : 's'}`;
+      }
+    });
+
+    $moodboardElements.subscribe((elements) => {
+      if (emptyPrompt) {
+        if (elements.length > 0) {
+          emptyPrompt.classList.add('opacity-0', 'pointer-events-none');
+          emptyPrompt.classList.remove('opacity-100', 'pointer-events-auto');
+        } else {
+          emptyPrompt.classList.remove('opacity-0', 'pointer-events-none');
+          emptyPrompt.classList.add('opacity-100', 'pointer-events-auto');
+        }
+      }
+    });
+
+    $moodboardConfig.subscribe((config) => {
+      if (zoomReadout) {
+        zoomReadout.textContent = `${Math.round(config.zoom * 100)}%`;
+      }
+      if (canvasSizeText) {
+        canvasSizeText.textContent = `${config.width} × ${config.height}`;
+      }
+    });
+  });
+</script>
