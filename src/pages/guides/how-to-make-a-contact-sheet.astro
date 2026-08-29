@@ -99,14 +99,14 @@ const schemas = [
         </h2>
 
         <div class="space-y-6">
-          {steps.map((step, idx) => (
+          {steps.map((step, i) => (
             <div class="flex gap-4 p-5 rounded-xl border border-marketing-border bg-marketing-bg transition-colors">
-              <div class="w-8 h-8 rounded-lg bg-stone-900 text-white dark:bg-accent dark:text-white flex-shrink-0 flex items-center justify-center font-bold text-sm">
-                {idx + 1}
+              <div class="w-8 h-8 rounded-lg bg-accent text-white flex-shrink-0 flex items-center justify-center font-bold text-sm">
+                {i + 1}
               </div>
               <div class="space-y-1">
-                <h3 class="text-base font-bold text-marketing-text">{step.name}</h3>
-                <p class="text-sm text-marketing-muted leading-relaxed">{step.text}</p>
+                <h3 class="text-sm font-bold text-marketing-text">{step.name}</h3>
+                <p class="text-xs text-marketing-muted leading-relaxed">{step.text}</p>
               </div>
             </div>
           ))}
@@ -131,9 +131,9 @@ const schemas = [
       </div>
 
       <!-- Action CTA Box -->
-      <div class="p-8 rounded-2xl bg-stone-900 text-white text-center space-y-4 shadow-xl">
-        <h2 class="text-xl font-bold">Ready to create your contact sheet?</h2>
-        <p class="text-xs text-stone-400 max-w-md mx-auto">
+      <div class="p-8 rounded-2xl bg-marketing-surface border border-marketing-border text-marketing-text text-center space-y-4 shadow-md">
+        <h2 class="text-xl font-bold text-marketing-text">Ready to create your contact sheet?</h2>
+        <p class="text-xs text-marketing-muted max-w-md mx-auto">
           No signups, no installations, and 100% private in-browser processing.
         </p>
         <a 

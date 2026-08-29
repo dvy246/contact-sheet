@@ -8,6 +8,9 @@
 # (per plan and per worktree; concurrent runs of the SAME plan in the same
 # working tree share it).
 set -euo pipefail
+export GIT_CONFIG_GLOBAL=/dev/null
+export GIT_CONFIG_NOSYSTEM=1
+
 
 if [ $# -lt 2 ] || [ $# -gt 3 ]; then
   echo "usage: task-brief PLAN_FILE TASK_NUMBER [OUTFILE]" >&2

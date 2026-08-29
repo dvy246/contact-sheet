@@ -1,6 +1,8 @@
 ---
 import Icon from '../common/Icon.astro';
+import HighlightText from '../ui/HighlightText.astro';
 ---
+
 
 <section class="py-14 sm:py-20 lg:py-24 bg-transparent border-b border-marketing-border relative overflow-hidden transition-colors selection:bg-accent/20">
   <!-- Subtle Ambient Keynote Glow -->
@@ -18,8 +20,9 @@ import Icon from '../common/Icon.astro';
       </div>
 
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-[-0.035em] text-marketing-text leading-[1.1] mb-4 text-balance">
-        Create Clean, Professional Contact Sheets in Seconds.
+        Create Clean, <HighlightText variant="lime">Professional</HighlightText> Contact Sheets in <HighlightText variant="yellow">Seconds</HighlightText>.
       </h2>
+
 
       <p class="text-sm sm:text-base lg:text-lg text-marketing-muted leading-relaxed max-w-2xl mx-auto text-balance font-normal">
         Easily organize, review, and share your photo sets. Display camera settings on every frame, make gallery prints, or let clients pick their favorite shots with ease.
@@ -383,12 +386,17 @@ import Icon from '../common/Icon.astro';
     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 mt-12 sm:mt-16">
       
       <!-- Card 1: Camera Settings (Ascends Slow) -->
-      <div class="p-6 sm:p-7 rounded-3xl bg-marketing-surface border border-marketing-border hover:border-accent/40 transition-all duration-300 flex flex-col justify-between space-y-5 shadow-xs group scroll-float-card scroll-ascend-slow">
+      <div class="p-6 sm:p-7 rounded-3xl bg-marketing-surface border border-marketing-border hover:border-accent/40 transition-all duration-300 flex flex-col justify-between space-y-5 shadow-xs group card-surface card-interactive scroll-float-card scroll-ascend-slow">
         <div class="space-y-3">
-          <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent group-hover:scale-105 transition-transform">
-            <Icon name="camera" size={20} />
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent group-hover:scale-105 transition-transform">
+              <Icon name="camera" size={20} />
+            </div>
+            <span class="card-emoji text-2xl select-none" aria-hidden="true">📷</span>
           </div>
-          <h3 class="text-base sm:text-lg font-bold text-marketing-text tracking-tight">Show Camera Settings Automatically</h3>
+          <h3 class="text-base sm:text-lg font-bold text-marketing-text tracking-tight">
+            Show <HighlightText variant="lime">Camera Settings</HighlightText> Automatically
+          </h3>
           <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
             Read shutter speed, aperture, ISO, and lens details directly from your photos and print them under each picture.
           </p>
@@ -399,12 +407,17 @@ import Icon from '../common/Icon.astro';
       </div>
 
       <!-- Card 2: Client Proofing (Ascends Medium) -->
-      <div class="p-6 sm:p-7 rounded-3xl bg-marketing-surface border border-marketing-border hover:border-accent/40 transition-all duration-300 flex flex-col justify-between space-y-5 shadow-xs group scroll-float-card scroll-ascend-medium">
+      <div class="p-6 sm:p-7 rounded-3xl bg-marketing-surface border border-marketing-border hover:border-accent/40 transition-all duration-300 flex flex-col justify-between space-y-5 shadow-xs group card-surface card-interactive scroll-float-card scroll-ascend-medium">
         <div class="space-y-3">
-          <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent group-hover:scale-105 transition-transform">
-            <Icon name="file-check" size={20} />
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent group-hover:scale-105 transition-transform">
+              <Icon name="file-check" size={20} />
+            </div>
+            <span class="card-emoji text-2xl select-none" aria-hidden="true">✨</span>
           </div>
-          <h3 class="text-base sm:text-lg font-bold text-marketing-text tracking-tight">Easy Client Photo Selection</h3>
+          <h3 class="text-base sm:text-lg font-bold text-marketing-text tracking-tight">
+            Easy Client <HighlightText variant="pink">Photo Selection</HighlightText>
+          </h3>
           <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
             Download a single interactive web page file. Send it to clients so they can pick favorites, leave notes, and send selections back.
           </p>
@@ -415,12 +428,17 @@ import Icon from '../common/Icon.astro';
       </div>
 
       <!-- Card 3: Privacy (Ascends Fast) -->
-      <div class="p-6 sm:p-7 rounded-3xl bg-marketing-surface border border-marketing-border hover:border-accent/40 transition-all duration-300 flex flex-col justify-between space-y-5 shadow-xs group scroll-float-card scroll-ascend-fast">
+      <div class="p-6 sm:p-7 rounded-3xl bg-marketing-surface border border-marketing-border hover:border-accent/40 transition-all duration-300 flex flex-col justify-between space-y-5 shadow-xs group card-surface card-interactive scroll-float-card scroll-ascend-fast">
         <div class="space-y-3">
-          <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent group-hover:scale-105 transition-transform">
-            <Icon name="shield" size={20} />
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent group-hover:scale-105 transition-transform">
+              <Icon name="shield" size={20} />
+            </div>
+            <span class="card-emoji text-2xl select-none" aria-hidden="true">🛡️</span>
           </div>
-          <h3 class="text-base sm:text-lg font-bold text-marketing-text tracking-tight">100% Private on Your Computer</h3>
+          <h3 class="text-base sm:text-lg font-bold text-marketing-text tracking-tight">
+            100% Private on <HighlightText variant="cyan">Your Computer</HighlightText>
+          </h3>
           <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
             Your photos never get uploaded to any website or cloud server. Everything stays completely safe and private on your device.
           </p>
@@ -431,6 +449,7 @@ import Icon from '../common/Icon.astro';
       </div>
 
     </div>
+
 
   </div>
 

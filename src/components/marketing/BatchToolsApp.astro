@@ -1,0 +1,27 @@
+---
+// BatchToolsApp.astro: Interactive client-side batch processing island
+---
+
+<div id="batch-tools-island-root" class="w-full min-w-0">
+  <div id="batch-tools-app-mount" class="w-full min-w-0"></div>
+</div>
+
+<script>
+  import { BatchToolsApp } from './BatchToolsApp';
+
+  function initBatchTools() {
+    const mount = document.getElementById('batch-tools-app-mount');
+    if (mount && !mount.hasAttribute('data-initialized')) {
+      mount.setAttribute('data-initialized', 'true');
+      new BatchToolsApp(mount);
+    }
+  }
+
+  // Support direct render & astro page transitions
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBatchTools);
+  } else {
+    initBatchTools();
+  }
+  document.addEventListener('astro:page-load', initBatchTools);
+</script>

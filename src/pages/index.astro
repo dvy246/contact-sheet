@@ -8,8 +8,10 @@ import TemplateShowcase from '../components/marketing/TemplateShowcase.astro';
 import ComparisonTable from '../components/marketing/ComparisonTable.astro';
 import FaqAccordion from '../components/common/FaqAccordion.astro';
 import WorkspaceApp from '../components/workspace/WorkspaceApp.astro';
+import HighlightText from '../components/ui/HighlightText.astro';
 import Icon from '../components/common/Icon.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
+
 import { buildWebSiteSchema, buildOrganizationSchema, buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/'];
@@ -78,7 +80,7 @@ const schemas = [
             <span>LIVE WORKSPACE INSTRUMENT</span>
           </div>
           <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
-            Instant Photo Proofing &amp; Layout Engine
+            Instant Photo <HighlightText variant="lime">Proofing</HighlightText> &amp; <HighlightText variant="yellow">Layout Engine</HighlightText>
           </h2>
           <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
             Drag image batches directly into the light table. Organize contact sheets, cull selects with instant keyboard shortcuts, and export print-ready PDFs without uploading files to the cloud.
@@ -138,8 +140,9 @@ const schemas = [
           </div>
 
           <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-marketing-text leading-[1.12]">
-            Curate Aesthetic Mood Boards &amp; Lookbooks
+            Curate Aesthetic <HighlightText variant="pink">Mood Boards</HighlightText> &amp; <HighlightText variant="cyan">Lookbooks</HighlightText>
           </h2>
+
 
           <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
             Assemble visual narratives, lighting setups, and wardrobe palettes on an unconstrained freeform canvas. Freely drag, resize, rotate, and layer assets with real-time magnetic snapping guides and designer color cards.

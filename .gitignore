@@ -21,3 +21,7 @@ pnpm-debug.log*
 
 # Superpowers / SDD Scratch
 .superpowers/
+
+# Temporary visual audit screenshots
+screenshot*.png
+

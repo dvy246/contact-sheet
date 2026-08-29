@@ -1,5 +1,6 @@
 ---
 import Icon from '../common/Icon.astro';
+import HighlightText from '../ui/HighlightText.astro';
 ---
 
 <section class="py-16 sm:py-24 lg:py-28 bg-transparent border-b border-marketing-border transition-colors" data-reveal>
@@ -12,10 +13,10 @@ import Icon from '../common/Icon.astro';
         <span>THREE-STEP WORKFLOW</span>
       </div>
       <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
-        Built for the photographer's real selection workflow
+        A <HighlightText variant="lime">simple, fast way</HighlightText> to sort your photos
       </h2>
       <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
-        From a memory card dump to a verified client select list in minutes. Everything happens on your machine without cloud lag or upload wait times.
+        Go from a folder of photos to a final selection in minutes. Everything happens directly on your computer, so there's no waiting for uploads.
       </p>
     </div>
 
@@ -30,13 +31,16 @@ import Icon from '../common/Icon.astro';
             <span class="px-2.5 py-1 rounded-md bg-accent/10 border border-accent/20 text-xs font-mono font-bold text-accent-ink">
               01 / INGEST
             </span>
-            <div class="w-9 h-9 rounded-xl bg-marketing-surface border border-marketing-border flex items-center justify-center text-accent-ink group-hover:scale-105 transition-transform shadow-xs">
-              <Icon name="upload" size={18} />
+            <div class="flex items-center gap-2">
+              <span class="card-emoji text-xl select-none" aria-hidden="true">📥</span>
+              <div class="w-9 h-9 rounded-xl bg-marketing-surface border border-marketing-border flex items-center justify-center text-accent-ink group-hover:scale-105 transition-transform shadow-xs">
+                <Icon name="upload" size={18} />
+              </div>
             </div>
           </div>
 
           <h3 class="text-lg sm:text-xl font-bold text-marketing-text leading-snug tracking-tight mb-4">
-            Batch Import & Auto-Layout
+            <HighlightText variant="yellow">Batch Import</HighlightText> &amp; Auto-Layout
           </h3>
           <p class="text-sm text-marketing-muted leading-relaxed mb-6">
             Drop hundreds of JPG, PNG, or WebP files. Make Contact Sheet instantly parses image dimensions and arranges them into standard A4, Letter, or 16:9 contact sheets.
@@ -64,13 +68,16 @@ import Icon from '../common/Icon.astro';
             <span class="px-2.5 py-1 rounded-md bg-accent/10 border border-accent/20 text-xs font-mono font-bold text-accent-ink">
               02 / CULLING
             </span>
-            <div class="w-9 h-9 rounded-xl bg-marketing-surface border border-marketing-border flex items-center justify-center text-accent-ink group-hover:scale-105 transition-transform shadow-xs">
-              <Icon name="eye" size={18} />
+            <div class="flex items-center gap-2">
+              <span class="card-emoji text-xl select-none" aria-hidden="true">⌨️</span>
+              <div class="w-9 h-9 rounded-xl bg-marketing-surface border border-marketing-border flex items-center justify-center text-accent-ink group-hover:scale-105 transition-transform shadow-xs">
+                <Icon name="eye" size={18} />
+              </div>
             </div>
           </div>
 
           <h3 class="text-lg sm:text-xl font-bold text-marketing-text leading-snug tracking-tight mb-4">
-            Rapid Review & Shortcuts
+            Rapid Review &amp; <HighlightText variant="pink">Shortcuts</HighlightText>
           </h3>
           <p class="text-sm text-marketing-muted leading-relaxed mb-6">
             Evaluate framing and color consistency on an archival light-table. Mark favorites, flags, or rejects using fast <kbd class="px-1.5 py-0.5 rounded bg-marketing-surface border border-marketing-border text-xs font-mono">1</kbd>, <kbd class="px-1.5 py-0.5 rounded bg-marketing-surface border border-marketing-border text-xs font-mono">2</kbd>, and <kbd class="px-1.5 py-0.5 rounded bg-marketing-surface border border-marketing-border text-xs font-mono">3</kbd> keyboard keys.
@@ -98,13 +105,16 @@ import Icon from '../common/Icon.astro';
             <span class="px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono font-bold text-emerald-500">
               03 / EXPORT
             </span>
-            <div class="w-9 h-9 rounded-xl bg-marketing-surface border border-marketing-border flex items-center justify-center text-emerald-500 group-hover:scale-105 transition-transform shadow-xs">
-              <Icon name="download" size={18} />
+            <div class="flex items-center gap-2">
+              <span class="card-emoji text-xl select-none" aria-hidden="true">🚀</span>
+              <div class="w-9 h-9 rounded-xl bg-marketing-surface border border-marketing-border flex items-center justify-center text-emerald-500 group-hover:scale-105 transition-transform shadow-xs">
+                <Icon name="download" size={18} />
+              </div>
             </div>
           </div>
 
           <h3 class="text-lg sm:text-xl font-bold text-marketing-text leading-snug tracking-tight mb-4">
-            Lightroom & PDF Handoff
+            <HighlightText variant="cyan">Lightroom &amp; PDF</HighlightText> Handoff
           </h3>
           <p class="text-sm text-marketing-muted leading-relaxed mb-6">
             Export print-ready multi-page PDFs, high-res visual sheets, and structured CSV/TXT filename lists that plug directly into Adobe Lightroom search filters.

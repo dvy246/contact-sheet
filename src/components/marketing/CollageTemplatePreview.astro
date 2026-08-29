@@ -1,0 +1,97 @@
+---
+import type { CollageTemplate } from '../../lib/types';
+
+interface Props {
+  template: CollageTemplate;
+  class?: string;
+}
+
+const { template, class: className = '' } = Astro.props;
+
+// Curated atmospheric photographic color themes for mockup cells
+const CELL_THEMES = [
+  { bg: 'from-amber-900/40 via-stone-800/60 to-stone-900', label: 'Portra 400', accent: '#e08a32' },
+  { bg: 'from-blue-950/40 via-stone-900 to-stone-950', label: 'Cine 800T', accent: '#60a5fa' },
+  { bg: 'from-emerald-950/30 via-stone-900 to-stone-900', label: 'Fuji 400H', accent: '#34d399' },
+  { bg: 'from-orange-950/40 via-stone-900 to-stone-950', label: 'Tri-X 400', accent: '#fb923c' },
+  { bg: 'from-rose-950/30 via-stone-900 to-stone-950', label: 'Gold 200', accent: '#f43f5e' },
+  { bg: 'from-amber-950/30 via-stone-850 to-stone-950', label: 'Ektar 100', accent: '#f59e0b' },
+  { bg: 'from-indigo-950/30 via-stone-900 to-stone-950', label: 'Velvia 50', accent: '#818cf8' },
+  { bg: 'from-teal-950/30 via-stone-900 to-stone-950', label: 'Pro 400H', accent: '#2dd4bf' },
+  { bg: 'from-purple-950/30 via-stone-900 to-stone-950', label: 'Ilford HP5', accent: '#a855f7' },
+];
+
+const aspectRatioStyle = template.aspectRatio >= 1 
+  ? `aspect-ratio: ${Math.min(2.1, Math.max(1, template.aspectRatio))};` 
+  : `aspect-ratio: ${Math.max(0.65, template.aspectRatio)};`;
+---
+
+<div class={`w-full relative group/preview flex items-center justify-center p-3 sm:p-4 rounded-xl bg-marketing-surface/90 border border-marketing-border overflow-hidden ${className}`}>
+  <!-- Subtle Ambient Glow on Hover -->
+  <div class="absolute inset-0 bg-gradient-to-tr from-accent/5 via-transparent to-accent/10 opacity-0 group-hover/preview:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+
+  <!-- Collage Canvas Frame -->
+  <div 
+    class="h-[140px] sm:h-[150px] max-w-full relative rounded-lg bg-[#181513] dark:bg-[#120F0D] border border-white/10 shadow-md overflow-hidden transition-transform duration-300 group-hover/preview:scale-[1.03]"
+    style={aspectRatioStyle}
+  >
+    <!-- Background Canvas Texture Grid -->
+    <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:8px_8px] pointer-events-none"></div>
+
+    <!-- Render Each Template Cell -->
+    {template.cells.map((cell, idx) => {
+      const theme = CELL_THEMES[idx % CELL_THEMES.length];
+      const left = `${cell.x * 100}%`;
+      const top = `${cell.y * 100}%`;
+      const width = `${cell.w * 100}%`;
+      const height = `${cell.h * 100}%`;
+
+      return (
+        <div
+          class="absolute overflow-hidden p-[2px]"
+          style={`left: ${left}; top: ${top}; width: ${width}; height: ${height};`}
+        >
+          <div class={`w-full h-full rounded-[4px] relative bg-gradient-to-br ${theme.bg} border border-white/15 flex flex-col justify-between p-1.5 shadow-xs group/cell transition-colors duration-200`}>
+            
+            <!-- Cell Top Bar: Index Badge & Dot -->
+            <div class="flex items-center justify-between w-full opacity-75">
+              <span class="text-[8px] font-mono font-bold text-white/90 bg-black/50 px-1 py-0.2 rounded leading-none backdrop-blur-xs">
+                #{idx + 1}
+              </span>
+              <span class="w-1.5 h-1.5 rounded-full" style={`background-color: ${theme.accent};`}></span>
+            </div>
+
+            <!-- Cell Center Visual Graphic (Camera Frame) -->
+            <div class="flex-1 flex items-center justify-center py-0.5">
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 24 24" 
+                class="w-3.5 h-3.5 text-white/35 group-hover/preview:text-white/70 transition-colors" 
+                fill="none" 
+                stroke="currentColor" 
+                stroke-width="1.5" 
+                stroke-linecap="round" 
+                stroke-linejoin="round"
+              >
+                <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+                <circle cx="12" cy="13" r="3" />
+              </svg>
+            </div>
+
+            <!-- Cell Bottom Meta Tag -->
+            <div class="flex items-center justify-between w-full opacity-60 text-[7px] font-mono text-white/70 truncate">
+              <span class="truncate">{cell.fit === 'contain' ? 'FIT' : 'FILL'}</span>
+              <span class="text-[6px] tracking-tighter opacity-75">{Math.round(cell.w * 100)}%</span>
+            </div>
+
+            <!-- Specular Light Reflection Sweep -->
+            <div class="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/10 pointer-events-none"></div>
+          </div>
+        </div>
+      );
+    })}
+
+    <!-- Outer Film Frame Border Overlay -->
+    <div class="absolute inset-0 border border-white/10 rounded-lg pointer-events-none"></div>
+  </div>
+</div>

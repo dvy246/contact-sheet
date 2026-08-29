@@ -4,10 +4,12 @@ import Breadcrumbs from '../components/common/Breadcrumbs.astro';
 import WorkspaceApp from '../components/workspace/WorkspaceApp.astro';
 import FaqAccordion from '../components/common/FaqAccordion.astro';
 import Icon from '../components/common/Icon.astro';
+import HighlightText from '../components/ui/HighlightText.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
 import { buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/photo-contact-sheet-maker'];
+
 
 const faqs = [
   {
@@ -56,7 +58,7 @@ const schemas = [
       <Breadcrumbs items={breadcrumbs} />
       <div class="max-w-3xl">
         <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
-          Fast Photo Contact Sheet Maker
+          Fast Photo <HighlightText variant="lime">Contact Sheet Maker</HighlightText>
         </h1>
         <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
           Create professional photography proof sheets and contact prints directly in your browser. Configure grid columns, paper formats, and filename labels with instant local PDF and PNG exports.
@@ -103,7 +105,7 @@ const schemas = [
       
       <div class="space-y-4 prose-measure">
         <h2 class="text-2xl font-bold text-marketing-text">
-          What is a photo contact sheet?
+          What is a photo <HighlightText variant="yellow">contact sheet</HighlightText>?
         </h2>
         <p class="text-sm text-marketing-text/90 leading-relaxed">
           A photo contact sheet (historically known as a proof sheet or contact print) is a grid arrangement of thumbnail images compiled onto a single page or multi-page document. In traditional darkroom photography, a contact print was created by placing photographic negative strips directly onto light-sensitive paper under glass.
@@ -115,8 +117,9 @@ const schemas = [
 
       <div class="space-y-4 prose-measure">
         <h2 class="text-2xl font-bold text-marketing-text">
-          Why use a browser-based contact sheet generator?
+          Why use a <HighlightText variant="cyan">browser-based</HighlightText> contact sheet generator?
         </h2>
+
         <p class="text-sm text-marketing-text/90 leading-relaxed">
           Traditional desktop software like Adobe Photoshop or Lightroom requires heavy subscriptions, installation, and complex catalog setups for a task that should take thirty seconds. Meanwhile, generic online collage apps strip camera filenames, upload unreleased client work to unknown cloud servers, and force users to create accounts.
         </p>

@@ -2,6 +2,8 @@
 import MarketingLayout from '../layouts/MarketingLayout.astro';
 import Breadcrumbs from '../components/common/Breadcrumbs.astro';
 import FaqAccordion from '../components/common/FaqAccordion.astro';
+import ContactSheetPreview from '../components/marketing/ContactSheetPreview.astro';
+import HighlightText from '../components/ui/HighlightText.astro';
 import { CONTACT_SHEET_PRESETS } from '../lib/engine/templates';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
 import { buildFAQSchema } from '../lib/seo/schemaGenerator';
@@ -45,7 +47,7 @@ const schemas = [
       <Breadcrumbs items={breadcrumbs} />
       <div class="max-w-3xl space-y-3">
         <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight">
-          Free Contact Sheet Templates
+          Free <HighlightText variant="lime">Contact Sheet</HighlightText> Templates
         </h1>
         <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
           Browse calibrated contact sheet presets for print proofing, client review sessions, and portfolio archiving. Choose a layout to start arranging your photos in seconds.
@@ -54,24 +56,54 @@ const schemas = [
     </div>
   </div>
 
-  <section class="py-16 sm:py-24 lg:py-28 bg-marketing-bg border-b border-marketing-border transition-colors">
+
+  <section class="py-12 sm:py-16 lg:py-20 bg-marketing-bg border-b border-marketing-border transition-colors">
     <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      
+      <!-- Category Filter Bar -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-8 sm:mb-10 no-scrollbar" id="preset-filter-bar">
+        <button data-filter="all" class="filter-btn active px-3.5 py-1.5 rounded-xl text-xs font-semibold font-mono border transition-all cursor-pointer bg-accent text-white border-accent shadow-xs">
+          All ({CONTACT_SHEET_PRESETS.length})
+        </button>
+        <button data-filter="standard" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold font-mono border transition-all cursor-pointer bg-marketing-surface text-marketing-text border-marketing-border hover:border-accent/40">
+          Print Standards ({CONTACT_SHEET_PRESETS.filter(p => p.category === 'standard').length})
+        </button>
+        <button data-filter="film" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold font-mono border transition-all cursor-pointer bg-marketing-surface text-marketing-text border-marketing-border hover:border-accent/40">
+          Film &amp; Darkroom Index ({CONTACT_SHEET_PRESETS.filter(p => p.category === 'film').length})
+        </button>
+        <button data-filter="client" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold font-mono border transition-all cursor-pointer bg-marketing-surface text-marketing-text border-marketing-border hover:border-accent/40">
+          Client Review &amp; EXIF ({CONTACT_SHEET_PRESETS.filter(p => p.category === 'client').length})
+        </button>
+        <button data-filter="digital" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold font-mono border transition-all cursor-pointer bg-marketing-surface text-marketing-text border-marketing-border hover:border-accent/40">
+          Screen &amp; Video Board ({CONTACT_SHEET_PRESETS.filter(p => p.category === 'digital').length})
+        </button>
+      </div>
+
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {CONTACT_SHEET_PRESETS.map((preset) => (
-          <div class="bg-marketing-panel border border-marketing-border rounded-2xl p-6 sm:p-7 flex flex-col justify-between space-y-6 shadow-xs hover:border-stone-400 dark:hover:border-stone-600 transition-all">
-            <div class="space-y-3">
-              <div class="flex items-center justify-between">
-                <span class="text-[11px] font-bold uppercase tracking-wider text-accent-ink font-mono">
-                  {preset.category}
-                </span>
-                <span class="text-[11px] px-2.5 py-1 rounded-lg bg-marketing-surface border border-marketing-border font-mono text-marketing-muted">
-                  {preset.config.columns}x{preset.config.rows} Grid
-                </span>
+          <div 
+            data-preset-card
+            data-category={preset.category}
+            class="bg-marketing-panel border border-marketing-border rounded-2xl p-5 sm:p-6 flex flex-col justify-between space-y-5 shadow-xs hover:border-accent/40 hover:shadow-md transition-all group"
+          >
+            <div class="space-y-4">
+              <!-- Visual Contact Sheet Grid Preview -->
+              <ContactSheetPreview preset={preset} />
+
+              <div class="space-y-2.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] font-bold uppercase tracking-wider text-accent-ink font-mono">
+                    {preset.category}
+                  </span>
+                  <span class="text-[11px] px-2.5 py-0.5 rounded-lg bg-marketing-surface border border-marketing-border font-mono text-marketing-muted">
+                    {preset.config.columns}x{preset.config.rows} Grid
+                  </span>
+                </div>
+                <h2 class="text-base sm:text-lg font-bold text-marketing-text group-hover:text-accent transition-colors">{preset.name}</h2>
+                <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
+                  {preset.description}
+                </p>
               </div>
-              <h2 class="text-lg font-bold text-marketing-text">{preset.name}</h2>
-              <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
-                {preset.description}
-              </p>
 
               <div class="pt-3 border-t border-marketing-border space-y-1.5 text-xs text-marketing-muted font-mono">
                 <div class="flex justify-between">
@@ -91,15 +123,44 @@ const schemas = [
 
             <a 
               href="/#workspace" 
-              class="w-full py-2.5 px-4 rounded-xl bg-stone-900 hover:bg-black text-white dark:bg-accent dark:hover:bg-accent-hover dark:text-white font-semibold text-xs text-center tracking-tight shadow-sm hover:shadow transition-all block"
+              class="w-full py-2.5 px-4 rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold text-xs text-center tracking-tight shadow-sm hover:shadow transition-all block"
             >
-              Open in Workspace
+              Use This Preset
             </a>
           </div>
         ))}
       </div>
     </div>
   </section>
+
+  <script>
+    const filterBar = document.getElementById('preset-filter-bar');
+    if (filterBar) {
+      const filterBtns = filterBar.querySelectorAll('.filter-btn');
+      const cards = document.querySelectorAll<HTMLElement>('[data-preset-card]');
+
+      filterBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach((b) => {
+            b.classList.remove('bg-accent', 'text-white', 'border-accent', 'shadow-xs');
+            b.classList.add('bg-marketing-surface', 'text-marketing-text', 'border-marketing-border');
+          });
+          btn.classList.remove('bg-marketing-surface', 'text-marketing-text', 'border-marketing-border');
+          btn.classList.add('bg-accent', 'text-white', 'border-accent', 'shadow-xs');
+
+          const filter = btn.getAttribute('data-filter');
+          cards.forEach((card) => {
+            const cat = card.getAttribute('data-category');
+            if (filter === 'all' || cat === filter) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    }
+  </script>
 
   <!-- Editorial Section -->
   <section class="py-16 sm:py-20 bg-marketing-panel border-b border-marketing-border transition-colors">

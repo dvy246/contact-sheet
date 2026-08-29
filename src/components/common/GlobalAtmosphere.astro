@@ -1,14 +1,15 @@
 ---
 /**
- * GlobalAtmosphere — Continuous Ambient Gradient Mesh across the whole website.
+ * GlobalAtmosphere — Continuous Ambient Gradient Mesh and Dot Pattern Matrix across the whole website.
  * 
  * Provides a luminous, warm, sunlit champagne / amber aura in Light Mode,
- * and a deep warm cocoa / caramel glow in Dark Mode.
+ * a deep warm cocoa / caramel glow in Dark Mode, and an ultra-fine architectural dot matrix pattern.
  * 
  * Performance:
  * - Rendered as fixed, composited background layers (0 DOM layout cost, 0 paint on scroll).
  * - Clipped with GPU contain: strict and pointer-events: none.
  */
+import DotPattern from '../ui/DotPattern.astro';
 ---
 
 <div class="global-atmosphere-wrap fixed inset-0 pointer-events-none -z-10 overflow-hidden" aria-hidden="true">
@@ -20,6 +21,16 @@
 
   <!-- Orb 3: Lower Right Soft Champagne Corona -->
   <div class="global-orb orb-3"></div>
+
+  <!-- Architectural Dot Pattern Matrix (Zero Repaint Overhead) -->
+  <DotPattern
+    width={32}
+    height={32}
+    cx={1.5}
+    cy={1.5}
+    cr={1.2}
+    className="opacity-40 dark:opacity-35 [mask-image:radial-gradient(ellipse_80%_70%_at_50%_35%,black_35%,transparent_92%)]"
+  />
 
   <!-- Subtle Film Grain Texture Overlay for Tangible Material Depth -->
   <div class="global-grain"></div>
@@ -39,7 +50,7 @@
     opacity: 0.85;
   }
 
-  /* Light Mode Orbs: Sunlit Champagne, Warm Honey & Soft Coral Glow (Luminous & Not Dark) */
+  /* Light Mode Orbs: Sunlit Champagne, Warm Honey & Soft Coral Glow (Delicate & Low Contrast) */
   .orb-1 {
     top: -10%;
     right: -5%;
@@ -49,8 +60,8 @@
     max-height: 750px;
     background: radial-gradient(
       circle,
-      rgba(224, 138, 50, 0.18) 0%,
-      rgba(240, 160, 80, 0.12) 40%,
+      rgba(224, 138, 50, 0.10) 0%,
+      rgba(240, 160, 80, 0.06) 40%,
       rgba(251, 247, 242, 0) 75%
     );
   }
@@ -64,8 +75,8 @@
     max-height: 800px;
     background: radial-gradient(
       circle,
-      rgba(201, 100, 66, 0.16) 0%,
-      rgba(235, 150, 95, 0.10) 45%,
+      rgba(201, 100, 66, 0.08) 0%,
+      rgba(235, 150, 95, 0.05) 45%,
       rgba(251, 247, 242, 0) 75%
     );
   }
@@ -79,8 +90,8 @@
     max-height: 700px;
     background: radial-gradient(
       circle,
-      rgba(245, 185, 110, 0.16) 0%,
-      rgba(235, 140, 75, 0.08) 50%,
+      rgba(245, 185, 110, 0.08) 0%,
+      rgba(235, 140, 75, 0.04) 50%,
       rgba(251, 247, 242, 0) 80%
     );
   }

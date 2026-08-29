@@ -1,0 +1,172 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../components/common/Breadcrumbs.astro';
+import BatchToolsApp from '../components/marketing/BatchToolsApp.astro';
+import FaqAccordion from '../components/common/FaqAccordion.astro';
+import Icon from '../components/common/Icon.astro';
+import HighlightText from '../components/ui/HighlightText.astro';
+import { METADATA_REGISTRY } from '../lib/seo/metadata';
+import { buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
+
+const meta = METADATA_REGISTRY['/batch-photo-tools'] || {
+  title: 'Batch Photo Tools — Local Image Renamer, EXIF Extractor & Converter',
+  description: 'Batch rename photos with dynamic token recipes, extract technical camera EXIF metadata, and convert image formats locally in your browser. 100% private, zero uploads.',
+  canonical: 'https://makecontactsheet.com/batch-photo-tools',
+  robots: 'index, follow',
+  ogType: 'website',
+  schemaType: ['SoftwareApplication', 'FAQPage', 'BreadcrumbList'],
+};
+
+const faqs = [
+  {
+    question: 'How does the batch photo rename tool work?',
+    answer: 'The batch photo renamer allows you to construct custom naming recipes using prefixes, sequenced index numbers with zero-padding (e.g. 001, 0001), suffixes, and dynamic metadata tokens ({name}, {date}, {camera}, {fstop}, {iso}). You can preview the changes in real time and download a local Mac/Linux Bash (.sh) script, Windows PowerShell (.ps1) script, or CSV mapping table to apply the renames directly on your device.',
+  },
+  {
+    question: 'Can I extract EXIF camera settings for my whole photo shoot?',
+    answer: 'Yes! When you drop your images or a whole directory into the tool, Make Contact Sheet reads the camera make and model, lens details, focal length, aperture (f-number), shutter speed, ISO, and original capture timestamps using client-side binary parsing. You can export this technical data into a CSV spreadsheet or Lightroom search filter query with one click.',
+  },
+  {
+    question: 'Does Make Contact Sheet upload my files to any server?',
+    answer: 'No. All file operations, decoding, thumbnail generation, EXIF parsing, and format conversions execute 100% locally in your browser. Your images and filenames never leave your computer.',
+  },
+  {
+    question: 'Can I send my batch directly to the Contact Sheet or Collage Maker?',
+    answer: 'Yes! Clicking "Send to Studio" immediately loads your batch into the interactive light-table workspace, where you can arrange photos on A4/Letter proof sheets, review picks with keyboard shortcuts, and export high-DPI PDF contact sheets.',
+  },
+];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Batch Photo Tools' },
+];
+
+const schemas = [
+  buildSoftwareApplicationSchema(
+    'Batch Photo Tools',
+    meta.description,
+    'https://makecontactsheet.com/batch-photo-tools'
+  ),
+  buildFAQSchema(faqs),
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+  schema={schemas}
+>
+  <!-- Page Header Banner -->
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-accent-ink font-bold mb-3">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>100% IN-BROWSER PRIVATE SUITE</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
+          <HighlightText variant="lime">Batch Photo Tools</HighlightText> &amp; File Operations
+        </h1>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          Streamline your photography proofing workflow. Batch rename images with dynamic token recipes, inspect technical camera EXIF metadata, and convert image formats directly in your browser with zero server uploads.
+        </p>
+
+        <div class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="/studio/contact-sheet"
+            class="inline-flex items-center gap-2 h-10 px-5 rounded-full bg-accent hover:bg-accent-hover text-white font-semibold text-xs sm:text-sm tracking-tight shadow-sm hover:shadow active:scale-[0.98] transition-all"
+          >
+            <Icon name="maximize" size={14} />
+            <span>Open Contact Sheet Studio</span>
+          </a>
+          <a
+            href="/photo-collage-maker"
+            class="inline-flex items-center gap-2 h-10 px-5 rounded-full bg-marketing-surface hover:bg-marketing-surface-hover text-marketing-text font-semibold text-xs sm:text-sm border border-marketing-border transition-colors"
+          >
+            <Icon name="layout" size={14} />
+            <span>Photo Collage Maker</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Batch Tools Workbench -->
+  <section class="py-10 sm:py-14 lg:py-16 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+      <BatchToolsApp />
+    </div>
+  </section>
+
+  <!-- Editorial Pillars & Guides -->
+  <section class="py-14 sm:py-20 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="max-w-3xl mb-12">
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight mb-3">
+          Designed for <HighlightText variant="yellow">Professional</HighlightText> Photography Workflows
+        </h2>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          Whether you are delivering client proof sheets, organizing thousands of camera roll frames, or extracting technical shoot parameters, Make Contact Sheet provides zero-install, private tools running entirely on your machine.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        
+        <!-- Pillar 1: Batch Renaming -->
+        <div class="p-6 rounded-2xl bg-marketing-surface border border-marketing-border space-y-3 card-surface card-interactive group">
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent">
+              <Icon name="file-text" size={20} />
+            </div>
+            <span class="card-emoji text-2xl select-none" aria-hidden="true">🏷️</span>
+          </div>
+          <h3 class="text-base font-bold text-marketing-text">Dynamic Token Recipes</h3>
+          <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
+            Construct sequential naming formats with customizable zero-padding (<code class="font-mono text-accent-ink">001</code>, <code class="font-mono text-accent-ink">0001</code>), prefixes, suffixes, and camera EXIF parameters. Export executable shell scripts for instant local execution.
+          </p>
+        </div>
+
+        <!-- Pillar 2: Technical EXIF -->
+        <div class="p-6 rounded-2xl bg-marketing-surface border border-marketing-border space-y-3 card-surface card-interactive group">
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent">
+              <Icon name="camera" size={20} />
+            </div>
+            <span class="card-emoji text-2xl select-none" aria-hidden="true">📷</span>
+          </div>
+          <h3 class="text-base font-bold text-marketing-text">Deep EXIF Extraction</h3>
+          <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
+            Inspect camera bodies, lenses, focal lengths, apertures, shutter speeds, and ISO values across your entire shoot in a consolidated, downloadable table formatted for spreadsheets and Lightroom catalogs.
+          </p>
+        </div>
+
+        <!-- Pillar 3: Offline Privacy -->
+        <div class="p-6 rounded-2xl bg-marketing-surface border border-marketing-border space-y-3 card-surface card-interactive group">
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent">
+              <Icon name="shield" size={20} />
+            </div>
+            <span class="card-emoji text-2xl select-none" aria-hidden="true">🔒</span>
+          </div>
+          <h3 class="text-base font-bold text-marketing-text">Zero-Upload Privacy</h3>
+          <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
+            Unlike cloud-based converters and upload services, Make Contact Sheet executes every operation in local browser memory using modern web standards. Your commercial client files remain strictly confidential.
+          </p>
+        </div>
+
+      </div>
+
+
+      <!-- FAQ Section -->
+      <div class="max-w-3xl">
+        <h3 class="text-xl sm:text-2xl font-bold text-marketing-text mb-6">Frequently Asked Questions</h3>
+        <FaqAccordion faqs={faqs} />
+      </div>
+
+    </div>
+  </section>
+</MarketingLayout>

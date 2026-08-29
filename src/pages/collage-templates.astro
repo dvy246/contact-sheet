@@ -2,6 +2,8 @@
 import MarketingLayout from '../layouts/MarketingLayout.astro';
 import Breadcrumbs from '../components/common/Breadcrumbs.astro';
 import FaqAccordion from '../components/common/FaqAccordion.astro';
+import CollageTemplatePreview from '../components/marketing/CollageTemplatePreview.astro';
+import HighlightText from '../components/ui/HighlightText.astro';
 import { COLLAGE_TEMPLATES } from '../lib/engine/templates';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
 import { buildFAQSchema } from '../lib/seo/schemaGenerator';
@@ -45,7 +47,7 @@ const schemas = [
       <Breadcrumbs items={breadcrumbs} />
       <div class="max-w-3xl space-y-3">
         <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight">
-          Custom Photo Collage Templates
+          Custom <HighlightText variant="pink">Photo Collage</HighlightText> Templates
         </h1>
         <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
           Explore clean, structured photo collage layouts for social media, portfolios, and print. Arrange your photos with professional proportions in seconds.
@@ -54,24 +56,54 @@ const schemas = [
     </div>
   </div>
 
-  <section class="py-16 sm:py-24 lg:py-28 bg-marketing-bg border-b border-marketing-border transition-colors">
+
+  <section class="py-12 sm:py-16 lg:py-20 bg-marketing-bg border-b border-marketing-border transition-colors">
     <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      
+      <!-- Category Filter Bar -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-8 sm:mb-10 no-scrollbar" id="template-filter-bar">
+        <button data-filter="all" class="filter-btn active px-3.5 py-1.5 rounded-xl text-xs font-semibold font-mono border transition-all cursor-pointer bg-accent text-white border-accent shadow-xs">
+          All ({COLLAGE_TEMPLATES.length})
+        </button>
+        <button data-filter="basic" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold font-mono border transition-all cursor-pointer bg-marketing-surface text-marketing-text border-marketing-border hover:border-accent/40">
+          Basic Grid ({COLLAGE_TEMPLATES.filter(t => t.category === 'basic').length})
+        </button>
+        <button data-filter="showcase" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold font-mono border transition-all cursor-pointer bg-marketing-surface text-marketing-text border-marketing-border hover:border-accent/40">
+          Showcase &amp; Editorial ({COLLAGE_TEMPLATES.filter(t => t.category === 'showcase').length})
+        </button>
+        <button data-filter="social" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold font-mono border transition-all cursor-pointer bg-marketing-surface text-marketing-text border-marketing-border hover:border-accent/40">
+          Social Stories ({COLLAGE_TEMPLATES.filter(t => t.category === 'social').length})
+        </button>
+        <button data-filter="comparison" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold font-mono border transition-all cursor-pointer bg-marketing-surface text-marketing-text border-marketing-border hover:border-accent/40">
+          Comparison &amp; Duo ({COLLAGE_TEMPLATES.filter(t => t.category === 'comparison').length})
+        </button>
+      </div>
+
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {COLLAGE_TEMPLATES.map((template) => (
-          <div class="bg-marketing-panel border border-marketing-border rounded-2xl p-6 sm:p-7 flex flex-col justify-between space-y-6 shadow-xs hover:border-stone-400 dark:hover:border-stone-600 transition-all">
-            <div class="space-y-3">
-              <div class="flex items-center justify-between">
-                <span class="text-[11px] font-bold uppercase tracking-wider text-accent-ink font-mono">
-                  {template.category}
-                </span>
-                <span class="text-[11px] px-2.5 py-1 rounded-lg bg-marketing-surface border border-marketing-border font-mono text-marketing-muted">
-                  {template.cells.length} Photos
-                </span>
+          <div 
+            data-template-card
+            data-category={template.category}
+            class="bg-marketing-panel border border-marketing-border rounded-2xl p-5 sm:p-6 flex flex-col justify-between space-y-5 shadow-xs hover:border-accent/40 hover:shadow-md transition-all group"
+          >
+            <div class="space-y-4">
+              <!-- Visual Grid Structure Preview -->
+              <CollageTemplatePreview template={template} />
+
+              <div class="space-y-2.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] font-bold uppercase tracking-wider text-accent-ink font-mono">
+                    {template.category}
+                  </span>
+                  <span class="text-[11px] px-2.5 py-0.5 rounded-lg bg-marketing-surface border border-marketing-border font-mono text-marketing-muted">
+                    {template.cells.length} Photos
+                  </span>
+                </div>
+                <h2 class="text-base sm:text-lg font-bold text-marketing-text group-hover:text-accent transition-colors">{template.name}</h2>
+                <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
+                  {template.description}
+                </p>
               </div>
-              <h2 class="text-lg font-bold text-marketing-text">{template.name}</h2>
-              <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
-                {template.description}
-              </p>
 
               <div class="pt-3 border-t border-marketing-border space-y-1.5 text-xs text-marketing-muted font-mono">
                 <div class="flex justify-between">
@@ -87,7 +119,7 @@ const schemas = [
 
             <a 
               href="/#workspace" 
-              class="w-full py-2.5 px-4 rounded-xl bg-stone-900 hover:bg-black text-white dark:bg-accent dark:hover:bg-accent-hover dark:text-white font-semibold text-xs text-center tracking-tight shadow-sm hover:shadow transition-all block"
+              class="w-full py-2.5 px-4 rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold text-xs text-center tracking-tight shadow-sm hover:shadow transition-all block"
             >
               Use This Template
             </a>
@@ -96,6 +128,35 @@ const schemas = [
       </div>
     </div>
   </section>
+
+  <script>
+    const filterBar = document.getElementById('template-filter-bar');
+    if (filterBar) {
+      const filterBtns = filterBar.querySelectorAll('.filter-btn');
+      const cards = document.querySelectorAll<HTMLElement>('[data-template-card]');
+
+      filterBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach((b) => {
+            b.classList.remove('bg-accent', 'text-white', 'border-accent', 'shadow-xs');
+            b.classList.add('bg-marketing-surface', 'text-marketing-text', 'border-marketing-border');
+          });
+          btn.classList.remove('bg-marketing-surface', 'text-marketing-text', 'border-marketing-border');
+          btn.classList.add('bg-accent', 'text-white', 'border-accent', 'shadow-xs');
+
+          const filter = btn.getAttribute('data-filter');
+          cards.forEach((card) => {
+            const cat = card.getAttribute('data-category');
+            if (filter === 'all' || cat === filter) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    }
+  </script>
 
   <!-- Editorial Section -->
   <section class="py-16 sm:py-20 bg-marketing-panel border-b border-marketing-border transition-colors">

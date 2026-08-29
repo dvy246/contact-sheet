@@ -1,5 +1,8 @@
 ---
 import Icon from '../common/Icon.astro';
+import ContactSheetPreview from './ContactSheetPreview.astro';
+import CollageTemplatePreview from './CollageTemplatePreview.astro';
+import HighlightText from '../ui/HighlightText.astro';
 import { CONTACT_SHEET_PRESETS, COLLAGE_TEMPLATES } from '../../lib/engine/templates';
 ---
 
@@ -15,8 +18,9 @@ import { CONTACT_SHEET_PRESETS, COLLAGE_TEMPLATES } from '../../lib/engine/templ
             <span>PROOFING PRESETS</span>
           </div>
           <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
-            Proof Sheet Layouts & Presets
+            Proof Sheet <HighlightText variant="lime">Layouts</HighlightText> &amp; <HighlightText variant="yellow">Presets</HighlightText>
           </h2>
+
           <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
             Calibrated for standard printing, digital review boards, and client proofing.
           </p>
@@ -28,19 +32,28 @@ import { CONTACT_SHEET_PRESETS, COLLAGE_TEMPLATES } from '../../lib/engine/templ
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-        {CONTACT_SHEET_PRESETS.slice(0, 3).map((preset) => (
-          <div class="bg-marketing-surface border border-marketing-border rounded-2xl p-7 flex flex-col justify-between space-y-6 transition-all group card-surface card-interactive">
-            <div class="space-y-3">
-              <div class="flex items-center justify-between">
-                <span class="text-[11px] font-bold uppercase tracking-wider text-accent-ink font-mono">
-                  {preset.config.pageSize?.toUpperCase()} - {preset.config.orientation?.toUpperCase()}
-                </span>
-                <span class="text-[11px] px-2.5 py-1 rounded-lg bg-marketing-surface border border-marketing-border font-mono text-marketing-muted">
-                  {preset.config.columns}x{preset.config.rows} Grid
-                </span>
+        {[
+          CONTACT_SHEET_PRESETS.find(p => p.id === 'a4-portrait-proof')!,
+          CONTACT_SHEET_PRESETS.find(p => p.id === 'studio-tech-exif')!,
+          CONTACT_SHEET_PRESETS.find(p => p.id === 'wedding-client-proof')!
+        ].map((preset) => (
+          <div class="bg-marketing-surface border border-marketing-border rounded-2xl p-5 sm:p-6 flex flex-col justify-between space-y-5 transition-all group card-surface card-interactive hover:border-accent/40">
+            <div class="space-y-4">
+              <!-- Visual Grid Preview -->
+              <ContactSheetPreview preset={preset} />
+
+              <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] font-bold uppercase tracking-wider text-accent-ink font-mono">
+                    {preset.config.pageSize?.toUpperCase()} - {preset.config.orientation?.toUpperCase()}
+                  </span>
+                  <span class="text-[11px] px-2.5 py-0.5 rounded-lg bg-marketing-surface border border-marketing-border font-mono text-marketing-muted">
+                    {preset.config.columns}x{preset.config.rows} Grid
+                  </span>
+                </div>
+                <h3 class="text-base sm:text-lg font-bold text-marketing-text group-hover:text-accent transition-colors">{preset.name}</h3>
+                <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{preset.description}</p>
               </div>
-              <h3 class="text-lg font-bold text-marketing-text mb-2.5">{preset.name}</h3>
-              <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{preset.description}</p>
             </div>
 
             <a 
@@ -63,8 +76,9 @@ import { CONTACT_SHEET_PRESETS, COLLAGE_TEMPLATES } from '../../lib/engine/templ
             <span>CREATIVE COMPOSITIONS</span>
           </div>
           <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
-            Creative Collage Templates
+            Creative <HighlightText variant="pink">Collage</HighlightText> <HighlightText variant="cyan">Templates</HighlightText>
           </h2>
+
           <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
             Clean, balanced multi-photo layouts for social stories, before/after edits, and portfolios.
           </p>
@@ -76,19 +90,29 @@ import { CONTACT_SHEET_PRESETS, COLLAGE_TEMPLATES } from '../../lib/engine/templ
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
-        {COLLAGE_TEMPLATES.slice(0, 4).map((template) => (
-          <div class="bg-marketing-surface border border-marketing-border rounded-2xl p-6 sm:p-7 flex flex-col justify-between space-y-6 transition-all group card-surface card-interactive">
-            <div class="space-y-3">
-              <div class="flex items-center justify-between">
-                <span class="text-[11px] font-bold uppercase tracking-wider text-accent-ink font-mono">
-                  {template.category.toUpperCase()}
-                </span>
-                <span class="text-[11px] px-2.5 py-1 rounded-lg bg-marketing-surface border border-marketing-border font-mono text-marketing-muted">
-                  {template.cells.length} Photos
-                </span>
+        {[
+          COLLAGE_TEMPLATES.find(t => t.id === 'three-hero-split')!,
+          COLLAGE_TEMPLATES.find(t => t.id === 'cinematic-split')!,
+          COLLAGE_TEMPLATES.find(t => t.id === 'editorial-mosaic-5')!,
+          COLLAGE_TEMPLATES.find(t => t.id === 'hero-golden-quad')!
+        ].map((template) => (
+          <div class="bg-marketing-surface border border-marketing-border rounded-2xl p-5 sm:p-6 flex flex-col justify-between space-y-5 transition-all group card-surface card-interactive hover:border-accent/40">
+            <div class="space-y-4">
+              <!-- Visual Grid Preview -->
+              <CollageTemplatePreview template={template} />
+
+              <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-[11px] font-bold uppercase tracking-wider text-accent-ink font-mono">
+                    {template.category.toUpperCase()}
+                  </span>
+                  <span class="text-[11px] px-2.5 py-0.5 rounded-lg bg-marketing-surface border border-marketing-border font-mono text-marketing-muted">
+                    {template.cells.length} Photos
+                  </span>
+                </div>
+                <h3 class="text-base font-bold text-marketing-text group-hover:text-accent transition-colors">{template.name}</h3>
+                <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{template.description}</p>
               </div>
-              <h3 class="text-base font-bold text-marketing-text mb-2.5">{template.name}</h3>
-              <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{template.description}</p>
             </div>
 
             <a 

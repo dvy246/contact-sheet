@@ -4,10 +4,12 @@ import Breadcrumbs from '../components/common/Breadcrumbs.astro';
 import WorkspaceApp from '../components/workspace/WorkspaceApp.astro';
 import FaqAccordion from '../components/common/FaqAccordion.astro';
 import Icon from '../components/common/Icon.astro';
+import HighlightText from '../components/ui/HighlightText.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
 import { buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/photo-collage-maker'];
+
 
 const faqs = [
   {
@@ -56,7 +58,7 @@ const schemas = [
       <Breadcrumbs items={breadcrumbs} />
       <div class="max-w-3xl">
         <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
-          Free Photo Collage Maker
+          Free <HighlightText variant="pink">Photo Collage</HighlightText> Maker
         </h1>
         <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
           Combine multiple pictures into balanced grids, storytelling triptychs, and social formats. Fast, private, and free with no cloud uploads or signups required.
@@ -91,7 +93,7 @@ const schemas = [
       
       <div class="space-y-4 prose-measure">
         <h2 class="text-2xl font-bold text-marketing-text">
-          How to design clean, intentional photo collages
+          How to design clean, <HighlightText variant="yellow">intentional</HighlightText> photo collages
         </h2>
         <p class="text-sm text-marketing-text/90 leading-relaxed">
           A great photo collage tells a cohesive visual story rather than crowding random images into a cluttered box. When designing a collage, start by selecting a purposeful aspect ratio based on where the image will be seen: square (1:1) for portfolio feeds, portrait (4:5) for standard social posts, vertical (9:16) for mobile stories, or widescreen (16:9) for website hero banners and print posters.
@@ -103,8 +105,9 @@ const schemas = [
 
       <div class="space-y-4 prose-measure">
         <h2 class="text-2xl font-bold text-marketing-text">
-          Why Make Contact Sheet is a better collage tool for creators
+          Why Make Contact Sheet is a <HighlightText variant="lime">better collage tool</HighlightText> for creators
         </h2>
+
         <p class="text-sm text-marketing-text/90 leading-relaxed">
           Most online collage makers are bloated design tools that push subscription upgrades, plaster watermarks on exports, and require you to upload your personal photos to their servers. Make Contact Sheet takes a minimalist, privacy-first approach: clean geometric templates, adjustable borders and margins, uncompromised full-resolution exports, and 100% local processing.
         </p>

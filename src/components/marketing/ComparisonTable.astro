@@ -1,4 +1,5 @@
 ---
+import HighlightText from '../ui/HighlightText.astro';
 ---
 
 <section class="py-16 sm:py-24 lg:py-28 bg-transparent border-b border-marketing-border transition-colors w-full max-w-full overflow-hidden" data-reveal>
@@ -8,10 +9,10 @@
     <div class="max-w-2xl mb-12 sm:mb-14">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs mb-3.5">
         <span class="w-2 h-2 rounded-full bg-accent"></span>
-        <span>BENCHMARK & PRIVACY</span>
+        <span>BENCHMARK &amp; PRIVACY</span>
       </div>
       <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
-        How Make Contact Sheet compares to alternatives
+        How Make Contact Sheet <HighlightText variant="lime">compares</HighlightText> to <HighlightText variant="yellow">alternatives</HighlightText>
       </h2>
       <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
         An honest look at how browser-first review compares with heavy desktop software and generic cloud design apps.
@@ -25,7 +26,10 @@
           <tr class="bg-marketing-surface border-b border-marketing-border text-marketing-text font-bold">
             <th class="p-4 sm:p-5">Capability / Feature</th>
             <th class="p-4 sm:p-5 bg-accent/10 text-marketing-text border-x border-accent/30 font-bold">
-              Make Contact Sheet
+              <span class="inline-flex items-center gap-1.5">
+                <span>Make Contact Sheet</span>
+                <span class="card-emoji text-sm" aria-hidden="true">⚡</span>
+              </span>
             </th>
             <th class="p-4 sm:p-5 text-marketing-muted font-semibold">Photoshop (Contact Sheet II)</th>
             <th class="p-4 sm:p-5 text-marketing-muted font-semibold">Canva</th>
@@ -33,70 +37,91 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-marketing-border text-marketing-text">
-          <tr>
-            <td class="p-4 sm:p-5 font-medium">Account / Signup Required</td>
-            <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold text-emerald-600 dark:text-emerald-400">
-              No (Instant Access)
+          <tr class="group hover:bg-marketing-surface/30 transition-colors">
+            <td class="p-4 sm:p-5 font-medium flex items-center gap-2">
+              <span class="card-emoji text-base" aria-hidden="true">👤</span>
+              <span>Account / Signup Required</span>
+            </td>
+            <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold">
+              <HighlightText variant="lime">No (Instant Access)</HighlightText>
             </td>
             <td class="p-4 sm:p-5 text-marketing-muted">Yes (Adobe ID)</td>
-            <td class="p-4 sm:p-5 text-rose-600 dark:text-rose-400">Yes (Mandatory)</td>
+            <td class="p-4 sm:p-5 text-rose-600 dark:text-rose-400 font-medium">Yes (Mandatory)</td>
             <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400">No</td>
           </tr>
 
-          <tr>
-            <td class="p-4 sm:p-5 font-medium">Privacy / File Transfer</td>
-            <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold text-emerald-600 dark:text-emerald-400">
-              100% In-Browser Local
+          <tr class="group hover:bg-marketing-surface/30 transition-colors">
+            <td class="p-4 sm:p-5 font-medium flex items-center gap-2">
+              <span class="card-emoji text-base" aria-hidden="true">🔒</span>
+              <span>Privacy / File Transfer</span>
+            </td>
+            <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold">
+              <HighlightText variant="lime">100% In-Browser Local</HighlightText>
             </td>
             <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400">Local Desktop</td>
-            <td class="p-4 sm:p-5 text-rose-600 dark:text-rose-400">Uploaded to Cloud</td>
+            <td class="p-4 sm:p-5 text-rose-600 dark:text-rose-400 font-medium">Uploaded to Cloud</td>
             <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400">Local Browser</td>
           </tr>
 
-          <tr>
-            <td class="p-4 sm:p-5 font-medium">Filename Preservation</td>
-            <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold text-emerald-600 dark:text-emerald-400">
-              Always Preserved & Verified
+          <tr class="group hover:bg-marketing-surface/30 transition-colors">
+            <td class="p-4 sm:p-5 font-medium flex items-center gap-2">
+              <span class="card-emoji text-base" aria-hidden="true">🏷️</span>
+              <span>Filename Preservation</span>
+            </td>
+            <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold">
+              <HighlightText variant="yellow">Always Preserved</HighlightText> &amp; Verified
             </td>
             <td class="p-4 sm:p-5 text-marketing-muted">Preserved in Print</td>
-            <td class="p-4 sm:p-5 text-rose-600 dark:text-rose-400">Stripped / Lost</td>
+            <td class="p-4 sm:p-5 text-rose-600 dark:text-rose-400 font-medium">Stripped / Lost</td>
             <td class="p-4 sm:p-5 text-marketing-muted">Preserved in Grid</td>
           </tr>
 
-          <tr>
-            <td class="p-4 sm:p-5 font-medium">Keep / Reject / Flag Culling</td>
-            <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold text-emerald-600 dark:text-emerald-400">
-              Yes (Shortcuts 1, 2, 3)
+          <tr class="group hover:bg-marketing-surface/30 transition-colors">
+            <td class="p-4 sm:p-5 font-medium flex items-center gap-2">
+              <span class="card-emoji text-base" aria-hidden="true">🎯</span>
+              <span>Keep / Reject / Flag Culling</span>
+            </td>
+            <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold">
+              <HighlightText variant="pink">Yes (Shortcuts 1, 2, 3)</HighlightText>
             </td>
             <td class="p-4 sm:p-5 text-marketing-muted">None</td>
             <td class="p-4 sm:p-5 text-marketing-muted">None</td>
             <td class="p-4 sm:p-5 text-marketing-muted">None</td>
           </tr>
 
-          <tr>
-            <td class="p-4 sm:p-5 font-medium">Filename CSV / TXT Export</td>
-            <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold text-emerald-600 dark:text-emerald-400">
-              Yes (Lightroom Ready)
+          <tr class="group hover:bg-marketing-surface/30 transition-colors">
+            <td class="p-4 sm:p-5 font-medium flex items-center gap-2">
+              <span class="card-emoji text-base" aria-hidden="true">📄</span>
+              <span>Filename CSV / TXT Export</span>
+            </td>
+            <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold">
+              <HighlightText variant="cyan">Yes (Lightroom Ready)</HighlightText>
             </td>
             <td class="p-4 sm:p-5 text-marketing-muted">None</td>
             <td class="p-4 sm:p-5 text-marketing-muted">None</td>
             <td class="p-4 sm:p-5 text-marketing-muted">None</td>
           </tr>
 
-          <tr>
-            <td class="p-4 sm:p-5 font-medium">Collage Mode + Templates</td>
-            <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold text-emerald-600 dark:text-emerald-400">
-              Built-in Siblings
+          <tr class="group hover:bg-marketing-surface/30 transition-colors">
+            <td class="p-4 sm:p-5 font-medium flex items-center gap-2">
+              <span class="card-emoji text-base" aria-hidden="true">🎨</span>
+              <span>Collage &amp; Mood Board Modes</span>
+            </td>
+            <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold">
+              <HighlightText variant="orange">Built-in Studio</HighlightText>
             </td>
             <td class="p-4 sm:p-5 text-marketing-muted">None</td>
             <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400">Extensive Templates</td>
             <td class="p-4 sm:p-5 text-marketing-muted">None</td>
           </tr>
 
-          <tr>
-            <td class="p-4 sm:p-5 font-medium">Pricing Model</td>
-            <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold text-emerald-600 dark:text-emerald-400">
-              Free & Open
+          <tr class="group hover:bg-marketing-surface/30 transition-colors">
+            <td class="p-4 sm:p-5 font-medium flex items-center gap-2">
+              <span class="card-emoji text-base" aria-hidden="true">💰</span>
+              <span>Pricing Model</span>
+            </td>
+            <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold">
+              <HighlightText variant="lime">Free &amp; Open</HighlightText>
             </td>
             <td class="p-4 sm:p-5 text-marketing-muted">~$20-$55/month</td>
             <td class="p-4 sm:p-5 text-marketing-muted">Freemium ($13/mo)</td>

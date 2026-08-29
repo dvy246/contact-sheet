@@ -4,7 +4,9 @@ import Breadcrumbs from '../components/common/Breadcrumbs.astro';
 import FaqAccordion from '../components/common/FaqAccordion.astro';
 import Icon from '../components/common/Icon.astro';
 import MoodBoardApp from '../components/workspace/moodboard/MoodBoardApp.astro';
+import HighlightText from '../components/ui/HighlightText.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
+
 import { buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/mood-board-maker'] || {
@@ -71,7 +73,7 @@ const schemas = [
           <span>100% PRIVATE FREEFORM CANVAS</span>
         </div>
         <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
-          Free Photography Mood Board Maker
+          Free <HighlightText variant="pink">Photography Mood Board</HighlightText> Maker
         </h1>
         <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
           Curate aesthetic visual stories, lighting concepts, and fashion lookbooks. Arrange images on a tactile freeform canvas with magnetic snapping guides, color swatches, typographic notes, and 300 DPI exports.
@@ -117,7 +119,7 @@ const schemas = [
       
       <div class="max-w-3xl mb-12">
         <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight mb-3">
-          Visual Direction Crafted for Photographers &amp; Art Directors
+          Visual Direction Crafted for <HighlightText variant="yellow">Photographers</HighlightText> &amp; <HighlightText variant="cyan">Art Directors</HighlightText>
         </h2>
         <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
           A compelling mood board establishes tone, palette, and composition before the first shutter clicks. Make Contact Sheet provides an unconstrained freeform workspace designed specifically for creative production workflows.
@@ -127,9 +129,12 @@ const schemas = [
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
         
         <!-- Pillar 1: Freeform Canvas -->
-        <div class="p-6 rounded-2xl bg-marketing-surface border border-marketing-border space-y-3">
-          <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent">
-            <Icon name="crop" size={20} />
+        <div class="p-6 rounded-2xl bg-marketing-surface border border-marketing-border space-y-3 card-surface card-interactive group">
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent">
+              <Icon name="crop" size={20} />
+            </div>
+            <span class="card-emoji text-2xl select-none" aria-hidden="true">📐</span>
           </div>
           <h3 class="text-base font-bold text-marketing-text">Freeform Canvas &amp; Snapping</h3>
           <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
@@ -138,9 +143,12 @@ const schemas = [
         </div>
 
         <!-- Pillar 2: Palettes & Annotations -->
-        <div class="p-6 rounded-2xl bg-marketing-surface border border-marketing-border space-y-3">
-          <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent">
-            <Icon name="columns" size={20} />
+        <div class="p-6 rounded-2xl bg-marketing-surface border border-marketing-border space-y-3 card-surface card-interactive group">
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent">
+              <Icon name="columns" size={20} />
+            </div>
+            <span class="card-emoji text-2xl select-none" aria-hidden="true">🎨</span>
           </div>
           <h3 class="text-base font-bold text-marketing-text">Color Palettes &amp; Notes</h3>
           <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
@@ -149,9 +157,12 @@ const schemas = [
         </div>
 
         <!-- Pillar 3: Studio Print Exports -->
-        <div class="p-6 rounded-2xl bg-marketing-surface border border-marketing-border space-y-3">
-          <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent">
-            <Icon name="download" size={20} />
+        <div class="p-6 rounded-2xl bg-marketing-surface border border-marketing-border space-y-3 card-surface card-interactive group">
+          <div class="flex items-center justify-between">
+            <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent">
+              <Icon name="download" size={20} />
+            </div>
+            <span class="card-emoji text-2xl select-none" aria-hidden="true">🖨️</span>
           </div>
           <h3 class="text-base font-bold text-marketing-text">High-DPI 300 DPI Export</h3>
           <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
@@ -160,6 +171,7 @@ const schemas = [
         </div>
 
       </div>
+
 
       <!-- Links to Related Guides & Tools -->
       <div class="p-6 sm:p-8 rounded-2xl bg-marketing-bg border border-marketing-border space-y-4 mb-16 transition-colors">

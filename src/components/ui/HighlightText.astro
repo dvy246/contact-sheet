@@ -1,0 +1,30 @@
+---
+import { cn } from "@/lib/utils";
+
+interface Props {
+  className?: string;
+  variant?: "lime" | "yellow" | "pink" | "cyan" | "orange";
+}
+
+const { className = "", variant = "lime" } = Astro.props;
+
+const highlightVariants: Record<NonNullable<Props["variant"]>, string> = {
+  lime: "bg-accent-green text-zinc-950",
+  yellow: "bg-yellow-300 text-zinc-950",
+  pink: "bg-pink-300 text-zinc-950",
+  cyan: "bg-cyan-300 text-zinc-950",
+  orange: "bg-orange-300 text-zinc-950",
+};
+---
+
+<span class="relative inline-block font-inherit px-1 mx-0.5">
+  <span
+    class={cn(
+      "absolute inset-0 scale-x-105 scale-y-95 -skew-y-1 rounded-md -z-0 opacity-90 transition-all duration-300 ease-out group-hover:scale-x-110 group-hover:rotate-0 shadow-xs",
+      highlightVariants[variant],
+      className
+    )}
+    aria-hidden="true"
+  ></span>
+  <span class="relative z-10 font-bold drop-shadow-xs"><slot /></span>
+</span>
