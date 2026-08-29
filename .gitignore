@@ -22,6 +22,10 @@ pnpm-debug.log*
 # Superpowers / SDD Scratch
 .superpowers/
 
+# Local agent workspace & skills
+.agents/
+
 # Temporary visual audit screenshots
 screenshot*.png
+
 
