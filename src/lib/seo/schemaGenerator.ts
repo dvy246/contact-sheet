@@ -56,7 +56,7 @@ export function buildFAQSchema(faqs: FAQItem[]) {
       'name': faq.question,
       'acceptedAnswer': {
         '@type': 'Answer',
-        'text': faq.answer,
+        'text': faq.answer.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim(),
       },
     })),
   };

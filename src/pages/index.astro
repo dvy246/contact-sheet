@@ -18,40 +18,44 @@ const meta = METADATA_REGISTRY['/'];
 
 const faqs = [
   {
+    question: 'What is a contact sheet?',
+    answer: 'A contact sheet (or proof sheet) is a grid layout of thumbnail images used by photographers and visual artists to quickly preview, catalog, and select photographs from a shoot. Originating in traditional darkroom optical printing, digital contact sheets display sequential index badges, camera filenames, and technical metadata for fast editing handoffs.',
+  },
+  {
+    question: 'How do I make a contact sheet online?',
+    answer: 'To make a contact sheet online: drag and drop your image folder into the <a href="/photo-contact-sheet-maker" class="text-accent-ink underline font-medium">Make Contact Sheet studio</a>, configure your desired columns, rows, margins, and filename labels, and click Export to download a print-ready 300 DPI PDF or PNG file. All image processing occurs immediately in your browser.',
+  },
+  {
+    question: 'Can I make a contact sheet without Photoshop or Lightroom?',
+    answer: 'Yes. Make Contact Sheet runs directly in your web browser with no Adobe Creative Cloud subscription or software installation required. Unlike Adobe Photoshop\'s Contact Sheet II script, it provides real-time interactive grid customization, keyboard-driven review shortcuts (1/2/3), and instant client selection list exports.',
+  },
+  {
+    question: 'Can I create a contact sheet without an account?',
+    answer: 'Yes. Make Contact Sheet is completely free to use without account registration, login screens, or personal information collection. You can immediately access the full layout engine, <a href="/contact-sheet-template" class="text-accent-ink underline font-medium">preset templates</a>, and export tools.',
+  },
+  {
+    question: 'Can I show original camera filenames on the contact sheet?',
+    answer: 'Yes. Make Contact Sheet indexes and preserves complete, original camera filenames (such as <code>DSC_8941.NEF</code> or <code>_MG_1024.CR3</code>) and offers configurable caption styles, including sequential index numbers (#01, #02), plain filenames, and custom labels.',
+  },
+  {
+    question: 'How many photos can I put on one contact sheet?',
+    answer: 'You can arrange dozens to hundreds of photos across single or multi-page documents. The application automatically paginates your image batch across multiple A4 or US Letter sheets based on your chosen column and row layout, bounded only by your device\'s available browser memory.',
+  },
+  {
+    question: 'What export formats are available for contact sheets?',
+    answer: 'You can export high-resolution multi-page PDFs formatted for 300 DPI A4 or US Letter printing, standalone PNG and JPEG composite images, structured CSV selection manifests, and Adobe XMP sidecar archives for seamless Lightroom Classic synchronization.',
+  },
+  {
+    question: 'Which image file formats are supported?',
+    answer: 'Make Contact Sheet supports all standard browser-decodable image formats including JPEG, PNG, WebP, AVIF, GIF, and BMP. For major camera RAW formats (such as Canon CR2/CR3, Nikon NEF, Sony ARW, and Fujifilm RAF), the engine extracts embedded JPEG previews directly on your device.',
+  },
+  {
+    question: 'How do client photo proofing and selection exports work?',
+    answer: 'You can review and flag images using keyboard shortcuts (1 for Keep, 2 for Flag, 3 for Reject). When finished, open the Export drawer and choose "Lightroom TXT" or "CSV Table" to copy a filtered list of approved filenames directly into Lightroom Classic or Capture One search filters.',
+  },
+  {
     question: 'Are my photos uploaded to a cloud server?',
-    answer: 'No. Make Contact Sheet processes 100% of your images locally in your web browser using HTML5 Canvas and Web Workers. Your files, raw pixel bitmaps, filenames, and EXIF metadata never leave your computer.',
-  },
-  {
-    question: 'How do I export the list of selected filenames for Lightroom?',
-    answer: 'After marking your photos with Keep (1), Flag (2), or Reject (3), open the Export drawer and choose "CSV Table" or "Lightroom TXT". You can download a structured CSV or a clean TXT list containing only your kept photos to paste directly into Lightroom or Capture One search filters.',
-  },
-  {
-    question: 'Can I make visual mood boards with custom colors and notes?',
-    answer: 'Yes! Our new Freeform Mood Board Maker allows you to freely arrange photos, position color swatches, write sticky notes, and align assets with magnetic snapping guides, exporting up to 300 DPI fine-art prints.',
-  },
-  {
-    question: 'How does Make Contact Sheet differ from Adobe Photoshop Contact Sheet II?',
-    answer: 'Unlike Photoshop Contact Sheet II which requires an expensive Creative Cloud subscription and generates static uneditable rasters one image at a time, Make Contact Sheet runs instantly in your browser, offers real-time grid adjustments, and provides built-in client selection shortcuts and 1-click filename export.',
-  },
-  {
-    question: 'What file formats are supported?',
-    answer: 'Make Contact Sheet supports all standard browser-decodable image formats including JPG/JPEG, PNG, WebP, AVIF, GIF, and BMP, plus camera RAW previews.',
-  },
-  {
-    question: 'Can I print or save high-resolution PDFs?',
-    answer: 'Yes. Make Contact Sheet includes a print-ready PDF generator that builds standard A4 and US Letter multi-page proof sheets formatted with clean margins, headers, and filename labels at 300 DPI.',
-  },
-  {
-    question: 'Can I customize contact sheet grids and thumbnail spacing?',
-    answer: 'Yes. You can adjust column and row counts, cell aspect ratios, gutter spacing (0px to 24px), page margins, background colors, header text, and watermark logo placement in real time with instant preview.',
-  },
-  {
-    question: 'Does Make Contact Sheet extract camera EXIF metadata and exposure settings?',
-    answer: 'Yes. Our browser engine extracts camera make/model, focal length, aperture (f/stop), shutter speed, and ISO directly from EXIF headers and lets you render technical badges below each thumbnail.',
-  },
-  {
-    question: 'Is Make Contact Sheet free to use?',
-    answer: 'Yes. Make Contact Sheet is completely free with no account creation, no subscription paywalls, and no watermarks required.',
+    answer: 'No. Make Contact Sheet is built on a local-first client-side architecture. All image decoding, thumbnail downscaling, and PDF rendering take place in your browser\'s local memory sandbox via HTML5 Canvas and Web Workers. Your image files and metadata are never uploaded to remote servers.',
   },
 ];
 
