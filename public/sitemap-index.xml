@@ -61,6 +61,36 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://makecontactsheet.com/free-8x10-photo-prints</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://makecontactsheet.com/lightroom-client-selection-workflow</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://makecontactsheet.com/white-label-client-gallery</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://makecontactsheet.com/bulk-resize-photos-to-16-9</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://makecontactsheet.com/compress-photos-for-web</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://makecontactsheet.com/auto-cull-photos</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://makecontactsheet.com/about-us</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

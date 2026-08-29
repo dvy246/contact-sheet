@@ -1,5 +1,43 @@
 # AGENTS.md
 
+- Executed **Pre-Launch UI/UX Audit & Comprehensive SEO Content Injection**:
+  - Performed rigorous code-level visual review against `web-design-reviewer` standards, verifying WCAG AA 4.5:1 contrast compliance for the custom `--color-accent` adaptive palette, proper touch targets, and robust `max-w-[1240px]` responsive fluidity that prevents horizontal overflow on mobile.
+  - Confirmed custom domain deployment readiness (Cloudflare Pages), validating canonical domains, sitemaps, and absolute Open Graph URLs.
+  - Implemented strong SEO interlinking architecture (Lever 1) by creating `SeoRelatedLinks.astro`, a dynamic sidebar cross-linking the 6 primary tool hubs (AI Culling, 8x10 Print Saver, Contact Sheet, Collage, Mood Board, Batch Tools).
+  - Authored and injected highly optimized, entity-dense prose components (`SeoToolProse.astro`) across previously thin utility pages (`/auto-cull-photos`, `/bulk-resize-photos-to-16-9`, `/compress-photos-for-web`) detailing the privacy and technical advantages (e.g. Laplacian variance, WebP conversion, local Web Workers).
+  - Maintained zero TypeScript errors and confirmed successful 23-page static build.
+
+- Implemented **Phase 1: 8×10 Print-Saver Suite & P0 Guided Workflow**:
+  - Added native `'8x10'` dimensions ($1200 \times 1500$ px at 150 DPI baseline, $2400 \times 3000$ px at 300 DPI 2x export scale) in `src/lib/types.ts` and `src/lib/engine/contactSheetEngine.ts`.
+  - Added dedicated 8×10 contact sheet presets (`print-8x10-2up-5x7`, `print-8x10-4up-4x5`, `print-8x10-8up-wallet`, `print-8x10-full`), collage templates (`collage-8x10-2up-5x7`, `collage-8x10-4up-4x5`, `collage-8x10-8up-wallet`), and grid presets in `src/lib/engine/templates.ts` and `src/lib/engine/gridPresets.ts`.
+  - Created high-intent SEO landing page `src/pages/free-8x10-photo-prints.astro` targeting the Walgreens/CVS multi-photo print hack with interactive studio launcher, HowTo steps, and FAQ schema.
+  - Implemented center-stage first-run guided workflow modal ("1. Drop Photos → 2. Review & Cull → 3. Choose Layout → 4. Export Handoff") with localStorage dismissal persistence in `StudioApp.astro`.
+  - Added live Export Integrity Summary Card (Total, Scope-Selected, Keep, Flag, Reject, Unreviewed) and 1-click clipboard summary copying in `src/components/workspace/ExportDrawer.ts`.
+  - Maintained strict `0 errors / 0 warnings / 0 hints` on `astro check` and confirmed successful static build.
+
+- Implemented **Phase 2: Professional Handoff, Adobe XMP Sidecars & White-Label Portals**:
+  - Created `src/lib/export/zipBuilder.ts` (pure TypeScript zero-dependency PKZip archiver with standard LFH, CDH, EOCD, and CRC32 checksums).
+  - Created `src/lib/export/xmpGenerator.ts` producing Adobe-standard XMP sidecar XMLs mapping client Keep/Flag selections to 5-star ratings and green color labels, with 1-click ZIP export in `ExportDrawer.ts`.
+  - Created high-intent AEO/GEO tutorial landing page `src/pages/lightroom-client-selection-workflow.astro` with structured step-by-step Lightroom Classic/Capture One sync instructions and HowTo schema.
+  - Built custom studio branding & white-label controls in `src/components/workspace/LayoutControls.ts` and `src/lib/export/htmlPortalExporter.ts` (custom Base64 logo upload, primary hex color picker, CSS variable injection, and "Hide Platform Branding" toggle).
+  - Created dedicated B2B landing page `src/pages/white-label-client-gallery.astro` featuring comparison charts against cloud subscription paywalls ($25/mo vs free local-first).
+  - Maintained strict `0 errors / 0 warnings / 0 hints` on `astro check` and confirmed successful 20-page static build.
+
+- Implemented **Phase 3: Advanced Media Processing & Native RAW Camera Support**:
+  - Enhanced `src/lib/media/batchProcessor.ts` to support center-crop aspect ratio conversions (1:1, 4:5, 16:9, 9:16, 3:2) and multi-format compression (JPEG, PNG, WebP) with max dimension bounding.
+  - Added Aspect Ratio Crop dropdown and Quick Preset chips (Instagram 1:1, Widescreen 16:9, Web 1080p WebP) to `src/components/marketing/BatchToolsApp.astro` and `BatchToolsApp.ts`.
+  - Implemented proprietary RAW camera file support (`.CR2`, `.CR3`, `.NEF`, `.ARW`, `.DNG`, `.ORF`, `.RW2`, `.RAF`, `.PEF`) in `src/lib/media/fileSanitizer.ts` with binary JPEG SOI/EOI chunk scanning fallback in `src/lib/media/imageLoader.ts`.
+  - Created dedicated landing pages `src/pages/bulk-resize-photos-to-16-9.astro` and `src/pages/compress-photos-for-web.astro` with structured SEO schemas and FAQs.
+  - Maintained strict `0 errors / 0 warnings / 0 hints` on `astro check` and confirmed successful 22-page static build.
+
+- Implemented **Phase 4: Local AI Auto-Culling & Forensic Invisible Watermarking**:
+  - Created `src/lib/ai/cullingEngine.ts` calculating modified Laplacian variance sharpness scoring across luminance channels directly on thumbnail bitmaps.
+  - Added "✨ Smart Cull" button in `src/components/workspace/ReviewToolbar.ts` with progress reporting, automatic rejection/flagging with numerical score notes, and instant 1-click Undo toast.
+  - Created `src/lib/engine/forensicWatermark.ts` embedding session UUID payloads into spatial pixel luminance for proof leak verification, complete with "Verify Leaked Proof" inspector in `src/components/workspace/LayoutControls.ts`.
+  - Created dedicated landing page `src/pages/auto-cull-photos.astro` with HowTo and SoftwareApplication schemas.
+  - Updated `public/sitemap-index.xml` and `Header.astro` / `Footer.astro` navigation with all new routes.
+  - Ran full `seo-aeo-geo-launch-checklist` with **`LAUNCH: PASS`** across all 23 production routes, zero diagnostics on `npm run check`, and successful 23-page static build.
+
 - Implemented **High-Fidelity Multi-Format Mood Board Exporter & Studio Integration (`/mood-board-maker`)**:
   - Created `src/lib/export/moodboardExporter.ts` supporting offscreen multi-scale Canvas 2D rendering (1x 1080p Standard, 2x 2K Retina, 3x 4K Ultra HD, 300 DPI Fine Art Print), element rotations, z-index layering, opacities, drop shadows, aspect ratio image fitting (`cover`/`contain`) with crop viewports and filename badges, designer color swatch cards with specular reflection gradients and hex codes, stylist sticky notes with paper tape accents and multiline typography wrapping, background patterns (`dots`, `grid`), and password-protected PDF export via dynamic `jspdf` import.
   - Built high-craft Export Drawer / Modal dialog in `src/components/workspace/moodboard/MoodBoardApp.astro` featuring format switching (PNG, JPEG, PDF), resolution scale presets (1x, 2x, 3x, 300 DPI), live output dimension calculations, custom filename inputs, optional PDF password protection, and live progress reporting.

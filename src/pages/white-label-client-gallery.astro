@@ -1,0 +1,112 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../components/common/Breadcrumbs.astro';
+import WorkspaceApp from '../components/workspace/WorkspaceApp.astro';
+import FaqAccordion from '../components/common/FaqAccordion.astro';
+import { METADATA_REGISTRY } from '../lib/seo/metadata';
+import { buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
+
+const route = '/white-label-client-gallery';
+const meta = METADATA_REGISTRY[route];
+
+const faqs = [
+  {
+    question: 'How much does white-labeling cost?',
+    answer: 'It is 100% free. Unlike traditional cloud photo gallery platforms that charge monthly fees to remove their branding, Make Contact Sheet allows you to export completely white-labeled HTML proofing portals with your custom studio logo and colors at no cost.',
+  },
+  {
+    question: 'Where are the white-label galleries hosted?',
+    answer: 'The HTML portals are completely self-contained. You can send the single HTML file to your client directly, or host it on your own domain or Dropbox. There is zero cloud storage limit because Make Contact Sheet does not host the files.',
+  },
+  {
+    question: 'Can clients still send selections back?',
+    answer: 'Yes! The white-labeled HTML portal contains a fully interactive review system. Clients can Keep, Flag, Reject, and leave retouch notes. When they finish, they export a feedback manifest file they send back to you.',
+  }
+];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'White Label Client Photo Gallery' },
+];
+
+const schemas = [
+  buildSoftwareApplicationSchema(
+    'White Label Client Proofing Portal',
+    'Custom-branded, serverless client photo proofing portals with custom studio logos and colors.',
+    route
+  ),
+  buildFAQSchema(faqs)
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+  schema={schemas}
+>
+  <div class="pt-24 pb-16 bg-white dark:bg-[#09090b]">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <Breadcrumbs items={breadcrumbs} class="mb-8" />
+      
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-stone-900 dark:text-white mb-6">
+          White Label Client Photo Gallery
+        </h1>
+        <p class="text-lg text-stone-600 dark:text-stone-400">
+          Create custom-branded, serverless client photo proofing portals with your own studio logo and colors. Zero monthly fees, zero cloud storage limits, 100% local.
+        </p>
+      </div>
+
+      <div class="my-12">
+        <WorkspaceApp initialMode="contact-sheet" contentBelow={true} />
+      </div>
+
+      <div class="max-w-5xl mx-auto space-y-12 my-20">
+        <section>
+          <h2 class="text-2xl font-bold text-stone-900 dark:text-white mb-6 text-center">Stop Paying to Remove Branding</h2>
+          
+          <div class="overflow-hidden rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#121215]">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-stone-50 dark:bg-[#18181b] border-b border-stone-200 dark:border-stone-800 text-stone-900 dark:text-white">
+                <tr>
+                  <th class="p-4 font-semibold">Feature</th>
+                  <th class="p-4 font-semibold border-l border-stone-200 dark:border-stone-800">Pixieset / Pic-Time</th>
+                  <th class="p-4 font-semibold border-l border-stone-200 dark:border-stone-800 text-blue-600 dark:text-blue-400">Make Contact Sheet</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-stone-200 dark:divide-stone-800 text-stone-700 dark:text-stone-300">
+                <tr>
+                  <td class="p-4 font-medium">Remove Platform Branding</td>
+                  <td class="p-4 border-l border-stone-200 dark:border-stone-800 text-red-600 dark:text-red-400 font-medium">Requires $20-25/mo Tier</td>
+                  <td class="p-4 border-l border-stone-200 dark:border-stone-800 text-emerald-600 dark:text-emerald-400 font-medium">100% Free</td>
+                </tr>
+                <tr>
+                  <td class="p-4 font-medium">Custom Studio Logo</td>
+                  <td class="p-4 border-l border-stone-200 dark:border-stone-800">Paid Tier Only</td>
+                  <td class="p-4 border-l border-stone-200 dark:border-stone-800 text-emerald-600 dark:text-emerald-400 font-medium">Included Free</td>
+                </tr>
+                <tr>
+                  <td class="p-4 font-medium">Custom Brand Colors</td>
+                  <td class="p-4 border-l border-stone-200 dark:border-stone-800">Paid Tier Only</td>
+                  <td class="p-4 border-l border-stone-200 dark:border-stone-800 text-emerald-600 dark:text-emerald-400 font-medium">Included Free</td>
+                </tr>
+                <tr>
+                  <td class="p-4 font-medium">Storage Limits</td>
+                  <td class="p-4 border-l border-stone-200 dark:border-stone-800 text-red-600 dark:text-red-400 font-medium">Capped (e.g. 10GB - 100GB)</td>
+                  <td class="p-4 border-l border-stone-200 dark:border-stone-800 text-emerald-600 dark:text-emerald-400 font-medium">Unlimited (Runs Offline)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="border-t border-stone-200 dark:border-stone-800 pt-12 max-w-3xl mx-auto">
+          <h2 class="text-2xl font-bold text-stone-900 dark:text-white mb-8">Frequently Asked Questions</h2>
+          <FaqAccordion faqs={faqs} />
+        </section>
+      </div>
+    </div>
+  </div>
+</MarketingLayout>

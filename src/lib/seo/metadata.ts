@@ -18,6 +18,14 @@ export const METADATA_REGISTRY: Record<string, RouteMetadata> = {
     ogType: 'website',
     schemaType: ['WebSite', 'Organization', 'SoftwareApplication', 'FAQPage'],
   },
+  '/auto-cull-photos': {
+    title: 'AI Photo Auto-Culling Tool — Filter Blurry & Out-of-Focus Photos Locally',
+    description: 'Automatically cull blurry, out-of-focus, and low-quality photos in your browser using local AI vision analysis. 100% private with zero cloud uploads.',
+    canonical: `${SITE_URL}/auto-cull-photos`,
+    robots: 'index, follow',
+    ogType: 'website',
+    schemaType: ['SoftwareApplication', 'HowTo', 'FAQPage', 'BreadcrumbList'],
+  },
   '/batch-photo-tools': {
     title: 'Batch Photo Tools — Local Image Renamer, EXIF Extractor & Converter',
     description: 'Batch rename photos with dynamic token recipes, extract technical camera EXIF metadata, and convert image formats locally in your browser. 100% private, zero uploads.',
@@ -33,6 +41,22 @@ export const METADATA_REGISTRY: Record<string, RouteMetadata> = {
     robots: 'index, follow',
     ogType: 'website',
     schemaType: ['SoftwareApplication', 'FAQPage', 'BreadcrumbList'],
+  },
+  '/bulk-resize-photos-to-16-9': {
+    title: 'Bulk Resize Photos to 16:9 Online — Free Batch Aspect Ratio Cropper',
+    description: 'Crop and resize multiple photos to 16:9 widescreen format in bulk. 100% private in-browser image processing with custom quality and zero uploads.',
+    canonical: `${SITE_URL}/bulk-resize-photos-to-16-9`,
+    robots: 'index, follow',
+    ogType: 'website',
+    schemaType: ['SoftwareApplication', 'HowTo', 'FAQPage', 'BreadcrumbList'],
+  },
+  '/compress-photos-for-web': {
+    title: 'Compress Photos for Web — Local Batch JPEG, WebP & PNG Compressor',
+    description: 'Compress images for websites and social media locally in your browser. Reduce photo file size without quality loss or privacy risks. Zero server uploads.',
+    canonical: `${SITE_URL}/compress-photos-for-web`,
+    robots: 'index, follow',
+    ogType: 'website',
+    schemaType: ['SoftwareApplication', 'HowTo', 'FAQPage', 'BreadcrumbList'],
   },
   // Indexable in its own right: the route carries a full copy block under the
   // app (how it works, every configuration field, shortcuts, formats, FAQ), so
@@ -143,6 +167,30 @@ export const METADATA_REGISTRY: Record<string, RouteMetadata> = {
     robots: 'noindex, follow',
     ogType: 'website',
     schemaType: ['BreadcrumbList'],
+  },
+  '/free-8x10-photo-prints': {
+    title: 'Free 8×10 Photo Print Templates & Print-Saver Maker',
+    description: 'Combine multiple 5x7 or 4x5 photos onto a single 8x10 print. Save money at Walgreens, CVS, or local labs with our free browser-based print-saver maker.',
+    canonical: `${SITE_URL}/free-8x10-photo-prints`,
+    robots: 'index, follow',
+    ogType: 'website',
+    schemaType: ['SoftwareApplication', 'HowTo', 'FAQPage', 'BreadcrumbList'],
+  },
+  '/lightroom-client-selection-workflow': {
+    title: 'Lightroom Client Selection Workflow — Sync Proof Selections with XMP',
+    description: 'Step-by-step guide and zero-click XMP sidecar generator for syncing client photo selections directly into Lightroom Classic and Capture One without plugins.',
+    canonical: `${SITE_URL}/lightroom-client-selection-workflow`,
+    robots: 'index, follow',
+    ogType: 'article',
+    schemaType: ['HowTo', 'SoftwareApplication', 'FAQPage', 'BreadcrumbList'],
+  },
+  '/white-label-client-gallery': {
+    title: 'White Label Client Photo Gallery & Proofing Portal — 100% Private',
+    description: 'Create custom-branded, serverless client photo proofing portals with your own studio logo and colors. Zero monthly fees, zero cloud storage limits, 100% local.',
+    canonical: `${SITE_URL}/white-label-client-gallery`,
+    robots: 'index, follow',
+    ogType: 'website',
+    schemaType: ['SoftwareApplication', 'FAQPage', 'BreadcrumbList'],
   },
   '/404': {
     title: 'Page Not Found · Make Contact Sheet',

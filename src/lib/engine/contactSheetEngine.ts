@@ -31,6 +31,9 @@ export function getPagePixelDimensions(
   } else if (pageSize === 'letter') {
     w = orientation === 'portrait' ? 1275 : 1650;
     h = orientation === 'portrait' ? 1650 : 1275;
+  } else if (pageSize === '8x10') {
+    w = orientation === 'portrait' ? 1200 : 1500;
+    h = orientation === 'portrait' ? 1500 : 1200;
   } else if (pageSize === '16-9') {
     w = orientation === 'portrait' ? 1080 : 1920;
     h = orientation === 'portrait' ? 1920 : 1080;

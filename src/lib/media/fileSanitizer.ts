@@ -25,6 +25,15 @@ const ALLOWED_EXTENSIONS = new Set([
   'bmp',
   'heic',
   'heif',
+  'cr2',
+  'cr3',
+  'nef',
+  'arw',
+  'dng',
+  'orf',
+  'rw2',
+  'raf',
+  'pef'
 ]);
 
 export function isAllowedImage(file: File): boolean {
@@ -33,6 +42,12 @@ export function isAllowedImage(file: File): boolean {
   }
   const ext = file.name.split('.').pop()?.toLowerCase();
   return ext ? ALLOWED_EXTENSIONS.has(ext) : false;
+}
+
+export function isRawFile(file: File): boolean {
+  const ext = file.name.split('.').pop()?.toLowerCase();
+  const rawExts = new Set(['cr2', 'cr3', 'nef', 'arw', 'dng', 'orf', 'rw2', 'raf', 'pef']);
+  return ext ? rawExts.has(ext) : false;
 }
 
 /**

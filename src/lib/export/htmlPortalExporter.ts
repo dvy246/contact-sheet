@@ -159,6 +159,8 @@ export function generateClientProofingPortalHtml(
     images,
   }).replace(/</g, '\\u003c'); // Prevent XSS or script tag breakout
 
+  const safeBrandColor = (config.customBrandColor || '#3b82f6').replace(/[^a-zA-Z0-9#,.\(\)\s%-]/g, '');
+
   return `<!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
@@ -167,6 +169,7 @@ export function generateClientProofingPortalHtml(
   <title>${escapeHtml(projectTitle)} - Make Contact Sheet Proofing Portal</title>
   <style>
     :root {
+      --portal-accent: ${safeBrandColor};
       --bg-main: #09090b;
       --bg-surface: #121215;
       --bg-card: #18181b;
@@ -176,8 +179,8 @@ export function generateClientProofingPortalHtml(
       --text-main: #f4f4f5;
       --text-muted: #a1a1aa;
       --text-dim: #71717a;
-      --accent: #3b82f6;
-      --accent-hover: #2563eb;
+      --accent: var(--portal-accent);
+      --accent-hover: var(--portal-accent);
       --color-keep: #10b981;
       --color-keep-bg: rgba(16, 185, 129, 0.15);
       --color-flag: #f59e0b;
@@ -197,8 +200,8 @@ export function generateClientProofingPortalHtml(
       --text-main: #0f172a;
       --text-muted: #64748b;
       --text-dim: #94a3b8;
-      --accent: #2563eb;
-      --accent-hover: #1d4ed8;
+      --accent: var(--portal-accent);
+      --accent-hover: var(--portal-accent);
       --color-keep: #059669;
       --color-keep-bg: rgba(5, 150, 105, 0.12);
       --color-flag: #d97706;
@@ -884,11 +887,14 @@ export function generateClientProofingPortalHtml(
   <header>
     <div class="header-inner">
       <div class="brand-group">
-        <div class="brand-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
-        </div>
+        ${config.customBrandLogo ? 
+          `<img src="${escapeHtml(config.customBrandLogo)}" alt="Studio Logo" class="brand-icon" style="object-fit: cover; background: none; box-shadow: none; border-radius: 4px;" />` : 
+          `<div class="brand-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+          </div>`
+        }
         <div>
-          <div class="brand-title">${escapeHtml(projectTitle)}</div>
+          <div class="brand-title">${escapeHtml(config.customBrandName || projectTitle)}</div>
           <div class="brand-subtitle" id="stats-summary">Loading photos...</div>
         </div>
       </div>
@@ -1584,6 +1590,11 @@ export function generateClientProofingPortalHtml(
       renderGrid();
     })();
   </script>
+    ${config.hideMadeWithBadge ? '' : `
+  <div style="text-align: center; padding: 40px 20px; font-size: 13px; color: var(--text-muted);">
+    Powered by <a href="https://makecontactsheet.com" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: none; font-weight: 500;">Make Contact Sheet</a>
+  </div>
+    `}
 </body>
 </html>`;
 }

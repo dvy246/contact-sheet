@@ -1,0 +1,110 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../components/common/Breadcrumbs.astro';
+import BatchToolsApp from '../components/marketing/BatchToolsApp.astro';
+import FaqAccordion from '../components/common/FaqAccordion.astro';
+import HighlightText from '../components/ui/HighlightText.astro';
+import SeoToolProse from '../components/marketing/SeoToolProse.astro';
+import { METADATA_REGISTRY } from '../lib/seo/metadata';
+import { buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
+
+const meta = METADATA_REGISTRY['/bulk-resize-photos-to-16-9'] || {
+  title: 'Bulk Resize Photos to 16:9 Online — Free Batch Aspect Ratio Cropper',
+  description: 'Crop and resize multiple photos to 16:9 widescreen format in bulk. 100% private in-browser image processing with custom quality and zero uploads.',
+  canonical: 'https://makecontactsheet.com/bulk-resize-photos-to-16-9',
+  robots: 'index, follow',
+  ogType: 'website',
+  schemaType: ['SoftwareApplication', 'HowTo', 'FAQPage', 'BreadcrumbList'],
+};
+
+const faqs = [
+  {
+    question: 'How do I resize photos to 16:9 in bulk?',
+    answer: 'Drag and drop your photos into the batch converter, go to the Resize & Convert tab, select the 16:9 Widescreen aspect ratio crop, and click Convert & Download.',
+  },
+  {
+    question: 'Does this crop my images?',
+    answer: 'Yes, the 16:9 setting uses a center-crop "cover" mode to accurately trim your images into a perfect widescreen aspect ratio while maintaining maximum resolution.',
+  },
+];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Batch Photo Tools', url: '/batch-photo-tools' },
+  { name: 'Bulk Resize to 16:9' },
+];
+
+const schemas = [
+  buildSoftwareApplicationSchema(
+    'Bulk Resize Photos',
+    meta.description,
+    meta.canonical
+  ),
+  buildFAQSchema(faqs),
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+  schema={schemas}
+>
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="max-w-3xl">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
+          <HighlightText variant="lime">Bulk Resize Photos</HighlightText> to 16:9
+        </h1>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          Quickly crop and resize entire folders of photos to widescreen 16:9 format. 100% private processing right in your browser.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <section class="py-10 sm:py-14 lg:py-16 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+      <BatchToolsApp />
+    </div>
+  </section>
+
+  <SeoToolProse currentUrl="/bulk-resize-photos-to-16-9">
+    <h2 class="mt-0">Why Bulk Resize Photos to 16:9?</h2>
+    <p>
+      The <strong>16:9 aspect ratio</strong> (widescreen) is the universal standard for video thumbnails, presentation slides, modern desktop wallpapers, and television displays. When preparing a photography portfolio or integrating still shots into a video edit, mixed aspect ratios (like 3:2 from DSLRs or 4:3 from mobile phones) create black bars (letterboxing) and ruin visual consistency.
+    </p>
+    <p>
+      Our bulk resizing tool standardizes your entire image batch instantly. By calculating the precise mathematical center of each image, the engine performs a non-destructive center-crop that fills the widescreen frame without distorting or stretching your subjects.
+    </p>
+
+    <h3>High-Performance Client-Side Cropping</h3>
+    <p>
+      Standard photo resizers force you to zip your images, upload them to a server, wait in a queue, and download them again. This is unacceptable for multi-gigabyte professional workflows. 
+    </p>
+    <p>
+      <strong>Make Contact Sheet</strong> eliminates the cloud entirely. Built on a local-first architecture, the resizing tool leverages the native <code>CanvasRenderingContext2D</code> and Web Worker threads inside your browser. This means:
+    </p>
+    <ul>
+      <li><strong>Zero Privacy Risks:</strong> Your unreleased or personal photos never leave your device.</li>
+      <li><strong>Instant Batch Processing:</strong> Crop hundreds of high-resolution images in seconds, constrained only by your local CPU.</li>
+      <li><strong>Format Flexibility:</strong> Convert your massive camera JPEGs directly to compressed WebP or PNG during the cropping phase.</li>
+    </ul>
+
+    <h3>How to Format for YouTube Thumbnails & Slides</h3>
+    <p>
+      If you are exporting specifically for YouTube thumbnails or digital presentations, selecting the <strong>16:9 Aspect Ratio</strong> along with a <strong>1080p Web Width</strong> cap provides the perfect balance. It ensures your images meet the strict 2MB limit for most thumbnail uploads while retaining crisp, high-definition 1920x1080 resolution.
+    </p>
+  </SeoToolProse>
+
+  <section class="py-14 sm:py-20 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <h3 class="text-xl sm:text-2xl font-bold text-marketing-text mb-6">Frequently Asked Questions</h3>
+        <FaqAccordion faqs={faqs} />
+      </div>
+    </div>
+  </section>
+</MarketingLayout>

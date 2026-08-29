@@ -1,0 +1,108 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../components/common/Breadcrumbs.astro';
+import WorkspaceApp from '../components/workspace/WorkspaceApp.astro';
+import FaqAccordion from '../components/common/FaqAccordion.astro';
+import HighlightText from '../components/ui/HighlightText.astro';
+import SeoToolProse from '../components/marketing/SeoToolProse.astro';
+import { METADATA_REGISTRY } from '../lib/seo/metadata';
+import { buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
+
+const meta = METADATA_REGISTRY['/auto-cull-photos'];
+
+const faqs = [
+  {
+    question: 'What is Smart Cull and how does it work?',
+    answer: 'Smart Cull is a local AI tool that analyzes the edge sharpness (Laplacian variance) of every imported photo right in your browser. It automatically detects blurry or out-of-focus shots and flags or rejects them instantly without manual review.',
+  },
+  {
+    question: 'Are my photos uploaded to the cloud for AI analysis?',
+    answer: 'No. Make Contact Sheet performs all image processing, including Smart Culling, entirely offline inside your web browser. No photos, metadata, or AI tracking data are ever uploaded to a server, guaranteeing 100% privacy.',
+  },
+  {
+    question: 'What happens to photos that are flagged as blurry?',
+    answer: 'Photos that fall below the sharpness threshold are marked as "Flagged" or "Rejected" and given a Sharpness Score note. You can easily filter out these photos using the workspace toolbar, keeping only your sharpest shots.',
+  },
+  {
+    question: 'What is the Invisible Forensic Watermark?',
+    answer: 'The forensic watermark embeds an invisible tracking payload into exported proofs. If a proof sheet is ever leaked or shared without authorization, you can drop the leaked file back into the tool to extract its UUID and trace the source.',
+  }
+];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'AI Auto-Culling' },
+];
+
+const schemas = [
+  buildSoftwareApplicationSchema(
+    'AI Photo Auto-Culling Tool',
+    meta.description,
+    meta.canonical
+  ),
+  buildFAQSchema(faqs),
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+  schema={schemas}
+>
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="max-w-3xl">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
+          <HighlightText variant="cyan">AI Auto-Cull</HighlightText> & Forensic Security
+        </h1>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          Instantly filter out blurry, out-of-focus, and low-quality photos using in-browser AI vision analysis. Secure your exports with invisible tracking UUIDs. 100% local, zero cloud uploads.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <section class="border-b border-marketing-border transition-colors">
+    <WorkspaceApp />
+  </section>
+
+  <SeoToolProse currentUrl="/auto-cull-photos">
+    <h2 class="mt-0">How the Smart Photo Culling AI Works</h2>
+    <p>
+      Manually reviewing thousands of photos to find the sharpest shot is the most tedious part of a photographer's workflow. Our <strong>Smart Cull</strong> tool automates this process using a specialized <a href="https://en.wikipedia.org/wiki/Laplace_operator" target="_blank" rel="noopener noreferrer">Laplacian edge-detection algorithm</a>. 
+    </p>
+    <p>
+      By calculating the luminance variance across every pixel, the engine assigns a precise <strong>0–100 Sharpness Score</strong> to every imported image. Blurry, out-of-focus, or motion-blurred shots receive low scores and are automatically flagged or rejected, allowing you to focus only on your best keepers.
+    </p>
+
+    <h3>100% Local AI for Complete Privacy</h3>
+    <p>
+      Unlike cloud-based AI tools (like Narrative Select or Aftershoot) that require you to upload gigabytes of raw photos to a third-party server, <strong>Make Contact Sheet processes everything directly in your web browser</strong> using WebAssembly and Canvas 2D. 
+    </p>
+    <ul>
+      <li><strong>Zero Server Uploads:</strong> Your pre-release commercial or wedding proofs never leave your computer, ensuring total compliance with client NDAs.</li>
+      <li><strong>Instant Speed:</strong> Because there are no upload or download wait times, the culling engine processes thumbnails in milliseconds.</li>
+      <li><strong>No Subscriptions:</strong> Premium local processing power without the $20/month paywall.</li>
+    </ul>
+
+    <h3>Forensic Leak Protection</h3>
+    <p>
+      Protecting unreleased client work is critical. Our engine includes a toggleable <strong>Invisible Forensic Watermark</strong>. When enabled, a cryptographic session UUID is embedded invisibly into the spatial luminance data of your exported proof sheets.
+    </p>
+    <p>
+      If a client ever leaks a proof sheet to social media before authorization, you can drop the leaked image back into our "Verify Leaked Proof" inspector to instantly extract the tracking payload and trace the source.
+    </p>
+  </SeoToolProse>
+
+  <section class="py-14 sm:py-20 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <h3 class="text-xl sm:text-2xl font-bold text-marketing-text mb-6">Frequently Asked Questions</h3>
+        <FaqAccordion faqs={faqs} />
+      </div>
+    </div>
+  </section>
+</MarketingLayout>

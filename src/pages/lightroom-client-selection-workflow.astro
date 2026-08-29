@@ -1,0 +1,115 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../components/common/Breadcrumbs.astro';
+import WorkspaceApp from '../components/workspace/WorkspaceApp.astro';
+import FaqAccordion from '../components/common/FaqAccordion.astro';
+import { METADATA_REGISTRY } from '../lib/seo/metadata';
+import { buildSoftwareApplicationSchema, buildFAQSchema, buildHowToSchema } from '../lib/seo/schemaGenerator';
+
+const route = '/lightroom-client-selection-workflow';
+const meta = METADATA_REGISTRY[route];
+
+const faqs = [
+  {
+    question: 'How do XMP sidecars sync with Lightroom Classic?',
+    answer: 'Lightroom reads standard Adobe XMP metadata. When you drop an .xmp file next to a RAW file of the same name and tell Lightroom to "Read Metadata from File", it imports the color labels, star ratings, and keywords written in the sidecar directly onto the RAW file.',
+  },
+  {
+    question: 'Does this work with Capture One?',
+    answer: 'Yes! Capture One also reads standard XMP metadata. Make sure "Auto Sync Sidecar XMP" is enabled in Capture One preferences.',
+  },
+  {
+    question: 'Are there any plugins required?',
+    answer: 'No plugins are required. Make Contact Sheet generates standard Adobe XMP files natively in your browser that can be read by any professional RAW processor.',
+  }
+];
+
+const howToSteps = [
+  {
+    name: 'Generate Proof Portal / Contact Sheet',
+    text: 'Drag your exported low-res JPEG proofs into Make Contact Sheet and generate a Client Proofing Portal or send them a PDF.',
+  },
+  {
+    name: 'Collect Client Selections',
+    text: 'Clients review the photos and export their feedback manifest (.makecontactsheet.json). Drop this file into the Make Contact Sheet studio to instantly restore their Keep/Flag/Reject tags.',
+  },
+  {
+    name: 'Export XMP Sidecar ZIP',
+    text: 'Click the "Export Artifact" button and select the "Lightroom XMP" format. This generates a ZIP of .xmp files containing 5-star ratings and color labels for every selected photo.',
+  },
+  {
+    name: 'Drop Sidecars into RAW Folder in Lightroom Classic / Capture One',
+    text: 'Extract the ZIP into the exact folder containing your original RAW files. In Lightroom, select all images, right-click, and choose "Metadata > Read Metadata from File". Your client selections are now perfectly synced to your RAWs.',
+  }
+];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Lightroom Client Selection Workflow' },
+];
+
+const schemas = [
+  buildSoftwareApplicationSchema(
+    'Make Contact Sheet',
+    'Browser-based workspace generating Lightroom XMP sidecars from client proof selections.',
+    route
+  ),
+  buildFAQSchema(faqs),
+  buildHowToSchema(
+    'Sync Client Photo Selections into Lightroom with XMP Sidecars',
+    'Learn the zero-click workflow to bring client photo selections directly into your RAW processor.',
+    howToSteps
+  )
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+  schema={schemas}
+>
+  <div class="pt-24 pb-16 bg-white dark:bg-[#09090b]">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <Breadcrumbs items={breadcrumbs} class="mb-8" />
+      
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-stone-900 dark:text-white mb-6">
+          Lightroom Client Selection Workflow
+        </h1>
+        <p class="text-lg text-stone-600 dark:text-stone-400">
+          Sync client photo selections directly into Lightroom Classic and Capture One using zero-click XMP sidecars. No plugins required.
+        </p>
+      </div>
+
+      <div class="my-12">
+        <WorkspaceApp initialMode="contact-sheet" contentBelow={true} />
+      </div>
+
+      <div class="max-w-3xl mx-auto space-y-12 my-20">
+        <section>
+          <h2 class="text-2xl font-bold text-stone-900 dark:text-white mb-6">How it Works: The XMP Sidecar Workflow</h2>
+          <div class="space-y-8">
+            {howToSteps.map((step, idx) => (
+              <div class="flex gap-4">
+                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center">
+                  {idx + 1}
+                </div>
+                <div>
+                  <h3 class="text-xl font-semibold text-stone-900 dark:text-white mb-2">{step.name}</h3>
+                  <p class="text-stone-600 dark:text-stone-400 leading-relaxed">{step.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section class="border-t border-stone-200 dark:border-stone-800 pt-12">
+          <h2 class="text-2xl font-bold text-stone-900 dark:text-white mb-8">Frequently Asked Questions</h2>
+          <FaqAccordion faqs={faqs} />
+        </section>
+      </div>
+    </div>
+  </div>
+</MarketingLayout>

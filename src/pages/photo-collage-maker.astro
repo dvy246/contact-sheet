@@ -3,6 +3,7 @@ import MarketingLayout from '../layouts/MarketingLayout.astro';
 import Breadcrumbs from '../components/common/Breadcrumbs.astro';
 import WorkspaceApp from '../components/workspace/WorkspaceApp.astro';
 import FaqAccordion from '../components/common/FaqAccordion.astro';
+import SeoRelatedLinks from '../components/common/SeoRelatedLinks.astro';
 import Icon from '../components/common/Icon.astro';
 import HighlightText from '../components/ui/HighlightText.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
@@ -114,34 +115,37 @@ const schemas = [
       </div>
 
       <!-- Links to Related Guides -->
-      <div class="p-6 sm:p-7 rounded-2xl bg-marketing-bg border border-marketing-border space-y-4 transition-colors">
-        <h3 class="text-base font-bold text-marketing-text">Collage & Layout Guides</h3>
-        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs">
-          <li>
-            <a href="/guides/how-to-make-photo-collage" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
-              <Icon name="file-text" size={14} class="text-marketing-muted" />
-              <span>How to Make a Photo Collage Online (Tutorial)</span>
-            </a>
-          </li>
-          <li>
-            <a href="/collage-templates" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
-              <Icon name="layout" size={14} class="text-marketing-muted" />
-              <span>Browse Customizable Collage Templates</span>
-            </a>
-          </li>
-          <li>
-            <a href="/photo-contact-sheet-maker" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
-              <Icon name="grid" size={14} class="text-marketing-muted" />
-              <span>Photo Contact Sheet Maker</span>
-            </a>
-          </li>
-          <li>
-            <a href="/guides/how-to-make-a-contact-sheet" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
-              <Icon name="file-text" size={14} class="text-marketing-muted" />
-              <span>Contact Sheet Best Practices</span>
-            </a>
-          </li>
-        </ul>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <SeoRelatedLinks currentUrl="/photo-collage-maker" />
+        <div class="p-6 sm:p-7 rounded-2xl bg-marketing-bg border border-marketing-border space-y-4 transition-colors self-start">
+          <h3 class="text-base font-bold text-marketing-text">Collage & Layout Guides</h3>
+          <ul class="flex flex-col gap-3.5 text-xs">
+            <li>
+              <a href="/guides/how-to-make-photo-collage" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
+                <Icon name="file-text" size={14} class="text-marketing-muted" />
+                <span>How to Make a Photo Collage Online (Tutorial)</span>
+              </a>
+            </li>
+            <li>
+              <a href="/collage-templates" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
+                <Icon name="layout" size={14} class="text-marketing-muted" />
+                <span>Browse Customizable Collage Templates</span>
+              </a>
+            </li>
+            <li>
+              <a href="/photo-contact-sheet-maker" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
+                <Icon name="grid" size={14} class="text-marketing-muted" />
+                <span>Photo Contact Sheet Maker</span>
+              </a>
+            </li>
+            <li>
+              <a href="/guides/how-to-make-a-contact-sheet" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
+                <Icon name="file-text" size={14} class="text-marketing-muted" />
+                <span>Contact Sheet Best Practices</span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
 
       <!-- FAQ Section -->

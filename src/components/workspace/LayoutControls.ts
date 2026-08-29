@@ -24,6 +24,7 @@ import {
 } from '../../lib/engine/contactSheetEngine';
 import { resolveMetadataTokens } from '../../lib/engine/canvasRenderer';
 import type { LayoutConfig, SortKey } from '../../lib/types';
+import { extractForensicWatermark } from '../../lib/engine/forensicWatermark';
 
 /**
  * Layout sidebar.
@@ -424,6 +425,12 @@ export class LayoutControls {
         )}
 
         ${this.section('Sheet colours', 'Paper tone and label ink.', this.colourMarkup())}
+
+        ${this.section(
+          'Custom branding & white-label',
+          'Personalize the client proofing portal with your own logo and colors.',
+          this.brandingMarkup()
+        )}
       </div>
     `;
   }
@@ -478,6 +485,37 @@ export class LayoutControls {
         )}
 
         ${this.section('Canvas colours', 'Background tone and text ink.', this.colourMarkup())}
+      </div>
+    `;
+  }
+
+  private brandingMarkup(): string {
+    return `
+      <div class="space-y-3">
+        <label class="space-y-1.5 block">
+          <span class="text-[11px] text-workspace-muted font-medium">Custom Logo (PNG/JPG/SVG)</span>
+          <input type="file" id="brandLogoUpload" accept="image/png, image/jpeg, image/svg+xml" class="hidden" />
+          <div class="flex gap-2">
+            <button type="button" class="btn btn-secondary text-xs flex-1" onclick="document.getElementById('brandLogoUpload').click()">Upload Logo</button>
+            <button type="button" class="btn btn-secondary text-xs px-2" data-action="clearBrandLogo" title="Clear Logo">✕</button>
+          </div>
+          <p class="text-[10px] text-workspace-muted mt-1">Recommended: Square or horizontal transparent PNG.</p>
+        </label>
+
+        <label class="space-y-1.5 block">
+          <span class="text-[11px] text-workspace-muted font-medium">Brand Name</span>
+          <input type="text" data-cfg="customBrandName" placeholder="Your Studio Name" class="${INPUT_CLASS}" />
+        </label>
+
+        <div class="flex items-center justify-between gap-3">
+          <span class="text-[11px] text-workspace-muted font-medium">Primary Brand Color</span>
+          <input type="color" data-cfg="customBrandColor" value="#2563eb" class="w-9 h-7 rounded border border-workspace-border bg-workspace-surface cursor-pointer" />
+        </div>
+
+        <label class="flex items-center justify-between gap-3 cursor-pointer pt-2 border-t border-workspace-border">
+          <span class="text-[11px] text-workspace-muted font-medium">Hide Platform Branding (White-Label)</span>
+          <input type="checkbox" data-cfg="hideMadeWithBadge" class="w-4 h-4 rounded accent-[var(--color-accent)] cursor-pointer" />
+        </label>
       </div>
     `;
   }
@@ -564,6 +602,24 @@ export class LayoutControls {
 
           ${this.slider('watermarkImageScale', 'Logo size (% of frame)', 10, 80, 5, false)}
           ${this.slider('watermarkOpacity', 'Opacity', 5, 100, 5, false)}
+        </div>
+      </div>
+
+      <div class="mt-4 pt-4 border-t border-workspace-border space-y-3">
+        <label class="flex items-center justify-between gap-3 cursor-pointer">
+          <span class="font-semibold text-[11px] text-workspace-text">Invisible Forensic Watermark</span>
+          <input type="checkbox" data-cfg="enableForensicWatermark" class="w-4 h-4 rounded accent-[var(--color-accent)] cursor-pointer" />
+        </label>
+        <p class="text-[10px] text-workspace-muted leading-tight">
+          Embeds a hidden tracking payload in exported images. Helps identify the source of leaked proofs.
+        </p>
+        
+        <div class="mt-2 rounded bg-workspace-panel border border-workspace-border border-dashed p-3 text-center" id="verify-leak-dropzone">
+          <span class="text-[11px] text-workspace-muted font-medium block mb-1">Verify Leaked Proof</span>
+          <p class="text-[10px] text-workspace-muted mb-2">Drop a suspect photo here to extract its forensic UUID.</p>
+          <input type="file" id="verify-leak-input" accept="image/png, image/jpeg, image/webp" class="hidden" />
+          <button type="button" class="btn btn-secondary text-xs px-3 py-1" onclick="document.getElementById('verify-leak-input').click()">Select Photo</button>
+          <div id="verify-leak-result" class="text-[10px] mt-2 font-mono font-bold hidden"></div>
         </div>
       </div>
     `;
@@ -733,7 +789,34 @@ export class LayoutControls {
 
   private onValue(e: Event) {
     const el = e.target as HTMLInputElement | HTMLSelectElement | null;
-    if (!el || !('dataset' in el)) return;
+    if (!el) return;
+
+    if (el.id === 'verify-leak-input' && el instanceof HTMLInputElement && el.files?.[0]) {
+      const file = el.files[0];
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0);
+          const payload = extractForensicWatermark(canvas);
+          const resultEl = this.container.querySelector('#verify-leak-result');
+          if (resultEl) {
+            resultEl.classList.remove('hidden');
+            resultEl.textContent = payload ? `Found UUID: ${payload}` : 'No watermark found.';
+            resultEl.className = `text-[10px] mt-2 font-mono font-bold block ${payload ? 'text-emerald-500' : 'text-rose-500'}`;
+          }
+        }
+        URL.revokeObjectURL(url);
+      };
+      img.src = url;
+      return;
+    }
+
+    if (!('dataset' in el)) return;
     const key = el.dataset.cfg;
     if (!key) return;
 
@@ -746,6 +829,19 @@ export class LayoutControls {
           watermarkImageUrl: dataUrl,
           watermarkType: 'image',
           showWatermark: true,
+        });
+      };
+      reader.readAsDataURL(file);
+      return;
+    }
+
+    if (el.id === 'brandLogoUpload' && el instanceof HTMLInputElement && el.files?.[0]) {
+      const file = el.files[0];
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const dataUrl = ev.target?.result as string;
+        updateLayoutConfig({
+          customBrandLogo: dataUrl,
         });
       };
       reader.readAsDataURL(file);
@@ -786,6 +882,14 @@ export class LayoutControls {
     if (removeLogoBtn) {
       updateLayoutConfig({ watermarkImageUrl: '' });
       const fileInput = this.container.querySelector<HTMLInputElement>('#watermark-logo-file');
+      if (fileInput) fileInput.value = '';
+      return;
+    }
+
+    const clearBrandLogoBtn = target.closest('[data-action="clearBrandLogo"]');
+    if (clearBrandLogoBtn) {
+      updateLayoutConfig({ customBrandLogo: '' });
+      const fileInput = this.container.querySelector<HTMLInputElement>('#brandLogoUpload');
       if (fileInput) fileInput.value = '';
       return;
     }

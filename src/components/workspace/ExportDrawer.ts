@@ -57,8 +57,25 @@ export class ExportDrawer {
             </div>
           </div>
 
+          <!-- Export Integrity Summary Card -->
+          <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3 p-3 rounded-xl bg-workspace-surface border border-workspace-border mt-1 mb-2">
+            <div class="flex flex-wrap items-center gap-3 sm:gap-4 text-xs font-medium">
+               <div class="flex items-center gap-1.5"><span class="text-workspace-muted">Total:</span><span id="export-summary-total" class="text-workspace-text">0</span></div>
+               <div class="w-px h-3.5 bg-workspace-border hidden sm:block"></div>
+               <div class="flex items-center gap-1.5"><span class="text-workspace-muted">Selected:</span><span id="export-summary-selected" class="text-accent">0</span></div>
+               <div class="w-px h-3.5 bg-workspace-border hidden sm:block"></div>
+               <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span><span id="export-summary-keep">0</span></div>
+               <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-500"></span><span id="export-summary-flag">0</span></div>
+               <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-red-500"></span><span id="export-summary-reject">0</span></div>
+               <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-gray-400"></span><span id="export-summary-unreviewed">0</span></div>
+            </div>
+            <button id="btn-copy-audit" class="flex-shrink-0 h-7 px-3 rounded border border-workspace-border bg-workspace-bg hover:bg-workspace-panel text-[11px] font-semibold text-workspace-text transition-colors cursor-pointer whitespace-nowrap">
+              Copy Plain-Text Audit Summary
+            </button>
+          </div>
+
           <!-- Format Selector Tabs -->
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2 sm:gap-2.5">
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-8 gap-2 sm:gap-2.5">
             <button data-format="png" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer">
               <div class="font-medium text-xs">PNG Image</div>
               <div class="text-[10px] text-workspace-muted mt-0.5">High-Res Lossless</div>
@@ -72,20 +89,24 @@ export class ExportDrawer {
               <div class="text-[10px] text-workspace-muted mt-0.5">Print Proof Sheet</div>
             </button>
             <button data-format="html" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer">
-              <div class="font-medium text-xs">HTML Portal</div>
-              <div class="text-[10px] text-workspace-muted mt-0.5">Client Proofing</div>
+              <div class="font-medium text-xs">Client Review Portal</div>
+              <div class="text-[10px] text-workspace-muted mt-0.5">Offline Self-Contained HTML</div>
             </button>
             <button data-format="csv" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer">
-              <div class="font-medium text-xs">CSV Table</div>
-              <div class="text-[10px] text-workspace-muted mt-0.5">Filename Handoff</div>
+              <div class="font-medium text-xs">Selected Filenames</div>
+              <div class="text-[10px] text-workspace-muted mt-0.5">CSV Spreadsheet</div>
             </button>
             <button data-format="txt" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer">
-              <div class="font-medium text-xs">Lightroom TXT</div>
-              <div class="text-[10px] text-workspace-muted mt-0.5">Search Filter List</div>
+              <div class="font-medium text-xs">Lightroom Filter</div>
+              <div class="text-[10px] text-workspace-muted mt-0.5">Comma-Separated Text</div>
             </button>
             <button data-format="json" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer">
-              <div class="font-medium text-xs">Manifest</div>
+              <div class="font-medium text-xs">Project Session</div>
               <div class="text-[10px] text-workspace-muted mt-0.5">.makecontactsheet.json</div>
+            </button>
+            <button data-format="xmp" class="export-format-btn p-2.5 sm:p-3 rounded-xl border text-center transition-all cursor-pointer">
+              <div class="font-medium text-xs">Lightroom XMP</div>
+              <div class="text-[10px] text-workspace-muted mt-0.5">Zero-Click Sidecars</div>
             </button>
           </div>
 
@@ -150,6 +171,30 @@ export class ExportDrawer {
       });
     }
 
+    // Update Export Integrity Summary Card
+    const elTotal = document.getElementById('export-summary-total');
+    const elSelected = document.getElementById('export-summary-selected');
+    const elKeep = document.getElementById('export-summary-keep');
+    const elFlag = document.getElementById('export-summary-flag');
+    const elReject = document.getElementById('export-summary-reject');
+    const elUnreviewed = document.getElementById('export-summary-unreviewed');
+
+    if (elTotal) elTotal.textContent = String(counts.total);
+    if (elKeep) elKeep.textContent = `${counts.keep} Keep`;
+    if (elFlag) elFlag.textContent = `${counts.flag} Flag`;
+    if (elReject) elReject.textContent = `${counts.reject} Reject`;
+    if (elUnreviewed) elUnreviewed.textContent = `${counts.unreviewed} Unreviewed`;
+
+    if (elSelected) {
+      let selectedCount = counts.total;
+      if (this.exportScope === 'keep') selectedCount = counts.keep;
+      else if (this.exportScope === 'flag') selectedCount = counts.flag;
+      else if (this.exportScope === 'reject') selectedCount = counts.reject;
+      else if (this.exportScope === 'unreviewed') selectedCount = counts.unreviewed;
+      else if (this.exportScope === 'exclude-rejected') selectedCount = counts.total - counts.reject;
+      elSelected.textContent = String(selectedCount);
+    }
+
     this.container.querySelectorAll('.export-format-btn').forEach((btn) => {
       const fmt = btn.getAttribute('data-format');
       if (fmt === this.selectedFormat) {
@@ -210,11 +255,52 @@ export class ExportDrawer {
     const scopeSelect = document.getElementById('export-scope-select') as HTMLSelectElement | null;
     scopeSelect?.addEventListener('change', () => {
       this.exportScope = scopeSelect.value as FilterStatus;
+      this.sync();
     });
 
     document.getElementById('btn-trigger-export')?.addEventListener('click', () => {
       this.executeExport();
     });
+
+    const btnCopyAudit = document.getElementById('btn-copy-audit');
+    if (btnCopyAudit) {
+      btnCopyAudit.addEventListener('click', () => {
+        const counts = $reviewCounts.get();
+        const scopeNames: Record<string, string> = {
+          'all': 'All Images',
+          'keep': 'Kept Only',
+          'flag': 'Flagged Only',
+          'reject': 'Rejected',
+          'unreviewed': 'Unreviewed',
+          'exclude-rejected': 'Exclude Rejected'
+        };
+        const scopeName = scopeNames[this.exportScope] || 'Unknown';
+        
+        let targetCount = counts.total;
+        if (this.exportScope === 'keep') targetCount = counts.keep;
+        else if (this.exportScope === 'flag') targetCount = counts.flag;
+        else if (this.exportScope === 'reject') targetCount = counts.reject;
+        else if (this.exportScope === 'unreviewed') targetCount = counts.unreviewed;
+        else if (this.exportScope === 'exclude-rejected') targetCount = counts.total - counts.reject;
+
+        const report = `Make Contact Sheet Export Summary: Total: ${counts.total} | Export Scope: ${scopeName} (${targetCount}) | Flagged: ${counts.flag} | Rejected: ${counts.reject}`;
+        
+        navigator.clipboard.writeText(report).then(() => {
+          const original = btnCopyAudit.textContent;
+          btnCopyAudit.textContent = 'Copied!';
+          setTimeout(() => {
+            btnCopyAudit.textContent = original;
+          }, 2000);
+        }).catch(err => {
+          console.error('Failed to copy audit:', err);
+          const original = btnCopyAudit.textContent;
+          btnCopyAudit.textContent = 'Failed to Copy';
+          setTimeout(() => {
+            btnCopyAudit.textContent = original;
+          }, 2000);
+        });
+      });
+    }
   }
 
   private async executeExport() {
@@ -261,6 +347,10 @@ export class ExportDrawer {
           $filterStatus.get(),
           $sortKey.get()
         );
+        $exportProgress.set(100);
+      } else if (this.selectedFormat === 'xmp') {
+        const { exportXmpSidecarsZip } = await import('../../lib/export/xmpGenerator');
+        await exportXmpSidecarsZip(targetImages, 'makecontactsheet-xmp-sidecars');
         $exportProgress.set(100);
       } else if (this.selectedFormat === 'html') {
         const { exportClientProofingPortal } = await import('../../lib/export/htmlPortalExporter');

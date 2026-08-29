@@ -3,6 +3,7 @@ import MarketingLayout from '../layouts/MarketingLayout.astro';
 import Breadcrumbs from '../components/common/Breadcrumbs.astro';
 import BatchToolsApp from '../components/marketing/BatchToolsApp.astro';
 import FaqAccordion from '../components/common/FaqAccordion.astro';
+import SeoRelatedLinks from '../components/common/SeoRelatedLinks.astro';
 import Icon from '../components/common/Icon.astro';
 import HighlightText from '../components/ui/HighlightText.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
@@ -160,11 +161,13 @@ const schemas = [
 
       </div>
 
-
-      <!-- FAQ Section -->
-      <div class="max-w-3xl">
-        <h3 class="text-xl sm:text-2xl font-bold text-marketing-text mb-6">Frequently Asked Questions</h3>
-        <FaqAccordion faqs={faqs} />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <SeoRelatedLinks currentUrl="/batch-photo-tools" />
+        <!-- FAQ Section -->
+        <div>
+          <h3 class="text-xl sm:text-2xl font-bold text-marketing-text mb-6">Frequently Asked Questions</h3>
+          <FaqAccordion faqs={faqs} />
+        </div>
       </div>
 
     </div>

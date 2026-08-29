@@ -1,12 +1,15 @@
 import { 
+  $images,
   $filterStatus, 
   $reviewCounts, 
   $workspaceMode, 
   setFilterStatus, 
   setWorkspaceMode, 
-  batchSetStatus 
+  batchSetStatus,
+  setImages
 } from '../../lib/store';
 import type { FilterStatus } from '../../lib/types';
+import { runSmartCull } from '../../lib/ai/cullingEngine';
 
 export class ReviewToolbar {
   private container: HTMLElement;
@@ -66,6 +69,10 @@ export class ReviewToolbar {
 
         <!-- Quick Batch Controls & Help -->
         <div class="flex items-center gap-2 shrink-0">
+          <button id="btn-smart-cull" class="h-8 px-3 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-700 dark:text-indigo-400 border border-indigo-500/30 transition-colors text-xs font-semibold cursor-pointer flex items-center justify-center gap-1.5" title="Auto-flag blurry images">
+            <span>✨</span>
+            <span>Smart Cull</span>
+          </button>
           <button id="btn-batch-keep" class="h-8 px-3 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 transition-colors text-xs font-semibold cursor-pointer flex items-center justify-center" title="Mark visible as Kept">
             Keep All
           </button>
@@ -104,6 +111,42 @@ export class ReviewToolbar {
     });
 
     // Batch actions
+    document.getElementById('btn-smart-cull')?.addEventListener('click', async () => {
+      const images = $images.get();
+      if (images.length === 0) return;
+      
+      const proceed = confirm(`Run AI Smart Cull on ${images.length} photos to automatically flag blurry & out-of-focus shots?`);
+      if (!proceed) return;
+
+      const btn = document.getElementById('btn-smart-cull');
+      if (btn) {
+        btn.innerHTML = `<span class="animate-spin">⚙️</span><span>Culling...</span>`;
+        btn.setAttribute('disabled', 'true');
+      }
+
+      // Save previous state for undo
+      const prevImages = [...images];
+
+      const { flaggedCount, rejectedCount } = await runSmartCull(images, () => {
+        // Optional: Update progress in UI if a progress bar existed
+      });
+
+      if (btn) {
+        btn.innerHTML = `<span>✨</span><span>Smart Cull</span>`;
+        btn.removeAttribute('disabled');
+      }
+
+      if (flaggedCount > 0 || rejectedCount > 0) {
+        // Find a way to show a toast, simple confirm for undo for now
+        const undo = confirm(`Smart Cull complete: ${flaggedCount} flagged, ${rejectedCount} rejected.\n\nClick Cancel to Undo, or OK to keep changes.`);
+        if (!undo) {
+          setImages(prevImages);
+        }
+      } else {
+        alert('Smart Cull complete: All images are sharp!');
+      }
+    });
+
     document.getElementById('btn-batch-keep')?.addEventListener('click', () => {
       batchSetStatus('keep');
     });

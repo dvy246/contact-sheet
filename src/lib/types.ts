@@ -2,7 +2,7 @@ export type ReviewStatus = 'unreviewed' | 'keep' | 'reject' | 'flag';
 
 export type WorkspaceMode = 'contact-sheet' | 'collage' | 'mood-board';
 
-export type PageSize = 'a4' | 'letter' | '16-9' | 'auto' | 'square' | 'story' | 'custom';
+export type PageSize = 'a4' | 'letter' | '8x10' | '16-9' | 'auto' | 'square' | 'story' | 'custom';
 
 export type PageOrientation = 'portrait' | 'landscape';
 
@@ -25,7 +25,7 @@ export type SortKey =
 
 export type FilterStatus = 'all' | 'keep' | 'flag' | 'reject' | 'unreviewed' | 'exclude-rejected';
 
-export type ExportFormat = 'png' | 'jpeg' | 'pdf' | 'csv' | 'txt' | 'json' | 'html';
+export type ExportFormat = 'png' | 'jpeg' | 'pdf' | 'csv' | 'txt' | 'json' | 'html' | 'xmp';
 
 export interface ImageExifData {
   dateTimeOriginal?: string;
@@ -124,10 +124,17 @@ export interface LayoutConfig {
   watermarkImageUrl?: string;
   watermarkImageScale?: number;
   watermarkImagePosition?: WatermarkImagePosition;
+  /** Invisible payload tracking (Phase 4) */
+  enableForensicWatermark?: boolean;
   /** EXIF / Metadata overlay settings */
   showExifOverlay?: boolean;
   exifTokenTemplate?: string;
   exifBadgeStyle?: MetadataBadgeStyle;
+  /** White-labeling / Branding config */
+  customBrandLogo?: string;
+  customBrandName?: string;
+  customBrandColor?: string;
+  hideMadeWithBadge?: boolean;
 }
 
 export interface CollageTemplateCell {

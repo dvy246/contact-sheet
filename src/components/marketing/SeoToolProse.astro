@@ -1,0 +1,29 @@
+---
+import SeoRelatedLinks from '../common/SeoRelatedLinks.astro';
+
+interface Props {
+  currentUrl: string;
+}
+
+const { currentUrl } = Astro.props;
+---
+
+<section class="py-16 sm:py-24 bg-marketing-bg transition-colors border-b border-marketing-border">
+  <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
+      
+      <!-- Article Body -->
+      <div class="lg:col-span-2 text-marketing-muted prose prose-sm sm:prose-base dark:prose-invert max-w-none prose-a:text-accent-ink prose-a:no-underline hover:prose-a:underline prose-headings:text-marketing-text prose-strong:text-marketing-text">
+        <slot />
+      </div>
+
+      <!-- Sidebar Links -->
+      <aside class="space-y-8">
+        <div class="p-6 rounded-2xl bg-marketing-panel border border-marketing-border shadow-xs">
+          <SeoRelatedLinks currentUrl={currentUrl} />
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>

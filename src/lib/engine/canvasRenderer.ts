@@ -210,6 +210,13 @@ export async function renderContactSheetToCanvas(
   if (page.footerRect) {
     drawFooterBand(ctx, page, config, scale);
   }
+
+  // Phase 4: Forensic Watermark
+  if (isExport && config.enableForensicWatermark) {
+    const { $sessionUUID } = await import('../store');
+    const { embedForensicWatermark } = await import('./forensicWatermark');
+    embedForensicWatermark(canvas, $sessionUUID.get());
+  }
 }
 
 export async function renderCollageToCanvas(
@@ -302,6 +309,13 @@ export async function renderCollageToCanvas(
       ctx.strokeRect(cell.x - 1, cell.y - 1, cell.width + 2, cell.height + 2);
       ctx.restore();
     }
+  }
+
+  // Phase 4: Forensic Watermark
+  if (isExport && config.enableForensicWatermark) {
+    const { $sessionUUID } = await import('../store');
+    const { embedForensicWatermark } = await import('./forensicWatermark');
+    embedForensicWatermark(canvas, $sessionUUID.get());
   }
 }
 

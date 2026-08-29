@@ -1,0 +1,142 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../components/common/Breadcrumbs.astro';
+import WorkspaceApp from '../components/workspace/WorkspaceApp.astro';
+import FaqAccordion from '../components/common/FaqAccordion.astro';
+import SeoRelatedLinks from '../components/common/SeoRelatedLinks.astro';
+import Icon from '../components/common/Icon.astro';
+import HighlightText from '../components/ui/HighlightText.astro';
+import { METADATA_REGISTRY } from '../lib/seo/metadata';
+import { buildSoftwareApplicationSchema, buildFAQSchema, buildHowToSchema } from '../lib/seo/schemaGenerator';
+
+const meta = METADATA_REGISTRY['/free-8x10-photo-prints'];
+
+const faqs = [
+  {
+    question: 'How do I save money printing multiple photos on an 8x10 sheet?',
+    answer: 'Pharmacies and photo labs like Walgreens or CVS often charge a premium for individual 5x7 or 4x5 prints, but offer cheap 8x10 prints (especially with promo codes). By combining two 5x7s or four 4x5s onto a single 8x10 image before printing, you pay the 8x10 price and can simply cut the photos apart at home.',
+  },
+  {
+    question: 'Are the exports high enough quality (300 DPI) for photo labs?',
+    answer: 'Yes! Make Contact Sheet exports at full 300 DPI resolution. When you select the 8x10 page size and export, the resulting image has the exact pixel dimensions required for a crisp, professional print at any photo lab.',
+  },
+  {
+    question: 'Will this work at Walgreens, CVS, or Walmart photo centers?',
+    answer: 'Absolutely. The exported JPEG or PNG is a standard 8x10 aspect ratio image that will upload perfectly to any online photo printing service or kiosk.',
+  },
+  {
+    question: 'Do I need to download an app or create an account?',
+    answer: 'No. Make Contact Sheet runs entirely in your web browser. There are no downloads, no accounts, and your photos never leave your device.',
+  }
+];
+
+const howToSteps = [
+  { name: 'Upload your photos', text: 'Drag and drop your photos into the Make Contact Sheet workspace. They will load instantly without uploading to any server.' },
+  { name: 'Select an 8x10 Print Saver Template', text: 'In the sidebar, choose one of the 8x10 Print Saver templates (e.g., Two 5x7s, Four 4x5s, or Eight Wallets).' },
+  { name: 'Adjust cropping and fit', text: 'Ensure your photos look correct in their frames. You can toggle between "contain" (show the whole photo) and "cover" (fill the frame).' },
+  { name: 'Export at High Resolution', text: 'Click Export and choose PNG or JPEG. Make sure the scale is set to 300 DPI to guarantee a sharp print at the lab.' },
+  { name: 'Print and cut', text: 'Upload the exported 8x10 image to your preferred photo lab. Once printed, simply use scissors or a paper trimmer to separate your photos.' }
+];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Free 8×10 Photo Prints' },
+];
+
+const schemas = [
+  buildSoftwareApplicationSchema(
+    '8x10 Photo Print Saver',
+    meta.description,
+    'https://makecontactsheet.com/free-8x10-photo-prints'
+  ),
+  buildFAQSchema(faqs),
+  buildHowToSchema('How to Combine Photos on an 8x10 Print', 'Learn how to save money by printing multiple smaller photos on a single 8x10 sheet.', howToSteps)
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+  schema={schemas}
+>
+  <!-- Page Header -->
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="max-w-3xl">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
+          Free 8×10 Photo Print Templates &amp; <HighlightText variant="lime">Print-Saver Maker</HighlightText>
+        </h1>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          Combine multiple 5x7, 4x5, or wallet-sized photos onto a single 8x10 print. Use this simple hack to save money at Walgreens, CVS, or your local photo lab with our free browser-based tool.
+        </p>
+
+        <a
+          href="/studio/contact-sheet"
+          class="mt-6 inline-flex items-center gap-2 h-11 px-6 rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold text-sm tracking-tight shadow-lg shadow-accent/25 active:scale-[0.98] transition-all"
+        >
+          <Icon name="maximize" size={15} />
+          <span>Open the full-screen Studio</span>
+          <Icon name="arrow-right" size={15} />
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Framed Live Workspace -->
+  <section class="py-12 sm:py-16 lg:py-20 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="rounded-2xl overflow-hidden border border-workspace-border shadow-2xl bg-workspace-bg">
+        <!-- Window Chrome Top Bar -->
+        <div class="px-4 py-2.5 bg-workspace-panel border-b border-workspace-border flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 rounded-full bg-rose-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+          </div>
+          <div class="text-[11px] font-mono text-workspace-muted font-medium">Print Saver Studio · 8x10 Layouts</div>
+          <div class="w-12"></div>
+        </div>
+
+        <WorkspaceApp />
+      </div>
+    </div>
+  </section>
+
+  <!-- Editorial & Guide Content -->
+  <section class="py-16 sm:py-24 lg:py-28 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[850px] mx-auto px-4 sm:px-6 space-y-14">
+      
+      <div class="space-y-4 prose-measure">
+        <h2 class="text-2xl font-bold text-marketing-text">
+          How to <HighlightText variant="yellow">Combine Photos</HighlightText> on one 8x10 Print
+        </h2>
+        <div class="space-y-4 mt-6">
+          {howToSteps.map((step, index) => (
+            <div class="flex gap-4">
+              <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center font-bold text-sm">
+                {index + 1}
+              </div>
+              <div>
+                <h3 class="text-base font-bold text-marketing-text">{step.name}</h3>
+                <p class="text-sm text-marketing-text/90 mt-1">{step.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+        <SeoRelatedLinks currentUrl="/free-8x10-photo-prints" />
+        <!-- FAQ Accordion -->
+        <div class="space-y-6">
+          <h2 class="text-2xl font-bold text-marketing-text">Print Saver FAQs</h2>
+          <FaqAccordion faqs={faqs} />
+        </div>
+      </div>
+
+    </div>
+  </section>
+</MarketingLayout>

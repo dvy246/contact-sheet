@@ -24,6 +24,8 @@ export interface BatchConvertOptions {
   quality: number; // 0.1 to 1.0
   maxDimension?: number; // 0 = original
   preserveExif?: boolean;
+  aspectRatio?: 'original' | '1:1' | '4:5' | '16:9' | '9:16' | '3:2' | '2:3';
+  cropMode?: 'cover' | 'contain' | 'none';
 }
 
 export interface BatchConvertResult {
@@ -213,6 +215,36 @@ export async function convertAndResizeSingleImage(
   const bitmap = await createImageBitmap(file, { imageOrientation: 'from-image' });
   let width = bitmap.width;
   let height = bitmap.height;
+  
+  let sx = 0, sy = 0, sw = width, sh = height;
+
+  if (options.aspectRatio && options.aspectRatio !== 'original') {
+    const ratios: Record<string, number> = {
+      '1:1': 1,
+      '4:5': 4 / 5,
+      '16:9': 16 / 9,
+      '9:16': 9 / 16,
+      '3:2': 3 / 2,
+      '2:3': 2 / 3,
+    };
+    const R = ratios[options.aspectRatio] || 1;
+    
+    if (!options.cropMode || options.cropMode === 'cover') {
+      if (width / height > R) {
+        sh = height;
+        sw = Math.round(sh * R);
+        sx = Math.floor((width - sw) / 2);
+        sy = 0;
+      } else {
+        sw = width;
+        sh = Math.round(sw / R);
+        sx = 0;
+        sy = Math.floor((height - sh) / 2);
+      }
+      width = sw;
+      height = sh;
+    }
+  }
 
   // Scale down if maxDimension is specified and exceeded
   if (options.maxDimension && options.maxDimension > 0) {
@@ -243,8 +275,8 @@ export async function convertAndResizeSingleImage(
     throw new Error('Could not acquire 2D canvas rendering context.');
   }
 
-  // Draw scaled bitmap
-  ctx.drawImage(bitmap, 0, 0, width, height);
+  // Draw scaled and optionally cropped bitmap
+  ctx.drawImage(bitmap, sx, sy, sw, sh, 0, 0, width, height);
   bitmap.close();
 
   let blob: Blob;

@@ -35,6 +35,7 @@ export class BatchToolsApp {
   private convertFormat: 'image/jpeg' | 'image/png' | 'image/webp' = 'image/jpeg';
   private convertQuality = 0.88;
   private convertMaxDimension = 0; // 0 = original
+  private convertAspectRatio: 'original' | '1:1' | '4:5' | '16:9' | '9:16' | '3:2' | '2:3' = 'original';
 
   constructor(container: HTMLElement) {
     this.container = container;
@@ -347,7 +348,14 @@ export class BatchToolsApp {
     return `
       <div class="space-y-6">
         <div class="p-6 rounded-2xl bg-marketing-panel/80 border border-marketing-border space-y-6">
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 text-xs">
+          
+          <div class="flex flex-wrap gap-2 text-xs mb-2">
+            <button class="preset-btn px-3 py-1.5 rounded-lg bg-marketing-surface border border-marketing-border hover:border-accent text-marketing-text transition-colors" data-preset="insta">Instagram 1:1</button>
+            <button class="preset-btn px-3 py-1.5 rounded-lg bg-marketing-surface border border-marketing-border hover:border-accent text-marketing-text transition-colors" data-preset="wide">Widescreen 16:9</button>
+            <button class="preset-btn px-3 py-1.5 rounded-lg bg-marketing-surface border border-marketing-border hover:border-accent text-marketing-text transition-colors" data-preset="web">Web 1080p WebP</button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 text-xs">
             
             <!-- Format Selector -->
             <div class="space-y-2">
@@ -368,6 +376,19 @@ export class BatchToolsApp {
                 <option value="2560" ${this.convertMaxDimension === 2560 ? 'selected' : ''}>1440p 2K QHD (2560px)</option>
                 <option value="3840" ${this.convertMaxDimension === 3840 ? 'selected' : ''}>4K Ultra HD (3840px)</option>
                 <option value="1200" ${this.convertMaxDimension === 1200 ? 'selected' : ''}>Web Standard (1200px)</option>
+              </select>
+            </div>
+
+            <!-- Aspect Ratio Crop -->
+            <div class="space-y-2">
+              <label class="font-bold text-marketing-text font-mono text-[11px]">ASPECT RATIO CROP</label>
+              <select id="convert-aspect-ratio-select" class="w-full px-3 py-2.5 rounded-xl bg-marketing-surface border border-marketing-border text-marketing-text font-mono text-xs focus:border-accent outline-none">
+                <option value="original" ${this.convertAspectRatio === 'original' ? 'selected' : ''}>Original (No Crop)</option>
+                <option value="1:1" ${this.convertAspectRatio === '1:1' ? 'selected' : ''}>1:1 Square</option>
+                <option value="4:5" ${this.convertAspectRatio === '4:5' ? 'selected' : ''}>4:5 Portrait</option>
+                <option value="16:9" ${this.convertAspectRatio === '16:9' ? 'selected' : ''}>16:9 Widescreen</option>
+                <option value="9:16" ${this.convertAspectRatio === '9:16' ? 'selected' : ''}>9:16 Story</option>
+                <option value="3:2" ${this.convertAspectRatio === '3:2' ? 'selected' : ''}>3:2 Classic</option>
               </select>
             </div>
 
@@ -565,11 +586,37 @@ export class BatchToolsApp {
       this.convertMaxDimension = parseInt(dimSel.value, 10) || 0;
     });
 
+    const aspectSel = this.container.querySelector('#convert-aspect-ratio-select') as HTMLSelectElement;
+    aspectSel?.addEventListener('change', () => {
+      this.convertAspectRatio = aspectSel.value as any;
+    });
+
     const qSlider = this.container.querySelector('#convert-quality-slider') as HTMLInputElement;
     const qVal = this.container.querySelector('#quality-val');
     qSlider?.addEventListener('input', () => {
       this.convertQuality = parseFloat(qSlider.value);
       if (qVal) qVal.textContent = `${Math.round(this.convertQuality * 100)}%`;
+    });
+
+    this.container.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLButtonElement;
+        const preset = target.dataset.preset;
+        if (preset === 'insta') {
+          this.convertAspectRatio = '1:1';
+          this.convertMaxDimension = 1080;
+          this.convertFormat = 'image/jpeg';
+        } else if (preset === 'wide') {
+          this.convertAspectRatio = '16:9';
+          this.convertMaxDimension = 1920;
+          this.convertFormat = 'image/jpeg';
+        } else if (preset === 'web') {
+          this.convertAspectRatio = 'original';
+          this.convertMaxDimension = 1080;
+          this.convertFormat = 'image/webp';
+        }
+        this.render();
+      });
     });
 
     this.container.querySelector('#start-batch-convert-btn')?.addEventListener('click', () => {
@@ -578,7 +625,7 @@ export class BatchToolsApp {
   }
 
   private async handleFiles(files: File[]): Promise<void> {
-    const valid = files.filter(f => f.type.startsWith('image/') || /\.(jpg|jpeg|png|webp|avif|heic|heif)$/i.test(f.name));
+    const valid = files.filter(f => f.type.startsWith('image/') || /\.(jpg|jpeg|png|webp|avif|heic|heif|cr2|cr3|nef|arw|dng|orf|rw2|raf|pef)$/i.test(f.name));
     if (valid.length === 0) return;
 
     this.isProcessing = true;
@@ -624,6 +671,8 @@ export class BatchToolsApp {
       targetFormat: this.convertFormat,
       quality: this.convertQuality,
       maxDimension: this.convertMaxDimension,
+      aspectRatio: this.convertAspectRatio,
+      cropMode: 'cover' as const,
     };
 
     for (let i = 0; i < this.localImages.length; i++) {

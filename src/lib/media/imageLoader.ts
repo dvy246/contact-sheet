@@ -1,5 +1,5 @@
 import type { ImageItem } from '../types';
-import { isAllowedImage, sanitizeFilename, isHeicFile } from './fileSanitizer';
+import { isAllowedImage, sanitizeFilename, isHeicFile, isRawFile } from './fileSanitizer';
 import { extractMetadataWithTwoStageSlicing } from './metadataExtractor';
 
 export interface LoadProgressCallback {
@@ -174,6 +174,44 @@ export async function decodeSingleImage(file: File): Promise<ImageItem> {
         bitmap.close();
       }
       decodedViaBitmap = true;
+    }
+  }
+
+  // Fallback to extract JPEG preview from RAW binary if direct decode fails
+  if (!decodedViaBitmap && isRawFile(file)) {
+    try {
+      const buffer = await file.slice(0, 10 * 1024 * 1024).arrayBuffer(); // First 10MB
+      const arr = new Uint8Array(buffer);
+      for (let i = 0; i < arr.length - 1; i++) {
+        if (arr[i] === 0xff && arr[i + 1] === 0xd8) {
+          for (let j = i + 2; j < arr.length - 1; j++) {
+            if (arr[j] === 0xff && arr[j + 1] === 0xd9) {
+              if (j - i > 20000) { // Large enough to be a decent preview
+                const rawPreviewBlob = new Blob([arr.slice(i, j + 2)], { type: 'image/jpeg' });
+                try {
+                  const bitmap = await createImageBitmap(rawPreviewBlob);
+                  width = bitmap.width;
+                  height = bitmap.height;
+                  thumbnailBlob = await generateThumbnailBlob(bitmap, width, height);
+                  bitmap.close();
+                  decodedViaBitmap = true;
+                } catch (e) {
+                  // Failed to decode this JPEG segment, continue
+                }
+              }
+              // Advance outer loop to end of this JPEG to avoid O(N^2) rescanning
+              i = j + 1;
+              break;
+            }
+          }
+        }
+        if (decodedViaBitmap) break;
+      }
+      if (!decodedViaBitmap) {
+        console.warn(`Could not extract preview from RAW file: ${file.name}`);
+      }
+    } catch (err) {
+      console.warn(`Failed to parse RAW file: ${file.name}`, err);
     }
   }
 

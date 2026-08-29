@@ -1,0 +1,104 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../components/common/Breadcrumbs.astro';
+import BatchToolsApp from '../components/marketing/BatchToolsApp.astro';
+import FaqAccordion from '../components/common/FaqAccordion.astro';
+import HighlightText from '../components/ui/HighlightText.astro';
+import SeoToolProse from '../components/marketing/SeoToolProse.astro';
+import { METADATA_REGISTRY } from '../lib/seo/metadata';
+import { buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
+
+const meta = METADATA_REGISTRY['/compress-photos-for-web'] || {
+  title: 'Compress Photos for Web — Local Batch JPEG, WebP & PNG Compressor',
+  description: 'Compress images for websites and social media locally in your browser. Reduce photo file size without quality loss or privacy risks. Zero server uploads.',
+  canonical: 'https://makecontactsheet.com/compress-photos-for-web',
+  robots: 'index, follow',
+  ogType: 'website',
+  schemaType: ['SoftwareApplication', 'HowTo', 'FAQPage', 'BreadcrumbList'],
+};
+
+const faqs = [
+  {
+    question: 'How does the web compression work?',
+    answer: 'Simply upload your photos, set your target format (like WebP or JPEG), choose a maximum edge dimension (like 1200px), and hit convert. The process runs locally to shrink your image sizes drastically for fast web loading.',
+  },
+  {
+    question: 'Which format is best for web?',
+    answer: 'WebP offers superior compression for the web, keeping sizes small while maintaining high quality compared to standard JPEGs.',
+  },
+];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Batch Photo Tools', url: '/batch-photo-tools' },
+  { name: 'Compress Photos for Web' },
+];
+
+const schemas = [
+  buildSoftwareApplicationSchema(
+    'Compress Photos for Web',
+    meta.description,
+    meta.canonical
+  ),
+  buildFAQSchema(faqs),
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+  schema={schemas}
+>
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="max-w-3xl">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
+          <HighlightText variant="lime">Compress Photos</HighlightText> for Web
+        </h1>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          Reduce your image file sizes instantly. Compress into WebP, JPEG, or PNG format offline in your browser, perfect for blogs, portfolios, and social media.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <section class="py-10 sm:py-14 lg:py-16 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+      <BatchToolsApp />
+    </div>
+  </section>
+
+  <SeoToolProse currentUrl="/compress-photos-for-web">
+    <h2 class="mt-0">Why Compress Photos for the Web?</h2>
+    <p>
+      Modern digital cameras and smartphones capture massive 20 to 50-megapixel images that often exceed 15MB per file. Uploading these raw, uncompressed JPEGs or HEIC files directly to a website will severely hurt your <strong>Core Web Vitals</strong>, significantly increase page load times, and cause high bounce rates. Search engines prioritize fast-loading websites, making image optimization a critical SEO and user experience requirement.
+    </p>
+
+    <h3>The WebP Advantage</h3>
+    <p>
+      Our compression engine supports converting massive camera files directly into <strong>WebP format</strong>. Developed by Google, WebP provides superior lossless and lossy compression for web images, often resulting in files that are 30% to 50% smaller than equivalent JPEGs without any perceptible loss in quality. Selecting the "1080p WebP" preset in our toolkit instantly optimizes your assets for blogs, portfolios, and e-commerce stores.
+    </p>
+
+    <h3>Smart Bounding & Aspect Ratios</h3>
+    <p>
+      Compression isn't just about file format; it's about physical pixels. A 6000x4000 pixel image is unnecessary for a web layout that maxes out at 1920 pixels wide. By applying a <strong>Max Dimension Bound (e.g., 2K or 1080p)</strong>, our tool scales down the resolution proportionally before applying compression algorithms, yielding incredibly lightweight files.
+    </p>
+
+    <h3>Zero-Server Security</h3>
+    <p>
+      Unlike other free compression tools that require you to upload your entire photo library to their cloud servers, <strong>Make Contact Sheet runs the compression algorithms entirely within your local browser</strong>. We use the native Canvas API to decode, resize, and re-encode your images locally. This guarantees absolute privacy for sensitive client images and delivers instant batch conversions with no upload wait times.
+    </p>
+  </SeoToolProse>
+
+  <section class="py-14 sm:py-20 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <h3 class="text-xl sm:text-2xl font-bold text-marketing-text mb-6">Frequently Asked Questions</h3>
+        <FaqAccordion faqs={faqs} />
+      </div>
+    </div>
+  </section>
+</MarketingLayout>

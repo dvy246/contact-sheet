@@ -66,6 +66,7 @@ export const $exportProgress = atom<number>(0);
 export const $isImporting = atom<boolean>(false);
 export const $sortKey = atom<SortKey>('custom');
 export const $pendingManifest = atom<ProjectManifest | null>(null);
+export const $sessionUUID = atom<string>(typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'dev-session-id');
 
 // Computed: Filtered Images based on current review status filter
 export const $filteredImages = computed([$images, $filterStatus], (images, filter) => {
@@ -301,6 +302,13 @@ export function setImageStatus(id: string, status: ReviewStatus) {
   const current = $images.get();
   $images.set(
     current.map(img => (img.id === id ? { ...img, status } : img))
+  );
+}
+
+export function updateImageProperties(id: string, props: Partial<ImageItem>) {
+  const current = $images.get();
+  $images.set(
+    current.map(img => (img.id === id ? { ...img, ...props } : img))
   );
 }
 

@@ -1,0 +1,77 @@
+---
+import Icon from './Icon.astro';
+
+interface Link {
+  title: string;
+  description: string;
+  url: string;
+  icon: 'wand' | 'printer' | 'camera' | 'layout' | 'image' | 'file-text';
+}
+
+interface Props {
+  currentUrl: string;
+}
+
+const { currentUrl } = Astro.props;
+
+const allLinks: Link[] = [
+  {
+    title: 'AI Auto-Culling',
+    description: 'Filter blurry shots offline',
+    url: '/auto-cull-photos',
+    icon: 'wand'
+  },
+  {
+    title: '8×10 Print Saver',
+    description: 'Combine photos for cheap printing',
+    url: '/free-8x10-photo-prints',
+    icon: 'printer'
+  },
+  {
+    title: 'Contact Sheet Studio',
+    description: 'Full-screen EXIF light table',
+    url: '/photo-contact-sheet-maker',
+    icon: 'camera'
+  },
+  {
+    title: 'Photo Collage Maker',
+    description: 'Geometric grid templates',
+    url: '/photo-collage-maker',
+    icon: 'layout'
+  },
+  {
+    title: 'Mood Board Maker',
+    description: 'Freeform visual lookbooks',
+    url: '/mood-board-maker',
+    icon: 'image'
+  },
+  {
+    title: 'Batch Photo Toolkit',
+    description: 'Rename, crop, & format convert',
+    url: '/batch-photo-tools',
+    icon: 'file-text'
+  }
+];
+
+// Filter out the current page
+const displayLinks = allLinks.filter(link => link.url !== currentUrl).slice(0, 5);
+---
+
+<div class="space-y-5">
+  <h3 class="text-lg font-bold text-marketing-text border-b border-marketing-border pb-3">Related Tools & Workflows</h3>
+  <ul class="space-y-4">
+    {displayLinks.map((link) => (
+      <li>
+        <a href={link.url} class="group flex items-start gap-3 p-3 -m-3 rounded-xl hover:bg-marketing-surface transition-colors">
+          <div class="w-8 h-8 rounded-lg bg-marketing-surface border border-marketing-border flex items-center justify-center shrink-0 group-hover:border-accent/40 text-marketing-text group-hover:text-accent shadow-xs transition-colors">
+            <Icon name={link.icon} size={16} />
+          </div>
+          <div class="flex flex-col">
+            <span class="font-semibold text-marketing-text text-sm group-hover:text-accent transition-colors">{link.title}</span>
+            <span class="text-xs text-marketing-muted leading-snug mt-0.5">{link.description}</span>
+          </div>
+        </a>
+      </li>
+    ))}
+  </ul>
+</div>

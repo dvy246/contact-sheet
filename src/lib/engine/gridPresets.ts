@@ -132,6 +132,27 @@ export const GRID_PRESETS: GridPreset[] = [
       cellRadius: 4,
     },
   },
+  {
+    id: 'print-8x10-2x1',
+    label: '2 × 1 on 8×10',
+    shape: '8:10',
+    capacity: 2,
+    patch: { ...GRID_BASE, columns: 1, rows: 2, pageSize: '8x10', orientation: 'portrait', spacing: 10, margin: 10, cellRadius: 0 },
+  },
+  {
+    id: 'print-8x10-2x2',
+    label: '2 × 2 on 8×10',
+    shape: '8:10',
+    capacity: 4,
+    patch: { ...GRID_BASE, columns: 2, rows: 2, pageSize: '8x10', orientation: 'portrait', spacing: 10, margin: 10, cellRadius: 0 },
+  },
+  {
+    id: 'print-8x10-2x4',
+    label: '2 × 4 on 8×10',
+    shape: '8:10',
+    capacity: 8,
+    patch: { ...GRID_BASE, columns: 2, rows: 4, pageSize: '8x10', orientation: 'portrait', spacing: 10, margin: 10, cellRadius: 0 },
+  },
 ];
 
 /** Background swatches offered in the grid tool. */
