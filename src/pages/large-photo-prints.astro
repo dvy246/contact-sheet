@@ -7,7 +7,7 @@ import SeoToolProse from '../components/marketing/SeoToolProse.astro';
 import Icon from '../components/common/Icon.astro';
 import HighlightText from '../components/ui/HighlightText.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
-import { buildSoftwareApplicationSchema, buildFAQSchema, buildHowToSchema } from '../lib/seo/schemaGenerator';
+import { buildSoftwareApplicationSchema, buildHowToSchema } from '../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/large-photo-prints'];
 
@@ -115,7 +115,6 @@ const schemas = [
     meta.description,
     meta.canonical
   ),
-  buildFAQSchema(faqs),
   buildHowToSchema(
     'How to Gang Multiple Photos onto One 24×36 Poster to Save $50+',
     'Learn how to format and arrange multiple photos on a single 16x20 or 24x36 large poster print for CVS, Walgreens, or custom labs.',

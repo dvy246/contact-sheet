@@ -20,7 +20,7 @@ import StudioApp from '../../components/workspace/StudioApp.astro';
 import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
 import FaqAccordion from '../../components/common/FaqAccordion.astro';
 import { METADATA_REGISTRY } from '../../lib/seo/metadata';
-import { buildSoftwareApplicationSchema, buildFAQSchema } from '../../lib/seo/schemaGenerator';
+import { buildSoftwareApplicationSchema } from '../../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/studio/contact-sheet'];
 
@@ -149,7 +149,6 @@ const schemas = [
     meta.description,
     'https://makecontactsheet.com/studio/contact-sheet'
   ),
-  buildFAQSchema(faqs),
 ];
 ---
 

@@ -6,7 +6,6 @@ import ContactSheetPreview from '../components/marketing/ContactSheetPreview.ast
 import HighlightText from '../components/ui/HighlightText.astro';
 import { CONTACT_SHEET_PRESETS } from '../lib/engine/templates';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
-import { buildFAQSchema } from '../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/contact-sheet-template'];
 
@@ -29,10 +28,6 @@ const breadcrumbs = [
   { name: 'Home', url: '/' },
   { name: 'Contact Sheet Templates' },
 ];
-
-const schemas = [
-  buildFAQSchema(faqs),
-];
 ---
 
 <MarketingLayout
@@ -40,17 +35,16 @@ const schemas = [
   description={meta.description}
   canonical={meta.canonical}
   robots={meta.robots}
-  schema={schemas}
 >
   <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
     <div class="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-4">
       <Breadcrumbs items={breadcrumbs} />
       <div class="max-w-3xl space-y-3">
         <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight">
-          Free <HighlightText variant="lime">Contact Sheet</HighlightText> Templates
+          Free <HighlightText variant="lime">Contact Sheet Templates</HighlightText> &amp; Layouts
         </h1>
         <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
-          Browse calibrated contact sheet presets for print proofing, client review sessions, and portfolio archiving. Choose a layout to start arranging your photos in seconds.
+          Browse free printable contact sheet templates for client proofing, darkroom film indexing, and portfolio archiving. Choose an A4, US Letter, or digital 16:9 contact sheet layout to arrange photos in seconds.
         </p>
       </div>
     </div>
@@ -167,10 +161,10 @@ const schemas = [
     <div class="max-w-[900px] mx-auto px-4 sm:px-6 space-y-10">
       <div class="space-y-4 prose-measure">
         <h2 class="text-2xl font-bold text-marketing-text">
-          How to choose the right contact sheet layout
+          How to choose the right printable contact sheet template
         </h2>
         <p class="text-sm text-marketing-text/90 leading-relaxed">
-          The ideal contact sheet layout balances thumbnail size with page density. If you are printing proofs for a client review binder, 16 to 20 images per A4 or US Letter page allows the viewer to evaluate facial expressions, lighting, and composition without needing a magnifying loupe.
+          The ideal contact sheet layout balances thumbnail size with page density. If you are printing a photo proof sheet for a client review binder, an A4 contact sheet template or US Letter preset with 16 to 20 images per page allows the viewer to evaluate facial expressions, lighting, and composition without needing a magnifying loupe.
         </p>
         <p class="text-sm text-marketing-text/90 leading-relaxed">
           For digital screen presentations and video call reviews, 16:9 widescreen formats (such as our 4×3 Digital Review Board) match modern laptop and monitor displays without leaving awkward blank vertical margins.

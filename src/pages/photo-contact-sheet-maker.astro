@@ -7,7 +7,7 @@ import SeoRelatedLinks from '../components/common/SeoRelatedLinks.astro';
 import Icon from '../components/common/Icon.astro';
 import HighlightText from '../components/ui/HighlightText.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
-import { buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
+import { buildSoftwareApplicationSchema } from '../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/photo-contact-sheet-maker'];
 
@@ -42,7 +42,6 @@ const schemas = [
     meta.description,
     'https://makecontactsheet.com/photo-contact-sheet-maker'
   ),
-  buildFAQSchema(faqs),
 ];
 ---
 
@@ -59,10 +58,10 @@ const schemas = [
       <Breadcrumbs items={breadcrumbs} />
       <div class="max-w-3xl">
         <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
-          Fast Photo <HighlightText variant="lime">Contact Sheet Maker</HighlightText>
+          Photo <HighlightText variant="lime">Contact Sheet Maker</HighlightText>
         </h1>
         <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
-          Create professional photography proof sheets and contact prints directly in your browser. Configure grid columns, paper formats, and filename labels with instant local PDF and PNG exports.
+          Create professional photography contact sheets and proof prints directly in your browser. Configure grid columns, paper formats, and camera filename labels with instant local PDF and PNG exports.
         </p>
 
         <!-- The embedded workspace below is framed inside the page, so the sheet

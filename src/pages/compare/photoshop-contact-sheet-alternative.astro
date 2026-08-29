@@ -5,7 +5,6 @@ import ComparisonTable from '../../components/marketing/ComparisonTable.astro';
 import FaqAccordion from '../../components/common/FaqAccordion.astro';
 import Icon from '../../components/common/Icon.astro';
 import { METADATA_REGISTRY } from '../../lib/seo/metadata';
-import { buildFAQSchema } from '../../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/compare/photoshop-contact-sheet-alternative'];
 
@@ -30,9 +29,6 @@ const breadcrumbs = [
   { name: 'Photoshop Alternative' },
 ];
 
-const schemas = [
-  buildFAQSchema(faqs),
-];
 ---
 
 <MarketingLayout
@@ -41,7 +37,6 @@ const schemas = [
   canonical={meta.canonical}
   robots={meta.robots}
   ogType={meta.ogType}
-  schema={schemas}
 >
   <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
     <div class="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-4">

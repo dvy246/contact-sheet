@@ -1,5 +1,16 @@
 # AGENTS.md
 
+- Implemented **Dedicated Mood Board Templates Suite (`/mood-board-templates`) & Step-by-Step Guide (`/guides/how-to-make-a-mood-board`)**:
+  - Registered `/mood-board-templates` and `/guides/how-to-make-a-mood-board` in `src/lib/seo/metadata.ts` with front-loaded title tags (< 60 chars), calibrated descriptions (145–165 chars), and structured JSON-LD schemas (`HowTo`, `FAQPage`, `BreadcrumbList`).
+  - Created `src/components/marketing/MoodBoardTemplatePreview.astro` rendering scaled, geometric canvas previews for each mood board layout with photo frames, color swatches, sticky notes, and texture patterns.
+  - Expanded `MOODBOARD_TEMPLATES` in `src/lib/moodboardStore.ts` to 10 curated presets across 5 categories: **Editorial & Storyboard**, **Fashion Lookbook**, **Concept & Palette**, **Film & Analog**, and **Minimal Clean**.
+  - Built interactive discovery page `src/pages/mood-board-templates.astro` with real-time category filtering and 1-click template launcher links (`/mood-board-maker?template=${id}#moodboard-workbench`).
+  - Added URL search parameter auto-loading in `src/components/workspace/moodboard/MoodBoardApp.astro` to instantly populate the selected template onto the canvas light-table.
+  - Created comprehensive step-by-step tutorial `src/pages/guides/how-to-make-a-mood-board.astro` with direct AEO answers, 5 structured steps, composition guidelines, and FAQ accordion.
+  - Linked new pages across `src/components/common/Header.astro` (desktop Templates & Guides dropdowns & mobile drawer), `src/components/common/Footer.astro`, and `src/components/common/SeoRelatedLinks.astro`.
+  - Overhauled Header navigation to provide full parity across all 8 tools, 3 template suites, and 6 workflow guides across both desktop floating capsule menus and responsive mobile navigation drawers.
+  - Maintained strict `0 errors / 0 warnings / 0 hints` on `astro check` and confirmed a clean 26-page static build.
+
 - Implemented **Large Photo Print Layout Suite & SEO Landing Page (`/large-photo-prints`)**:
   - Registered `/large-photo-prints` in `src/lib/seo/metadata.ts` and `public/sitemap-index.xml` with complete OpenGraph metadata and structured schemas (`SoftwareApplication`, `HowTo`, `FAQPage`, `BreadcrumbList`).
   - Created high-craft landing page `src/pages/large-photo-prints.astro` featuring an integrated live studio launcher, visual dimension & DPI reference cards (11×14, 12×18, 16×20, 24×36 at 150 & 300 DPI), step-by-step gang sheet HowTo guide, entity-dense SEO prose detailing print mathematics and zero-upload privacy, and comprehensive FAQ accordion.

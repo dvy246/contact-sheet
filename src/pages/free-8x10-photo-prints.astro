@@ -7,7 +7,7 @@ import SeoRelatedLinks from '../components/common/SeoRelatedLinks.astro';
 import Icon from '../components/common/Icon.astro';
 import HighlightText from '../components/ui/HighlightText.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
-import { buildSoftwareApplicationSchema, buildFAQSchema, buildHowToSchema } from '../lib/seo/schemaGenerator';
+import { buildSoftwareApplicationSchema, buildHowToSchema } from '../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/free-8x10-photo-prints'];
 
@@ -45,11 +45,10 @@ const breadcrumbs = [
 
 const schemas = [
   buildSoftwareApplicationSchema(
-    '8x10 Photo Print Saver',
+    '8x10 Photo Prints Saver',
     meta.description,
     'https://makecontactsheet.com/free-8x10-photo-prints'
   ),
-  buildFAQSchema(faqs),
   buildHowToSchema('How to Combine Photos on an 8x10 Print', 'Learn how to save money by printing multiple smaller photos on a single 8x10 sheet.', howToSteps)
 ];
 ---
@@ -67,10 +66,10 @@ const schemas = [
       <Breadcrumbs items={breadcrumbs} />
       <div class="max-w-3xl">
         <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
-          Free 8×10 Photo Print Templates &amp; <HighlightText variant="lime">Print-Saver Maker</HighlightText>
+          Free <HighlightText variant="lime">8×10 Photo Prints</HighlightText> Saver &amp; Layout Maker
         </h1>
         <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
-          Combine multiple 5x7, 4x5, or wallet-sized photos onto a single 8x10 print. Use this simple hack to save money at Walgreens, CVS, or your local photo lab with our free browser-based tool.
+          Combine multiple 5x7, 4x5, or wallet-sized photos onto a single 8x10 photo sheet. Create 300 DPI 8x10 photo prints to save money at Walgreens, CVS, or local photo labs with our free browser tool.
         </p>
 
         <a
@@ -109,13 +108,14 @@ const schemas = [
   <section class="py-16 sm:py-24 lg:py-28 bg-marketing-panel border-b border-marketing-border transition-colors">
     <div class="max-w-[850px] mx-auto px-4 sm:px-6 space-y-14">
       
+      <!-- Step-by-Step Instructions -->
       <div class="space-y-4 prose-measure">
         <h2 class="text-2xl font-bold text-marketing-text">
           How to <HighlightText variant="yellow">Combine Photos</HighlightText> on one 8x10 Print
         </h2>
         <div class="space-y-4 mt-6">
           {howToSteps.map((step, index) => (
-            <div class="flex gap-4">
+            <div class="flex gap-4 p-4 rounded-xl bg-marketing-bg border border-marketing-border">
               <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center font-bold text-sm">
                 {index + 1}
               </div>
@@ -125,6 +125,40 @@ const schemas = [
               </div>
             </div>
           ))}
+        </div>
+      </div>
+
+      <!-- Technical Print Dimensions & Specs -->
+      <div class="space-y-4 prose-measure">
+        <h2 class="text-2xl font-bold text-marketing-text">
+          Standard <HighlightText variant="cyan">8x10 Photo</HighlightText> Print Dimensions &amp; Quality
+        </h2>
+        <p class="text-sm text-marketing-text/90 leading-relaxed">
+          An authentic 8×10 photo print has an exact aspect ratio of 4:5 (8 inches wide by 10 inches high). For lab-quality photo prints at Walgreens, CVS, or commercial labs, the digital canvas must output at exactly <strong>2400 × 3000 pixels at 300 DPI</strong> (dots per inch).
+        </p>
+        <p class="text-sm text-marketing-text/90 leading-relaxed">
+          Make Contact Sheet automatically renders your composite layout at full 300 DPI. Because all resizing and compositing happen locally in your browser's memory, your original image quality is completely preserved with zero compression artifacts or loss of detail.
+        </p>
+      </div>
+
+      <!-- Popular Multi-Photo Arrangements -->
+      <div class="space-y-4 prose-measure">
+        <h2 class="text-2xl font-bold text-marketing-text">
+          Popular Multi-Photo <HighlightText variant="pink">8x10 Layout</HighlightText> Configurations
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+          <div class="p-4 rounded-xl bg-marketing-surface border border-marketing-border space-y-2">
+            <span class="text-xs font-mono font-bold text-accent-ink uppercase">Two 5×7 Prints</span>
+            <p class="text-xs text-marketing-muted leading-relaxed">Place two 5x7 portrait pictures side by side on one 8x10 sheet. Perfect for school photos and framing.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-marketing-surface border border-marketing-border space-y-2">
+            <span class="text-xs font-mono font-bold text-accent-ink uppercase">Four 4×5 Prints</span>
+            <p class="text-xs text-marketing-muted leading-relaxed">A clean 2×2 grid of four 4x5 prints. Great for mini portfolios, gift cards, and scrapbooking.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-marketing-surface border border-marketing-border space-y-2">
+            <span class="text-xs font-mono font-bold text-accent-ink uppercase">Eight Wallet Photos</span>
+            <p class="text-xs text-marketing-muted leading-relaxed">Fit 8 standard 2.5×3.5 wallet prints onto one 8x10 page to share with family and friends.</p>
+          </div>
         </div>
       </div>
 

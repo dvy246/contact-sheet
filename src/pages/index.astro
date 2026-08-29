@@ -12,7 +12,7 @@ import HighlightText from '../components/ui/HighlightText.astro';
 import Icon from '../components/common/Icon.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
 
-import { buildWebSiteSchema, buildOrganizationSchema, buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
+import { buildWebSiteSchema, buildOrganizationSchema, buildSoftwareApplicationSchema } from '../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/'];
 
@@ -47,11 +47,10 @@ const schemas = [
   buildWebSiteSchema(),
   buildOrganizationSchema(),
   buildSoftwareApplicationSchema(
-    'Make Contact Sheet Photo Contact Sheet & Collage Maker',
+    'Make Contact Sheet — Contact Sheet Maker',
     meta.description,
     'https://makecontactsheet.com/'
   ),
-  buildFAQSchema(faqs),
 ];
 ---
 

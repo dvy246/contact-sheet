@@ -7,7 +7,7 @@ import SeoRelatedLinks from '../components/common/SeoRelatedLinks.astro';
 import Icon from '../components/common/Icon.astro';
 import HighlightText from '../components/ui/HighlightText.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
-import { buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
+import { buildSoftwareApplicationSchema } from '../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/photo-collage-maker'];
 
@@ -38,11 +38,10 @@ const breadcrumbs = [
 
 const schemas = [
   buildSoftwareApplicationSchema(
-    'Free Photo Collage Maker',
+    'Free Photo Collage Maker Online',
     meta.description,
     'https://makecontactsheet.com/photo-collage-maker'
   ),
-  buildFAQSchema(faqs),
 ];
 ---
 
@@ -59,10 +58,10 @@ const schemas = [
       <Breadcrumbs items={breadcrumbs} />
       <div class="max-w-3xl">
         <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
-          Free <HighlightText variant="pink">Photo Collage</HighlightText> Maker
+          Free <HighlightText variant="pink">Photo Collage</HighlightText> Maker Online
         </h1>
         <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
-          Combine multiple pictures into balanced grids, storytelling triptychs, and social formats. Fast, private, and free with no cloud uploads or signups required.
+          Combine multiple pictures into balanced grids, storytelling triptychs, and social formats. Fast, private, and free online photo collage maker with zero cloud uploads or signups required.
         </p>
       </div>
     </div>

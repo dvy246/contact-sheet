@@ -6,7 +6,6 @@ import CollageTemplatePreview from '../components/marketing/CollageTemplatePrevi
 import HighlightText from '../components/ui/HighlightText.astro';
 import { COLLAGE_TEMPLATES } from '../lib/engine/templates';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
-import { buildFAQSchema } from '../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/collage-templates'];
 
@@ -30,9 +29,6 @@ const breadcrumbs = [
   { name: 'Collage Templates' },
 ];
 
-const schemas = [
-  buildFAQSchema(faqs),
-];
 ---
 
 <MarketingLayout
@@ -40,17 +36,16 @@ const schemas = [
   description={meta.description}
   canonical={meta.canonical}
   robots={meta.robots}
-  schema={schemas}
 >
   <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
     <div class="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-4">
       <Breadcrumbs items={breadcrumbs} />
       <div class="max-w-3xl space-y-3">
         <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight">
-          Custom <HighlightText variant="pink">Photo Collage</HighlightText> Templates
+          Custom <HighlightText variant="pink">Photo Collage Templates</HighlightText> &amp; Layouts
         </h1>
         <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
-          Explore clean, structured photo collage layouts for social media, portfolios, and print. Arrange your photos with professional proportions in seconds.
+          Explore customizable photo collage templates for social media stories, comparison boards, and print posters. Arrange your photos with balanced geometric proportions in seconds.
         </p>
       </div>
     </div>

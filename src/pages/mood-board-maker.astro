@@ -7,15 +7,15 @@ import MoodBoardApp from '../components/workspace/moodboard/MoodBoardApp.astro';
 import HighlightText from '../components/ui/HighlightText.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
 
-import { buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
+import { buildSoftwareApplicationSchema } from '../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/mood-board-maker'] || {
-  title: 'Free Mood Board Maker — Visual Photo Concept & Lookbook Studio',
-  description: 'Design aesthetic photo mood boards, concept boards, and fashion lookbooks online. Freeform canvas with drag-and-drop, snapping guides, color swatches, and 300 DPI exports. 100% private.',
+  title: 'Free Mood Board Maker Online — Visual Direction Studio',
+  description: 'Design aesthetic mood boards and lookbooks online for free. Freeform canvas with drag-and-drop photos, color swatches, sticky notes, and 300 DPI exports.',
   canonical: 'https://makecontactsheet.com/mood-board-maker',
   robots: 'index, follow',
   ogType: 'website',
-  schemaType: ['SoftwareApplication', 'FAQPage', 'BreadcrumbList'],
+  schemaType: ['SoftwareApplication', 'BreadcrumbList'],
 };
 
 const faqs = [
@@ -25,7 +25,7 @@ const faqs = [
   },
   {
     question: 'Are my inspiration photos uploaded to any server?',
-    answer: 'No. Just like our contact sheet and collage tools, the Mood Board Maker operates 100% locally in your web browser. Your images, notes, color swatches, and compositions never leave your device.',
+    answer: 'No. Just like our contact sheet and collage tools, the mood board workspace operates 100% locally in your web browser. Your images, notes, color swatches, and compositions never leave your device.',
   },
   {
     question: 'Can I add custom color palettes and text annotations?',
@@ -37,7 +37,7 @@ const faqs = [
   },
   {
     question: 'Is Make Contact Sheet free to use?',
-    answer: 'Yes. The Mood Board Maker is completely free to use with no account signups, subscriptions, or watermarks on your exports.',
+    answer: 'Yes. The mood board tool is completely free to use with no account signups, subscriptions, or watermarks on your exports.',
   },
 ];
 
@@ -48,11 +48,10 @@ const breadcrumbs = [
 
 const schemas = [
   buildSoftwareApplicationSchema(
-    'Free Mood Board Maker',
+    'Free Mood Board Maker Online',
     meta.description,
     'https://makecontactsheet.com/mood-board-maker'
   ),
-  buildFAQSchema(faqs),
 ];
 ---
 
@@ -73,10 +72,10 @@ const schemas = [
           <span>100% PRIVATE FREEFORM CANVAS</span>
         </div>
         <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
-          Free <HighlightText variant="pink">Photography Mood Board</HighlightText> Maker
+          Free Online <HighlightText variant="pink">Mood Board Maker</HighlightText>
         </h1>
         <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
-          Curate aesthetic visual stories, lighting concepts, and fashion lookbooks. Arrange images on a tactile freeform canvas with magnetic snapping guides, color swatches, typographic notes, and 300 DPI exports.
+          Curate aesthetic visual stories, fashion lookbooks, and photo concept boards. Arrange images on a tactile freeform canvas with magnetic snapping guides, color swatches, stylist sticky notes, and 300 DPI exports.
         </p>
 
         <div class="mt-6 flex flex-wrap items-center gap-3">

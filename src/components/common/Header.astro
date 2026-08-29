@@ -175,6 +175,16 @@ const isWorkspace = variant === 'workspace';
                 <span class="text-[11px] text-marketing-muted">18 geometric & social story layouts</span>
               </div>
             </a>
+
+            <a href="/mood-board-templates" class="group/item flex items-start gap-3 p-2.5 rounded-xl hover:bg-marketing-surface transition-colors">
+              <div class="w-8 h-8 rounded-lg bg-marketing-surface border border-marketing-border flex items-center justify-center shrink-0 group-hover/item:border-accent/40 text-marketing-text group-hover/item:text-accent shadow-xs">
+                <Icon name="layout" size={16} />
+              </div>
+              <div class="flex flex-col">
+                <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">Mood Board Templates</span>
+                <span class="text-[11px] text-marketing-muted">10 aesthetic & lookbook presets</span>
+              </div>
+            </a>
           </div>
         </div>
 
@@ -202,11 +212,21 @@ const isWorkspace = variant === 'workspace';
 
             <a href="/guides/how-to-make-photo-collage" class="group/item flex items-start gap-3 p-2.5 rounded-xl hover:bg-marketing-surface transition-colors">
               <div class="w-8 h-8 rounded-lg bg-marketing-surface border border-marketing-border flex items-center justify-center shrink-0 text-marketing-text group-hover/item:text-accent shadow-xs">
-                <Icon name="image" size={16} />
+                <Icon name="layout" size={16} />
               </div>
               <div class="flex flex-col">
                 <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">How to Make a Photo Collage</span>
-                <span class="text-[11px] text-marketing-muted">Composition & proportions</span>
+                <span class="text-[11px] text-marketing-muted">Composition &amp; proportions</span>
+              </div>
+            </a>
+
+            <a href="/guides/how-to-make-a-mood-board" class="group/item flex items-start gap-3 p-2.5 rounded-xl hover:bg-marketing-surface transition-colors">
+              <div class="w-8 h-8 rounded-lg bg-marketing-surface border border-marketing-border flex items-center justify-center shrink-0 text-marketing-text group-hover/item:text-accent shadow-xs">
+                <Icon name="image" size={16} />
+              </div>
+              <div class="flex flex-col">
+                <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">How to Make a Mood Board</span>
+                <span class="text-[11px] text-marketing-muted">Visual direction &amp; styling guide</span>
               </div>
             </a>
 
@@ -216,7 +236,29 @@ const isWorkspace = variant === 'workspace';
               </div>
               <div class="flex flex-col">
                 <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">Proof Sheets with Filenames</span>
-                <span class="text-[11px] text-marketing-muted">Lightroom & client review workflow</span>
+                <span class="text-[11px] text-marketing-muted">Camera filenames &amp; metadata</span>
+              </div>
+            </a>
+
+            <div class="my-1 border-t border-marketing-border"></div>
+
+            <a href="/lightroom-client-selection-workflow" class="group/item flex items-start gap-3 p-2.5 rounded-xl hover:bg-marketing-surface transition-colors">
+              <div class="w-8 h-8 rounded-lg bg-marketing-surface border border-marketing-border flex items-center justify-center shrink-0 text-marketing-text group-hover/item:text-accent shadow-xs">
+                <Icon name="wand" size={16} />
+              </div>
+              <div class="flex flex-col">
+                <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">Lightroom Selection Workflow</span>
+                <span class="text-[11px] text-marketing-muted">Adobe XMP sidecars &amp; star ratings</span>
+              </div>
+            </a>
+
+            <a href="/white-label-client-gallery" class="group/item flex items-start gap-3 p-2.5 rounded-xl hover:bg-marketing-surface transition-colors">
+              <div class="w-8 h-8 rounded-lg bg-marketing-surface border border-marketing-border flex items-center justify-center shrink-0 text-marketing-text group-hover/item:text-accent shadow-xs">
+                <Icon name="shield" size={16} />
+              </div>
+              <div class="flex flex-col">
+                <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">White Label Client Gallery</span>
+                <span class="text-[11px] text-marketing-muted">Brandable client proofing portals</span>
               </div>
             </a>
           </div>
@@ -330,6 +372,10 @@ const isWorkspace = variant === 'workspace';
             <span>Batch Photo Tools</span>
             <Icon name="chevron-right" size={14} class="text-marketing-muted" />
           </a>
+          <a href="/auto-cull-photos" class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
+            <span>AI Auto-Cull Photos</span>
+            <Icon name="chevron-right" size={14} class="text-marketing-muted" />
+          </a>
           <a href="/free-8x10-photo-prints" class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
             <span>8×10 Print Saver</span>
             <Icon name="chevron-right" size={14} class="text-marketing-muted" />
@@ -356,11 +402,15 @@ const isWorkspace = variant === 'workspace';
             <span>Collage Templates (18 Layouts)</span>
             <Icon name="chevron-right" size={14} class="text-marketing-muted" />
           </a>
+          <a href="/mood-board-templates" class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
+            <span>Mood Board Templates (10 Presets)</span>
+            <Icon name="chevron-right" size={14} class="text-marketing-muted" />
+          </a>
         </div>
       </div>
 
       <div class="space-y-3">
-        <div class="text-[11px] font-mono uppercase tracking-wider text-accent-ink font-bold">Guides & Alternatives</div>
+        <div class="text-[11px] font-mono uppercase tracking-wider text-accent-ink font-bold">Guides & Workflows</div>
         <div class="grid grid-cols-1 gap-1">
           <a href="/guides/how-to-make-a-contact-sheet" class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
             <span>How to Make a Contact Sheet</span>
@@ -370,8 +420,20 @@ const isWorkspace = variant === 'workspace';
             <span>How to Make a Photo Collage</span>
             <Icon name="chevron-right" size={14} class="text-marketing-muted" />
           </a>
+          <a href="/guides/how-to-make-a-mood-board" class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
+            <span>How to Make a Mood Board</span>
+            <Icon name="chevron-right" size={14} class="text-marketing-muted" />
+          </a>
           <a href="/guides/photo-proof-sheet-with-filenames" class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
             <span>Proof Sheets with Filenames</span>
+            <Icon name="chevron-right" size={14} class="text-marketing-muted" />
+          </a>
+          <a href="/lightroom-client-selection-workflow" class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
+            <span>Lightroom Selection Workflow</span>
+            <Icon name="chevron-right" size={14} class="text-marketing-muted" />
+          </a>
+          <a href="/white-label-client-gallery" class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
+            <span>White Label Client Gallery</span>
             <Icon name="chevron-right" size={14} class="text-marketing-muted" />
           </a>
           <a href="/compare/photoshop-contact-sheet-alternative" class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">

@@ -6,7 +6,7 @@ import FaqAccordion from '../components/common/FaqAccordion.astro';
 import HighlightText from '../components/ui/HighlightText.astro';
 import SeoToolProse from '../components/marketing/SeoToolProse.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
-import { buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
+import { buildSoftwareApplicationSchema } from '../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/bulk-resize-photos-to-16-9'] || {
   title: 'Bulk Resize Photos to 16:9 Online — Free Batch Aspect Ratio Cropper',
@@ -40,7 +40,6 @@ const schemas = [
     meta.description,
     meta.canonical
   ),
-  buildFAQSchema(faqs),
 ];
 ---
 

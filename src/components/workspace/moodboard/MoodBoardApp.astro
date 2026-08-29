@@ -423,6 +423,7 @@ import '../../../styles/workspace.css';
     redo,
     addTextElement,
     downloadMoodBoardManifest,
+    applyTemplate,
   } from '../../../lib/moodboardStore';
   import { exportMoodBoard } from '../../../lib/export/moodboardExporter';
   import { BoardCanvas } from './BoardCanvas';
@@ -438,6 +439,14 @@ import '../../../styles/workspace.css';
 
     // 1. Initialize Core Canvas Engine
     const boardCanvas = new BoardCanvas(canvasStage);
+
+    // Check for URL template parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const templateParam = urlParams.get('template');
+    if (templateParam) {
+      applyTemplate(templateParam);
+      setTimeout(() => boardCanvas.fitToScreen(), 150);
+    }
 
     // 2. Initialize Sidebar & Floating Contextual Toolbar
     const sidebar = new MoodBoardSidebar(sidebarMount, boardCanvas);

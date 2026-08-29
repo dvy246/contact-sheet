@@ -1,0 +1,247 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../components/common/Breadcrumbs.astro';
+import MoodBoardTemplatePreview from '../components/marketing/MoodBoardTemplatePreview.astro';
+import FaqAccordion from '../components/common/FaqAccordion.astro';
+import SeoRelatedLinks from '../components/common/SeoRelatedLinks.astro';
+import HighlightText from '../components/ui/HighlightText.astro';
+import Icon from '../components/common/Icon.astro';
+import { METADATA_REGISTRY } from '../lib/seo/metadata';
+import { MOODBOARD_TEMPLATES } from '../lib/moodboardStore';
+import { buildFAQSchema } from '../lib/seo/schemaGenerator';
+
+const meta = METADATA_REGISTRY['/mood-board-templates'];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Mood Board Maker', url: '/mood-board-maker' },
+  { name: 'Templates' },
+];
+
+const faqs = [
+  {
+    question: 'How do I use a mood board template?',
+    answer: 'Simply click "Use This Template" on any preset above. It will instantly launch the full-screen visual studio with canvas dimensions, photographic frames, color swatches, and styling notes pre-positioned for you.',
+  },
+  {
+    question: 'Can I replace the placeholder frames with my own photos?',
+    answer: 'Yes! Drag and drop your photos into the studio photo tray, then drag them directly onto any photo frame on the canvas or click "Fill Frames" to auto-populate the layout.',
+  },
+  {
+    question: 'Can I change canvas background colors, swatches, and fonts?',
+    answer: 'Every element in our visual templates is 100% editable. You can adjust background colors, toggle grid/dot textures, customize hex codes on color swatches, and type custom direction notes.',
+  },
+  {
+    question: 'Can I export visual boards for client presentations and print?',
+    answer: 'Yes. You can export high-resolution PNGs, JPEGs, and print-ready 300 DPI PDFs (with optional client password protection) directly in your browser with zero compression loss.',
+  },
+];
+
+const schemas = [
+  buildFAQSchema(faqs),
+];
+
+const editorialCategories = [
+  { id: 'all', label: 'All Layouts', count: MOODBOARD_TEMPLATES.length },
+  { id: 'editorial', label: 'Editorial & Storyboard', count: MOODBOARD_TEMPLATES.filter(t => t.category === 'editorial').length },
+  { id: 'lookbook', label: 'Fashion Lookbook', count: MOODBOARD_TEMPLATES.filter(t => t.category === 'lookbook').length },
+  { id: 'concept', label: 'Concept & Palette', count: MOODBOARD_TEMPLATES.filter(t => t.category === 'concept').length },
+  { id: 'film', label: 'Film & Analog', count: MOODBOARD_TEMPLATES.filter(t => t.category === 'film').length },
+  { id: 'minimal', label: 'Minimal Clean', count: MOODBOARD_TEMPLATES.filter(t => t.category === 'minimal').length },
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+  schema={schemas}
+>
+  <!-- Page Header -->
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="max-w-3xl">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
+          Free <HighlightText variant="pink">Mood Board Templates</HighlightText> &amp; Layouts
+        </h1>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          Curated visual direction presets for photography, fashion styling lookbooks, lighting setups, and color palettes. 100% customizable in your browser with zero uploads.
+        </p>
+
+        <div class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="/mood-board-maker#moodboard-workbench"
+            class="inline-flex items-center gap-2 h-11 px-6 rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold text-sm tracking-tight shadow-lg shadow-accent/25 active:scale-[0.98] transition-all"
+          >
+            <Icon name="layout" size={16} />
+            <span>Open Studio Canvas</span>
+            <Icon name="arrow-right" size={15} />
+          </a>
+          <a
+            href="/guides/how-to-make-a-mood-board"
+            class="inline-flex items-center gap-2 h-11 px-5 rounded-xl bg-marketing-surface hover:bg-marketing-surface/80 text-marketing-text border border-marketing-border font-semibold text-sm tracking-tight transition-all"
+          >
+            <Icon name="help" size={16} />
+            <span>Read Step-by-Step Guide</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Templates Catalog Grid -->
+  <section class="py-12 sm:py-16 lg:py-20 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      
+      <!-- Category Filter Bar -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-8 sm:mb-10 no-scrollbar" id="mb-template-filter-bar">
+        {editorialCategories.map((cat, idx) => (
+          <button
+            type="button"
+            data-filter={cat.id}
+            class={`filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold font-mono border transition-all cursor-pointer flex-shrink-0 ${
+              idx === 0
+                ? 'active bg-accent text-white border-accent shadow-xs'
+                : 'bg-marketing-surface text-marketing-text border-marketing-border hover:border-accent/40'
+            }`}
+          >
+            {cat.label} ({cat.count})
+          </button>
+        ))}
+      </div>
+
+      <!-- Templates Cards Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        {MOODBOARD_TEMPLATES.map((template) => {
+          const imageCount = template.elements.filter(e => e.type === 'image').length;
+          const swatchCount = template.elements.filter(e => e.type === 'swatch').length;
+          const canvasWidth = template.canvas.width || 1920;
+          const canvasHeight = template.canvas.height || 1080;
+          const ratioDisplay = canvasWidth === 1920 && canvasHeight === 1080 ? '16:9 Widescreen' : `${canvasWidth}×${canvasHeight}`;
+
+          return (
+            <div 
+              data-template-card
+              data-category={template.category || 'all'}
+              class="bg-marketing-panel border border-marketing-border rounded-2xl p-5 sm:p-6 flex flex-col justify-between space-y-5 shadow-xs hover:border-accent/40 hover:shadow-md transition-all group"
+            >
+              <div class="space-y-4">
+                <!-- Visual Grid Structure Preview -->
+                <MoodBoardTemplatePreview template={template} />
+
+                <div class="space-y-2.5">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-accent-ink font-mono">
+                      {template.category || 'Preset'}
+                    </span>
+                    <span class="text-[11px] px-2.5 py-0.5 rounded-lg bg-marketing-surface border border-marketing-border font-mono text-marketing-muted">
+                      {imageCount} Photos · {swatchCount} Swatches
+                    </span>
+                  </div>
+                  <h2 class="text-base sm:text-lg font-bold text-marketing-text group-hover:text-accent transition-colors">
+                    {template.name}
+                  </h2>
+                  <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
+                    {template.description}
+                  </p>
+                </div>
+
+                <div class="pt-3 border-t border-marketing-border space-y-1.5 text-xs text-marketing-muted font-mono">
+                  <div class="flex justify-between">
+                    <span>Aspect Ratio:</span>
+                    <span class="font-bold text-marketing-text">{ratioDisplay}</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Elements:</span>
+                    <span class="font-bold text-marketing-text">{template.elements.length} total objects</span>
+                  </div>
+                </div>
+              </div>
+
+              <a 
+                href={`/mood-board-maker?template=${template.id}#moodboard-workbench`}
+                class="w-full py-2.5 px-4 rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold text-xs text-center tracking-tight shadow-sm hover:shadow transition-all block"
+              >
+                Use This Template
+              </a>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Editorial & Guide Content -->
+  <section class="py-16 sm:py-24 lg:py-28 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[850px] mx-auto px-4 sm:px-6 space-y-14">
+      
+      <!-- Choosing the Right Mood Board -->
+      <div class="space-y-4 prose-measure">
+        <h2 class="text-2xl font-bold text-marketing-text">
+          How to Choose the Right <HighlightText variant="yellow">Creative Layout Preset</HighlightText>
+        </h2>
+        <p class="text-sm text-marketing-text/90 leading-relaxed">
+          A visual concept board serves as the stylistic compass for your entire creative crew—including models, makeup artists, wardrobe stylists, and digital assistants. Choosing the right layout ensures everyone aligns with the intended aesthetic before stepping onto set.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+          <div class="p-4 rounded-xl bg-marketing-surface border border-marketing-border space-y-2">
+            <span class="text-xs font-mono font-bold text-accent-ink uppercase">Editorial &amp; Storyboard</span>
+            <p class="text-xs text-marketing-muted leading-relaxed">Prioritizes a large hero subject frame alongside texture macros and lighting balance notes for commercial productions.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-marketing-surface border border-marketing-border space-y-2">
+            <span class="text-xs font-mono font-bold text-accent-ink uppercase">Fashion Lookbook</span>
+            <p class="text-xs text-marketing-muted leading-relaxed">Balances full-body runway looks with fabric swatches, accessory callouts, and garment steam requirements.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-marketing-surface border border-marketing-border space-y-2">
+            <span class="text-xs font-mono font-bold text-accent-ink uppercase">Color Story &amp; Palette</span>
+            <p class="text-xs text-marketing-muted leading-relaxed">Features prominent hex code color swatches aligned with tonal reference photographs to define lighting gels and grading.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-marketing-surface border border-marketing-border space-y-2">
+            <span class="text-xs font-mono font-bold text-accent-ink uppercase">Film &amp; Analog Triptych</span>
+            <p class="text-xs text-marketing-muted leading-relaxed">Showcases 120 medium format and 35mm grain aesthetics with exposure ratings and film stock technical notes.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ & Interlinking -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+        <SeoRelatedLinks currentUrl="/mood-board-templates" />
+        <div class="space-y-6">
+          <h2 class="text-2xl font-bold text-marketing-text">Frequently Asked Questions</h2>
+          <FaqAccordion faqs={faqs} />
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    const filterBar = document.getElementById('mb-template-filter-bar');
+    if (filterBar) {
+      const filterBtns = filterBar.querySelectorAll<HTMLButtonElement>('.filter-btn');
+      const cards = document.querySelectorAll<HTMLElement>('[data-template-card]');
+
+      filterBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach((b) => {
+            b.classList.remove('bg-accent', 'text-white', 'border-accent', 'shadow-xs');
+            b.classList.add('bg-marketing-surface', 'text-marketing-text', 'border-marketing-border');
+          });
+          btn.classList.remove('bg-marketing-surface', 'text-marketing-text', 'border-marketing-border');
+          btn.classList.add('bg-accent', 'text-white', 'border-accent', 'shadow-xs');
+
+          const category = btn.getAttribute('data-filter');
+          cards.forEach((card) => {
+            if (category === 'all' || card.getAttribute('data-category') === category) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    }
+  </script>
+</MarketingLayout>

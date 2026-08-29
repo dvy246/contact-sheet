@@ -4,7 +4,7 @@ import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
 import FaqAccordion from '../../components/common/FaqAccordion.astro';
 import Icon from '../../components/common/Icon.astro';
 import { METADATA_REGISTRY } from '../../lib/seo/metadata';
-import { buildHowToSchema, buildFAQSchema } from '../../lib/seo/schemaGenerator';
+import { buildHowToSchema } from '../../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/guides/how-to-make-a-contact-sheet'];
 
@@ -54,11 +54,10 @@ const breadcrumbs = [
 
 const schemas = [
   buildHowToSchema(
-    'How to Make a Contact Sheet: Step-by-Step Guide',
+    'How to Make a Contact Sheet: Step-by-Step Photography Guide',
     meta.description,
     steps
   ),
-  buildFAQSchema(faqs),
 ];
 ---
 
@@ -77,10 +76,10 @@ const schemas = [
 
       <header class="space-y-4">
         <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-[1.2]">
-          How to Make a Contact Sheet: Step-by-Step Guide
+          How to Make a Contact Sheet: Step-by-Step Photography Guide
         </h1>
         <p class="text-base text-marketing-muted leading-relaxed">
-          Learn how to make a professional photo contact sheet in under a minute. This guide covers grid layouts, filename preservation, paper sizing, and client review workflows.
+          Learn how to make a professional contact sheet for photography in under a minute. This guide covers grid layouts, camera filename preservation, paper sizing, and client review workflows.
         </p>
       </header>
 
@@ -88,14 +87,14 @@ const schemas = [
       <div class="p-6 rounded-2xl bg-accent/10 border border-accent/30 text-marketing-text space-y-2">
         <div class="text-xs font-bold uppercase tracking-wider text-accent-ink font-mono">Direct Answer</div>
         <p class="text-sm leading-relaxed font-medium">
-          A contact sheet is created by arranging a batch of thumbnail photos into a structured grid on a single or multi-page document with original camera filenames displayed below each image. You can make one for free in Make Contact Sheet by dropping your image files, selecting a grid preset (such as 4x5 A4), and exporting as a print-ready PDF or high-resolution PNG.
+          A contact sheet in photography is created by arranging a batch of thumbnail photos into a structured grid on a single or multi-page document with original camera filenames displayed below each image. You can make one for free in Make Contact Sheet by dropping your image files, selecting a grid preset (such as 4x5 A4), and exporting as a print-ready PDF or high-resolution PNG.
         </p>
       </div>
 
       <!-- Main Step-by-Step Guide -->
       <div class="space-y-8 pt-4">
         <h2 class="text-2xl font-bold text-marketing-text">
-          5 Steps to Create a Photography Proof Sheet
+          5 Steps to Make a Photography Proof Sheet
         </h2>
 
         <div class="space-y-6">
@@ -116,10 +115,20 @@ const schemas = [
       <!-- In-Depth Content Sections -->
       <div class="space-y-6 pt-6 border-t border-marketing-border text-sm text-marketing-text/90 leading-relaxed prose-measure">
         <h2 class="text-2xl font-bold text-marketing-text">
-          Why Contact Sheets Remain Essential in Modern Photography
+          How to Make a Contact Sheet in Photoshop vs Lightroom vs Online
         </h2>
         <p>
-          Despite the transition from darkroom film strips to digital sensors, the contact sheet remains one of the most effective tools in visual storytelling. When viewing photos one-by-one in full screen, it is easy to lose context between takes. A contact sheet places an entire sequence in front of your eyes at once, making lighting shifts, model expressions, and compositional nuances immediately obvious.
+          Photographers traditionally created digital contact prints in Adobe Photoshop using the legacy Contact Sheet II plugin (File &gt; Automate &gt; Contact Sheet II) or Lightroom Classic's Print module. While capable, both methods require extensive margin adjustments, slow catalog rendering, and paid Creative Cloud subscriptions.
+        </p>
+        <p>
+          Make Contact Sheet provides a streamlined online alternative: drag your raw or JPEG image batch directly into the browser, set your grid columns, and export a 300 DPI multi-page PDF in seconds—with 100% local processing and zero cloud uploads.
+        </p>
+
+        <h3 class="text-lg font-bold text-marketing-text pt-3">
+          Why Contact Sheets Remain Essential in Modern Photography
+        </h3>
+        <p>
+          When viewing photos one-by-one in full screen, it is easy to lose context between takes. A contact sheet places an entire sequence in front of your eyes at once, making lighting shifts, model expressions, and compositional nuances immediately obvious.
         </p>
 
         <h3 class="text-lg font-bold text-marketing-text pt-3">

@@ -4,7 +4,7 @@ import Breadcrumbs from '../components/common/Breadcrumbs.astro';
 import WorkspaceApp from '../components/workspace/WorkspaceApp.astro';
 import FaqAccordion from '../components/common/FaqAccordion.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
-import { buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
+import { buildSoftwareApplicationSchema } from '../lib/seo/schemaGenerator';
 
 const route = '/white-label-client-gallery';
 const meta = METADATA_REGISTRY[route];
@@ -35,7 +35,6 @@ const schemas = [
     'Custom-branded, serverless client photo proofing portals with custom studio logos and colors.',
     route
   ),
-  buildFAQSchema(faqs)
 ];
 ---
 

@@ -7,7 +7,7 @@ import SeoRelatedLinks from '../components/common/SeoRelatedLinks.astro';
 import Icon from '../components/common/Icon.astro';
 import HighlightText from '../components/ui/HighlightText.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
-import { buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
+import { buildSoftwareApplicationSchema } from '../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/batch-photo-tools'] || {
   title: 'Batch Photo Tools — Local Image Renamer, EXIF Extractor & Converter',
@@ -48,7 +48,6 @@ const schemas = [
     meta.description,
     'https://makecontactsheet.com/batch-photo-tools'
   ),
-  buildFAQSchema(faqs),
 ];
 ---
 
@@ -69,10 +68,10 @@ const schemas = [
           <span>100% IN-BROWSER PRIVATE SUITE</span>
         </div>
         <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
-          <HighlightText variant="lime">Batch Photo Tools</HighlightText> &amp; File Operations
+          Free <HighlightText variant="lime">Batch Photo Tools</HighlightText> &amp; Operations
         </h1>
         <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
-          Streamline your photography proofing workflow. Batch rename images with dynamic token recipes, inspect technical camera EXIF metadata, and convert image formats directly in your browser with zero server uploads.
+          Streamline your photography proofing workflow. Batch rename photos with dynamic token recipes, inspect technical camera EXIF metadata, and convert image formats directly in your browser with zero server uploads.
         </p>
 
         <div class="mt-6 flex flex-wrap items-center gap-3">

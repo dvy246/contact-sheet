@@ -4,7 +4,7 @@ import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
 import FaqAccordion from '../../components/common/FaqAccordion.astro';
 import Icon from '../../components/common/Icon.astro';
 import { METADATA_REGISTRY } from '../../lib/seo/metadata';
-import { buildHowToSchema, buildFAQSchema } from '../../lib/seo/schemaGenerator';
+import { buildHowToSchema } from '../../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/guides/how-to-make-photo-collage'];
 
@@ -54,11 +54,10 @@ const breadcrumbs = [
 
 const schemas = [
   buildHowToSchema(
-    'How to Make a Photo Collage Online',
+    'How to Make a Photo Collage Online — Step-by-Step Tutorial',
     meta.description,
     steps
   ),
-  buildFAQSchema(faqs),
 ];
 ---
 

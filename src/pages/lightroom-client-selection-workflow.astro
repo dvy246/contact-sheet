@@ -4,7 +4,7 @@ import Breadcrumbs from '../components/common/Breadcrumbs.astro';
 import WorkspaceApp from '../components/workspace/WorkspaceApp.astro';
 import FaqAccordion from '../components/common/FaqAccordion.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
-import { buildSoftwareApplicationSchema, buildFAQSchema, buildHowToSchema } from '../lib/seo/schemaGenerator';
+import { buildSoftwareApplicationSchema, buildHowToSchema } from '../lib/seo/schemaGenerator';
 
 const route = '/lightroom-client-selection-workflow';
 const meta = METADATA_REGISTRY[route];
@@ -54,7 +54,6 @@ const schemas = [
     'Browser-based workspace generating Lightroom XMP sidecars from client proof selections.',
     route
   ),
-  buildFAQSchema(faqs),
   buildHowToSchema(
     'Sync Client Photo Selections into Lightroom with XMP Sidecars',
     'Learn the zero-click workflow to bring client photo selections directly into your RAW processor.',
