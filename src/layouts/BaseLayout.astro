@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import GlobalAtmosphere from '../components/common/GlobalAtmosphere.astro';
 
 interface Props {
   title?: string;
@@ -83,7 +84,8 @@ const ogImageUrl = 'https://makecontactsheet.com/og-image.png';
 
     <slot name="head" />
   </head>
-  <body class="bg-marketing-bg text-marketing-text selection:bg-accent selection:text-white antialiased w-full min-w-0 overflow-x-hidden">
+  <body class="bg-marketing-bg text-marketing-text selection:bg-accent selection:text-white antialiased w-full min-w-0 overflow-x-hidden relative">
+    <GlobalAtmosphere />
     <slot />
   </body>
 </html>
