@@ -1,0 +1,242 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../components/common/Breadcrumbs.astro';
+import FaqAccordion from '../components/common/FaqAccordion.astro';
+import Icon from '../components/common/Icon.astro';
+import { METADATA_REGISTRY } from '../lib/seo/metadata';
+import { buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
+
+const meta = METADATA_REGISTRY['/mood-board-maker'] || {
+  title: 'Free Mood Board Maker — Visual Photo Concept & Lookbook Studio',
+  description: 'Design aesthetic photo mood boards, concept boards, and fashion lookbooks online. Freeform canvas with drag-and-drop, snapping guides, color swatches, and 300 DPI exports. 100% private.',
+  canonical: 'https://makecontactsheet.com/mood-board-maker',
+  robots: 'index, follow',
+  ogType: 'website',
+  schemaType: ['SoftwareApplication', 'FAQPage', 'BreadcrumbList'],
+};
+
+const faqs = [
+  {
+    question: 'How do I create a photo mood board in Make Contact Sheet?',
+    answer: 'Simply drag and drop your inspiration photos directly onto the canvas. You can freely position, resize, rotate, and layer images, add typographic text notes and color swatches, and align elements using real-time magnetic snapping guides. When you are finished, export your high-resolution mood board as a PNG, JPEG, or 300 DPI print-ready PDF.',
+  },
+  {
+    question: 'Are my inspiration photos uploaded to any server?',
+    answer: 'No. Just like our contact sheet and collage tools, the Mood Board Maker operates 100% locally in your web browser. Your images, notes, color swatches, and compositions never leave your device.',
+  },
+  {
+    question: 'Can I add custom color palettes and text annotations?',
+    answer: 'Yes! You can add customizable color swatch pills, sticky notes, headlines, and captions alongside your photos to communicate color harmonies, lighting references, wardrobe cues, and aesthetic direction.',
+  },
+  {
+    question: 'What canvas aspect ratios and export resolutions are supported?',
+    answer: 'You can choose from standard presentation aspect ratios including 16:9 widescreen, 4:3 presentation, 1:1 square, 9:16 mobile story, or custom pixel dimensions. Exports are generated at full high-DPI resolution (up to 4K / 300 DPI) for razor-sharp client presentations and studio printouts.',
+  },
+  {
+    question: 'Is Make Contact Sheet free to use?',
+    answer: 'Yes. The Mood Board Maker is completely free to use with no account signups, subscriptions, or watermarks on your exports.',
+  },
+];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Mood Board Maker' },
+];
+
+const schemas = [
+  buildSoftwareApplicationSchema(
+    'Free Mood Board Maker',
+    meta.description,
+    'https://makecontactsheet.com/mood-board-maker'
+  ),
+  buildFAQSchema(faqs),
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+  schema={schemas}
+>
+  <!-- Page Header Banner -->
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-accent-ink font-bold mb-3">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>100% PRIVATE FREEFORM CANVAS</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
+          Free Photography Mood Board Maker
+        </h1>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          Curate aesthetic visual stories, lighting concepts, and fashion lookbooks. Arrange images on a tactile freeform canvas with magnetic snapping guides, color swatches, typographic notes, and 300 DPI exports.
+        </p>
+
+        <div class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="#moodboard-workbench"
+            class="inline-flex items-center gap-2 h-10 px-5 rounded-full bg-accent hover:bg-accent-hover text-white font-semibold text-xs sm:text-sm tracking-tight shadow-sm hover:shadow active:scale-[0.98] transition-all"
+          >
+            <Icon name="image" size={14} />
+            <span>Launch Mood Board Studio</span>
+          </a>
+          <a
+            href="/photo-collage-maker"
+            class="inline-flex items-center gap-2 h-10 px-5 rounded-full bg-marketing-surface hover:bg-marketing-surface-hover text-marketing-text font-semibold text-xs sm:text-sm border border-marketing-border transition-colors"
+          >
+            <Icon name="layout" size={14} />
+            <span>Photo Collage Maker</span>
+          </a>
+          <a
+            href="/studio/contact-sheet"
+            class="inline-flex items-center gap-2 h-10 px-5 rounded-full bg-marketing-surface hover:bg-marketing-surface-hover text-marketing-text font-semibold text-xs sm:text-sm border border-marketing-border transition-colors"
+          >
+            <Icon name="maximize" size={14} />
+            <span>Contact Sheet Studio</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Mood Board Workbench Shell -->
+  <section id="moodboard-workbench" class="py-10 sm:py-14 lg:py-16 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div id="moodboard-app-root" class="rounded-2xl overflow-hidden border border-workspace-border shadow-2xl bg-workspace-bg min-h-[620px] flex flex-col">
+        <!-- Studio Top Bar Chrome -->
+        <div class="px-4 py-2.5 bg-workspace-panel border-b border-workspace-border flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 rounded-full bg-rose-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+          </div>
+          <div class="text-[11px] font-mono text-workspace-muted font-medium">Make Contact Sheet · Mood Board Studio</div>
+          <div class="w-12"></div>
+        </div>
+
+        <!-- Initial Placeholder / Mounting Target -->
+        <div class="flex-1 flex flex-col items-center justify-center p-8 sm:p-12 text-center space-y-4">
+          <div class="w-16 h-16 rounded-2xl bg-marketing-surface border border-marketing-border flex items-center justify-center text-accent shadow-sm">
+            <Icon name="image" size={32} />
+          </div>
+          <div class="max-w-md space-y-2">
+            <h2 class="text-lg sm:text-xl font-bold text-workspace-text">Tactile Visual Mood Board Studio</h2>
+            <p class="text-xs sm:text-sm text-workspace-muted leading-relaxed">
+              Drag and drop inspiration photos to assemble your board, or choose a curated template from the sidebar to kickstart your creative vision.
+            </p>
+          </div>
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-accent/10 border border-accent/20 text-accent text-xs font-medium">
+            <Icon name="shield" size={14} />
+            <span>100% Client-Side Processing · Zero Cloud Uploads</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Editorial Pillars & Creative Direction Guide -->
+  <section class="py-14 sm:py-20 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="max-w-3xl mb-12">
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight mb-3">
+          Visual Direction Crafted for Photographers &amp; Art Directors
+        </h2>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          A compelling mood board establishes tone, palette, and composition before the first shutter clicks. Make Contact Sheet provides an unconstrained freeform workspace designed specifically for creative production workflows.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        
+        <!-- Pillar 1: Freeform Canvas -->
+        <div class="p-6 rounded-2xl bg-marketing-surface border border-marketing-border space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent">
+            <Icon name="crop" size={20} />
+          </div>
+          <h3 class="text-base font-bold text-marketing-text">Freeform Canvas &amp; Snapping</h3>
+          <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
+            Freely position, scale, rotate, and layer visual assets. Magnetic snapping guides ensure precise element-to-element alignment without rigid grid constraints.
+          </p>
+        </div>
+
+        <!-- Pillar 2: Palettes & Annotations -->
+        <div class="p-6 rounded-2xl bg-marketing-surface border border-marketing-border space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent">
+            <Icon name="columns" size={20} />
+          </div>
+          <h3 class="text-base font-bold text-marketing-text">Color Palettes &amp; Notes</h3>
+          <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
+            Add harmonic color swatch pills, typography labels, and sticky notes to capture mood, lighting instructions, wardrobe references, and styling notes.
+          </p>
+        </div>
+
+        <!-- Pillar 3: Studio Print Exports -->
+        <div class="p-6 rounded-2xl bg-marketing-surface border border-marketing-border space-y-3">
+          <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent">
+            <Icon name="download" size={20} />
+          </div>
+          <h3 class="text-base font-bold text-marketing-text">High-DPI 300 DPI Export</h3>
+          <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
+            Export uncompressed high-resolution PNGs, web-optimized JPEGs, or multi-page presentation PDFs ready for client pitches, creative decks, and studio wall prints.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Links to Related Guides & Tools -->
+      <div class="p-6 sm:p-8 rounded-2xl bg-marketing-bg border border-marketing-border space-y-4 mb-16 transition-colors">
+        <h3 class="text-base font-bold text-marketing-text">Explore Workspace Tools &amp; Layout Guides</h3>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5 text-xs">
+          <li>
+            <a href="/photo-collage-maker" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
+              <Icon name="layout" size={14} class="text-marketing-muted" />
+              <span>Photo Collage Maker</span>
+            </a>
+          </li>
+          <li>
+            <a href="/collage-templates" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
+              <Icon name="crop" size={14} class="text-marketing-muted" />
+              <span>Collage Templates (18 Layouts)</span>
+            </a>
+          </li>
+          <li>
+            <a href="/photo-contact-sheet-maker" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
+              <Icon name="grid" size={14} class="text-marketing-muted" />
+              <span>Photo Contact Sheet Maker</span>
+            </a>
+          </li>
+          <li>
+            <a href="/contact-sheet-template" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
+              <Icon name="columns" size={14} class="text-marketing-muted" />
+              <span>Contact Sheet Templates (21 Presets)</span>
+            </a>
+          </li>
+          <li>
+            <a href="/batch-photo-tools" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
+              <Icon name="file-text" size={14} class="text-marketing-muted" />
+              <span>Batch Photo Renamer &amp; EXIF</span>
+            </a>
+          </li>
+          <li>
+            <a href="/guides/how-to-make-photo-collage" class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
+              <Icon name="image" size={14} class="text-marketing-muted" />
+              <span>How to Make a Photo Collage Online</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="max-w-3xl">
+        <h2 class="text-xl sm:text-2xl font-bold text-marketing-text mb-6">Frequently Asked Questions</h2>
+        <FaqAccordion faqs={faqs} />
+      </div>
+
+    </div>
+  </section>
+</MarketingLayout>

@@ -1,6 +1,6 @@
 export type ReviewStatus = 'unreviewed' | 'keep' | 'reject' | 'flag';
 
-export type WorkspaceMode = 'contact-sheet' | 'collage';
+export type WorkspaceMode = 'contact-sheet' | 'collage' | 'mood-board';
 
 export type PageSize = 'a4' | 'letter' | '16-9' | 'auto' | 'square' | 'story' | 'custom';
 
@@ -262,3 +262,69 @@ export interface FilenameExportOptions {
   format?: 'newline' | 'comma' | 'space';
   delimiter?: string;
 }
+
+export type MoodBoardElementType = 'image' | 'text' | 'shape' | 'note' | 'swatch';
+
+export interface MoodBoardElementCrop {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+export interface MoodBoardElement {
+  id: string;
+  type: MoodBoardElementType;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  rotation: number;
+  zIndex: number;
+  opacity: number;
+  content?: string;
+  imageItemId?: string;
+  fit?: ImageFit;
+  crop?: MoodBoardElementCrop;
+  borderRadius?: number;
+  borderWidth?: number;
+  borderColor?: string;
+  shadow?: boolean;
+  fontSize?: number;
+  fontFamily?: string;
+  fontWeight?: string | number;
+  textAlign?: 'left' | 'center' | 'right';
+  color?: string;
+  backgroundColor?: string;
+  label?: string;
+}
+
+export interface MoodBoardCanvasConfig {
+  width: number;
+  height: number;
+  backgroundColor: string;
+  backgroundPattern?: 'none' | 'dots' | 'grid';
+  showGrid: boolean;
+  snapToGrid: boolean;
+  snapToElements: boolean;
+  gridSize: number;
+  zoom: number;
+  panX: number;
+  panY: number;
+}
+
+export interface MoodBoardTemplate {
+  id: string;
+  name: string;
+  description: string;
+  category?: 'editorial' | 'concept' | 'film' | 'lookbook' | 'minimal';
+  canvas: Partial<MoodBoardCanvasConfig>;
+  elements: Omit<MoodBoardElement, 'id'>[];
+}
+
+export interface MoodBoardState {
+  config: MoodBoardCanvasConfig;
+  elements: MoodBoardElement[];
+  selectedIds: string[];
+}
+
