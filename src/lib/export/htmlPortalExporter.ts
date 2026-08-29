@@ -1083,6 +1083,17 @@ export function generateClientProofingPortalHtml(
   <!-- Interactive Portal Client Application -->
   <script>
     (function() {
+      // Security: HTML entity escaping helper for client-side rendering
+      function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
       // 1. Data Initialization & Storage Relinking
       const rawDataEl = document.getElementById('portal-data');
       let portalData = { images: [], config: {}, title: 'Proofing Gallery' };
@@ -1216,10 +1227,17 @@ export function generateClientProofingPortalHtml(
           else if (status === 'flag') statusBadge = '<span class="status-pill flag">Flagged</span>';
           else if (status === 'reject') statusBadge = '<span class="status-pill reject">Rejected</span>';
 
+          const safeName = escapeHtml(img.name);
+          const safeDisplayLabel = escapeHtml(img.customLabel || img.name);
+          const safeNotes = escapeHtml(img.notes || '');
+          const safeThumbUrl = img.thumbnailDataUrl && (img.thumbnailDataUrl.startsWith('data:image/') || img.thumbnailDataUrl.startsWith('blob:'))
+            ? img.thumbnailDataUrl
+            : '';
+
           return \`
             <div class="photo-card" data-idx="\${globalIdx}" data-status="\${status}">
               <div class="thumb-wrapper" onclick="window.openLightbox(\${globalIdx})">
-                <img class="thumb-img" src="\${img.thumbnailDataUrl || ''}" alt="\${img.name}" loading="lazy">
+                <img class="thumb-img" src="\${safeThumbUrl}" alt="\${safeName}" loading="lazy">
                 <div class="card-badges">
                   <span class="index-badge">#\${globalIdx + 1}</span>
                   \${statusBadge}
@@ -1227,7 +1245,7 @@ export function generateClientProofingPortalHtml(
               </div>
               <div class="card-body">
                 <div class="card-header-row">
-                  <div class="photo-title" title="\${img.name}">\${img.customLabel || img.name}</div>
+                  <div class="photo-title" title="\${safeName}">\${safeDisplayLabel}</div>
                   <div class="star-rating" data-idx="\${globalIdx}">\${starsHtml}</div>
                 </div>
 
@@ -1246,7 +1264,7 @@ export function generateClientProofingPortalHtml(
                   </button>
                 </div>
 
-                <textarea class="note-input" data-idx="\${globalIdx}" placeholder="Add feedback or retouch notes...">\${img.notes || ''}</textarea>
+                <textarea class="note-input" data-idx="\${globalIdx}" placeholder="Add feedback or retouch notes...">\${safeNotes}</textarea>
               </div>
             </div>
           \`;

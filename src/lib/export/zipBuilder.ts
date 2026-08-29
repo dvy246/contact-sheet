@@ -11,29 +11,31 @@ export class ZipBuilder {
    * @param content File contents as a string (UTF-8) or Uint8Array
    */
   addFile(filename: string, content: string | Uint8Array) {
+    // Security: sanitize filename against Zip Slip / path traversal
+    const safeName = filename
+      .replace(/^(\.\.[\/\\])+/, '')
+      .replace(/[\/\\]+/g, '_')
+      .replace(/[<>:"|?*\x00-\x1F]/g, '_')
+      .trim() || 'file';
+
     let data: Uint8Array;
     if (typeof content === 'string') {
       data = new TextEncoder().encode(content);
     } else {
       data = content;
     }
-    this.files.push({ name: filename, data });
+    this.files.push({ name: safeName, data });
   }
 
   /**
-   * Computes a standard CRC32 checksum.
+   * Computes a standard IEEE 802.3 CRC-32 checksum.
    */
   private crc32(data: Uint8Array): number {
     let crc = 0xffffffff;
     for (let i = 0; i < data.length; i++) {
-      let b = data[i];
+      crc ^= data[i];
       for (let j = 0; j < 8; j++) {
-        if ((crc ^ b) & 1) {
-          crc = (crc >>> 1) ^ 0xedb88320;
-        } else {
-          crc = crc >>> 1;
-        }
-        b >>>= 1;
+        crc = (crc >>> 1) ^ ((crc & 1) ? 0xedb88320 : 0);
       }
     }
     return (crc ^ 0xffffffff) >>> 0;

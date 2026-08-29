@@ -5,55 +5,63 @@ import FaqAccordion from '../../components/common/FaqAccordion.astro';
 import Icon from '../../components/common/Icon.astro';
 import HighlightText from '../../components/ui/HighlightText.astro';
 import { METADATA_REGISTRY } from '../../lib/seo/metadata';
-import { buildHowToSchema } from '../../lib/seo/schemaGenerator';
+import { buildHowToSchema, buildFAQSchema } from '../../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/guides/how-to-make-a-mood-board'];
 
 const steps = [
   {
-    name: 'Define your creative concept and visual theme',
-    text: 'Clarify the mood, emotional tone, and aesthetic direction before gathering imagery—whether you are creating an editorial fashion shoot, analog 35mm story, or clean minimalist lookbook.',
+    name: 'Define your creative concept and visual thesis',
+    text: 'Clarify the narrative premise, emotional tone, and aesthetic direction before gathering imagery—whether planning an editorial fashion campaign, cinematic film lookbook, analog 35mm portrait series, or minimalist architectural study.',
   },
   {
-    name: 'Curate a focused set of reference photographs',
-    text: 'Gather 4 to 8 high-impact images covering your hero framing, lighting atmosphere, pose studies, and texture macros. Drag them into the Make Contact Sheet canvas workbench.',
+    name: 'Curate a disciplined set of reference photographs',
+    text: 'Gather 4 to 8 high-impact reference images covering hero framing, lighting atmosphere, pose studies, and texture macros. Drag them into the Make Contact Sheet freeform canvas light-table.',
   },
   {
-    name: 'Extract and arrange a cohesive color palette',
-    text: 'Add designer color swatches sampled from your core imagery. Label each swatch with hex color codes and descriptive names to guide lighting gels, wardrobe, and post-production color grading.',
+    name: 'Extract and arrange a cohesive designer color palette',
+    text: 'Add designer color swatch cards sampled from your core imagery. Label each swatch with exact hex color codes and descriptive tonal names to guide set design, lighting gels, wardrobe, and post-production color grading.',
   },
   {
-    name: 'Add actionable styling and lighting notes',
-    text: 'Place sticky notes or text callouts specifying key technical directives: key-to-fill light ratios, hair and makeup requirements, prop lists, and camera lens selections.',
+    name: 'Annotate actionable styling, lighting, and camera notes',
+    text: 'Place stylist sticky notes or typographic directives detailing key technical instructions: key-to-fill light ratios, modifier selections (octabox vs beauty dish), hair/makeup specifications, and lens choices (e.g. 85mm f/1.4).',
   },
   {
-    name: 'Export high-resolution PDF or PNG handoffs',
-    text: 'Download a crisp 300 DPI PDF presentation or lossless PNG. Share with models, stylists, clients, and assistants to align the whole production before shoot day.',
+    name: 'Export calibrated 300 DPI PDF or lossless PNG handoffs',
+    text: 'Download a crisp 300 DPI multi-page PDF presentation or lossless 4K PNG. Optionally apply local PDF password protection before sharing with clients, models, stylists, and assistants to align the whole production crew prior to shoot day.',
   },
 ];
 
 const faqs = [
   {
-    question: 'What is the purpose of a photography mood board?',
-    answer: 'A visual concept sheet acts as the central aesthetic reference for a creative shoot. It aligns photographers, models, art directors, wardrobe stylists, and hair/makeup artists on lighting ratios, color palettes, poses, and atmosphere before shooting begins.',
+    question: 'What is the primary purpose of a photography mood board in pre-production?',
+    answer: 'A visual mood board serves as the central aesthetic contract for a creative production. It aligns photographers, models, art directors, wardrobe stylists, and hair/makeup artists on lighting ratios, color palettes, poses, and atmospheric tone before shooting begins, ensuring zero wasted time on set.',
   },
   {
-    question: 'What should be included in a professional direction board?',
-    answer: 'A comprehensive layout typically includes 1–2 hero anchor images, detail/texture photos, 3–5 labeled color swatches, lighting ratio notes, wardrobe/styling requirements, and technical camera or film stock notes.',
+    question: 'What core elements must be included on a professional direction board?',
+    answer: 'A comprehensive layout typically contains: 1–2 prominent hero anchor images, 2–4 supporting detail/texture shots, a 3–5 swatch color palette with hex values, technical lighting notes (key-to-fill ratios, modifier types), hair and makeup directives, and camera/film stock notes.',
   },
   {
-    question: 'How do I choose the right canvas aspect ratio?',
-    answer: 'Use 16:9 widescreen for iPad and monitor presentations, 4:3 for desktop slide decks, A4/US Letter for physical print handouts on set, and 9:16 for mobile phone lookbooks.',
+    question: 'How do I choose the right canvas aspect ratio for client presentations?',
+    answer: 'Use 16:9 widescreen (1920 × 1080 or 3840 × 2160) for monitor pitches and iPad presentations, 4:3 for desktop slide decks, A4 or US Letter for physical print handouts on set, and 9:16 for vertical mobile lookbooks and Instagram story decks.',
   },
   {
-    question: 'Can I protect creative files before sharing with clients?',
-    answer: 'Yes! Make Contact Sheet allows you to export password-protected PDFs locally in your browser so confidential creative direction remains secure.',
+    question: 'Can I export password-protected PDF mood boards for confidential client work?',
+    answer: 'Yes. Make Contact Sheet includes a client-side encryption engine that allows you to set secure user passwords for exported PDF mood boards directly in your browser without uploading files to third-party servers.',
+  },
+  {
+    question: 'How does Make Contact Sheet differ from Pinterest or generic design tools like Canva?',
+    answer: 'Unlike Pinterest (which is a public link aggregator) or Canva (which requires accounts and compresses uploads into the cloud), Make Contact Sheet is a private, client-side studio instrument specifically built for photographers with magnetic snapping, calibrated 300 DPI rendering, designer swatch cards, and zero cloud uploads.',
+  },
+  {
+    question: 'How many reference images should be on a single mood board canvas?',
+    answer: 'The most effective mood boards maintain strict editorial restraint, utilizing 4 to 8 carefully chosen photographs. Overcrowding a board with 20+ images creates visual confusion and dilutes the clarity of your lighting and styling direction.',
   },
 ];
 
 const breadcrumbs = [
   { name: 'Home', url: '/' },
-  { name: 'Guides', url: '/guides/how-to-make-a-contact-sheet' },
+  { name: 'Guides', url: '/guides/how-to-make-a-mood-board' },
   { name: 'How to Make a Mood Board' },
 ];
 
@@ -63,6 +71,7 @@ const schemas = [
     meta.description,
     steps
   ),
+  buildFAQSchema(faqs),
 ];
 ---
 
@@ -75,106 +84,203 @@ const schemas = [
   schema={schemas}
 >
   <article class="py-12 sm:py-16 bg-marketing-panel border-b border-marketing-border transition-colors">
-    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-8">
+    <div class="max-w-[840px] mx-auto px-4 sm:px-6 space-y-10">
       
       <Breadcrumbs items={breadcrumbs} />
 
       <header class="space-y-4">
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-[1.2]">
-          How to Make a Mood Board: <HighlightText variant="pink">Step-by-Step Photography Guide</HighlightText>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-accent"></span>
+          <span>CREATIVE DIRECTION GUIDE · 9 MIN READ</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-[1.15]">
+          How to Make a Mood Board: <HighlightText variant="pink">Step-by-Step Direction Guide</HighlightText>
         </h1>
-        <p class="text-base text-marketing-muted leading-relaxed">
-          Learn how to structure compelling visual direction boards with photographic references, curated color swatches, and technical shoot directives.
+        <p class="text-base sm:text-lg text-marketing-muted leading-relaxed">
+          Master the art of visual pre-production. Learn how to structure compelling mood boards, extract harmonized color swatches, formulate technical lighting directives, and export 300 DPI presentation decks.
         </p>
       </header>
 
       <!-- Direct Answer / AEO Definition Block -->
-      <div class="p-6 rounded-2xl bg-accent/10 border border-accent/30 text-marketing-text space-y-2">
-        <div class="text-xs font-bold uppercase tracking-wider text-accent-ink font-mono">Direct Answer</div>
-        <p class="text-sm leading-relaxed font-medium">
-          To make a mood board for photography or visual direction, establish a core aesthetic concept, curate 4–8 reference photos (hero framing, lighting, textures), add a 3–5 swatch color palette with hex codes, annotate with actionable styling notes, and export a print-ready 300 DPI PDF or PNG directly in your browser.
+      <div class="p-6 sm:p-7 rounded-2xl bg-accent/10 border border-accent/30 text-marketing-text space-y-2.5">
+        <div class="text-xs font-bold uppercase tracking-wider text-accent-ink font-mono">Direct Answer / Methodology Summary</div>
+        <p class="text-sm sm:text-base leading-relaxed font-medium">
+          To make a professional mood board for photography or creative direction: establish a focused visual thesis, curate 4–8 high-impact reference images (hero framing, lighting, texture macros), extract a 3–5 swatch color palette with exact hex codes, annotate technical lighting and wardrobe directives using sticky notes, and export a calibrated 300 DPI PDF or lossless 4K PNG. In <strong>Make Contact Sheet</strong>, this entire process executes in your browser with magnetic snapping guides, zero account signups, and 100% local privacy.
         </p>
       </div>
 
-      <!-- Step-by-Step Guide -->
-      <div class="space-y-8 pt-4">
-        <h2 class="text-2xl font-bold text-marketing-text">
-          5 Steps to Build a Polished Visual Direction Sheet
+      <!-- Main Step-by-Step Guide -->
+      <section class="space-y-6 pt-2">
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+          5 Steps to Build a Client-Ready Visual Mood Board
         </h2>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          Follow this structured pre-production workflow to align creative teams, agency clients, and on-set talent before production begins:
+        </p>
 
-        <div class="space-y-6">
+        <div class="space-y-4">
           {steps.map((step, idx) => (
-            <div class="flex gap-4 p-5 rounded-xl border border-marketing-border bg-marketing-bg transition-colors">
-              <div class="w-8 h-8 rounded-lg bg-accent text-white flex-shrink-0 flex items-center justify-center font-bold text-sm">
+            <div class="flex items-start gap-4 p-5 sm:p-6 rounded-2xl border border-marketing-border bg-marketing-bg shadow-xs transition-colors">
+              <div class="w-9 h-9 rounded-xl bg-accent text-white flex-shrink-0 flex items-center justify-center font-bold text-sm shadow-xs mt-0.5">
                 {idx + 1}
               </div>
-              <div class="space-y-1">
+              <div class="space-y-1.5 flex-1">
                 <h3 class="text-base font-bold text-marketing-text">{step.name}</h3>
-                <p class="text-sm text-marketing-muted leading-relaxed">{step.text}</p>
+                <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{step.text}</p>
               </div>
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
-      <!-- Composition & Direction Principles -->
-      <div class="space-y-6 pt-6 border-t border-marketing-border text-sm text-marketing-text/90 leading-relaxed prose-measure">
-        <h2 class="text-2xl font-bold text-marketing-text">
-          Essential Anatomy of an Effective Visual Board
-        </h2>
+      <!-- Deep Dive Educational Sections -->
+      <section class="space-y-8 pt-6 border-t border-marketing-border text-sm sm:text-base text-marketing-muted leading-relaxed">
         
-        <h3 class="text-lg font-bold text-marketing-text pt-2">
-          1. The Anchor Hero Image
-        </h3>
-        <p>
-          Every successful creative canvas requires a prominent visual anchor. This should be your largest, most evocative photograph that immediately communicates the overall atmosphere and lighting style. Surrounding images should then provide specific supporting context—such as makeup close-ups, fabric textures, or prop details.
-        </p>
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            The Strategic Role of Mood Boards in Commercial Photography
+          </h2>
+          <p>
+            In high-stakes commercial photoshoots, film productions, and editorial lookbooks, verbal descriptions are notoriously prone to subjective misinterpretation. A client requesting a <em>"moody, warm, editorial portrait"</em> might envision soft golden hour sunlight with vintage anamorphic flare, while the photographer might envision dramatic low-key chiaroscuro with hard tungsten rim lighting.
+          </p>
+          <p>
+            A disciplined mood board bridges this linguistic gap. It acts as an unambiguous visual contract between all key stakeholders:
+          </p>
+          <ul class="list-disc pl-5 space-y-2 text-marketing-text/90">
+            <li><strong>The Client &amp; Art Director:</strong> Confirms brand alignment, narrative pacing, and product placement before committing budget.</li>
+            <li><strong>The Photographer &amp; Gaffer:</strong> Sets concrete lighting ratios (e.g. 4:1 key-to-fill), modifier choices (parabolic umbrellas, fresnel spots), and camera angle perspectives.</li>
+            <li><strong>The Wardrobe &amp; Prop Stylist:</strong> Establishes fabric textures, garment silhouettes, and color palettes that complement the backdrop rather than clash.</li>
+            <li><strong>Hair &amp; Makeup Artists (HMUA):</strong> Defines skin finish (matte vs dewy), lip tones, and hair styling references with photographic precision.</li>
+          </ul>
+        </div>
 
-        <h3 class="text-lg font-bold text-marketing-text pt-3">
-          2. Cohesive Color Swatches &amp; Hex Codes
-        </h3>
-        <p>
-          Extracting a dedicated 3 to 5 tone palette prevents color clashing during the shoot. Including exact hex color values gives makeup artists and set designers concrete targets for lip shades, background seamless paper, and wardrobe fabrics.
-        </p>
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            Anatomy of an Effective Editorial Mood Board
+          </h2>
+          <p>
+            A high-craft mood board is not a random collage of Pinterest clippings. It follows a deliberate compositional architecture designed to guide the viewer's eye:
+          </p>
 
-        <h3 class="text-lg font-bold text-marketing-text pt-3">
-          3. Technical Lighting &amp; Directives Notes
-        </h3>
-        <p>
-          Clear typographic notes prevent miscommunication on set. Use sticky note elements to document key technical parameters: softbox diffusion sizes, rim light intensity, camera focal lengths, and model pose inspirations.
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-4">
+            <div class="p-5 rounded-2xl bg-marketing-surface border border-marketing-border space-y-2">
+              <div class="text-xs font-mono font-bold text-accent-ink uppercase">Element 1</div>
+              <h3 class="text-base font-bold text-marketing-text">The Hero Anchor Frame</h3>
+              <p class="text-xs text-marketing-muted leading-relaxed">
+                The largest photograph on the canvas (occupying ~40% of the visual weight). This image instantly establishes the primary mood, subject energy, and lighting style of the concept.
+              </p>
+            </div>
+            <div class="p-5 rounded-2xl bg-marketing-surface border border-marketing-border space-y-2">
+              <div class="text-xs font-mono font-bold text-accent-ink uppercase">Element 2</div>
+              <h3 class="text-base font-bold text-marketing-text">Supporting Detail &amp; Texture Callouts</h3>
+              <p class="text-xs text-marketing-muted leading-relaxed">
+                2 to 4 complementary images displaying macro fabric weaves, jewelry accents, background textures, or pose variations that contextualize the hero frame.
+              </p>
+            </div>
+            <div class="p-5 rounded-2xl bg-marketing-surface border border-marketing-border space-y-2">
+              <div class="text-xs font-mono font-bold text-accent-ink uppercase">Element 3</div>
+              <h3 class="text-base font-bold text-marketing-text">Designer Swatch Palette with Hex Values</h3>
+              <p class="text-xs text-marketing-muted leading-relaxed">
+                A dedicated row of 3 to 5 color cards sampled directly from the scene. Displaying hex codes (e.g. #D97706, #261B17) gives set painters and stylists exact target colors.
+              </p>
+            </div>
+            <div class="p-5 rounded-2xl bg-marketing-surface border border-marketing-border space-y-2">
+              <div class="text-xs font-mono font-bold text-accent-ink uppercase">Element 4</div>
+              <h3 class="text-base font-bold text-marketing-text">Technical Directives &amp; Sticky Notes</h3>
+              <p class="text-xs text-marketing-muted leading-relaxed">
+                Concise typographic notes specifying technical parameters: key light height, diffusion density, gel colors, lens focal lengths, and model direction notes.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            Choosing the Right Canvas Aspect Ratio &amp; Export Resolution
+          </h2>
+          <p>
+            The medium through which your mood board is viewed dictates the optimal canvas aspect ratio and resolution:
+          </p>
+
+          <div class="overflow-x-auto my-4 border border-marketing-border rounded-xl bg-marketing-surface shadow-xs">
+            <table class="w-full text-left text-xs sm:text-sm border-collapse">
+              <thead>
+                <tr class="bg-marketing-panel border-b border-marketing-border text-marketing-text font-bold">
+                  <th class="p-3 sm:p-4">Aspect Ratio</th>
+                  <th class="p-3 sm:p-4">Target Medium</th>
+                  <th class="p-3 sm:p-4">Recommended Dimensions</th>
+                  <th class="p-3 sm:p-4">Best Use Case</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-marketing-border text-marketing-text/90">
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold">16:9 Widescreen</td>
+                  <td class="p-3 sm:p-4">Monitors &amp; TVs</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">1920 × 1080 / 3840 × 2160</td>
+                  <td class="p-3 sm:p-4">Agency client pitch decks &amp; video treatments</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold">9:16 Vertical</td>
+                  <td class="p-3 sm:p-4">Smartphones &amp; Social</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">1080 × 1920 px</td>
+                  <td class="p-3 sm:p-4">Mobile lookbooks, TikTok &amp; IG Story mood guides</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold">A4 / US Letter</td>
+                  <td class="p-3 sm:p-4">Physical Print Handout</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">2480 × 3508 px (300 DPI)</td>
+                  <td class="p-3 sm:p-4">Laminated on-set lighting &amp; styling reference sheets</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold">1:1 Square</td>
+                  <td class="p-3 sm:p-4">Portfolio &amp; Feed</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">2048 × 2048 px</td>
+                  <td class="p-3 sm:p-4">Instagram grid aesthetic concepts &amp; album artwork</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Action CTA Box -->
+      <div class="p-8 sm:p-10 rounded-3xl bg-marketing-surface border border-marketing-border text-marketing-text text-center space-y-5 shadow-lg">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 text-[11px] font-mono font-bold text-accent-ink">
+          <span>FREE IN-BROWSER WORKBENCH</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">Ready to Design Your Mood Board?</h2>
+        <p class="text-sm text-marketing-muted max-w-lg mx-auto leading-relaxed">
+          Create unconstrained visual boards with magnetic snapping, designer swatches, and password-protected 300 DPI PDF exports. 100% private in your browser.
         </p>
+        <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+          <a 
+            href="/mood-board-maker#moodboard-workbench" 
+            class="inline-flex items-center gap-2 h-12 px-7 rounded-xl bg-accent hover:bg-accent-hover text-white font-bold text-sm tracking-tight shadow-md hover:shadow-lg active:scale-[0.98] transition-all cursor-pointer"
+          >
+            <span>Launch Mood Board Studio</span>
+            <Icon name="arrow-right" size={16} />
+          </a>
+          <a 
+            href="/mood-board-templates" 
+            class="inline-flex items-center gap-2 h-12 px-6 rounded-xl bg-marketing-bg hover:bg-marketing-surface text-marketing-text font-semibold text-sm border border-marketing-border transition-colors cursor-pointer"
+          >
+            <Icon name="layout" size={15} />
+            <span>Explore 10 Direction Presets</span>
+          </a>
+        </div>
       </div>
 
-      <!-- Quick Action Buttons -->
-      <div class="p-6 rounded-2xl bg-marketing-surface border border-marketing-border flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          <h3 class="font-bold text-base text-marketing-text">Ready to design your concept board?</h3>
-          <p class="text-xs text-marketing-muted mt-0.5">Start with a curated template or build from scratch in our private browser studio.</p>
+      <!-- FAQ Section -->
+      <section class="space-y-6 pt-6 border-t border-marketing-border">
+        <div class="space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">Frequently Asked Questions</h2>
+          <p class="text-sm text-marketing-muted">Expert guidance on visual direction boards, color curation, and pre-production alignment.</p>
         </div>
-        <div class="flex items-center gap-3 w-full sm:w-auto">
-          <a
-            href="/mood-board-templates"
-            class="py-2.5 px-4 rounded-xl bg-marketing-bg border border-marketing-border hover:border-accent/50 text-xs font-semibold text-marketing-text text-center flex-1 sm:flex-initial transition-all flex items-center justify-center gap-1.5"
-          >
-            <Icon name="layout" size={14} />
-            <span>Browse Templates</span>
-          </a>
-          <a
-            href="/mood-board-maker#moodboard-workbench"
-            class="py-2.5 px-4 rounded-xl bg-accent hover:bg-accent-hover text-white text-xs font-semibold text-center flex-1 sm:flex-initial transition-all flex items-center justify-center gap-1.5"
-          >
-            <span>Launch Studio</span>
-            <Icon name="arrow-right" size={14} />
-          </a>
-        </div>
-      </div>
-
-      <!-- FAQs -->
-      <div class="space-y-6 pt-6 border-t border-marketing-border">
-        <h2 class="text-2xl font-bold text-marketing-text">Frequently Asked Questions</h2>
         <FaqAccordion faqs={faqs} />
-      </div>
+      </section>
 
     </div>
   </article>
 </MarketingLayout>
+

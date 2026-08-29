@@ -1007,9 +1007,12 @@ export async function exportMoodBoardAsPDF(
   };
 
   if (options?.password && options.password.trim().length > 0) {
+    const secureOwnerSecret = (typeof crypto !== 'undefined' && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : Math.random().toString(36).slice(2) + Date.now().toString(36);
     pdfOptions.encryption = {
       userPassword: options.password,
-      ownerPassword: options.password,
+      ownerPassword: secureOwnerSecret,
       userPermissions: ['print', 'modify', 'copy', 'annot-forms'],
     };
   }

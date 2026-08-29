@@ -42,9 +42,13 @@ export async function exportContactSheetPagesToPDF(
   };
 
   if (options?.password) {
+    // Generate distinct random owner password so recipient with userPassword is bound by userPermissions
+    const secureOwnerSecret = (typeof crypto !== 'undefined' && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : Math.random().toString(36).slice(2) + Date.now().toString(36);
     pdfOptions.encryption = {
       userPassword: options.password,
-      ownerPassword: options.password,
+      ownerPassword: secureOwnerSecret,
       userPermissions: ['print', 'modify', 'copy', 'annot-forms'],
     };
   }
@@ -108,9 +112,13 @@ export async function exportCollageLayoutToPDF(
   };
 
   if (options?.password) {
+    // Generate distinct random owner password so recipient with userPassword is bound by userPermissions
+    const secureOwnerSecret = (typeof crypto !== 'undefined' && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : Math.random().toString(36).slice(2) + Date.now().toString(36);
     pdfOptions.encryption = {
       userPassword: options.password,
-      ownerPassword: options.password,
+      ownerPassword: secureOwnerSecret,
       userPermissions: ['print', 'modify', 'copy', 'annot-forms'],
     };
   }

@@ -3,42 +3,55 @@ import MarketingLayout from '../../layouts/MarketingLayout.astro';
 import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
 import FaqAccordion from '../../components/common/FaqAccordion.astro';
 import Icon from '../../components/common/Icon.astro';
+import HighlightText from '../../components/ui/HighlightText.astro';
 import { METADATA_REGISTRY } from '../../lib/seo/metadata';
-import { buildHowToSchema } from '../../lib/seo/schemaGenerator';
+import { buildHowToSchema, buildFAQSchema } from '../../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/guides/photo-proof-sheet-with-filenames'];
 
 const steps = [
   {
-    name: 'Import your batch into Make Contact Sheet',
-    text: 'Drag your camera files into Make Contact Sheet. The original camera filenames (such as DSC_4821.JPG or _MG_9022.CR3) are indexed and stored with zero risk of truncation.',
+    name: 'Import camera media with zero filename alteration',
+    text: 'Drag your camera shoot files directly into Make Contact Sheet. The browser engine indexes the exact source filenames (e.g. DSC_8941.NEF, _MG_1024.CR3, or DSC0491.ARW) with zero risk of truncation or arbitrary renaming.',
   },
   {
-    name: 'Enable filename and numbering labels',
-    text: 'Set the label configuration to "Index Number & Filename". This displays both a human-friendly sequence number (#12) and the exact file identifier below each thumbnail.',
+    name: 'Configure index badges and filename overlays',
+    text: 'Set the label configuration to "Index Number & Filename". This displays both a human-friendly sequential identifier (#01, #02) and the exact alphanumeric camera filename beneath each thumbnail frame.',
   },
   {
-    name: 'Export the client proof PDF',
-    text: 'Download a clean, branded multi-page PDF proof sheet to send to your client for initial review and image culling.',
+    name: 'Export the branded PDF proof package for client review',
+    text: 'Generate a clean, multi-page 300 DPI PDF document featuring your studio logo watermark and custom header text. Deliver this PDF to your client for initial image culling and selection.',
   },
   {
-    name: 'Import client selects into Lightroom or Capture One',
-    text: 'When your client returns their selections, mark those items in Make Contact Sheet and click "Export CSV / TXT List". Paste the comma-separated filename string directly into Lightroom\'s Library Filter (Text > Filename > Contains).',
+    name: 'Copy client selections and sync directly to Lightroom or Capture One',
+    text: 'When your client returns their selected numbers, mark those frames in Make Contact Sheet. Click "Export Selection List" to copy a comma-separated filename string or download Adobe XMP sidecar XMLs that instantly apply 5-star ratings and color labels inside Lightroom Classic.',
   },
 ];
 
 const faqs = [
   {
-    question: 'How do I use exported filenames in Adobe Lightroom?',
-    answer: 'In Lightroom Classic, open the Library module (shortcut G), press "\\" to open the Library Filter bar, click "Text", set the dropdown to "Filename -> Contains", and paste your exported filename list. Lightroom will instantly isolate only the client-approved photos.',
+    question: 'How do I paste exported filename lists into Adobe Lightroom Classic?',
+    answer: 'In Lightroom Classic, enter the Library Grid view (press G), press the "\\" key to open the Library Filter bar, click "Text", set the filter dropdown to "Filename -> Contains", and paste the comma-separated filename list exported from Make Contact Sheet. Lightroom will immediately isolate only the client-approved photos.',
   },
   {
-    question: 'Why do other online tools strip filenames?',
-    answer: 'Most consumer photo collage generators rename images sequentially (e.g. image_1.png) or discard file metadata during canvas upload. Make Contact Sheet is built specifically for photography workflows and strictly preserves all original filenames.',
+    question: 'Why do conventional consumer collage and cloud apps strip filenames?',
+    answer: 'Most consumer photo tools are designed for social media collages rather than professional asset pipelines. When uploading photos, they re-encode files into generic sequential strings (such as image_1.jpg) and discard EXIF headers. Make Contact Sheet is engineered specifically for photography workflows and strictly preserves all original camera identifiers.',
   },
   {
-    question: 'Can I export a list of only the "Kept" photos?',
-    answer: 'Yes. In the Make Contact Sheet export drawer, set the scope to "Kept Only" and select CSV or TXT format. It will generate a clean list containing only the approved files.',
+    question: 'Can I export a list containing only the client "Keep" selections?',
+    answer: 'Yes. In the Make Contact Sheet Export drawer, set the Export Scope dropdown to "Kept Only" and select CSV or TXT format. The tool will output a clean, filtered manifest containing solely the approved files.',
+  },
+  {
+    question: 'What is an Adobe XMP sidecar file and how does it speed up post-production?',
+    answer: 'An XMP sidecar is an industry-standard XML metadata file carrying the same basename as your RAW image (e.g. DSC_0012.xmp). When placed in the same folder as your RAW files, Lightroom Classic and Capture One automatically read the XMP sidecar to apply star ratings, color labels, and orientation flags without modifying the original RAW sensor data.',
+  },
+  {
+    question: 'How do I handle multi-camera shoots with duplicate file numbers (e.g. DSC_0001 from two bodies)?',
+    answer: 'Before generating client proofs, use our integrated Batch Photo Tools to apply a token rename recipe (e.g. {date}_{camera}_{index:03}). This guarantees unique, non-overlapping file identifiers across all cameras before client delivery.',
+  },
+  {
+    question: 'Can I include technical exposure settings alongside filenames on the proof sheet?',
+    answer: 'Yes. Enable the "EXIF Metadata Overlay" in Layout Controls to render camera model, focal length, aperture (f/stop), shutter speed, and ISO directly under each photo frame.',
   },
 ];
 
@@ -54,6 +67,7 @@ const schemas = [
     meta.description,
     steps
   ),
+  buildFAQSchema(faqs),
 ];
 ---
 
@@ -66,86 +80,191 @@ const schemas = [
   schema={schemas}
 >
   <article class="py-12 sm:py-16 bg-marketing-panel border-b border-marketing-border transition-colors">
-    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-8">
+    <div class="max-w-[840px] mx-auto px-4 sm:px-6 space-y-10">
       
       <Breadcrumbs items={breadcrumbs} />
 
       <header class="space-y-4">
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-[1.2]">
-          How to Create Photo Proof Sheets with Filenames Intact
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-accent"></span>
+          <span>POST-PRODUCTION WORKFLOW GUIDE · 8 MIN READ</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-[1.15]">
+          Photo Proof Sheets with Filenames: <HighlightText variant="lime">Complete Workflow Guide</HighlightText>
         </h1>
-        <p class="text-base text-marketing-muted leading-relaxed">
-          The complete workflow for photographers to eliminate client selection confusion, preserve original camera filenames, and automate post-shoot Lightroom culling.
+        <p class="text-base sm:text-lg text-marketing-muted leading-relaxed">
+          Eliminate client selection confusion forever. Learn how to generate filename-accurate proof sheets, automate Adobe Lightroom Classic culling, and deliver frictionless client selection handoffs.
         </p>
       </header>
 
       <!-- Direct Answer / AEO Definition Block -->
-      <div class="p-6 rounded-2xl bg-accent/10 border border-accent/30 text-marketing-text space-y-2">
-        <div class="text-xs font-bold uppercase tracking-wider text-accent-ink font-mono">Direct Answer</div>
-        <p class="text-sm leading-relaxed font-medium">
-          To create a photo proof sheet with filenames, import your image batch into Make Contact Sheet, enable the "Filename Only" or "Index & Filename" label option under Layout controls, and export as a multi-page PDF or PNG. Every thumbnail displays its verifiable camera filename, and you can export a CSV or TXT list of selected filenames for Lightroom culling.
+      <div class="p-6 sm:p-7 rounded-2xl bg-accent/10 border border-accent/30 text-marketing-text space-y-2.5">
+        <div class="text-xs font-bold uppercase tracking-wider text-accent-ink font-mono">Quick Answer / Core Protocol</div>
+        <p class="text-sm sm:text-base leading-relaxed font-medium">
+          To create a photo proof sheet with filenames intact: import your camera image folder into <strong>Make Contact Sheet</strong>, enable the "Index &amp; Filename" label preset, and export a multi-page 300 DPI PDF. When your client returns their selects, mark the approved frames in the workspace and export a filtered filename list (CSV/TXT) or Adobe XMP sidecar package to paste directly into Lightroom Classic or Capture One filters.
         </p>
       </div>
 
-      <!-- Step-by-Step Guide -->
-      <div class="space-y-8 pt-4">
-        <h2 class="text-2xl font-bold text-marketing-text">
+      <!-- Main Step-by-Step Guide -->
+      <section class="space-y-6 pt-2">
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
           The 4-Step Professional Handoff Workflow
         </h2>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          Follow this standardized post-shoot protocol to reduce client selection turnaround from days to minutes:
+        </p>
 
-        <div class="space-y-6">
+        <div class="space-y-4">
           {steps.map((step, idx) => (
-            <div class="flex gap-4 p-5 rounded-xl border border-marketing-border bg-marketing-bg transition-colors">
-              <div class="w-8 h-8 rounded-lg bg-accent text-white flex-shrink-0 flex items-center justify-center font-bold text-sm">
+            <div class="flex items-start gap-4 p-5 sm:p-6 rounded-2xl border border-marketing-border bg-marketing-bg shadow-xs transition-colors">
+              <div class="w-9 h-9 rounded-xl bg-accent text-white flex-shrink-0 flex items-center justify-center font-bold text-sm shadow-xs mt-0.5">
                 {idx + 1}
               </div>
-              <div class="space-y-1">
+              <div class="space-y-1.5 flex-1">
                 <h3 class="text-base font-bold text-marketing-text">{step.name}</h3>
-                <p class="text-sm text-marketing-muted leading-relaxed">{step.text}</p>
+                <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{step.text}</p>
               </div>
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
-      <!-- Professional Context -->
-      <div class="space-y-6 pt-6 border-t border-marketing-border text-sm text-marketing-text/90 leading-relaxed prose-measure">
-        <h2 class="text-2xl font-bold text-marketing-text">
-          The Problem with Traditional Client Photo Proofing
-        </h2>
-        <p>
-          Every working photographer knows the pain of client feedback via email: "We love the 4th photo in the second row, the one where the groom is smiling, and the photo near the bottom with the bouquet." Translating these subjective descriptions back into raw file numbers (e.g. DSC_8492.NEF) consumes hours of frustrating manual searching.
-        </p>
+      <!-- Deep Dive Educational Sections -->
+      <section class="space-y-8 pt-6 border-t border-marketing-border text-sm sm:text-base text-marketing-muted leading-relaxed">
+        
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            The Hidden Cost of Ambiguous Client Feedback
+          </h2>
+          <p>
+            Every working commercial, portrait, and wedding photographer has experienced the frustration of unorganized client feedback. After delivering an unindexed online gallery, clients frequently respond via email or messaging apps with vague descriptions:
+          </p>
+          <div class="p-4 rounded-xl bg-marketing-surface border-l-4 border-amber-500 text-xs sm:text-sm font-mono text-marketing-text/90 my-2">
+            "We love the 4th photo in the second row, the one where the bride is looking right, and the photo near the bottom with the cake."
+          </div>
+          <p>
+            Translating these subjective statements back into actual camera files (such as <code>_MG_9421.CR3</code> or <code>DSC_1084.NEF</code>) wastes billable hours, leads to incorrect file edits, and creates friction in the client relationship.
+          </p>
+          <p>
+            Delivering a proof sheet with verified filename labels and sequential index badges (#01, #02, #03) completely eliminates ambiguity. When a client replies with <em>"Please edit #04, #12, and #28"</em>, the photographer has an instant, mathematically exact reference.
+          </p>
+        </div>
 
-        <h3 class="text-lg font-bold text-marketing-text pt-3">
-          How Filename-Accurate Proof Sheets Solve This
-        </h3>
-        <p>
-          By sending a proof sheet where every thumbnail is clearly labeled with its index number and source filename, you establish an unambiguous common language with your client. When they reply with "Please edit #4, #18, and #22", you can mark those in Make Contact Sheet and instantly copy the exact filename string into Lightroom to begin editing immediately.
-        </p>
-      </div>
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            Understanding Camera Filename Structures Across Brands
+          </h2>
+          <p>
+            Professional digital cameras generate standardized alphanumeric naming sequences based on the Design Rule for Camera File System (DCF) standard:
+          </p>
+
+          <div class="overflow-x-auto my-4 border border-marketing-border rounded-xl bg-marketing-surface shadow-xs">
+            <table class="w-full text-left text-xs sm:text-sm border-collapse">
+              <thead>
+                <tr class="bg-marketing-panel border-b border-marketing-border text-marketing-text font-bold">
+                  <th class="p-3 sm:p-4">Camera Brand</th>
+                  <th class="p-3 sm:p-4">Standard sRGB Pattern</th>
+                  <th class="p-3 sm:p-4">Adobe RGB Pattern</th>
+                  <th class="p-3 sm:p-4">RAW Extension</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-marketing-border text-marketing-text/90">
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold">Canon EOS</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">IMG_0001.JPG</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">_MG_0001.CR3</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">.CR2 / .CR3</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold">Nikon Z / DSLR</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">DSC_0001.JPG</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">_DSC0001.NEF</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">.NEF / .NRW</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold">Sony Alpha</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">DSC00001.JPG</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">_DSC0001.ARW</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">.ARW</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold">Fujifilm X / GFX</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">DSCF0001.JPG</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">_DSF0001.RAF</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">.RAF</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Make Contact Sheet indexes the complete, unmodified string—including leading underscores used in Adobe RGB color profiles—ensuring zero broken search queries when syncing back to your raw catalog.
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            Lightroom Classic &amp; Capture One Integration Walkthrough
+          </h2>
+          <p>
+            Once your client provides their selection list, syncing those picks into your post-processing software requires only a single copy-paste operation:
+          </p>
+
+          <div class="p-6 rounded-2xl bg-marketing-surface border border-marketing-border space-y-4 my-3">
+            <h3 class="text-base font-bold text-marketing-text flex items-center gap-2">
+              <Icon name="check" size={16} class="text-accent-ink" />
+              <span>Step-by-Step Adobe Lightroom Classic Search Sync</span>
+            </h3>
+            <ol class="list-decimal pl-5 space-y-2 text-xs sm:text-sm text-marketing-muted">
+              <li>In Make Contact Sheet, click <strong>Export Drawer → Scope: Kept Only → Format: Lightroom TXT</strong> to copy the comma-separated filename string to your clipboard.</li>
+              <li>Open <strong>Adobe Lightroom Classic</strong> and select the target shoot folder in the Library Grid view (press <kbd class="px-1.5 py-0.5 rounded bg-marketing-panel border border-marketing-border text-xs font-mono text-marketing-text">G</kbd>).</li>
+              <li>Press the <kbd class="px-1.5 py-0.5 rounded bg-marketing-panel border border-marketing-border text-xs font-mono text-marketing-text">\</kbd> key to display the top Library Filter bar.</li>
+              <li>Click on <strong>Text</strong>, set the first dropdown to <strong>Filename</strong>, and set the second dropdown to <strong>Contains</strong>.</li>
+              <li>Paste (<kbd class="px-1.5 py-0.5 rounded bg-marketing-panel border border-marketing-border text-xs font-mono text-marketing-text">Cmd+V</kbd> / <kbd class="px-1.5 py-0.5 rounded bg-marketing-panel border border-marketing-border text-xs font-mono text-marketing-text">Ctrl+V</kbd>) your clipboard string into the search input.</li>
+              <li>Lightroom will instantly filter your catalog to show only the selected client images. Press <kbd class="px-1.5 py-0.5 rounded bg-marketing-panel border border-marketing-border text-xs font-mono text-marketing-text">Cmd+A</kbd> and assign a 5-star rating or color label.</li>
+            </ol>
+          </div>
+        </div>
+
+      </section>
 
       <!-- Action CTA Box -->
-      <div class="p-8 rounded-2xl bg-marketing-surface border border-marketing-border text-marketing-text text-center space-y-4 shadow-md">
-        <h2 class="text-xl font-bold text-marketing-text">Create your proof sheet with filenames now</h2>
-        <p class="text-xs text-marketing-muted max-w-md mx-auto">
-          Free, fast, and 100% private in your browser.
+      <div class="p-8 sm:p-10 rounded-3xl bg-marketing-surface border border-marketing-border text-marketing-text text-center space-y-5 shadow-lg">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 text-[11px] font-mono font-bold text-accent-ink">
+          <span>FREE IN-BROWSER WORKBENCH</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">Generate Proof Sheets with Filenames Today</h2>
+        <p class="text-sm text-marketing-muted max-w-lg mx-auto leading-relaxed">
+          Preserve camera filenames, add technical EXIF badges, and streamline your Lightroom selection workflow. 100% private in your browser.
         </p>
-        <a 
-          href="/photo-contact-sheet-maker" 
-          class="inline-flex items-center gap-2 h-11 px-6 rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold text-xs tracking-tight shadow-md transition-all"
-        >
-          <span>Start Proofing Photos</span>
-          <Icon name="arrow-right" size={15} />
-        </a>
+        <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+          <a 
+            href="/photo-contact-sheet-maker" 
+            class="inline-flex items-center gap-2 h-12 px-7 rounded-xl bg-accent hover:bg-accent-hover text-white font-bold text-sm tracking-tight shadow-md hover:shadow-lg active:scale-[0.98] transition-all cursor-pointer"
+          >
+            <span>Launch Contact Sheet Studio</span>
+            <Icon name="arrow-right" size={16} />
+          </a>
+          <a 
+            href="/lightroom-client-selection-workflow" 
+            class="inline-flex items-center gap-2 h-12 px-6 rounded-xl bg-marketing-bg hover:bg-marketing-surface text-marketing-text font-semibold text-sm border border-marketing-border transition-colors cursor-pointer"
+          >
+            <Icon name="layout" size={15} />
+            <span>Lightroom XMP Workflow</span>
+          </a>
+        </div>
       </div>
 
       <!-- FAQ Section -->
-      <div class="space-y-6 pt-6 border-t border-marketing-border">
-        <h2 class="text-2xl font-bold text-marketing-text">Frequently Asked Questions</h2>
+      <section class="space-y-6 pt-6 border-t border-marketing-border">
+        <div class="space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">Frequently Asked Questions</h2>
+          <p class="text-sm text-marketing-muted">Practical solutions for digital asset management, filename preservation, and client proofing.</p>
+        </div>
         <FaqAccordion faqs={faqs} />
-      </div>
+      </section>
 
     </div>
   </article>
 </MarketingLayout>
+

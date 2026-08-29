@@ -260,7 +260,12 @@ export class BoardElement {
     textDiv.style.color = el.color || '#ffffff';
 
     const rawContent = el.content || 'Click to edit text';
-    textDiv.innerHTML = rawContent.replace(/\n/g, '<br>');
+    textDiv.textContent = '';
+    const textLines = rawContent.split('\n');
+    textLines.forEach((line, idx) => {
+      if (idx > 0) textDiv.appendChild(document.createElement('br'));
+      textDiv.appendChild(document.createTextNode(line));
+    });
 
     container.appendChild(textDiv);
   }
@@ -337,7 +342,12 @@ export class BoardElement {
     noteBody.style.fontWeight = `${el.fontWeight || '400'}`;
 
     const text = el.content || 'Note content...';
-    noteBody.innerHTML = text.replace(/\n/g, '<br>');
+    noteBody.textContent = '';
+    const noteLines = text.split('\n');
+    noteLines.forEach((line, idx) => {
+      if (idx > 0) noteBody.appendChild(document.createElement('br'));
+      noteBody.appendChild(document.createTextNode(line));
+    });
 
     noteWrap.appendChild(noteBody);
     container.appendChild(noteWrap);

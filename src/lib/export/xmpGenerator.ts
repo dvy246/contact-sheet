@@ -3,7 +3,8 @@ import { ZipBuilder } from './zipBuilder';
 import { sanitizeFilename } from '../media/fileSanitizer';
 
 function getBaseFilename(filename: string): string {
-  const parts = filename.split('.');
+  const clean = sanitizeFilename(filename);
+  const parts = clean.split('.');
   if (parts.length > 1) {
     const ext = parts.pop()?.toLowerCase();
     if (ext === 'jpg' || ext === 'jpeg' || ext === 'png' || ext === 'webp' || ext === 'heic') {
@@ -12,7 +13,7 @@ function getBaseFilename(filename: string): string {
     // Reattach if it was an unknown extension
     return parts.join('.') + '.' + ext;
   }
-  return filename;
+  return clean;
 }
 
 function escapeXml(str: string): string {

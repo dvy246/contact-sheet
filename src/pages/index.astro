@@ -262,6 +262,162 @@ const schemas = [
     </div>
   </section>
 
+  <!-- Deep Dive Product & Workflow Prose (SEO & Educational Foundation) -->
+  <section class="py-16 sm:py-24 bg-marketing-surface border-b border-marketing-border transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        
+        <!-- Left: Prose Content -->
+        <div class="lg:col-span-8 space-y-8 text-marketing-muted text-sm sm:text-base leading-relaxed">
+          
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-bg border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs mb-3.5">
+              <span class="w-2 h-2 rounded-full bg-accent"></span>
+              <span>COMPLETE OVERVIEW</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
+              A Browser-First Contact Sheet Maker Built for Photography Workflows
+            </h2>
+            <p>
+              Make Contact Sheet is a dedicated photo workflow workspace designed to streamline how photographers, art directors, and studios compile, evaluate, and deliver visual image collections. Operating entirely within modern web browsers, the platform eliminates tedious software setups and expensive cloud upload queues, turning raw image folders into structured proof sheets, mood boards, and collages in seconds.
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="text-xl font-bold text-marketing-text tracking-tight">
+              Understanding Contact Sheets and Digital Proofing
+            </h3>
+            <p>
+              In traditional darkroom photography, a contact sheet was created by placing strips of film negatives directly against photographic paper and exposing them to light. This produced an exact 1:1 index of an entire camera roll on a single print. 
+            </p>
+            <p>
+              In modern digital production, contact sheets serve the same essential purpose: providing a scannable, high-density overview of a photoshoot. Instead of forcing clients or collaborators to open hundreds of high-resolution image files individually, a single digital proof sheet organizes shots into a structured grid. It displays original camera identifiers, capture sequences, and technical parameters side by side, making visual comparison intuitive and precise.
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="text-xl font-bold text-marketing-text tracking-tight">
+              Structured Review, Custom Culling, and Exact Metadata
+            </h3>
+            <p>
+              Reviewing large batches of photos requires clear visual feedback. Make Contact Sheet incorporates rapid keyboard triage shortcuts, allowing you to mark individual frames as <strong>Keep</strong> (1), <strong>Flag</strong> (2), or <strong>Reject</strong> (3) while inspecting thumbnails.
+            </p>
+            <p>
+              Because accurate communication depends on precise references, the layout engine extracts camera EXIF metadata directly from your files. Technical details—such as shutter speed, aperture, ISO, focal length, and exact camera filenames—can be rendered beneath each photo frame or embedded as clean badge overlays. You can also assign custom per-image labels or batch-rename files using dynamic token recipes before finalizing your sheets.
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="text-xl font-bold text-marketing-text tracking-tight">
+              Flexible Output: From Print-Ready PDFs to Lightroom Sync
+            </h3>
+            <p>
+              Once your layout is configured, the export engine produces calibrated deliverables tailored to your next production stage:
+            </p>
+            <ul class="list-disc pl-5 space-y-2 text-marketing-text/90">
+              <li><strong>Print-Ready PDF Documents:</strong> Multi-page proof sheets formatted for standard US Letter and A4 dimensions at 300 DPI, complete with custom headers, studio watermarks, and page numbers.</li>
+              <li><strong>High-Resolution Master Images:</strong> Export single-page JPEG, PNG, or WebP contact sheets and <a href="/collage-templates" class="text-accent-ink hover:underline font-medium">collage templates</a> up to 4K resolution.</li>
+              <li><strong>Adobe Lightroom and Capture One Handoff:</strong> Download filtered TXT selection lists or structured CSV manifests to paste directly into Lightroom search bars, or export industry-standard XMP sidecar XMLs that automatically apply star ratings and color labels to your original RAW files.</li>
+              <li><strong>Serverless Client Proofing Portals:</strong> Export a standalone, self-contained HTML gallery with built-in client rating buttons, zero hosting dependencies, and interactive review export.</li>
+            </ul>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="text-xl font-bold text-marketing-text tracking-tight">
+              Freeform Mood Boards and Creative Visual Direction
+            </h3>
+            <p>
+              When a project calls for conceptual planning rather than a rigid grid, our integrated <a href="/mood-board-maker" class="text-accent-ink hover:underline font-medium">mood board maker</a> provides an unconstrained freeform canvas. You can drag, resize, rotate, and layer photos alongside designer color swatch cards and stylist sticky notes. Featuring magnetic snapping guides and scaled 300 DPI exports, it gives creative directors and stylists the tools to pitch aesthetics, lighting setups, and wardrobe palettes effectively.
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="text-xl font-bold text-marketing-text tracking-tight">
+              In-Browser Execution and Client-Side Data Privacy
+            </h3>
+            <p>
+              All image decoding, thumbnail generation, EXIF parsing, and rendering operations execute locally on your device hardware using HTML5 Canvas and client Web Workers. Your image files, camera filenames, and confidential client assets are never uploaded to an external server or stored in a remote cloud database. This local-first architecture ensures strict client confidentiality, avoids bandwidth bottlenecks, and allows immediate processing of large photo collections.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Right: Practical Workflow & Quick Links Card -->
+        <div class="lg:col-span-4 space-y-6">
+          
+          <div class="p-6 sm:p-7 rounded-2xl bg-marketing-bg border border-marketing-border shadow-xs space-y-5">
+            <div class="text-xs font-mono font-semibold uppercase tracking-wider text-accent-ink">
+              Production Workflow
+            </div>
+            <h4 class="text-lg font-bold text-marketing-text">
+              Four Steps to Client Delivery
+            </h4>
+            <ol class="space-y-4 text-xs sm:text-sm text-marketing-muted list-decimal list-inside">
+              <li class="leading-relaxed">
+                <strong class="text-marketing-text">Import Media:</strong> Drop image batches into the light-table with support for standard raster formats and RAW previews.
+              </li>
+              <li class="leading-relaxed">
+                <strong class="text-marketing-text">Cull &amp; Review:</strong> Use keyboard keys 1–3 to tag keeps and rejects, or use automated sharpness evaluation to detect focus issues.
+              </li>
+              <li class="leading-relaxed">
+                <strong class="text-marketing-text">Format Layout:</strong> Choose a <a href="/contact-sheet-template" class="text-accent-ink hover:underline font-medium">contact sheet template</a>, 8×10 print saver, or freeform mood board layout.
+              </li>
+              <li class="leading-relaxed">
+                <strong class="text-marketing-text">Export Handoff:</strong> Generate 300 DPI PDFs, XMP sidecar packages, or filename lists for post-production.
+              </li>
+            </ol>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-marketing-bg border border-marketing-border shadow-xs space-y-4">
+            <div class="text-xs font-mono font-semibold uppercase tracking-wider text-marketing-muted">
+              Specialized Studio Hubs
+            </div>
+            <ul class="space-y-2.5 text-xs sm:text-sm">
+              <li>
+                <a href="/photo-contact-sheet-maker" class="flex items-center justify-between text-marketing-text hover:text-accent-ink transition-colors font-medium">
+                  <span>Photo Contact Sheet Maker</span>
+                  <span class="text-xs text-marketing-muted">→</span>
+                </a>
+              </li>
+              <li>
+                <a href="/mood-board-maker" class="flex items-center justify-between text-marketing-text hover:text-accent-ink transition-colors font-medium">
+                  <span>Mood Board Maker</span>
+                  <span class="text-xs text-marketing-muted">→</span>
+                </a>
+              </li>
+              <li>
+                <a href="/photo-collage-maker" class="flex items-center justify-between text-marketing-text hover:text-accent-ink transition-colors font-medium">
+                  <span>Photo Collage Maker</span>
+                  <span class="text-xs text-marketing-muted">→</span>
+                </a>
+              </li>
+              <li>
+                <a href="/batch-photo-tools" class="flex items-center justify-between text-marketing-text hover:text-accent-ink transition-colors font-medium">
+                  <span>Batch Photo Tools</span>
+                  <span class="text-xs text-marketing-muted">→</span>
+                </a>
+              </li>
+              <li>
+                <a href="/free-8x10-photo-prints" class="flex items-center justify-between text-marketing-text hover:text-accent-ink transition-colors font-medium">
+                  <span>8×10 Print Saver</span>
+                  <span class="text-xs text-marketing-muted">→</span>
+                </a>
+              </li>
+              <li>
+                <a href="/guides/how-to-make-a-contact-sheet" class="flex items-center justify-between text-marketing-text hover:text-accent-ink transition-colors font-medium">
+                  <span>Contact Sheet Tutorial Guide</span>
+                  <span class="text-xs text-marketing-muted">→</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- Comparison Table -->
   <ComparisonTable />
 

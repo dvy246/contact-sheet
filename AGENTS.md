@@ -1,6 +1,18 @@
 # AGENTS.md
 
-- Implemented **Dedicated Mood Board Templates Suite (`/mood-board-templates`) & Step-by-Step Guide (`/guides/how-to-make-a-mood-board`)**:
+- Implemented **Comprehensive SEO Hardening, E-E-A-T Guide Overhaul & Security Hardening**:
+  - **Homepage SEO & 600-Word Educational Prose**: Added ~658 words of semantic, entity-dense product and photography workflow copy (`src/pages/index.astro`) targeting the primary search keyword **"contact sheet maker"**, complete with structured H2/H3 headings, 4-step workflow sidebar, and internal tool hub links without disrupting hero conversion.
+  - **Open Graph & Twitter Social Metadata**: Added strict `og:image:width: 1200`, `og:image:height: 630`, `og:image:type: image/png`, and `og:image:secure_url` properties to `src/layouts/BaseLayout.astro`.
+  - **Comprehensive Guide Quality & Depth Expansion (1,000–1,450+ words per guide)**:
+    - `/guides/how-to-make-a-contact-sheet`: Darkroom origins, 300 DPI print mathematics, A4 vs US Letter grids, and Photoshop/Lightroom comparison matrix.
+    - `/guides/how-to-make-a-mood-board`: Creative pre-production alignment, 4 core direction elements, 16:9/9:16/A4 aspect ratio guide, and password-protected PDF exports.
+    - `/guides/how-to-make-photo-collage`: Golden Hero hierarchy, color temperature/exposure harmonization, and 4K lossless Canvas rendering.
+    - `/guides/photo-proof-sheet-with-filenames`: Camera filename standards (Canon, Nikon, Sony, Fujifilm) and step-by-step Lightroom Classic Library Filter sync.
+    - Linked `HowTo`, `FAQPage`, and `BreadcrumbList` JSON-LD schemas across all 4 guides.
+  - **Hero & Heading Visual Accents**: Updated "Photo Collage" highlights across hero headline, templates, and guides to vibrant pink (`variant="pink"` / `bg-pink-300`).
+  - **Pre-Production Security Hardening**: Remediated DOM XSS, Zip Slip, CSV Injection, and script sanitization risks across all export engines, and added `public/_headers` with Content Security Policy and security headers.
+  - Maintained strict `0 errors / 0 warnings / 0 hints` on `astro check` and confirmed successful 26-page static build.
+
   - Registered `/mood-board-templates` and `/guides/how-to-make-a-mood-board` in `src/lib/seo/metadata.ts` with front-loaded title tags (< 60 chars), calibrated descriptions (145–165 chars), and structured JSON-LD schemas (`HowTo`, `FAQPage`, `BreadcrumbList`).
   - Created `src/components/marketing/MoodBoardTemplatePreview.astro` rendering scaled, geometric canvas previews for each mood board layout with photo frames, color swatches, sticky notes, and texture patterns.
   - Expanded `MOODBOARD_TEMPLATES` in `src/lib/moodboardStore.ts` to 10 curated presets across 5 categories: **Editorial & Storyboard**, **Fashion Lookbook**, **Concept & Palette**, **Film & Analog**, and **Minimal Clean**.

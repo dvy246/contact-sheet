@@ -13,6 +13,19 @@ export function filterImagesByScope(images: ImageItem[], filter?: FilterStatus):
   return images;
 }
 
+function sanitizeCsvCell(value: string | number | null | undefined): string {
+  if (value === null || value === undefined) return '""';
+  const str = String(value);
+  const safeStr = /^[=+\-@\t\r]/.test(str) ? `'${str}` : str;
+  return `"${safeStr.replace(/"/g, '""')}"`;
+}
+
+function sanitizeTsvCell(value: string | number | null | undefined): string {
+  if (value === null || value === undefined) return '';
+  const str = String(value).replace(/\t|\r|\n/g, ' ');
+  return /^[=+\-@\t\r]/.test(str) ? `'${str}` : str;
+}
+
 /**
  * Generates CSV string containing image review data with exact source filenames.
  */
@@ -21,14 +34,14 @@ export function generateFilenamesCSV(images: ImageItem[], filter?: FilterStatus)
   const header = ['Index', 'Filename', 'Status', 'Rating', 'Notes', 'Width', 'Height', 'SizeBytes', 'FileType'];
   const rows = targetImages.map((img, idx) => [
     idx + 1,
-    `"${img.name.replace(/"/g, '""')}"`,
-    img.status,
+    sanitizeCsvCell(img.name),
+    sanitizeCsvCell(img.status),
     img.rating !== undefined ? img.rating : '',
-    img.note || img.notes ? `"${(img.note || img.notes || '').replace(/"/g, '""')}"` : '',
+    sanitizeCsvCell(img.note || img.notes || ''),
     img.width,
     img.height,
     img.size,
-    img.type,
+    sanitizeCsvCell(img.type),
   ]);
 
   return [
@@ -60,14 +73,14 @@ export function generateFilenamesTSV(images: ImageItem[], filter?: FilterStatus)
   const header = ['Index', 'Filename', 'Status', 'Rating', 'Notes', 'Width', 'Height', 'SizeBytes', 'FileType'];
   const rows = targetImages.map((img, idx) => [
     idx + 1,
-    img.name.replace(/\t|\r|\n/g, ' '),
-    img.status,
+    sanitizeTsvCell(img.name),
+    sanitizeTsvCell(img.status),
     img.rating !== undefined ? img.rating : '',
-    (img.note || img.notes || '').replace(/\t|\r|\n/g, ' '),
+    sanitizeTsvCell(img.note || img.notes || ''),
     img.width,
     img.height,
     img.size,
-    img.type,
+    sanitizeTsvCell(img.type),
   ]);
 
   return [

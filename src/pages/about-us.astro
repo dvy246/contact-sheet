@@ -2,6 +2,7 @@
 import MarketingLayout from '../layouts/MarketingLayout.astro';
 import Breadcrumbs from '../components/common/Breadcrumbs.astro';
 import Icon from '../components/common/Icon.astro';
+import HighlightText from '../components/ui/HighlightText.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
 import { buildOrganizationSchema } from '../lib/seo/schemaGenerator';
 
@@ -25,65 +26,97 @@ const schemas = [
   schema={schemas}
 >
   <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
-    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-4">
+    <div class="max-w-[840px] mx-auto px-4 sm:px-6 space-y-4">
       <Breadcrumbs items={breadcrumbs} />
-      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-marketing-text">
-        About Make Contact Sheet
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs">
+        <span class="w-2 h-2 rounded-full bg-accent"></span>
+        <span>ENGINEERING &amp; MISSION</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight">
+        About <HighlightText variant="lime">Make Contact Sheet</HighlightText>
       </h1>
-      <p class="text-base text-marketing-muted leading-relaxed">
-        Building the fastest, most private browser-first workspace for photo contact sheets, collages, and client proofing.
+      <p class="text-base sm:text-lg text-marketing-muted leading-relaxed">
+        Building the fastest, most private browser-first workspace for photo contact sheets, mood boards, and client proofing.
       </p>
     </div>
   </div>
 
   <article class="py-16 sm:py-20 bg-marketing-bg border-b border-marketing-border transition-colors">
-    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-10 text-sm text-marketing-text/90 leading-relaxed prose-measure">
+    <div class="max-w-[840px] mx-auto px-4 sm:px-6 space-y-12 text-sm sm:text-base text-marketing-text/90 leading-relaxed prose-measure">
       
       <div class="space-y-4">
-        <h2 class="text-2xl font-bold text-marketing-text">Our Mission</h2>
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">Our Mission &amp; Purpose</h2>
         <p>
-          Make Contact Sheet was created to solve a persistent frustration in professional photography: why does creating a simple, filename-accurate contact sheet or client proof pack require expensive subscriptions, slow desktop scripts, or privacy-compromising cloud uploaders?
+          Make Contact Sheet was founded by software engineers and working commercial photographers to solve a persistent friction in visual production: why does creating a simple, filename-accurate contact sheet or client proof package require expensive monthly subscriptions, slow catalog indexing, or privacy-compromising cloud uploaders?
         </p>
         <p>
-          We believe photographers and visual creators deserve lightweight, dedicated studio instruments that respect their privacy, run at the speed of their hardware, and get out of the way of the work.
+          We believe photographers, art directors, graphic designers, and visual creators deserve lightweight, dedicated studio instruments that respect client confidentiality, execute at the raw hardware speed of modern client devices, and get completely out of the way of the creative process.
         </p>
       </div>
 
       <div class="space-y-4">
-        <h2 class="text-2xl font-bold text-marketing-text">The Privacy-First Principle</h2>
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">The Local-First Privacy Architecture</h2>
         <p>
-          Unlike modern web apps that funnel user assets into centralized databases, Make Contact Sheet is architected as a true client-side application. When you drop a 500-photo wedding shoot into Make Contact Sheet, every single byte of pixel data, filename text, and EXIF tag is processed directly in your browser's local memory sandbox. No photos are transmitted over the wire.
+          Unlike conventional SaaS web applications that funnel user photographs into centralized remote cloud storage buckets, Make Contact Sheet is fundamentally engineered as a <strong>100% client-side application</strong>.
         </p>
+        <p>
+          When you drag a 500-photo commercial shoot or unreleased client portrait session into Make Contact Sheet:
+        </p>
+        <ul class="list-disc pl-5 space-y-2 text-marketing-muted">
+          <li><strong>Zero Network Transfer:</strong> Every byte of raw pixel bitmap data, camera filename text, and technical EXIF metadata is decoded and rendered directly within your local browser sandbox using HTML5 Canvas and client-side Web Workers.</li>
+          <li><strong>Zero Server Storage:</strong> We operate zero backend image processing servers. Your confidential client assets never touch a remote hard drive, third-party AI training pipeline, or cloud database.</li>
+          <li><strong>Instant Execution:</strong> Because there are no multi-gigabyte upload or download queues, image rendering, grid formatting, and 300 DPI PDF generation happen immediately at hardware speed.</li>
+        </ul>
       </div>
 
-      <div class="p-6 rounded-2xl bg-marketing-panel border border-marketing-border space-y-3 shadow-xs transition-colors">
-        <h3 class="text-base font-bold text-marketing-text">Core Architecture Commitments</h3>
-        <ul class="space-y-2 text-xs text-marketing-muted">
-          <li class="flex items-center gap-2">
-            <Icon name="check" size={14} class="text-emerald-500" />
-            <span>Zero account creation required to access full workspace features.</span>
+      <div class="p-6 sm:p-8 rounded-3xl bg-marketing-panel border border-marketing-border space-y-4 shadow-xs transition-colors">
+        <h3 class="text-lg font-bold text-marketing-text tracking-tight">Core Studio Commitments</h3>
+        <ul class="space-y-3 text-xs sm:text-sm text-marketing-muted">
+          <li class="flex items-start gap-3">
+            <div class="p-1 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 mt-0.5">
+              <Icon name="check" size={15} />
+            </div>
+            <span><strong>Zero Account Gates:</strong> Full workspace capabilities, template presets, and high-resolution exports are accessible without mandatory account registration or paywalls.</span>
           </li>
-          <li class="flex items-center gap-2">
-            <Icon name="check" size={14} class="text-emerald-500" />
-            <span>100% in-browser Canvas 2D client-side execution.</span>
+          <li class="flex items-start gap-3">
+            <div class="p-1 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 mt-0.5">
+              <Icon name="check" size={15} />
+            </div>
+            <span><strong>Strict Metadata Integrity:</strong> Original camera filenames, exposure timestamps, and lens parameters are preserved without arbitrary truncation.</span>
           </li>
-          <li class="flex items-center gap-2">
-            <Icon name="check" size={14} class="text-emerald-500" />
-            <span>Zero media telemetry or pixel logging.</span>
+          <li class="flex items-start gap-3">
+            <div class="p-1 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 mt-0.5">
+              <Icon name="check" size={15} />
+            </div>
+            <span><strong>Zero Telemetry on User Media:</strong> We collect zero analytics or telemetry on image contents, file names, or client proof selections.</span>
           </li>
         </ul>
       </div>
 
-      <div class="pt-6 border-t border-marketing-border">
+      <div class="space-y-4">
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">Open Community &amp; Feedback</h2>
+        <p>
+          Make Contact Sheet is an evolving project shaped directly by feedback from professional studios, film laboratories, editorial retouchers, and independent photographers worldwide. We continually introduce new layout presets, color palettes, and workflow bridges based on real-world production requirements.
+        </p>
+      </div>
+
+      <div class="pt-6 border-t border-marketing-border flex flex-col sm:flex-row items-center justify-between gap-4">
         <a 
           href="/contact-us" 
-          class="inline-flex items-center gap-2 text-marketing-text font-semibold hover:text-accent-ink transition-colors"
+          class="inline-flex items-center gap-2 text-marketing-text font-bold hover:text-accent-ink transition-colors"
         >
-          <span>Have feedback or questions? Contact our team</span>
-          <Icon name="arrow-right" size={14} />
+          <span>Have feedback or template requests? Contact our team</span>
+          <Icon name="arrow-right" size={15} />
+        </a>
+        <a 
+          href="/privacy-policy" 
+          class="text-xs text-marketing-muted hover:text-marketing-text underline transition-colors"
+        >
+          Read our full Privacy Policy
         </a>
       </div>
 
     </div>
   </article>
 </MarketingLayout>
+

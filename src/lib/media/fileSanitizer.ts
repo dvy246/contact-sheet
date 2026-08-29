@@ -36,7 +36,12 @@ const ALLOWED_EXTENSIONS = new Set([
   'pef'
 ]);
 
+export const MAX_FILE_SIZE_BYTES = 500 * 1024 * 1024; // 500 MB per file
+
 export function isAllowedImage(file: File): boolean {
+  if (file.size > MAX_FILE_SIZE_BYTES) {
+    return false;
+  }
   if (ALLOWED_MIME_TYPES.has(file.type.toLowerCase())) {
     return true;
   }

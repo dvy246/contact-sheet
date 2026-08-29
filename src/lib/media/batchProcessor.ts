@@ -54,25 +54,25 @@ export function applyRenamePattern(
 
   let result = recipe.template || '{prefix}{index}{suffix}';
 
-  // Core replacements
-  result = result.replace(/\{name\}|\{basename\}/gi, baseName);
-  result = result.replace(/\{filename\}/gi, originalName);
-  result = result.replace(/\{ext\}/gi, ext);
-  result = result.replace(/\{prefix\}/gi, recipe.prefix || '');
-  result = result.replace(/\{suffix\}/gi, recipe.suffix ? `_${recipe.suffix}` : '');
-  result = result.replace(/\{index\}/gi, paddedIndex);
+  // Core replacements (use function replacers to prevent $1, $& regex expansion issues)
+  result = result.replace(/\{name\}|\{basename\}/gi, () => baseName);
+  result = result.replace(/\{filename\}/gi, () => originalName);
+  result = result.replace(/\{ext\}/gi, () => ext);
+  result = result.replace(/\{prefix\}/gi, () => recipe.prefix || '');
+  result = result.replace(/\{suffix\}/gi, () => recipe.suffix ? `_${recipe.suffix}` : '');
+  result = result.replace(/\{index\}/gi, () => paddedIndex);
 
   // EXIF replacements
   if (exif) {
-    result = result.replace(/\{camera\}/gi, (exif.cameraModel || exif.cameraMake || '').replace(/\s+/g, '-'));
-    result = result.replace(/\{lens\}/gi, (exif.lensModel || '').replace(/\s+/g, '-'));
-    result = result.replace(/\{focal\}/gi, exif.focalLength || '');
-    result = result.replace(/\{fstop\}|\{aperture\}/gi, (exif.fNumber || '').replace('f/', 'f'));
-    result = result.replace(/\{iso\}/gi, exif.iso ? `ISO${exif.iso}` : '');
+    result = result.replace(/\{camera\}/gi, () => (exif.cameraModel || exif.cameraMake || '').replace(/\s+/g, '-'));
+    result = result.replace(/\{lens\}/gi, () => (exif.lensModel || '').replace(/\s+/g, '-'));
+    result = result.replace(/\{focal\}/gi, () => exif.focalLength || '');
+    result = result.replace(/\{fstop\}|\{aperture\}/gi, () => (exif.fNumber || '').replace('f/', 'f'));
+    result = result.replace(/\{iso\}/gi, () => exif.iso ? `ISO${exif.iso}` : '');
     if (exif.captureDate) {
       const d = exif.captureDate;
       const yyyymmdd = `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
-      result = result.replace(/\{date\}/gi, yyyymmdd);
+      result = result.replace(/\{date\}/gi, () => yyyymmdd);
     }
   }
 
@@ -143,11 +143,11 @@ export function generateBashRenameScript(items: BatchRenameItem[]): string {
 
   for (const item of items) {
     if (item.originalName !== item.newName) {
-      // Escape single quotes for bash safety
+      // Escape single quotes for bash safety and use -- to prevent option injection
       const origEscaped = item.originalName.replace(/'/g, "'\\''");
       const newEscaped = item.newName.replace(/'/g, "'\\''");
-      lines.push(`if [ -f '${origEscaped}' ]; then`);
-      lines.push(`  mv -n '${origEscaped}' '${newEscaped}'`);
+      lines.push(`if [ -f -- '${origEscaped}' ]; then`);
+      lines.push(`  mv -n -- '${origEscaped}' '${newEscaped}'`);
       lines.push('fi');
     }
   }
@@ -183,22 +183,32 @@ export function generatePowerShellRenameScript(items: BatchRenameItem[]): string
 }
 
 /**
+ * Sanitizes a cell for safe CSV rendering, neutralizing spreadsheet formula injection (CWE-1236).
+ */
+function sanitizeCsvCell(value: string | number | null | undefined): string {
+  if (value === null || value === undefined) return '""';
+  const str = String(value);
+  const safeStr = /^[=+\-@\t\r]/.test(str) ? `'${str}` : str;
+  return `"${safeStr.replace(/"/g, '""')}"`;
+}
+
+/**
  * Generates a CSV mapping of Original Filename -> New Filename for asset tracking.
  */
 export function generateRenameMappingCSV(items: BatchRenameItem[]): string {
   const header = ['Index', 'Original Filename', 'New Filename', 'Extension', 'Size (Bytes)', 'Camera', 'Lens', 'Focal Length', 'Aperture', 'Shutter', 'ISO'];
   const rows = items.map((item, idx) => [
     idx + 1,
-    `"${item.originalName.replace(/"/g, '""')}"`,
-    `"${item.newName.replace(/"/g, '""')}"`,
-    item.extension,
+    sanitizeCsvCell(item.originalName),
+    sanitizeCsvCell(item.newName),
+    sanitizeCsvCell(item.extension),
     item.size,
-    item.exif?.cameraModel || '',
-    item.exif?.lensModel || '',
-    item.exif?.focalLength || '',
-    item.exif?.fNumber || '',
-    item.exif?.exposureTime || '',
-    item.exif?.iso || '',
+    sanitizeCsvCell(item.exif?.cameraModel || ''),
+    sanitizeCsvCell(item.exif?.lensModel || ''),
+    sanitizeCsvCell(item.exif?.focalLength || ''),
+    sanitizeCsvCell(item.exif?.fNumber || ''),
+    sanitizeCsvCell(item.exif?.exposureTime || ''),
+    sanitizeCsvCell(item.exif?.iso || ''),
   ]);
 
   return [header.join(','), ...rows.map(r => r.join(','))].join('\n');

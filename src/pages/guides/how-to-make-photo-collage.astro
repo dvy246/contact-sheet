@@ -3,46 +3,59 @@ import MarketingLayout from '../../layouts/MarketingLayout.astro';
 import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
 import FaqAccordion from '../../components/common/FaqAccordion.astro';
 import Icon from '../../components/common/Icon.astro';
+import HighlightText from '../../components/ui/HighlightText.astro';
 import { METADATA_REGISTRY } from '../../lib/seo/metadata';
-import { buildHowToSchema } from '../../lib/seo/schemaGenerator';
+import { buildHowToSchema, buildFAQSchema } from '../../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/guides/how-to-make-photo-collage'];
 
 const steps = [
   {
-    name: 'Choose a purposeful collage aspect ratio',
-    text: 'Select an aspect ratio suited for your target medium: 1:1 square for portfolio feeds, 4:5 portrait for vertical posts, 9:16 for mobile stories, or 16:9 for widescreen web banners.',
+    name: 'Select a purposeful aspect ratio for your medium',
+    text: 'Choose an aspect ratio optimized for your target platform: 1:1 square for portfolio grids, 4:5 portrait for vertical social feeds, 9:16 for full-screen mobile stories, or 16:9 widescreen for website hero banners and print posters.',
   },
   {
-    name: 'Select your photo collection',
-    text: 'Gather 2 to 9 complementary photos with harmonized lighting, color grading, or subject matter. Drag them into the Make Contact Sheet workspace.',
+    name: 'Import and batch-index your curated image collection',
+    text: 'Gather 2 to 9 complementary photographs sharing harmonized lighting, color grading, or subject matter. Drag them into the Make Contact Sheet canvas dropzone for instant local decoding without cloud uploads.',
   },
   {
-    name: 'Assign photos to template cells',
-    text: 'Arrange your strongest hero shot in the primary cell and balance secondary detail shots in surrounding tiles. Drag to reorder photos easily.',
+    name: 'Assign hero and supporting detail images to layout cells',
+    text: 'Position your strongest hero photograph in the dominant cell (anchoring visual weight) and arrange secondary close-up or texture shots in surrounding tiles. Drag and swap images fluidly across cells.',
   },
   {
-    name: 'Adjust borders, gutters, and background color',
-    text: 'Tune the spacing between images (from 0px seamless tiles to 24px wide gallery borders) and pick a background tone that flatters your photography.',
+    name: 'Fine-tune borders, gutter gaps, and background canvas tone',
+    text: 'Adjust spacing between cells from 0px seamless edge-to-edge mosaics to 24px wide fine-art gallery mats. Select a background tone (such as Deep Charcoal, Archival Linen, or Warm Cream) that flatters your photography.',
   },
   {
-    name: 'Export at full studio resolution',
-    text: 'Download your finalized collage as a lossless PNG or optimized JPEG ready for social sharing or physical printing.',
+    name: 'Export at full native sensor resolution up to 4K',
+    text: 'Download your completed collage layout as a lossless PNG or high-quality JPEG at 300 DPI or 4K resolution, ready for immediate physical printing or digital publication with zero watermarks.',
   },
 ];
 
 const faqs = [
   {
-    question: 'How do I combine photos without losing image quality?',
-    answer: 'Make Contact Sheet renders collages using client-side Canvas acceleration at native source resolutions up to 4K / 300 DPI, avoiding the aggressive compression artifacts introduced by cloud collage websites.',
+    question: 'How do I combine multiple photos without sacrificing image sharpness and quality?',
+    answer: 'Make Contact Sheet uses client-side HTML5 Canvas rendering to process and composite images at their native source resolution up to 4K / 300 DPI. Unlike cloud collage apps that downscale and aggressively compress uploads, our local engine preserves original pixel fidelity and sharp micro-details.',
   },
   {
-    question: 'Can I make a collage with different size photos?',
-    answer: 'Yes. Templates such as our "Hero + 2 Stacked" and "Portfolio Mosaic Wall" feature asymmetrical grids specifically designed to mix large landscape shots with vertical portraits.',
+    question: 'Can I create a photo collage with mixed horizontal and vertical orientations?',
+    answer: 'Yes. Templates like "Hero + 2 Stacked", "Editorial Duo", and "Master Hero + 3 Stacked" feature asymmetrical cell configurations engineered specifically to harmoniously combine landscape orientation shots with tall portrait frames.',
   },
   {
-    question: 'Is there a watermark on downloaded collages?',
-    answer: 'No. All collages generated in Make Contact Sheet are 100% watermark-free.',
+    question: 'Are there any hidden watermarks on exported photo collages?',
+    answer: 'No. All photo collages generated in Make Contact Sheet are completely free and 100% watermark-free, with no account registration or payment required.',
+  },
+  {
+    question: 'What is the optimal gap width between photos in a collage?',
+    answer: 'For a seamless modern look, use 0px gutters. For editorial magazines and web posts, a 6px to 12px gap provides clean separation. For framed gallery prints, wide borders (16px to 24px) mimic traditional picture framing matboards.',
+  },
+  {
+    question: 'How should I choose which photo gets the largest cell in a collage?',
+    answer: 'Assign the largest cell to your primary narrative anchor—typically a wide contextual shot, an expressive portrait, or the main subject in motion. Secondary cells should display complementary details, such as jewelry, hands, atmospheric lighting, or environmental textures.',
+  },
+  {
+    question: 'Can I make collages on mobile devices as well as desktop computers?',
+    answer: 'Yes. Make Contact Sheet is fully responsive across mobile phones, tablets, and desktop workstations, allowing you to create and export multi-image collages directly from your mobile browser.',
   },
 ];
 
@@ -58,6 +71,7 @@ const schemas = [
     meta.description,
     steps
   ),
+  buildFAQSchema(faqs),
 ];
 ---
 
@@ -70,86 +84,179 @@ const schemas = [
   schema={schemas}
 >
   <article class="py-12 sm:py-16 bg-marketing-panel border-b border-marketing-border transition-colors">
-    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-8">
+    <div class="max-w-[840px] mx-auto px-4 sm:px-6 space-y-10">
       
       <Breadcrumbs items={breadcrumbs} />
 
       <header class="space-y-4">
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-[1.2]">
-          How to Make a Photo Collage Online: Complete Guide
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-accent"></span>
+          <span>COMPOSITION &amp; DESIGN GUIDE · 8 MIN READ</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-[1.15]">
+          How to Make a <HighlightText variant="pink">Photo Collage</HighlightText> Online: Complete Composition Guide
         </h1>
-        <p class="text-base text-marketing-muted leading-relaxed">
-          Learn how to compose clean, high-impact photo collages without complicated design software or privacy-compromising cloud uploads.
+        <p class="text-base sm:text-lg text-marketing-muted leading-relaxed">
+          Master the principles of photographic layout design. Learn how to combine multiple images into balanced geometric compositions, harmonize color temperatures, and export 300 DPI master files.
         </p>
       </header>
 
       <!-- Direct Answer / AEO Definition Block -->
-      <div class="p-6 rounded-2xl bg-accent/10 border border-accent/30 text-marketing-text space-y-2">
-        <div class="text-xs font-bold uppercase tracking-wider text-accent-ink font-mono">Direct Answer</div>
-        <p class="text-sm leading-relaxed font-medium">
-          To make a photo collage online, select a template matching your desired aspect ratio (e.g. 1:1, 4:5, or 16:9), import your images into the browser workspace, arrange hero and detail shots into complementary cells, and export the composite image as a high-resolution PNG or JPG.
+      <div class="p-6 sm:p-7 rounded-2xl bg-accent/10 border border-accent/30 text-marketing-text space-y-2.5">
+        <div class="text-xs font-bold uppercase tracking-wider text-accent-ink font-mono">Quick Answer / Summary Protocol</div>
+        <p class="text-sm sm:text-base leading-relaxed font-medium">
+          To make a photo collage online: choose an aspect ratio suited for your target platform (e.g. 1:1 square, 4:5 vertical, or 16:9 widescreen), drop 2–9 curated images into the workspace, assign your main visual anchor to the dominant hero cell, adjust border gutters (0px–24px) and background matte color, and export a lossless 4K PNG or 300 DPI print file. <strong>Make Contact Sheet</strong> processes all pixels locally in your browser with zero compression loss, zero watermark stamps, and zero cloud uploads.
         </p>
       </div>
 
-      <!-- Step-by-Step Guide -->
-      <div class="space-y-8 pt-4">
-        <h2 class="text-2xl font-bold text-marketing-text">
-          5 Steps to Build a Polished Photo Collage
+      <!-- Main Step-by-Step Guide -->
+      <section class="space-y-6 pt-2">
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+          5 Steps to Build a Balanced Photo Collage
         </h2>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          Follow this proven design procedure to create striking multi-photo editorial layouts in under two minutes:
+        </p>
 
-        <div class="space-y-6">
+        <div class="space-y-4">
           {steps.map((step, idx) => (
-            <div class="flex gap-4 p-5 rounded-xl border border-marketing-border bg-marketing-bg transition-colors">
-              <div class="w-8 h-8 rounded-lg bg-accent text-white flex-shrink-0 flex items-center justify-center font-bold text-sm">
+            <div class="flex items-start gap-4 p-5 sm:p-6 rounded-2xl border border-marketing-border bg-marketing-bg shadow-xs transition-colors">
+              <div class="w-9 h-9 rounded-xl bg-accent text-white flex-shrink-0 flex items-center justify-center font-bold text-sm shadow-xs mt-0.5">
                 {idx + 1}
               </div>
-              <div class="space-y-1">
+              <div class="space-y-1.5 flex-1">
                 <h3 class="text-base font-bold text-marketing-text">{step.name}</h3>
-                <p class="text-sm text-marketing-muted leading-relaxed">{step.text}</p>
+                <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{step.text}</p>
               </div>
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
-      <!-- Composition Principles -->
-      <div class="space-y-6 pt-6 border-t border-marketing-border text-sm text-marketing-text/90 leading-relaxed prose-measure">
-        <h2 class="text-2xl font-bold text-marketing-text">
-          Key Principles of Photographic Layout Design
-        </h2>
-        <p>
-          Creating an engaging collage is an exercise in visual hierarchy. Rather than treating all images equally, establish one visual anchor (the largest or most striking photograph) that draws the viewer's eye first. Complementary photos should offer context, detail, or alternate angles.
-        </p>
+      <!-- Deep Dive Compositional Principles -->
+      <section class="space-y-8 pt-6 border-t border-marketing-border text-sm sm:text-base text-marketing-muted leading-relaxed">
+        
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            The Geometry of Visual Balance in Multi-Photo Layouts
+          </h2>
+          <p>
+            A compelling photo collage is fundamentally an exercise in visual storytelling and weight distribution. When multiple photographs are displayed together, the viewer's brain naturally seeks a clear hierarchy. Layouts where all images share equal size can cause cognitive fatigue, as the eye wanders aimlessly without a clear focal entry point.
+          </p>
+          <p>
+            Effective editorial collages utilize the <strong>Golden Hero Principle</strong>:
+          </p>
+          <ul class="list-disc pl-5 space-y-2 text-marketing-text/90">
+            <li><strong>The Visual Anchor (Hero Frame):</strong> Allocate 50% to 65% of the total canvas area to your single strongest photograph. This image should possess high emotional resonance, strong compositional leading lines, or clear subject focus.</li>
+            <li><strong>Contextual Sub-Frames:</strong> Surround the hero with smaller secondary tiles displaying detail shots, texture macros, environmental context, or alternating angles.</li>
+            <li><strong>Directional Gaze Alignment:</strong> When composing portraits, ensure subjects in side cells are looking inward toward the center of the collage rather than gazing out of the canvas frame.</li>
+          </ul>
+        </div>
 
-        <h3 class="text-lg font-bold text-marketing-text pt-3">
-          Maintaining Color and Tonal Consistency
-        </h3>
-        <p>
-          Collages look cohesive when all photos share a unified color temperature and exposure balance. If one photo is warm and golden while an adjacent photo is cool and blue, the layout will look disjointed. Grouping images from the same shoot or lighting condition creates an effortless, editorial result.
-        </p>
-      </div>
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            Color Temperature, Exposure, and Tonal Harmonization
+          </h2>
+          <p>
+            One of the most common mistakes in photo collage design is placing images with conflicting white balances or exposure values side by side. If one image has a cool blue cast (6500K) while an adjacent frame is warm golden sunlight (3200K), the collage feels discordant and amateurish.
+          </p>
+          <p>
+            To achieve a cohesive, magazine-grade layout:
+          </p>
+          <ol class="list-decimal pl-5 space-y-2 text-marketing-text/90">
+            <li><strong>Select Images from the Same Lighting Environment:</strong> Group photographs shot under identical lighting conditions (e.g. open shade, direct golden hour, or controlled studio strobe setups).</li>
+            <li><strong>Match Black Points &amp; Contrast Levels:</strong> Ensure that deep shadows across all images share similar tonal depth to avoid washed-out cells next to high-contrast frames.</li>
+            <li><strong>Limit the Scene Palette:</strong> Strive for a unified 2-to-3 color harmony across the collective composition (such as terracotta and sand, or deep forest green and slate).</li>
+          </ol>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            Aspect Ratio Selection Guide for Digital &amp; Print Media
+          </h2>
+          <p>
+            Before arranging your cells, select the canvas aspect ratio matching your destination publishing channel:
+          </p>
+
+          <div class="overflow-x-auto my-4 border border-marketing-border rounded-xl bg-marketing-surface shadow-xs">
+            <table class="w-full text-left text-xs sm:text-sm border-collapse">
+              <thead>
+                <tr class="bg-marketing-panel border-b border-marketing-border text-marketing-text font-bold">
+                  <th class="p-3 sm:p-4">Aspect Ratio</th>
+                  <th class="p-3 sm:p-4">Dimensions (px)</th>
+                  <th class="p-3 sm:p-4">Primary Platform</th>
+                  <th class="p-3 sm:p-4">Recommended Grid Layout</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-marketing-border text-marketing-text/90">
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold">1:1 Square</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">2048 × 2048</td>
+                  <td class="p-3 sm:p-4">Instagram Feed / Portfolio Squares</td>
+                  <td class="p-3 sm:p-4">2 × 2 Quad or 3 × 3 Mosaic Grid</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold">4:5 Portrait</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">2160 × 2700</td>
+                  <td class="p-3 sm:p-4">Vertical Mobile Social Feeds</td>
+                  <td class="p-3 sm:p-4">Hero + 2 Stacked or Duo Diptych</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold">9:16 Story</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">1080 × 1920</td>
+                  <td class="p-3 sm:p-4">TikTok, Instagram Reels &amp; Stories</td>
+                  <td class="p-3 sm:p-4">Vertical Triptych (3-Photo Tall)</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold">16:9 Landscape</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">3840 × 2160</td>
+                  <td class="p-3 sm:p-4">Website Banners &amp; Poster Prints</td>
+                  <td class="p-3 sm:p-4">Cinematic Header + 3 Insets</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
 
       <!-- Action CTA Box -->
-      <div class="p-8 rounded-2xl bg-marketing-surface border border-marketing-border text-marketing-text text-center space-y-4 shadow-md">
-        <h2 class="text-xl font-bold text-marketing-text">Start making your collage now</h2>
-        <p class="text-xs text-marketing-muted max-w-md mx-auto">
-          Free, watermark-free, and processed locally on your computer.
+      <div class="p-8 sm:p-10 rounded-3xl bg-marketing-surface border border-marketing-border text-marketing-text text-center space-y-5 shadow-lg">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 text-[11px] font-mono font-bold text-accent-ink">
+          <span>FREE IN-BROWSER WORKBENCH</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">Ready to Create Your Photo Collage?</h2>
+        <p class="text-sm text-marketing-muted max-w-lg mx-auto leading-relaxed">
+          Choose from 18 curated geometric templates, adjust gallery borders, and export crisp 4K lossless images with zero watermarks.
         </p>
-        <a 
-          href="/photo-collage-maker" 
-          class="inline-flex items-center gap-2 h-11 px-6 rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold text-xs tracking-tight shadow-md transition-all"
-        >
-          <span>Open Collage Maker</span>
-          <Icon name="arrow-right" size={15} />
-        </a>
+        <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+          <a 
+            href="/photo-collage-maker" 
+            class="inline-flex items-center gap-2 h-12 px-7 rounded-xl bg-accent hover:bg-accent-hover text-white font-bold text-sm tracking-tight shadow-md hover:shadow-lg active:scale-[0.98] transition-all cursor-pointer"
+          >
+            <span>Launch Collage Maker</span>
+            <Icon name="arrow-right" size={16} />
+          </a>
+          <a 
+            href="/collage-templates" 
+            class="inline-flex items-center gap-2 h-12 px-6 rounded-xl bg-marketing-bg hover:bg-marketing-surface text-marketing-text font-semibold text-sm border border-marketing-border transition-colors cursor-pointer"
+          >
+            <Icon name="layout" size={15} />
+            <span>Browse 18 Collage Templates</span>
+          </a>
+        </div>
       </div>
 
       <!-- FAQ Section -->
-      <div class="space-y-6 pt-6 border-t border-marketing-border">
-        <h2 class="text-2xl font-bold text-marketing-text">Frequently Asked Questions</h2>
+      <section class="space-y-6 pt-6 border-t border-marketing-border">
+        <div class="space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">Frequently Asked Questions</h2>
+          <p class="text-sm text-marketing-muted">Expert guidance on photo collage composition, aspect ratios, and print resolution.</p>
+        </div>
         <FaqAccordion faqs={faqs} />
-      </div>
+      </section>
 
     </div>
   </article>
 </MarketingLayout>
+

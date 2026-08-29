@@ -3,46 +3,59 @@ import MarketingLayout from '../../layouts/MarketingLayout.astro';
 import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
 import FaqAccordion from '../../components/common/FaqAccordion.astro';
 import Icon from '../../components/common/Icon.astro';
+import HighlightText from '../../components/ui/HighlightText.astro';
 import { METADATA_REGISTRY } from '../../lib/seo/metadata';
-import { buildHowToSchema } from '../../lib/seo/schemaGenerator';
+import { buildHowToSchema, buildFAQSchema } from '../../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/guides/how-to-make-a-contact-sheet'];
 
 const steps = [
   {
-    name: 'Select and import your photo batch',
-    text: 'Drag your folder or batch of image files directly into the Make Contact Sheet workspace dropzone. Make Contact Sheet decodes images locally in your browser without uploading any files to remote servers.',
+    name: 'Import and index your photo batch',
+    text: 'Drag your folder or selection of image files directly into the Make Contact Sheet browser workspace. The local engine immediately indexes all raster formats (JPEG, PNG, WebP, AVIF, HEIC) and RAW preview buffers without transferring any bytes to remote cloud servers.',
   },
   {
-    name: 'Choose a contact sheet layout preset',
-    text: 'Select your target output format, such as A4 Portrait Proof Sheet (for international standard paper) or US Letter (for North American printing). Adjust columns and rows to fit between 12 and 24 images per page.',
+    name: 'Select paper geometry and grid density',
+    text: 'Choose your destination page standard: US Letter (8.5 × 11 in) for North American labs or ISO A4 (210 × 297 mm) for international documents. Configure column and row counts (such as 4 × 5 for 20 frames per sheet or 6 × 6 for 36-exposure film rolls) to balance thumbnail inspection with page count.',
   },
   {
-    name: 'Configure filename and numbering labels',
-    text: 'Ensure filename labels are enabled so each thumbnail displays its exact camera source name. You can also display sequential index numbers (#1, #2) to make client communication easy.',
+    name: 'Configure filename and technical EXIF metadata',
+    text: 'Enable filename labels to display verifiable camera identifiers (e.g. DSC_4821.NEF) and sequential index badges (#01, #02). Optionally insert dynamic EXIF badges to expose exposure parameters (shutter speed, aperture, ISO, and focal length) beneath each frame.',
   },
   {
-    name: 'Review, cull, and mark selections',
-    text: 'Use keyboard shortcuts 1 (Keep), 2 (Flag), and 3 (Reject) to review and categorize your photo proofs directly on the dark workspace light table.',
+    name: 'Perform rapid keyboard review and triage',
+    text: 'Navigate through your proof thumbnails using keyboard shortcuts: press 1 to mark Keep, 2 to Flag for secondary consideration, and 3 to Reject out-of-focus or unselected takes directly on the interactive light-table.',
   },
   {
-    name: 'Export your print PDF or filename list',
-    text: 'Open the export drawer to download a multi-page 300 DPI PDF proof sheet or generate a clean CSV file containing the exact filenames of your kept selections.',
+    name: 'Export calibrated 300 DPI PDF or Lightroom selection lists',
+    text: 'Open the Export drawer to download a multi-page, print-ready 300 DPI PDF document with custom margins and headers, or copy a comma-separated filename text string to paste directly into Adobe Lightroom or Capture One search filters.',
   },
 ];
 
 const faqs = [
   {
     question: 'How do you make a contact sheet in Lightroom vs Make Contact Sheet?',
-    answer: 'In Adobe Lightroom, you must navigate to the Print module, create a custom page template, adjust margin sliders, and render to PDF. Make Contact Sheet eliminates this friction by letting you drag photos directly into a web browser to get an instant, verified contact sheet with zero setup or software subscriptions.',
+    answer: 'In Adobe Lightroom Classic, creating a contact sheet requires entering the Print Module, manually configuring a Custom Package or Contact Sheet template, adjusting margin and stroke sliders, and waiting for slow catalog background rendering. Make Contact Sheet removes all catalog overhead by allowing you to drop image folders directly into a browser for immediate, local 300 DPI PDF generation with zero subscription fees.',
   },
   {
-    question: 'What is the optimal grid size for a proof sheet?',
-    answer: 'A 4x5 grid (20 photos per page) on A4 or US Letter paper provides the ideal balance between thumbnail clarity and page density for photography proofing.',
+    question: 'What is the optimal grid configuration for photography client proofs?',
+    answer: 'For standard commercial and portrait proofing on US Letter or A4 paper, a 4 × 5 grid (20 photos per page) or 3 × 4 grid (12 photos per page) provides the best balance. It allows clients to clearly evaluate facial expressions, sharpness, and framing without needing a magnifying loupe.',
   },
   {
-    question: 'Can I export proof sheets on black backgrounds?',
-    answer: 'Yes. Make Contact Sheet allows switching between dark chocolate, deep black, clean gallery white, and warm cream background tones, or any custom sheet and label colour you enter.',
+    question: 'Why is it critical to preserve original camera filenames on proof sheets?',
+    answer: 'Consumer collage generators and cloud apps frequently rename uploaded files to sequential IDs (e.g. image_1.jpg) or strip metadata. Preserving exact camera identifiers (such as _MG_8092.CR3 or DSC_1042.ARW) ensures that when a client requests edits for specific frame numbers, you can instantly locate the original RAW master files in your editing software without guessing.',
+  },
+  {
+    question: 'Can I render contact sheets on dark or custom background colors?',
+    answer: 'Yes. Make Contact Sheet provides curated studio dark tones (Studio Slate, Dark Chocolate, Truffle Noir) as well as classic Gallery White, Archival Linen, and Warm Cream. You can also input custom hex codes for both sheet paper backgrounds and label typography.',
+  },
+  {
+    question: 'What resolution should I use when exporting contact sheets for physical print?',
+    answer: 'For physical printing on home inkjet printers or pro lab copiers, always export at 300 DPI (dots per inch). At 300 DPI, an A4 page renders at 2480 × 3508 pixels and US Letter renders at 2550 × 3300 pixels, ensuring razor-sharp thumbnail details and crystal-clear micro-typography for filename labels.',
+  },
+  {
+    question: 'Are my confidential client photographs uploaded to an external server?',
+    answer: 'No. Make Contact Sheet executes 100% locally in your web browser using HTML5 Canvas and client-side Web Workers. Your files, pixels, filenames, and EXIF metadata never leave your computer or touch a cloud server.',
   },
 ];
 
@@ -58,6 +71,7 @@ const schemas = [
     meta.description,
     steps
   ),
+  buildFAQSchema(faqs),
 ];
 ---
 
@@ -70,96 +84,235 @@ const schemas = [
   schema={schemas}
 >
   <article class="py-12 sm:py-16 bg-marketing-panel border-b border-marketing-border transition-colors">
-    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-8">
+    <div class="max-w-[840px] mx-auto px-4 sm:px-6 space-y-10">
       
       <Breadcrumbs items={breadcrumbs} />
 
       <header class="space-y-4">
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-[1.2]">
-          How to Make a Contact Sheet: Step-by-Step Photography Guide
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-accent"></span>
+          <span>PHOTOGRAPHY WORKFLOW GUIDE · 8 MIN READ</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-[1.15]">
+          How to Make a Contact Sheet: <HighlightText variant="lime">Step-by-Step Photography Guide</HighlightText>
         </h1>
-        <p class="text-base text-marketing-muted leading-relaxed">
-          Learn how to make a professional contact sheet for photography in under a minute. This guide covers grid layouts, camera filename preservation, paper sizing, and client review workflows.
+        <p class="text-base sm:text-lg text-marketing-muted leading-relaxed">
+          Learn how to generate professional, high-density contact sheets and proof packages in seconds. Master grid mathematics, paper dimension standards, EXIF metadata overlays, and zero-friction client selection handoffs.
         </p>
       </header>
 
       <!-- Direct Answer / AEO Definition Block -->
-      <div class="p-6 rounded-2xl bg-accent/10 border border-accent/30 text-marketing-text space-y-2">
-        <div class="text-xs font-bold uppercase tracking-wider text-accent-ink font-mono">Direct Answer</div>
-        <p class="text-sm leading-relaxed font-medium">
-          A contact sheet in photography is created by arranging a batch of thumbnail photos into a structured grid on a single or multi-page document with original camera filenames displayed below each image. You can make one for free in Make Contact Sheet by dropping your image files, selecting a grid preset (such as 4x5 A4), and exporting as a print-ready PDF or high-resolution PNG.
+      <div class="p-6 sm:p-7 rounded-2xl bg-accent/10 border border-accent/30 text-marketing-text space-y-2.5">
+        <div class="text-xs font-bold uppercase tracking-wider text-accent-ink font-mono">Quick Answer / Summary Definition</div>
+        <p class="text-sm sm:text-base leading-relaxed font-medium">
+          A photography contact sheet (or proof sheet) is a structured multi-image document arranging thumbnail captures into calibrated rows and columns, displaying original camera filenames and technical capture metadata beneath each frame. To make one for free without installing software: import your image batch into <strong>Make Contact Sheet</strong>, choose your target sheet dimensions (A4 or US Letter) and grid density (e.g., 4 × 5 for 20 photos per page), review your selects, and export a 300 DPI multi-page PDF or filename CSV list.
         </p>
       </div>
 
       <!-- Main Step-by-Step Guide -->
-      <div class="space-y-8 pt-4">
-        <h2 class="text-2xl font-bold text-marketing-text">
-          5 Steps to Make a Photography Proof Sheet
+      <section class="space-y-6 pt-2">
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+          5 Steps to Create a Production Proof Sheet
         </h2>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          Follow this standardized, five-step studio procedure to transform raw camera shoots into organized, client-ready review documents:
+        </p>
 
-        <div class="space-y-6">
+        <div class="space-y-4">
           {steps.map((step, i) => (
-            <div class="flex gap-4 p-5 rounded-xl border border-marketing-border bg-marketing-bg transition-colors">
-              <div class="w-8 h-8 rounded-lg bg-accent text-white flex-shrink-0 flex items-center justify-center font-bold text-sm">
+            <div class="flex items-start gap-4 p-5 sm:p-6 rounded-2xl border border-marketing-border bg-marketing-bg shadow-xs transition-colors">
+              <div class="w-9 h-9 rounded-xl bg-accent text-white flex-shrink-0 flex items-center justify-center font-bold text-sm shadow-xs mt-0.5">
                 {i + 1}
               </div>
-              <div class="space-y-1">
-                <h3 class="text-sm font-bold text-marketing-text">{step.name}</h3>
-                <p class="text-xs text-marketing-muted leading-relaxed">{step.text}</p>
+              <div class="space-y-1.5 flex-1">
+                <h3 class="text-base font-bold text-marketing-text">{step.name}</h3>
+                <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{step.text}</p>
               </div>
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
-      <!-- In-Depth Content Sections -->
-      <div class="space-y-6 pt-6 border-t border-marketing-border text-sm text-marketing-text/90 leading-relaxed prose-measure">
-        <h2 class="text-2xl font-bold text-marketing-text">
-          How to Make a Contact Sheet in Photoshop vs Lightroom vs Online
-        </h2>
-        <p>
-          Photographers traditionally created digital contact prints in Adobe Photoshop using the legacy Contact Sheet II plugin (File &gt; Automate &gt; Contact Sheet II) or Lightroom Classic's Print module. While capable, both methods require extensive margin adjustments, slow catalog rendering, and paid Creative Cloud subscriptions.
-        </p>
-        <p>
-          Make Contact Sheet provides a streamlined online alternative: drag your raw or JPEG image batch directly into the browser, set your grid columns, and export a 300 DPI multi-page PDF in seconds—with 100% local processing and zero cloud uploads.
-        </p>
+      <!-- Deep Dive Educational Content -->
+      <section class="space-y-8 pt-6 border-t border-marketing-border text-sm sm:text-base text-marketing-muted leading-relaxed">
+        
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            The Historical Evolution of the Photographic Contact Sheet
+          </h2>
+          <p>
+            The term <em>contact sheet</em> originates in 19th and 20th-century analog darkroom practices. Photographers cut exposed 35mm or 120 medium format film rolls into strips of 4 to 6 frames, laid them directly emulsion-to-emulsion against a sheet of photographic gelatin-silver paper inside a glass printing frame, and turned on the enlarger light for a brief test exposure. Because the negative was in physical contact with the paper, the resulting positive print displayed an exact 1:1 optical reproduction of the entire camera roll.
+          </p>
+          <p>
+            Master photographers like Henri Cartier-Bresson, Richard Avedon, and Annie Leibovitz treated contact sheets as intimate visual journals. The sheet revealed the exact sequence of thought: how the photographer worked the scene, circled around a subject, bracketed lighting exposures, and finally captured the decisive moment. Red grease pencil marks on historical proof sheets documented the photographer's culling decisions before making final master enlargements.
+          </p>
+          <p>
+            In contemporary digital photography, although physical darkroom chemicals have been replaced by digital sensors and pixels, the fundamental necessity of the contact sheet remains unchanged: it provides a high-density, bird's-eye perspective of a photoshoot that cannot be replicated by viewing full-screen single images sequentially.
+          </p>
+        </div>
 
-        <h3 class="text-lg font-bold text-marketing-text pt-3">
-          Why Contact Sheets Remain Essential in Modern Photography
-        </h3>
-        <p>
-          When viewing photos one-by-one in full screen, it is easy to lose context between takes. A contact sheet places an entire sequence in front of your eyes at once, making lighting shifts, model expressions, and compositional nuances immediately obvious.
-        </p>
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            Print Mathematics: DPI, Grid Proportions, and Paper Sizing
+          </h2>
+          <p>
+            Creating a clean contact sheet requires precise calculation of page dimensions, aspect ratios, and printable margins to ensure crisp rendering when outputting to commercial digital presses or local office printers:
+          </p>
 
-        <h3 class="text-lg font-bold text-marketing-text pt-3">
-          Best Practices for Client Proofing
-        </h3>
-        <p>
-          When preparing proofs for commercial clients, portrait sessions, or weddings, avoid sending raw un-annotated images. A structured contact sheet provides clear sequential index numbers (#1, #2, #3) alongside original filenames, eliminating the common confusion where clients describe images vaguely (such as "the one where she looks left").
-        </p>
-      </div>
+          <div class="overflow-x-auto my-4 border border-marketing-border rounded-xl bg-marketing-surface shadow-xs">
+            <table class="w-full text-left text-xs sm:text-sm border-collapse">
+              <thead>
+                <tr class="bg-marketing-panel border-b border-marketing-border text-marketing-text font-bold">
+                  <th class="p-3 sm:p-4">Standard Format</th>
+                  <th class="p-3 sm:p-4">Physical Size</th>
+                  <th class="p-3 sm:p-4">Pixel Canvas at 300 DPI</th>
+                  <th class="p-3 sm:p-4">Recommended Grid Density</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-marketing-border text-marketing-text/90">
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold">ISO A4 (Portrait)</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">210 × 297 mm</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">2480 × 3508 px</td>
+                  <td class="p-3 sm:p-4">4 × 5 (20 images) or 4 × 6 (24 images)</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold">US Letter (Portrait)</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">8.5 × 11.0 in</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">2550 × 3300 px</td>
+                  <td class="p-3 sm:p-4">4 × 5 (20 images) or 3 × 4 (12 images)</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold">16:9 Widescreen (Digital)</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">4K Ultra HD Display</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">3840 × 2160 px</td>
+                  <td class="p-3 sm:p-4">6 × 3 (18 images) or 8 × 4 (32 images)</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold">120 Medium Format (6×7)</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">A4 Landscape Proof</td>
+                  <td class="p-3 sm:p-4 font-mono text-xs">3508 × 2480 px</td>
+                  <td class="p-3 sm:p-4">5 × 2 (10-Up roll simulation)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            When outputting proof sheets for physical print inspection, <strong>300 DPI</strong> is the industry baseline. At lower resolutions (such as standard 72 DPI screen renderings), micro-text containing camera filenames and exposure data becomes pixelated and illegible, undermining the technical utility of the proof document.
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            Software Comparison: Make Contact Sheet vs Photoshop vs Lightroom Classic
+          </h2>
+          <p>
+            Photographers evaluating their production proofing pipeline typically compare three distinct approaches. Here is a technical breakdown of each workflow:
+          </p>
+
+          <div class="overflow-x-auto my-4 border border-marketing-border rounded-xl bg-marketing-surface shadow-xs">
+            <table class="w-full text-left text-xs sm:text-sm border-collapse">
+              <thead>
+                <tr class="bg-marketing-panel border-b border-marketing-border text-marketing-text font-bold">
+                  <th class="p-3 sm:p-4">Evaluation Criteria</th>
+                  <th class="p-3 sm:p-4 bg-accent/10 border-x border-accent/25 text-marketing-text font-bold">Make Contact Sheet</th>
+                  <th class="p-3 sm:p-4 text-marketing-muted font-semibold">Lightroom Classic</th>
+                  <th class="p-3 sm:p-4 text-marketing-muted font-semibold">Photoshop (Contact Sheet II)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-marketing-border text-marketing-text/90">
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold">Setup &amp; Installation</td>
+                  <td class="p-3 sm:p-4 bg-accent/5 border-x border-accent/20 font-bold text-accent-ink">Instant (0 Install, Browser)</td>
+                  <td class="p-3 sm:p-4">Heavy Desktop Application</td>
+                  <td class="p-3 sm:p-4">Heavy Desktop Application</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold">Catalog Prerequisite</td>
+                  <td class="p-3 sm:p-4 bg-accent/5 border-x border-accent/20">None (Direct Folder Drop)</td>
+                  <td class="p-3 sm:p-4">Mandatory Catalog Import</td>
+                  <td class="p-3 sm:p-4">None (Batch Script Folder)</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold">Batch Processing Speed</td>
+                  <td class="p-3 sm:p-4 bg-accent/5 border-x border-accent/20 font-semibold">Real-time Web Workers</td>
+                  <td class="p-3 sm:p-4">Slow Background Spooling</td>
+                  <td class="p-3 sm:p-4">Slow Single-Thread Automation</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold">Client Triage Shortcuts</td>
+                  <td class="p-3 sm:p-4 bg-accent/5 border-x border-accent/20 font-semibold">Built-in (1 Keep, 2 Flag, 3 Reject)</td>
+                  <td class="p-3 sm:p-4">Requires Library Module Switching</td>
+                  <td class="p-3 sm:p-4">None (Static Render)</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold">Cost &amp; Licensing</td>
+                  <td class="p-3 sm:p-4 bg-accent/5 border-x border-accent/20 font-bold text-emerald-600 dark:text-emerald-400">100% Free &amp; Open</td>
+                  <td class="p-3 sm:p-4">$19.99+/mo Creative Cloud</td>
+                  <td class="p-3 sm:p-4">$20.99+/mo Creative Cloud</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            Client Proofing Psychology: Eliminating Selection Bottlenecks
+          </h2>
+          <p>
+            When delivering unedited photo proofs to commercial clients, art directors, or wedding couples, sending a folder of loose JPEG files creates significant communication friction. Clients often provide ambiguous feedback such as <em>"We love the third shot where the model looks left, but not the one next to it."</em> Translating these subjective descriptions into raw camera numbers can cost hours of administrative back-and-forth.
+          </p>
+          <p>
+            Delivering an indexed contact sheet establishes a structured, unambiguous visual contract:
+          </p>
+          <ul class="list-disc pl-5 space-y-2 text-marketing-text/90">
+            <li><strong>Sequential Index Identifiers:</strong> Numbering frames sequentially (#01, #02, #03) gives clients a simple shorthand to communicate their favorite takes without having to memorize complex camera filenames.</li>
+            <li><strong>Visible Technical Metadata:</strong> Exposing camera settings (such as ISO 3200 or 1/60s) provides immediate technical context during test shoots and commercial lighting reviews.</li>
+            <li><strong>Side-by-Side Expression Comparison:</strong> Placing adjacent burst frames directly next to each other allows clients to assess micro-expressions, blink rate, and posture variations instantly.</li>
+          </ul>
+        </div>
+
+      </section>
 
       <!-- Action CTA Box -->
-      <div class="p-8 rounded-2xl bg-marketing-surface border border-marketing-border text-marketing-text text-center space-y-4 shadow-md">
-        <h2 class="text-xl font-bold text-marketing-text">Ready to create your contact sheet?</h2>
-        <p class="text-xs text-marketing-muted max-w-md mx-auto">
-          No signups, no installations, and 100% private in-browser processing.
+      <div class="p-8 sm:p-10 rounded-3xl bg-marketing-surface border border-marketing-border text-marketing-text text-center space-y-5 shadow-lg">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 text-[11px] font-mono font-bold text-accent-ink">
+          <span>FREE IN-BROWSER WORKBENCH</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">Ready to Generate Your Contact Sheets?</h2>
+        <p class="text-sm text-marketing-muted max-w-lg mx-auto leading-relaxed">
+          Process unlimited photos with zero cloud uploads. Create print-ready 300 DPI PDFs, customize grid margins, and preserve camera filenames locally.
         </p>
-        <a 
-          href="/photo-contact-sheet-maker" 
-          class="inline-flex items-center gap-2 h-11 px-6 rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold text-xs tracking-tight shadow-md transition-all"
-        >
-          <span>Open Contact Sheet Maker</span>
-          <Icon name="arrow-right" size={15} />
-        </a>
+        <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+          <a 
+            href="/photo-contact-sheet-maker" 
+            class="inline-flex items-center gap-2 h-12 px-7 rounded-xl bg-accent hover:bg-accent-hover text-white font-bold text-sm tracking-tight shadow-md hover:shadow-lg active:scale-[0.98] transition-all cursor-pointer"
+          >
+            <span>Launch Contact Sheet Maker</span>
+            <Icon name="arrow-right" size={16} />
+          </a>
+          <a 
+            href="/contact-sheet-template" 
+            class="inline-flex items-center gap-2 h-12 px-6 rounded-xl bg-marketing-bg hover:bg-marketing-surface text-marketing-text font-semibold text-sm border border-marketing-border transition-colors cursor-pointer"
+          >
+            <Icon name="layout" size={15} />
+            <span>Explore 21 Layout Presets</span>
+          </a>
+        </div>
       </div>
 
       <!-- FAQ Section -->
-      <div class="space-y-6 pt-6 border-t border-marketing-border">
-        <h2 class="text-2xl font-bold text-marketing-text">Frequently Asked Questions</h2>
+      <section class="space-y-6 pt-6 border-t border-marketing-border">
+        <div class="space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">Frequently Asked Questions</h2>
+          <p class="text-sm text-marketing-muted">Practical answers regarding contact sheet generation, paper dimensions, and Lightroom integrations.</p>
+        </div>
         <FaqAccordion faqs={faqs} />
-      </div>
+      </section>
 
     </div>
   </article>
 </MarketingLayout>
+

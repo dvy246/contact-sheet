@@ -11,6 +11,8 @@ import {
   downloadTextContent,
   downloadBlob,
 } from '../../lib/media/batchProcessor';
+import { escapeHtml } from '../../lib/utils';
+
 
 export class BatchToolsApp {
   private container: HTMLElement;
@@ -327,13 +329,13 @@ export class BatchToolsApp {
                 ${this.localImages.slice(0, 50).map((img, idx) => `
                   <tr class="hover:bg-marketing-surface/40 transition-colors">
                     <td class="p-3 text-center text-marketing-muted">${idx + 1}</td>
-                    <td class="p-3 font-semibold truncate max-w-[180px]">${img.name}</td>
-                    <td class="p-3 text-marketing-muted">${img.exif?.cameraModel || img.exif?.cameraMake || '—'}</td>
-                    <td class="p-3 text-marketing-muted truncate max-w-[160px]">${img.exif?.lensModel || '—'}</td>
-                    <td class="p-3 text-marketing-muted">${img.exif?.focalLength || '—'}</td>
-                    <td class="p-3 font-bold text-accent-ink">${img.exif?.fNumber || '—'}</td>
-                    <td class="p-3 text-marketing-muted">${img.exif?.exposureTime || '—'}</td>
-                    <td class="p-3 text-marketing-muted">${img.exif?.iso ? `ISO ${img.exif.iso}` : '—'}</td>
+                    <td class="p-3 font-semibold truncate max-w-[180px]">${escapeHtml(img.name)}</td>
+                    <td class="p-3 text-marketing-muted">${escapeHtml(img.exif?.cameraModel || img.exif?.cameraMake || '—')}</td>
+                    <td class="p-3 text-marketing-muted truncate max-w-[160px]">${escapeHtml(img.exif?.lensModel || '—')}</td>
+                    <td class="p-3 text-marketing-muted">${escapeHtml(img.exif?.focalLength || '—')}</td>
+                    <td class="p-3 font-bold text-accent-ink">${escapeHtml(img.exif?.fNumber || '—')}</td>
+                    <td class="p-3 text-marketing-muted">${escapeHtml(img.exif?.exposureTime || '—')}</td>
+                    <td class="p-3 text-marketing-muted">${escapeHtml(img.exif?.iso ? `ISO ${img.exif.iso}` : '—')}</td>
                   </tr>
                 `).join('')}
               </tbody>
@@ -651,8 +653,8 @@ export class BatchToolsApp {
     tbody.innerHTML = items.slice(0, 50).map((item, idx) => `
       <tr class="hover:bg-marketing-surface/40 transition-colors">
         <td class="p-3 text-center text-marketing-muted">${idx + 1}</td>
-        <td class="p-3 truncate max-w-[200px] text-marketing-muted">${item.originalName}</td>
-        <td class="p-3 font-bold text-accent-ink truncate max-w-[260px]">${item.newName}</td>
+        <td class="p-3 truncate max-w-[200px] text-marketing-muted">${escapeHtml(item.originalName)}</td>
+        <td class="p-3 font-bold text-accent-ink truncate max-w-[260px]">${escapeHtml(item.newName)}</td>
         <td class="p-3 text-marketing-muted">${this.localImages[idx]?.width || '-'} × ${this.localImages[idx]?.height || '-'}</td>
         <td class="p-3 text-marketing-muted">${Math.round(item.size / 1024)} KB</td>
       </tr>

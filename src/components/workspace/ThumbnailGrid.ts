@@ -10,6 +10,8 @@ import {
   batchClearCustomLabels,
 } from '../../lib/store';
 import { formatBytes } from '../../lib/media/fileSanitizer';
+import { escapeHtml } from '../../lib/utils';
+
 
 /**
  * ThumbnailGrid manages the photo list in the studio sidebar:
@@ -350,7 +352,7 @@ export class ThumbnailGrid {
                 <input 
                   type="text" 
                   name="customLabel" 
-                  value="${img.customLabel ?? img.sanitizedName}" 
+                  value="${escapeHtml(img.customLabel ?? img.sanitizedName)}" 
                   class="w-full h-6 px-1.5 rounded bg-workspace-bg border border-accent text-xs font-medium text-workspace-text focus:outline-none"
                   placeholder="Custom label"
                   autofocus
@@ -362,9 +364,9 @@ export class ThumbnailGrid {
               <div class="flex items-center gap-1.5 group/label">
                 <div 
                   class="text-xs font-semibold truncate ${hasCustomLabel ? 'text-accent-ink font-bold' : 'text-workspace-text'}" 
-                  title="${displayLabel} (Original: ${img.sanitizedName})"
+                  title="${escapeHtml(displayLabel)} (Original: ${escapeHtml(img.sanitizedName)})"
                 >
-                  ${displayLabel}
+                  ${escapeHtml(displayLabel)}
                 </div>
                 <button 
                   type="button" 
