@@ -328,3 +328,11 @@ export interface MoodBoardState {
   selectedIds: string[];
 }
 
+export interface MoodBoardManifest {
+  version: string;
+  generator: string;
+  createdAt: string;
+  canvas: MoodBoardCanvasConfig;
+  elements: MoodBoardElement[];
+}
+
