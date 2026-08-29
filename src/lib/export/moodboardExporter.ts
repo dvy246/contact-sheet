@@ -76,8 +76,27 @@ export const RESOLUTION_PRESETS: ResolutionPreset[] = [
 
 const PX_PER_MM = 3.779527559; // Standard 96 DPI CSS px per mm (at 1x scale)
 
-// In-memory image element cache for export operations
+// In-memory image element cache for export operations with LRU bounding
+const MAX_EXPORTER_IMAGE_CACHE_SIZE = 100;
 const exporterImageCache = new Map<string, HTMLImageElement>();
+
+/**
+ * Clears the mood board exporter image cache.
+ */
+export function clearExporterImageCache(url?: string): void {
+  if (url) {
+    const img = exporterImageCache.get(url);
+    if (img) {
+      img.src = '';
+      exporterImageCache.delete(url);
+    }
+  } else {
+    for (const img of exporterImageCache.values()) {
+      img.src = '';
+    }
+    exporterImageCache.clear();
+  }
+}
 
 /**
  * Loads an image from a URL or Blob object URL into an HTMLImageElement.
@@ -86,6 +105,9 @@ export function loadExporterImage(url: string): Promise<HTMLImageElement> {
   if (exporterImageCache.has(url)) {
     const cached = exporterImageCache.get(url)!;
     if (cached.complete && cached.naturalWidth > 0) {
+      // Re-insert to refresh LRU order
+      exporterImageCache.delete(url);
+      exporterImageCache.set(url, cached);
       return Promise.resolve(cached);
     }
   }
@@ -94,6 +116,15 @@ export function loadExporterImage(url: string): Promise<HTMLImageElement> {
     const img = new Image();
     img.crossOrigin = 'anonymous';
     img.onload = () => {
+      // LRU eviction if cache exceeds threshold
+      if (exporterImageCache.size >= MAX_EXPORTER_IMAGE_CACHE_SIZE) {
+        const oldestKey = exporterImageCache.keys().next().value;
+        if (oldestKey) {
+          const oldImg = exporterImageCache.get(oldestKey);
+          if (oldImg) oldImg.src = '';
+          exporterImageCache.delete(oldestKey);
+        }
+      }
       exporterImageCache.set(url, img);
       resolve(img);
     };

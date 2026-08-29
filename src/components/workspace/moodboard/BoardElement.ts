@@ -403,6 +403,12 @@ export class BoardElement {
     const prevColor = this.elementData.color;
     const prevLabel = this.elementData.label;
     const prevFont = `${this.elementData.fontSize}_${this.elementData.fontWeight}_${this.elementData.textAlign}`;
+    const prevRadius = this.elementData.borderRadius;
+    const prevBorderWidth = this.elementData.borderWidth;
+    const prevBorderColor = this.elementData.borderColor;
+    const prevShadow = this.elementData.shadow;
+    const prevFit = this.elementData.fit;
+    const prevCrop = JSON.stringify(this.elementData.crop);
 
     this.elementData = element;
     this.setSelected(isSelected, isMultiSelected);
@@ -418,12 +424,12 @@ export class BoardElement {
       prevColor !== element.color ||
       prevLabel !== element.label ||
       prevFont !== newFont ||
-      this.elementData.borderRadius !== element.borderRadius ||
-      this.elementData.borderWidth !== element.borderWidth ||
-      this.elementData.borderColor !== element.borderColor ||
-      this.elementData.shadow !== element.shadow ||
-      this.elementData.fit !== element.fit ||
-      JSON.stringify(this.elementData.crop) !== JSON.stringify(element.crop)
+      prevRadius !== element.borderRadius ||
+      prevBorderWidth !== element.borderWidth ||
+      prevBorderColor !== element.borderColor ||
+      prevShadow !== element.shadow ||
+      prevFit !== element.fit ||
+      prevCrop !== JSON.stringify(element.crop)
     ) {
       this.renderContent();
     }
