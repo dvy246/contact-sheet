@@ -70,52 +70,44 @@ const { class: className = '', intensity = 'bold', animated = true } = Astro.pro
     transform: translate3d(0, 0, 0);
   }
 
-  /* Alpha-only stops landing on a zero-alpha value of the same hue. Ending on
-     `transparent` would band, because `transparent` is premultiplied black. */
+  /* Light Mode: Radiant warm caramel, sunlit amber, and terracotta glow */
   .gb-layer-1 {
     background: radial-gradient(
-      circle at 68% 46%,
-      rgba(201, 138, 70, 0.16) 0%,
-      rgba(201, 138, 70, 0.135) 10%,
-      rgba(201, 138, 70, 0.08) 21%,
-      rgba(201, 138, 70, 0.025) 31%,
-      rgba(201, 138, 70, 0) 41%
+      ellipse 65% 55% at 65% 35%,
+      rgba(201, 100, 66, 0.36) 0%,
+      rgba(215, 125, 75, 0.26) 25%,
+      rgba(235, 160, 95, 0.15) 50%,
+      rgba(245, 195, 140, 0.05) 75%,
+      rgba(251, 247, 242, 0) 100%
     );
   }
 
-  /* Deep cocoa, the darkest note in the truffle range. It sits opposite the
-     caramel layer so the field reads as two tones of the same brown rather
-     than one flat wash — and at this alpha it reads as warm shade on cream,
-     never as a second hue. */
   .gb-layer-2 {
     background: radial-gradient(
-      circle at 25% 76%,
-      rgba(107, 60, 18, 0.11) 0%,
-      rgba(107, 60, 18, 0.09) 11%,
-      rgba(107, 60, 18, 0.055) 22%,
-      rgba(107, 60, 18, 0.018) 33%,
-      rgba(107, 60, 18, 0) 45%
+      ellipse 70% 60% at 28% 70%,
+      rgba(224, 138, 50, 0.32) 0%,
+      rgba(235, 160, 70, 0.22) 28%,
+      rgba(245, 185, 110, 0.12) 55%,
+      rgba(251, 247, 242, 0) 80%
     );
   }
 
-  /* The cream of the palette: a top highlight that lifts the section without
-     adding a third hue. */
   .gb-layer-3 {
     background: radial-gradient(
-      circle at 53% 13%,
-      rgba(255, 255, 255, 0.85) 0%,
-      rgba(255, 255, 255, 0.7) 17%,
-      rgba(255, 255, 255, 0.4) 33%,
-      rgba(255, 255, 255, 0.12) 50%,
-      rgba(255, 255, 255, 0) 67%
+      circle at 50% 18%,
+      rgba(238, 110, 70, 0.26) 0%,
+      rgba(245, 150, 90, 0.18) 25%,
+      rgba(250, 190, 130, 0.09) 50%,
+      rgba(251, 247, 242, 0) 75%
     );
   }
 
+  /* Dark Mode: Deep truffle caramel, cocoa, and warm cream illumination */
   :global(html.dark) .gb-layer-1 {
     background: radial-gradient(
       circle at 68% 46%,
-      rgba(201, 138, 70, 0.2) 0%,
-      rgba(201, 138, 70, 0.165) 10%,
+      rgba(201, 138, 70, 0.22) 0%,
+      rgba(201, 138, 70, 0.17) 10%,
       rgba(201, 138, 70, 0.1) 21%,
       rgba(201, 138, 70, 0.03) 31%,
       rgba(201, 138, 70, 0) 41%
@@ -125,23 +117,21 @@ const { class: className = '', intensity = 'bold', animated = true } = Astro.pro
   :global(html.dark) .gb-layer-2 {
     background: radial-gradient(
       circle at 25% 76%,
-      rgba(156, 90, 28, 0.22) 0%,
-      rgba(156, 90, 28, 0.18) 11%,
-      rgba(156, 90, 28, 0.1) 22%,
+      rgba(156, 90, 28, 0.24) 0%,
+      rgba(156, 90, 28, 0.19) 11%,
+      rgba(156, 90, 28, 0.11) 22%,
       rgba(156, 90, 28, 0.03) 33%,
       rgba(156, 90, 28, 0) 45%
     );
   }
 
-  /* On dark chocolate, white reads as haze. Warm cream at low alpha reads as
-     light falling on the surface. */
   :global(html.dark) .gb-layer-3 {
     background: radial-gradient(
       circle at 53% 13%,
-      rgba(216, 188, 158, 0.16) 0%,
-      rgba(216, 188, 158, 0.13) 17%,
-      rgba(216, 188, 158, 0.075) 33%,
-      rgba(216, 188, 158, 0.022) 50%,
+      rgba(216, 188, 158, 0.18) 0%,
+      rgba(216, 188, 158, 0.14) 17%,
+      rgba(216, 188, 158, 0.08) 33%,
+      rgba(216, 188, 158, 0.025) 50%,
       rgba(216, 188, 158, 0) 67%
     );
   }
