@@ -1,5 +1,30 @@
 # AGENTS.md
 
+- Implemented **High-Fidelity Multi-Format Mood Board Exporter & Studio Integration (`/mood-board-maker`)**:
+  - Created `src/lib/export/moodboardExporter.ts` supporting offscreen multi-scale Canvas 2D rendering (1x 1080p Standard, 2x 2K Retina, 3x 4K Ultra HD, 300 DPI Fine Art Print), element rotations, z-index layering, opacities, drop shadows, aspect ratio image fitting (`cover`/`contain`) with crop viewports and filename badges, designer color swatch cards with specular reflection gradients and hex codes, stylist sticky notes with paper tape accents and multiline typography wrapping, background patterns (`dots`, `grid`), and password-protected PDF export via dynamic `jspdf` import.
+  - Built high-craft Export Drawer / Modal dialog in `src/components/workspace/moodboard/MoodBoardApp.astro` featuring format switching (PNG, JPEG, PDF), resolution scale presets (1x, 2x, 3x, 300 DPI), live output dimension calculations, custom filename inputs, optional PDF password protection, and live progress reporting.
+  - Integrated Mood Board Maker showcase highlights and quick-start links on the homepage `src/pages/index.astro` and `src/components/marketing/FeatureGrid.astro`.
+  - Added dedicated landing page `src/pages/mood-board-maker.astro` with structured SEO schemas, FAQ accordions, and header/footer navigation links.
+  - Maintained strict `0 errors / 0 warnings / 0 hints` on `astro check` and confirmed successful 17-page static build.
+
+- Implemented **Dedicated Batch Photo Tools & Operations Hub (`/batch-photo-tools`)**:
+  - Created `src/lib/media/batchProcessor.ts` supporting token-based batch renaming (`{name}`, `{index:03}`, `{date}`, `{camera}`, `{focal}`, `{fstop}`, `{iso}`), downloadable shell script generation (Mac/Linux `.sh` and Windows PowerShell `.ps1`), CSV rename manifests, and client-side bounded image format conversion (JPEG, PNG, WebP) with resolution caps (1080p, 2K, 4K, custom px).
+  - Built interactive tabbed client workbench `src/components/marketing/BatchToolsApp.astro` & `BatchToolsApp.ts` with live before/after rename table, deep EXIF camera metadata inspector, format converter with progress yielding, and direct 1-click handoff into the full-screen Contact Sheet Studio.
+  - Added dedicated landing page `src/pages/batch-photo-tools.astro` with structured SEO schemas, FAQ accordions, and header/footer navigation links.
+  - Maintained strict `0 errors / 0 warnings / 0 hints` on `astro check` and confirmed successful 16-page static build.
+
+- Expanded **High-Quality Template & Preset Collection** (18 Collage Templates & 21 Contact Sheet Presets):
+  - Added new collage templates: **Vertical Triptych (3-Photo Tall 9:16)**, **Film Strip Quad (4 Photos)**, **Master Hero + 3 Stacked (Golden Quad)**, **Cinematic Header + 3 Insets**, **Editorial Center Hero (5 Photos)**, **Social Portrait 2×3 (6 Photos 4:5)**, **Central Spotlight (5 Photos)**, **Panorama + 4 Thumbnails**, and **Editorial Duo (3:2)**.
+  - Added new contact sheet presets: **Studio Technical EXIF Sheet** (with live EXIF metadata pills), **120 Film 6×7 Proof (10-Up)** (medium format analog roll layout), **Detail & Focus QC (8-Up)**, **Lookbook Double Spread (2-Up)**, **Reel & Short Storyboard (8-Up)**, and **Archival Lab Mega Index (70-Up)**.
+  - Implemented interactive category filter bars on `/collage-templates` and `/contact-sheet-template` for instant switching between categories (Basic, Showcase, Social, Comparison / Print, Film, Client, Digital).
+  - Maintained strict `0 errors / 0 warnings / 0 hints` on `astro check` and successful 15-page static build.
+
+- Implemented **Visual Grid Template Previews on Preset & Collage Cards**:
+  - Created `src/components/marketing/CollageTemplatePreview.astro` rendering scaled, responsive geometric canvas mockups for each collage layout with normalized cell positions, index badges (`#1`, `#2`), aperture vectors, and specular reflections.
+  - Created `src/components/marketing/ContactSheetPreview.astro` rendering authentic paper proof sheet mockups (A4/Letter portrait & landscape, 16:9, square) with title header bands, dynamic $N \times M$ thumbnail grids, filename label strips, and 300 DPI export footers.
+  - Integrated visual previews into `src/pages/collage-templates.astro`, `src/pages/contact-sheet-template.astro`, and the homepage `src/components/marketing/TemplateShowcase.astro`.
+  - Maintained strict `0 errors / 0 warnings / 0 hints` on `astro check` and confirmed successful 15-page static build.
+
 - Implemented **120 FPS Zero-Overhead GPU Compositor Scroll-Driven Animations**:
   - Completely removed external JavaScript scroll libraries (`lenis`) and layout-querying rAF listeners to eliminate all main-thread overhead and CPU drag.
   - Implemented modern CSS `@keyframes` scroll-driven animations (`animation-timeline: view()` and `animation-timeline: scroll()`) running 100% on the GPU compositor thread with instant native browser scrolling.

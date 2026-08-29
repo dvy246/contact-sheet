@@ -4,7 +4,7 @@
  *
  * Provides a freeform drag-and-drop workspace with magnetic snapping guides,
  * contextual floating action toolbar, 4-tab responsive sidebar (photos tray, curated templates,
- * assets & elements, and canvas settings), live undo/redo history, and high-DPI exports.
+ * assets & elements, and canvas settings), live undo/redo history, and high-DPI multi-format exports.
  *
  * 100% Client-side processing with zero cloud uploads.
  */
@@ -138,18 +138,16 @@ import '../../../styles/workspace.css';
         <span>Save Project</span>
       </button>
 
-      <!-- Export Dropdown Button -->
-      <div class="relative">
-        <button
-          id="btn-mb-export"
-          type="button"
-          class="h-8 px-3.5 rounded-lg bg-accent hover:bg-accent-hover text-white text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-colors cursor-pointer"
-          title="Export Mood Board (PNG / JPEG / PDF)"
-        >
-          <Icon name="download" size={13} />
-          <span>Export Board</span>
-        </button>
-      </div>
+      <!-- Export Trigger Button -->
+      <button
+        id="btn-mb-export"
+        type="button"
+        class="h-8 px-3.5 rounded-lg bg-accent hover:bg-accent-hover text-white text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+        title="Export Mood Board (PNG / JPEG / PDF)"
+      >
+        <Icon name="download" size={13} />
+        <span>Export Board</span>
+      </button>
     </div>
 
   </header>
@@ -215,6 +213,203 @@ import '../../../styles/workspace.css';
     </main>
 
   </div>
+
+  <!-- EXPORT DRAWER / MODAL DIALOG -->
+  <div
+    id="mb-export-modal"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md transition-all duration-200 hidden opacity-0 select-none"
+  >
+    <div
+      class="bg-workspace-panel border border-workspace-border rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden flex flex-col transition-all duration-200 transform scale-95"
+      id="mb-export-modal-card"
+    >
+      <!-- Modal Header -->
+      <div class="px-5 py-4 border-b border-workspace-border flex items-center justify-between bg-workspace-surface/50">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-accent/15 border border-accent/30 flex items-center justify-center text-accent">
+            <Icon name="download" size={16} />
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-workspace-text tracking-tight">Export Mood Board</h3>
+            <p class="text-[11px] text-workspace-muted font-mono">100% Client-Side Render · High-DPI</p>
+          </div>
+        </div>
+        <button
+          id="btn-mb-modal-close"
+          type="button"
+          class="w-7 h-7 rounded-lg hover:bg-workspace-surface-hover flex items-center justify-center text-workspace-muted hover:text-workspace-text transition-colors cursor-pointer"
+          title="Close (Esc)"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Body Form -->
+      <div class="p-5 space-y-4 text-xs overflow-y-auto max-h-[75vh]">
+        
+        <!-- Format Selector -->
+        <div class="space-y-1.5">
+          <label class="font-bold text-workspace-text text-[11px] uppercase tracking-wider font-mono">Export Format</label>
+          <div class="grid grid-cols-3 gap-2">
+            <button
+              type="button"
+              data-format="png"
+              class="mb-export-format-btn p-3 rounded-xl border border-accent bg-accent/10 text-accent font-semibold text-center transition-all cursor-pointer flex flex-col items-center gap-1"
+            >
+              <span class="text-xs font-bold">PNG</span>
+              <span class="text-[10px] opacity-75 font-normal">Lossless High-DPI</span>
+            </button>
+            <button
+              type="button"
+              data-format="jpeg"
+              class="mb-export-format-btn p-3 rounded-xl border border-workspace-border bg-workspace-surface hover:bg-workspace-surface-hover text-workspace-text text-center transition-all cursor-pointer flex flex-col items-center gap-1"
+            >
+              <span class="text-xs font-bold">JPEG</span>
+              <span class="text-[10px] text-workspace-muted font-normal">Compressed Photo</span>
+            </button>
+            <button
+              type="button"
+              data-format="pdf"
+              class="mb-export-format-btn p-3 rounded-xl border border-workspace-border bg-workspace-surface hover:bg-workspace-surface-hover text-workspace-text text-center transition-all cursor-pointer flex flex-col items-center gap-1"
+            >
+              <span class="text-xs font-bold">PDF</span>
+              <span class="text-[10px] text-workspace-muted font-normal">Print Document</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Resolution Presets -->
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between">
+            <label class="font-bold text-workspace-text text-[11px] uppercase tracking-wider font-mono">Resolution &amp; Scale</label>
+            <span id="mb-export-dimensions-readout" class="font-mono text-[11px] text-accent font-semibold">1920 × 1080 px</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              data-scale="1"
+              class="mb-export-scale-btn p-2.5 rounded-xl border border-accent bg-accent/10 text-accent text-left transition-all cursor-pointer flex items-center justify-between"
+            >
+              <div>
+                <div class="font-bold text-xs">1x Standard</div>
+                <div class="text-[10px] opacity-80">Screen / Web (1080p)</div>
+              </div>
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-accent/20 font-bold">1x</span>
+            </button>
+
+            <button
+              type="button"
+              data-scale="2"
+              class="mb-export-scale-btn p-2.5 rounded-xl border border-workspace-border bg-workspace-surface hover:bg-workspace-surface-hover text-workspace-text text-left transition-all cursor-pointer flex items-center justify-between"
+            >
+              <div>
+                <div class="font-bold text-xs">2x Retina</div>
+                <div class="text-[10px] text-workspace-muted">Pitch Decks (2K)</div>
+              </div>
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-workspace-panel text-workspace-muted font-medium">2x</span>
+            </button>
+
+            <button
+              type="button"
+              data-scale="3"
+              class="mb-export-scale-btn p-2.5 rounded-xl border border-workspace-border bg-workspace-surface hover:bg-workspace-surface-hover text-workspace-text text-left transition-all cursor-pointer flex items-center justify-between"
+            >
+              <div>
+                <div class="font-bold text-xs">3x Ultra HD</div>
+                <div class="text-[10px] text-workspace-muted">Ultra Fidelity (4K)</div>
+              </div>
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-workspace-panel text-workspace-muted font-medium">3x</span>
+            </button>
+
+            <button
+              type="button"
+              data-scale="3.125"
+              class="mb-export-scale-btn p-2.5 rounded-xl border border-workspace-border bg-workspace-surface hover:bg-workspace-surface-hover text-workspace-text text-left transition-all cursor-pointer flex items-center justify-between"
+            >
+              <div>
+                <div class="font-bold text-xs">300 DPI Print</div>
+                <div class="text-[10px] text-workspace-muted">Fine Art Studio Proof</div>
+              </div>
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-workspace-panel text-workspace-muted font-medium">PRO</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Custom Filename -->
+        <div class="space-y-1.5">
+          <label for="mb-export-filename-input" class="font-bold text-workspace-text text-[11px] uppercase tracking-wider font-mono">Custom Filename</label>
+          <div class="flex items-center gap-2">
+            <input
+              type="text"
+              id="mb-export-filename-input"
+              value="makecontactsheet-moodboard"
+              class="flex-1 bg-workspace-surface border border-workspace-border rounded-lg px-3 py-2 text-xs font-mono text-workspace-text focus:border-accent focus:outline-none transition-colors"
+              placeholder="Filename"
+            />
+            <span id="mb-export-filename-ext" class="font-mono text-xs text-workspace-muted">.png</span>
+          </div>
+        </div>
+
+        <!-- PDF Password Group (Dynamic) -->
+        <div id="mb-export-password-group" class="p-3 rounded-xl bg-workspace-surface border border-workspace-border space-y-2 hidden">
+          <div class="flex items-center justify-between">
+            <label for="mb-export-pdf-password" class="flex items-center gap-1.5 text-xs font-medium text-workspace-text">
+              <svg class="w-3.5 h-3.5 text-accent shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <span>PDF Password Protection <span class="text-workspace-muted font-normal">(Optional)</span></span>
+            </label>
+          </div>
+          <input
+            type="password"
+            id="mb-export-pdf-password"
+            placeholder="Leave empty for unencrypted PDF"
+            autocomplete="new-password"
+            class="w-full bg-workspace-panel border border-workspace-border rounded-lg px-3 py-1.5 text-xs text-workspace-text placeholder:text-workspace-muted focus:border-accent focus:outline-none transition-colors"
+          />
+        </div>
+
+        <!-- Progress and Status Indicator -->
+        <div id="mb-export-progress-group" class="p-3 rounded-xl bg-workspace-surface border border-workspace-border space-y-2 hidden">
+          <div class="flex items-center justify-between text-[11px] font-mono">
+            <span id="mb-export-progress-label" class="text-workspace-text font-medium">Preparing export buffer...</span>
+            <span id="mb-export-progress-pct" class="text-accent font-bold">0%</span>
+          </div>
+          <div class="w-full h-1.5 bg-workspace-panel rounded-full overflow-hidden">
+            <div
+              id="mb-export-progress-bar"
+              class="h-full bg-accent transition-all duration-150 rounded-full w-0"
+            ></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-5 py-3.5 border-t border-workspace-border flex items-center justify-between bg-workspace-surface/50">
+        <button
+          id="btn-mb-modal-cancel"
+          type="button"
+          class="px-4 py-2 rounded-lg bg-workspace-surface hover:bg-workspace-surface-hover text-workspace-muted hover:text-workspace-text font-semibold text-xs transition-colors cursor-pointer border border-workspace-border"
+        >
+          Cancel
+        </button>
+
+        <button
+          id="btn-mb-modal-download"
+          type="button"
+          class="px-5 py-2 rounded-lg bg-accent hover:bg-accent-hover text-white font-semibold text-xs shadow-md hover:shadow-lg flex items-center gap-2 transition-all cursor-pointer"
+        >
+          <Icon name="download" size={14} />
+          <span id="btn-mb-modal-download-text">Download PNG</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
 </div>
 
 <script>
@@ -229,6 +424,7 @@ import '../../../styles/workspace.css';
     addTextElement,
     downloadMoodBoardManifest,
   } from '../../../lib/moodboardStore';
+  import { exportMoodBoard } from '../../../lib/export/moodboardExporter';
   import { BoardCanvas } from './BoardCanvas';
   import { MoodBoardSidebar } from './MoodBoardSidebar';
   import { FloatingToolbar } from './FloatingToolbar';
@@ -283,11 +479,6 @@ import '../../../styles/workspace.css';
       downloadMoodBoardManifest();
     });
 
-    exportBtn?.addEventListener('click', () => {
-      // Direct Manifest download or prompt for Task 5 exporter integration
-      downloadMoodBoardManifest();
-    });
-
     // Empty Prompt Quick Start Actions
     promptTemplateBtn?.addEventListener('click', () => {
       sidebar.switchTab('templates');
@@ -336,6 +527,179 @@ import '../../../styles/workspace.css';
       }
       if (canvasSizeText) {
         canvasSizeText.textContent = `${config.width} × ${config.height}`;
+      }
+      updateDimensionsReadout();
+    });
+
+    // -------------------------------------------------------------------------
+    // 5. High-Fidelity Export Modal Controller
+    // -------------------------------------------------------------------------
+    const exportModal = document.getElementById('mb-export-modal');
+    const exportModalCard = document.getElementById('mb-export-modal-card');
+    const modalCloseBtn = document.getElementById('btn-mb-modal-close') as HTMLButtonElement | null;
+    const modalCancelBtn = document.getElementById('btn-mb-modal-cancel') as HTMLButtonElement | null;
+    const modalDownloadBtn = document.getElementById('btn-mb-modal-download') as HTMLButtonElement | null;
+    const modalDownloadText = document.getElementById('btn-mb-modal-download-text');
+    const formatBtns = document.querySelectorAll('.mb-export-format-btn');
+    const scaleBtns = document.querySelectorAll('.mb-export-scale-btn');
+    const filenameInput = document.getElementById('mb-export-filename-input') as HTMLInputElement | null;
+    const filenameExt = document.getElementById('mb-export-filename-ext');
+    const passwordGroup = document.getElementById('mb-export-password-group');
+    const passwordInput = document.getElementById('mb-export-pdf-password') as HTMLInputElement | null;
+    const progressGroup = document.getElementById('mb-export-progress-group');
+    const progressBar = document.getElementById('mb-export-progress-bar');
+    const progressLabel = document.getElementById('mb-export-progress-label');
+    const progressPct = document.getElementById('mb-export-progress-pct');
+    const dimensionsReadout = document.getElementById('mb-export-dimensions-readout');
+
+    let currentFormat: 'png' | 'jpeg' | 'pdf' = 'png';
+    let currentScale = 1;
+    let isExporting = false;
+
+    function updateDimensionsReadout() {
+      if (!dimensionsReadout) return;
+      const config = $moodboardConfig.get();
+      const outputW = Math.round(config.width * currentScale);
+      const outputH = Math.round(config.height * currentScale);
+      dimensionsReadout.textContent = `${outputW} × ${outputH} px`;
+    }
+
+    function openExportModal() {
+      if (!exportModal || !exportModalCard) return;
+      exportModal.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        exportModal.classList.remove('opacity-0');
+        exportModalCard.classList.remove('scale-95');
+        exportModalCard.classList.add('scale-100');
+      });
+      updateDimensionsReadout();
+    }
+
+    function closeExportModal() {
+      if (!exportModal || !exportModalCard || isExporting) return;
+      exportModal.classList.add('opacity-0');
+      exportModalCard.classList.remove('scale-100');
+      exportModalCard.classList.add('scale-95');
+      setTimeout(() => {
+        exportModal.classList.add('hidden');
+      }, 180);
+    }
+
+    exportBtn?.addEventListener('click', openExportModal);
+    modalCloseBtn?.addEventListener('click', closeExportModal);
+    modalCancelBtn?.addEventListener('click', closeExportModal);
+
+    exportModal?.addEventListener('click', (e) => {
+      if (e.target === exportModal) {
+        closeExportModal();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !exportModal?.classList.contains('hidden')) {
+        closeExportModal();
+      }
+    });
+
+    // Format selection
+    formatBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const fmt = btn.getAttribute('data-format') as 'png' | 'jpeg' | 'pdf' | null;
+        if (!fmt) return;
+        currentFormat = fmt;
+
+        // Update active styling
+        formatBtns.forEach((b) => {
+          b.classList.remove('border-accent', 'bg-accent/10', 'text-accent');
+          b.classList.add('border-workspace-border', 'bg-workspace-surface', 'text-workspace-text');
+        });
+        btn.classList.remove('border-workspace-border', 'bg-workspace-surface', 'text-workspace-text');
+        btn.classList.add('border-accent', 'bg-accent/10', 'text-accent');
+
+        // Toggle PDF password group
+        if (passwordGroup) {
+          passwordGroup.classList.toggle('hidden', currentFormat !== 'pdf');
+        }
+
+        // Update file extension and download button label
+        const ext = currentFormat === 'jpeg' ? '.jpg' : currentFormat === 'pdf' ? '.pdf' : '.png';
+        if (filenameExt) filenameExt.textContent = ext;
+        if (modalDownloadText) {
+          modalDownloadText.textContent = `Download ${currentFormat.toUpperCase()}`;
+        }
+      });
+    });
+
+    // Scale selection
+    scaleBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const scaleVal = parseFloat(btn.getAttribute('data-scale') || '1');
+        currentScale = scaleVal;
+
+        // Update active styling
+        scaleBtns.forEach((b) => {
+          b.classList.remove('border-accent', 'bg-accent/10', 'text-accent');
+          b.classList.add('border-workspace-border', 'bg-workspace-surface', 'text-workspace-text');
+        });
+        btn.classList.remove('border-workspace-border', 'bg-workspace-surface', 'text-workspace-text');
+        btn.classList.add('border-accent', 'bg-accent/10', 'text-accent');
+
+        updateDimensionsReadout();
+      });
+    });
+
+    // Trigger download execution
+    modalDownloadBtn?.addEventListener('click', async () => {
+      if (isExporting) return;
+      isExporting = true;
+
+      const elements = $moodboardElements.get();
+      const config = $moodboardConfig.get();
+      const filename = filenameInput?.value.trim() || 'makecontactsheet-moodboard';
+      const pdfPassword = passwordInput?.value.trim() || undefined;
+
+      // Show progress container & disable buttons
+      if (progressGroup) progressGroup.classList.remove('hidden');
+      if (modalDownloadBtn) modalDownloadBtn.disabled = true;
+      if (modalCancelBtn) modalCancelBtn.disabled = true;
+
+      try {
+        await exportMoodBoard(elements, config, {
+          format: currentFormat,
+          scale: currentScale,
+          quality: 0.92,
+          filename,
+          pdfOptions: { password: pdfPassword },
+          onProgress: (current, total, phase) => {
+            const pct = Math.round((current / Math.max(1, total)) * 100);
+            if (progressBar) progressBar.style.width = `${pct}%`;
+            if (progressPct) progressPct.textContent = `${pct}%`;
+            if (progressLabel) progressLabel.textContent = phase;
+          },
+        });
+
+        if (progressLabel) progressLabel.textContent = 'Export complete!';
+        if (progressPct) progressPct.textContent = '100%';
+        if (progressBar) progressBar.style.width = '100%';
+
+        setTimeout(() => {
+          closeExportModal();
+          setTimeout(() => {
+            if (progressGroup) progressGroup.classList.add('hidden');
+            if (progressBar) progressBar.style.width = '0%';
+            if (modalDownloadBtn) modalDownloadBtn.disabled = false;
+            if (modalCancelBtn) modalCancelBtn.disabled = false;
+            isExporting = false;
+          }, 300);
+        }, 600);
+      } catch (err) {
+        console.error('Mood board export error:', err);
+        if (progressLabel) {
+          progressLabel.textContent = 'Export encountered an issue. Please retry.';
+        }
+        if (modalDownloadBtn) modalDownloadBtn.disabled = false;
+        if (modalCancelBtn) modalCancelBtn.disabled = false;
+        isExporting = false;
       }
     });
   });

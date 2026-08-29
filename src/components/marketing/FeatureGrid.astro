@@ -12,10 +12,10 @@ import Icon from '../common/Icon.astro';
         <span>CORE CAPABILITIES</span>
       </div>
       <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
-        Precision tools engineered for visual professionals
+        Everything you need to manage &amp; present your photos
       </h2>
       <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
-        Everything you need to review and present photo batches without the bloat of subscription suites or privacy risks of cloud uploaders.
+        Organize, review, layout, and share your photo collections easily without paying for expensive subscriptions or worrying about cloud privacy.
       </p>
     </div>
 
@@ -55,17 +55,25 @@ import Icon from '../common/Icon.astro';
         </div>
       </div>
 
-      <!-- Card 3: Two Modes (1 col, Ascends Fast) -->
-      <div class="lg:col-span-1 bg-marketing-panel border border-marketing-border rounded-2xl p-7 sm:p-8 transition-all flex flex-col justify-between card-surface card-interactive scroll-float-card scroll-ascend-fast">
+      <!-- Card 3: Freeform Mood Board Studio (1 col, Ascends Fast) -->
+      <div class="lg:col-span-1 bg-marketing-panel border border-marketing-border rounded-2xl p-7 sm:p-8 transition-all flex flex-col justify-between card-surface card-interactive scroll-float-card scroll-ascend-fast group hover:border-accent/40">
         <div>
-          <div class="w-11 h-11 rounded-xl bg-accent/10 text-accent-ink flex items-center justify-center border border-accent/20 mb-6 shadow-xs">
-            <Icon name="layout" size={22} />
+          <div class="w-11 h-11 rounded-xl bg-accent/10 text-accent-ink flex items-center justify-center border border-accent/20 mb-6 shadow-xs group-hover:bg-accent/20 transition-colors">
+            <Icon name="image" size={22} />
           </div>
-          <h3 class="text-lg sm:text-xl font-bold text-marketing-text leading-snug tracking-tight mb-4">Proof Sheets & Collages</h3>
-          <p class="text-sm text-marketing-muted leading-relaxed">
-            Switch seamlessly between multi-photo proof sheets and creative template-based collages without reloading your batch.
+          <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-accent/10 text-accent-ink text-[10px] font-mono font-bold mb-2">NEW</div>
+          <h3 class="text-lg sm:text-xl font-bold text-marketing-text leading-snug tracking-tight mb-3">Freeform Mood Board Studio</h3>
+          <p class="text-sm text-marketing-muted leading-relaxed mb-4">
+            Curate visual concept boards, lighting references, and fashion lookbooks with magnetic snapping, color swatches, sticky notes, and 300 DPI exports.
           </p>
         </div>
+        <a
+          href="/mood-board-maker"
+          class="inline-flex items-center gap-1.5 text-xs font-semibold text-accent-ink hover:text-accent transition-colors pt-2 border-t border-marketing-border"
+        >
+          <span>Launch Mood Board Maker</span>
+          <Icon name="arrow-right" size={13} />
+        </a>
       </div>
 
       <!-- Card 4: Print Engine (Spans 2 cols, Ascends Medium) -->
@@ -75,9 +83,9 @@ import Icon from '../common/Icon.astro';
             <Icon name="file-text" size={22} />
           </div>
           <div>
-            <h3 class="text-lg sm:text-xl font-bold text-marketing-text leading-snug tracking-tight mb-4">High-DPI Print-Ready PDF Generation</h3>
+            <h3 class="text-lg sm:text-xl font-bold text-marketing-text leading-snug tracking-tight mb-4">High-DPI Print-Ready PDF &amp; Image Generation</h3>
             <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
-              Export vector-wrapped multi-page PDFs formatted for standard A4 and US Letter paper with custom margins, pagination headers, index numbers, and customizable background tones.
+              Export vector-wrapped multi-page PDFs formatted for standard A4 and US Letter paper with custom margins, pagination headers, index numbers, and customizable background tones, plus uncompressed PNGs and JPEGs up to 300 DPI.
             </p>
           </div>
         </div>

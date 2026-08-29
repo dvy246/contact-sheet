@@ -8,6 +8,7 @@ import TemplateShowcase from '../components/marketing/TemplateShowcase.astro';
 import ComparisonTable from '../components/marketing/ComparisonTable.astro';
 import FaqAccordion from '../components/common/FaqAccordion.astro';
 import WorkspaceApp from '../components/workspace/WorkspaceApp.astro';
+import Icon from '../components/common/Icon.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
 import { buildWebSiteSchema, buildOrganizationSchema, buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
 
@@ -21,6 +22,10 @@ const faqs = [
   {
     question: 'How do I export the list of selected filenames for Lightroom?',
     answer: 'After marking your photos with Keep (1), Flag (2), or Reject (3), open the Export drawer and choose "CSV Table" or "Lightroom TXT". You can download a structured CSV or a clean TXT list containing only your kept photos to paste directly into Lightroom or Capture One search filters.',
+  },
+  {
+    question: 'Can I make visual mood boards with custom colors and notes?',
+    answer: 'Yes! Our new Freeform Mood Board Maker allows you to freely arrange photos, position color swatches, write sticky notes, and align assets with magnetic snapping guides, exporting up to 300 DPI fine-art prints.',
   },
   {
     question: 'What file formats are supported?',
@@ -73,7 +78,7 @@ const schemas = [
             <span>LIVE WORKSPACE INSTRUMENT</span>
           </div>
           <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
-            Instant Photo Proofing & Layout Engine
+            Instant Photo Proofing &amp; Layout Engine
           </h2>
           <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
             Drag image batches directly into the light table. Organize contact sheets, cull selects with instant keyboard shortcuts, and export print-ready PDFs without uploading files to the cloud.
@@ -114,6 +119,146 @@ const schemas = [
 
   <!-- Template Showcase -->
   <TemplateShowcase />
+
+  <!-- Dedicated Mood Board Maker Spotlight Section -->
+  <section class="py-16 sm:py-24 lg:py-28 bg-marketing-panel border-b border-marketing-border relative overflow-hidden transition-colors">
+    <!-- Subtle Ambient Glow -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+      <div class="absolute top-1/2 right-1/4 w-[600px] h-[350px] bg-accent/8 dark:bg-accent/12 rounded-full blur-[130px]"></div>
+    </div>
+
+    <div class="relative z-10 max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        
+        <!-- Left Column: Copy & Value Proposition -->
+        <div class="lg:col-span-6 space-y-6">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono font-medium tracking-wider text-accent-ink shadow-xs">
+            <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+            <span>FREEFORM VISUAL DIRECTION</span>
+          </div>
+
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-marketing-text leading-[1.12]">
+            Curate Aesthetic Mood Boards &amp; Lookbooks
+          </h2>
+
+          <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+            Assemble visual narratives, lighting setups, and wardrobe palettes on an unconstrained freeform canvas. Freely drag, resize, rotate, and layer assets with real-time magnetic snapping guides and designer color cards.
+          </p>
+
+          <!-- Feature Pills Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs">
+            <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-marketing-surface border border-marketing-border text-marketing-text font-medium">
+              <Icon name="crop" size={16} class="text-accent" />
+              <span>Magnetic Snapping Guides</span>
+            </div>
+            <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-marketing-surface border border-marketing-border text-marketing-text font-medium">
+              <Icon name="columns" size={16} class="text-accent" />
+              <span>Designer Color Swatches</span>
+            </div>
+            <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-marketing-surface border border-marketing-border text-marketing-text font-medium">
+              <Icon name="file-text" size={16} class="text-accent" />
+              <span>Stylist Sticky Notes</span>
+            </div>
+            <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-marketing-surface border border-marketing-border text-marketing-text font-medium">
+              <Icon name="download" size={16} class="text-accent" />
+              <span>300 DPI Fine-Art Prints</span>
+            </div>
+          </div>
+
+          <!-- CTAs -->
+          <div class="flex flex-wrap items-center gap-3 pt-4">
+            <a
+              href="/mood-board-maker"
+              class="inline-flex items-center gap-2 h-11 px-6 rounded-xl bg-accent hover:bg-accent-hover text-white text-xs sm:text-sm font-semibold tracking-tight shadow-md hover:shadow-lg active:scale-[0.98] transition-all cursor-pointer"
+            >
+              <Icon name="image" size={15} />
+              <span>Launch Mood Board Studio</span>
+            </a>
+            <a
+              href="/collage-templates"
+              class="inline-flex items-center gap-2 h-11 px-5 rounded-xl bg-marketing-surface hover:bg-marketing-surface-hover text-marketing-text text-xs sm:text-sm font-semibold border border-marketing-border transition-colors cursor-pointer"
+            >
+              <span>Explore Templates</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Column: Tactile Freeform Board Preview Card -->
+        <div class="lg:col-span-6">
+          <div class="p-4 sm:p-6 rounded-3xl bg-[#14100e] border border-white/10 shadow-2xl relative overflow-hidden text-white space-y-4">
+            
+            <!-- Window Top Bar -->
+            <div class="flex items-center justify-between pb-3 border-b border-white/10 text-[11px] font-mono text-stone-400">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
+                <span class="ml-2 font-medium text-stone-300">Mood Board Workspace</span>
+              </div>
+              <span class="text-accent font-bold">1920 × 1080 · 100% Local</span>
+            </div>
+
+            <!-- Canvas Composition Mockup -->
+            <div class="relative w-full aspect-[16/10] bg-[#1a1412] rounded-2xl border border-white/10 overflow-hidden p-4 shadow-inner">
+              <!-- Dots background -->
+              <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 16px 16px;"></div>
+
+              <!-- Main Hero Editorial Photo -->
+              <div class="absolute top-4 left-4 w-[48%] h-[68%] rounded-xl bg-gradient-to-tr from-stone-900 via-stone-800 to-amber-950/60 border border-white/15 shadow-xl overflow-hidden flex flex-col justify-between p-3 rotate-[-1deg]">
+                <span class="text-[9px] font-mono px-2 py-0.5 rounded bg-black/60 backdrop-blur-sm self-start text-white/90">HERO LOOK</span>
+                <div class="text-center py-4">
+                  <Icon name="camera" size={24} class="mx-auto text-accent opacity-60" />
+                </div>
+                <span class="text-[10px] font-mono text-white/70">85mm f/1.4 · ISO 100</span>
+              </div>
+
+              <!-- Top Right Secondary Photo -->
+              <div class="absolute top-4 right-4 w-[42%] h-[46%] rounded-xl bg-gradient-to-br from-amber-900/40 via-stone-900 to-stone-800 border border-white/15 shadow-xl overflow-hidden p-2.5 rotate-[1.5deg]">
+                <span class="text-[9px] font-mono px-2 py-0.5 rounded bg-black/60 backdrop-blur-sm text-white/90">DETAIL SHOT</span>
+                <div class="text-center py-2">
+                  <Icon name="image" size={18} class="mx-auto text-white/40" />
+                </div>
+              </div>
+
+              <!-- Color Swatch 1: Amber Glow -->
+              <div class="absolute bottom-4 left-4 w-24 h-24 rounded-xl bg-stone-900 border border-white/15 shadow-xl overflow-hidden flex flex-col rotate-[2deg]">
+                <div class="flex-1 bg-[#d97706] relative">
+                  <div class="absolute inset-0 bg-gradient-to-tr from-black/20 to-white/20"></div>
+                </div>
+                <div class="px-2 py-1 bg-black/90 text-[9px] font-mono flex items-center justify-between text-white/90">
+                  <span class="font-bold">Amber</span>
+                  <span class="text-white/60">#D97706</span>
+                </div>
+              </div>
+
+              <!-- Color Swatch 2: Truffle Noir -->
+              <div class="absolute bottom-4 left-32 w-24 h-24 rounded-xl bg-stone-900 border border-white/15 shadow-xl overflow-hidden flex flex-col rotate-[-1deg]">
+                <div class="flex-1 bg-[#261b17] relative">
+                  <div class="absolute inset-0 bg-gradient-to-tr from-black/20 to-white/20"></div>
+                </div>
+                <div class="px-2 py-1 bg-black/90 text-[9px] font-mono flex items-center justify-between text-white/90">
+                  <span class="font-bold">Noir</span>
+                  <span class="text-white/60">#261B17</span>
+                </div>
+              </div>
+
+              <!-- Sticky Note -->
+              <div class="absolute bottom-4 right-4 w-[42%] h-[42%] rounded-xl bg-[#fef3c7] text-stone-900 p-3 shadow-2xl rotate-[-2deg] border border-amber-300/60 flex flex-col justify-between">
+                <div class="w-10 h-3 bg-white/60 mx-auto -mt-2 rounded-xs rotate-[-1deg]"></div>
+                <div class="text-[10px] sm:text-[11px] font-medium leading-tight">
+                  Director styling note:<br />
+                  Soft 45° overhead key with warm bounce fill.
+                </div>
+                <span class="text-[9px] font-mono text-stone-500">LOOKBOOK · SCENE 04</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
 
   <!-- Comparison Table -->
   <ComparisonTable />
