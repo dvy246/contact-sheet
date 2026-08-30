@@ -7,7 +7,7 @@ import MoodBoardApp from '../components/workspace/moodboard/MoodBoardApp.astro';
 import HighlightText from '../components/ui/HighlightText.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
 
-import { buildSoftwareApplicationSchema } from '../lib/seo/schemaGenerator';
+import { buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/mood-board-maker'] || {
   title: 'Free Mood Board Maker Online — Visual Direction Studio',
@@ -52,6 +52,7 @@ const schemas = [
     meta.description,
     'https://makecontactsheet.com/mood-board-maker'
   ),
+  buildFAQSchema(faqs),
 ];
 ---
 

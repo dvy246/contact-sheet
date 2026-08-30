@@ -7,7 +7,7 @@ import SeoToolProse from '../components/marketing/SeoToolProse.astro';
 import Icon from '../components/common/Icon.astro';
 import HighlightText from '../components/ui/HighlightText.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
-import { buildSoftwareApplicationSchema, buildHowToSchema } from '../lib/seo/schemaGenerator';
+import { buildSoftwareApplicationSchema, buildHowToSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/large-photo-prints'];
 
@@ -120,6 +120,7 @@ const schemas = [
     'Learn how to format and arrange multiple photos on a single 16x20 or 24x36 large poster print for CVS, Walgreens, or custom labs.',
     howToSteps
   ),
+  buildFAQSchema(faqs),
 ];
 ---
 
@@ -183,7 +184,7 @@ const schemas = [
           <span>Print Lab Resolution Specs</span>
         </div>
         <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-marketing-text">
-          Large Photo Print <HighlightText variant="yellow">Dimension &amp; DPI Guide</HighlightText>
+          What are the required dimensions and DPI for large photo prints?
         </h2>
         <p class="text-sm sm:text-base text-marketing-muted">
           Compare pixel requirements across standard commercial photo poster sizes. Ensure your camera resolution meets the strict minimums for sharp printing at Walgreens, CVS, Walmart, or fine art print houses.
@@ -236,7 +237,7 @@ const schemas = [
     <div class="max-w-[850px] mx-auto px-4 sm:px-6 space-y-12">
       <div class="space-y-4">
         <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text">
-          How to <HighlightText variant="cyan">Gang Multiple Photos</HighlightText> on One 24×36 Poster to Save $50+
+          How can I save money by ganging multiple photos on a 24x36 poster?
         </h2>
         <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
           Follow this 5-step workflow to combine multiple smaller photos onto a single 24×36 or 16×20 poster sheet, saving substantial money at retail photo labs.

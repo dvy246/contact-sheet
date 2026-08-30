@@ -1,0 +1,283 @@
+---
+import MarketingLayout from '../../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
+import FaqAccordion from '../../components/common/FaqAccordion.astro';
+import Icon from '../../components/common/Icon.astro';
+import HighlightText from '../../components/ui/HighlightText.astro';
+import { METADATA_REGISTRY } from '../../lib/seo/metadata';
+import { buildHowToSchema, buildFAQSchema } from '../../lib/seo/schemaGenerator';
+
+const meta = METADATA_REGISTRY['/guides/standard-large-photo-frames-and-print-sizes'];
+
+const steps = [
+  {
+    name: 'Determine native camera aspect ratio and resolution',
+    text: 'Inspect your source image pixel dimensions and aspect ratio (typically 3:2 for full-frame DSLRs/mirrorless, 4:3 for micro four-thirds and smartphones, or 1:1 for square captures). Ensure the file has at least 150 DPI for poster sizes or 300 DPI for gallery fine art.',
+  },
+  {
+    name: 'Select standard frame size vs custom dimensions',
+    text: 'Choose a mass-market frame dimension (such as 11×14, 16×20, 18×24, or 24×36 inches) to avoid costly bespoke custom moulding. Standard sizes are readily available at retail home decor stores and online framers.',
+  },
+  {
+    name: 'Calculate mat window opening and border margins',
+    text: 'Decide whether to frame full-bleed or with an archival mat board. A standard 2 to 3-inch mat border adds breathing room and elevates perception, requiring a smaller photo print inside a larger frame (e.g., an 8×10 print inside an 11×14 matted frame).',
+  },
+  {
+    name: 'Format and lay out print canvas with exact bleed tolerances',
+    text: 'Use Make Contact Sheet to lay out single large prints or multi-photo gang sheets with millimeter-precise margins and sub-pixel edge alignment. Add 0.125-inch (3mm) safe bleed margins to prevent white edges during trimming.',
+  },
+  {
+    name: 'Export at 300 DPI sRGB and assemble with archival hardware',
+    text: 'Export your print-ready master file as an uncompressed 300 DPI PNG or JPEG in sRGB color profile. Mount the print behind UV-filtering acrylic or museum glass with acid-free corner hinges to prevent paper buckling over time.',
+  },
+];
+
+const faqs = [
+  {
+    question: 'What are the most popular standard large photo frame sizes in the US?',
+    answer: 'The five most popular standard large photo frame sizes in the United States are 11×14 inches (small poster), 12×18 inches (native 3:2 DSLR ratio), 16×20 inches (standard gallery size), 18×24 inches (medium architectural poster), and 24×36 inches (commercial large poster).',
+  },
+  {
+    question: 'How do I choose between framing with a mat board versus full-bleed?',
+    answer: 'Framing with a 2 to 3.5-inch archival mat board creates visual separation between the art and frame, preventing paper emulsion from sticking to the glass. Full-bleed framing works best for modern, graphic photography, posters, and minimalist aluminum gallery frames where maximum visual scale is desired.',
+  },
+  {
+    question: 'What image resolution in megapixels is required for a 24×36 inch print?',
+    answer: 'For standard viewing distance (3+ feet), a 24×36 inch print at 150 DPI requires a 3600×5400 pixel image (19.4 megapixels). For critical close-up inspection at 300 DPI, it requires a 7200×10800 pixel master file (77.8 megapixels), which can be achieved natively or via bicubic canvas upscaling.',
+  },
+  {
+    question: 'Why does a 3:2 camera sensor crop when printed on an 8×10 or 16×20 frame?',
+    answer: 'A native 35mm DSLR or mirrorless sensor produces images with a 3:2 (1.50) aspect ratio. However, 8×10 and 16×20 frames have a 5:4 (1.25) aspect ratio. Printing a 3:2 image to fill a 16×20 frame requires cropping approximately 16.7% of the total width.',
+  },
+  {
+    question: 'How high should large framed photos be hung on a wall?',
+    answer: 'The standard museum gallery rule is to hang the center point of the framed photo at 57 to 60 inches (145–152 cm) from the finished floor. When hanging above furniture (such as a sofa or credenza), maintain 6 to 8 inches of clearance between the top of the furniture and bottom of the frame.',
+  },
+  {
+    question: 'How can I print multiple photos onto one large poster frame to save money?',
+    answer: 'You can gang multiple 4×5, 5×7, or 8×10 images onto a single 16×20 or 24×36 poster canvas in Make Contact Sheet. Retail print labs like Walgreens, CVS, and Walmart offer large poster prints at deep discounts (often $10–$18 with coupons), saving up to 70% compared to ordering individual prints.',
+  },
+];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Guides', url: '/guides/how-to-make-a-contact-sheet' },
+  { name: 'Large Photo Frames & Print Sizes' },
+];
+
+const schemas = [
+  buildHowToSchema(
+    'Standard Large Photo Frames & Print Sizes: Complete Guide',
+    meta.description,
+    steps
+  ),
+  buildFAQSchema(faqs),
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+  ogType={meta.ogType}
+  schema={schemas}
+>
+  <article class="py-12 sm:py-16 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[840px] mx-auto px-4 sm:px-6 space-y-10">
+      
+      <Breadcrumbs items={breadcrumbs} />
+
+      <header class="space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-accent"></span>
+          <span>PRINT & FRAMING GUIDE · 9 MIN READ</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-[1.15]">
+          Large Photo Frames &amp; <HighlightText variant="yellow">Print Sizes Guide</HighlightText>
+        </h1>
+        <p class="text-base sm:text-lg text-marketing-muted leading-relaxed">
+          Master standard photographic frame dimensions, sensor aspect ratios, matting mathematics, and print resolution standards. Learn how to size prints accurately for gallery exhibitions, home decor, and retail photo labs.
+        </p>
+      </header>
+
+      <!-- Direct Answer / AEO Definition Block -->
+      <div class="p-6 sm:p-7 rounded-2xl bg-accent/10 border border-accent/30 text-marketing-text space-y-2.5">
+        <div class="text-xs font-bold uppercase tracking-wider text-accent-ink font-mono">Quick Answer / Standard Dimensions Reference</div>
+        <p class="text-sm sm:text-base leading-relaxed font-medium">
+          Standard large photo frame sizes in North America are <strong>11×14 in (28×36 cm)</strong>, <strong>12×18 in (30×46 cm)</strong>, <strong>16×20 in (41×51 cm)</strong>, <strong>18×24 in (46×61 cm)</strong>, and <strong>24×36 in (61×91 cm)</strong>. To avoid image cropping, pair 3:2 camera sensors with 12×18 or 24×36 frames, and pair 4:3 sensors with 18×24 frames. For crisp gallery printing, target <strong>300 DPI</strong> (4800×6000 px for 16×20), or <strong>150 DPI</strong> (3600×5400 px for 24×36) for standard poster viewing distances.
+        </p>
+      </div>
+
+      <!-- Main Step-by-Step Guide -->
+      <section class="space-y-6 pt-2">
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+          How do you choose and prepare photos for large frame prints?
+        </h2>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          Follow this 5-step studio framework to calculate resolution, match frame aspect ratios, and export gallery-quality master files:
+        </p>
+
+        <div class="space-y-4">
+          {steps.map((step, i) => (
+            <div class="flex items-start gap-4 p-5 sm:p-6 rounded-2xl border border-marketing-border bg-marketing-bg shadow-xs transition-colors">
+              <div class="w-9 h-9 rounded-xl bg-accent text-white flex-shrink-0 flex items-center justify-center font-bold text-sm shadow-xs mt-0.5">
+                {i + 1}
+              </div>
+              <div class="space-y-1.5 flex-1">
+                <h3 class="text-base font-bold text-marketing-text">{step.name}</h3>
+                <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{step.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Deep Dive Dimensional Matrix -->
+      <section class="space-y-8 pt-6 border-t border-marketing-border text-sm sm:text-base text-marketing-muted leading-relaxed">
+        
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            What are the standard large photo frame dimensions and pixel requirements?
+          </h2>
+          <p>
+            When ordering frames from commercial retailers (such as West Elm, CB2, Target, or Michaels) or printing at retail labs (Walgreens, CVS, Walmart), choosing a standardized dimension eliminates custom framing surcharges. The reference matrix below outlines physical dimensions, metric equivalents, aspect ratios, and resolution requirements:
+          </p>
+
+          <div class="overflow-x-auto my-4 border border-marketing-border rounded-xl bg-marketing-surface shadow-xs">
+            <table class="w-full text-left text-xs sm:text-sm border-collapse">
+              <thead>
+                <tr class="bg-marketing-panel border-b border-marketing-border text-marketing-text font-bold">
+                  <th class="p-3 sm:p-4">Frame Size (Inches)</th>
+                  <th class="p-3 sm:p-4">Metric Size (cm)</th>
+                  <th class="p-3 sm:p-4">Aspect Ratio</th>
+                  <th class="p-3 sm:p-4">150 DPI Canvas (Poster)</th>
+                  <th class="p-3 sm:p-4">300 DPI Canvas (Gallery)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-marketing-border text-marketing-text/90 font-mono text-xs">
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold font-sans text-marketing-text">8 × 10 in</td>
+                  <td class="p-3 sm:p-4">20.3 × 25.4 cm</td>
+                  <td class="p-3 sm:p-4 font-sans">4:5 (1.25)</td>
+                  <td class="p-3 sm:p-4">1200 × 1500 px</td>
+                  <td class="p-3 sm:p-4">2400 × 3000 px</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold font-sans text-marketing-text">11 × 14 in</td>
+                  <td class="p-3 sm:p-4">27.9 × 35.6 cm</td>
+                  <td class="p-3 sm:p-4 font-sans">11:14 (1.27)</td>
+                  <td class="p-3 sm:p-4">1650 × 2100 px</td>
+                  <td class="p-3 sm:p-4">3300 × 4200 px</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold font-sans text-accent-ink">12 × 18 in</td>
+                  <td class="p-3 sm:p-4">30.5 × 45.7 cm</td>
+                  <td class="p-3 sm:p-4 font-sans font-bold">3:2 (Native DSLR)</td>
+                  <td class="p-3 sm:p-4">1800 × 2700 px</td>
+                  <td class="p-3 sm:p-4">3600 × 5400 px</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold font-sans text-marketing-text">16 × 20 in</td>
+                  <td class="p-3 sm:p-4">40.6 × 50.8 cm</td>
+                  <td class="p-3 sm:p-4 font-sans">4:5 (1.25)</td>
+                  <td class="p-3 sm:p-4">2400 × 3000 px</td>
+                  <td class="p-3 sm:p-4">4800 × 6000 px</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold font-sans text-marketing-text">18 × 24 in</td>
+                  <td class="p-3 sm:p-4">45.7 × 61.0 cm</td>
+                  <td class="p-3 sm:p-4 font-sans">3:4 (Micro 4/3 & iPhone)</td>
+                  <td class="p-3 sm:p-4">2700 × 3600 px</td>
+                  <td class="p-3 sm:p-4">5400 × 7200 px</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold font-sans text-accent-ink">24 × 36 in</td>
+                  <td class="p-3 sm:p-4">61.0 × 91.4 cm</td>
+                  <td class="p-3 sm:p-4 font-sans font-bold">3:2 (Master Poster)</td>
+                  <td class="p-3 sm:p-4">3600 × 5400 px</td>
+                  <td class="p-3 sm:p-4">7200 × 10800 px</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            How do mat board borders affect photo print size calculations?
+          </h2>
+          <p>
+            An archival mat board (passe-partout) serves two essential functions: <strong>mechanical protection</strong> (preventing the glass from sticking to and damaging photographic emulsion) and <strong>aesthetic enhancement</strong> (drawing the viewer's eye into the focal point of the artwork).
+          </p>
+          <p>
+            When framing with a mat board, the exterior dimension of the mat matches the frame moulding, while the interior opening cut matches your photo print size. Standard industry pairings include:
+          </p>
+          <ul class="list-disc pl-5 space-y-2 text-marketing-text/90">
+            <li><strong>11×14 in Frame with Mat:</strong> Holds an <strong>8×10 in photo</strong> with a 1.5-inch border on all sides.</li>
+            <li><strong>16×20 in Frame with Mat:</strong> Holds an <strong>11×14 in photo</strong> with a 2.5 to 3-inch border, or an <strong>8×10 in photo</strong> with a wide 4-inch gallery mat.</li>
+            <li><strong>18×24 in Frame with Mat:</strong> Holds a <strong>12×18 in photo</strong> with a 3-inch border on all sides.</li>
+            <li><strong>24×36 in Frame with Mat:</strong> Holds an <strong>18×24 in photo</strong> or <strong>20×30 in photo</strong> with a generous 3 to 3.5-inch border.</li>
+          </ul>
+          <p>
+            <em>Pro Tip:</em> Always order your print with a <strong>0.25-inch (6mm) overlap</strong> relative to the mat window opening. If your mat opening is precisely 8×10 inches, print the image at 8.25×10.25 inches to prevent visible white paper margins from slipping past the bevel cut.
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            What are the core gallery rules for hanging large framed prints?
+          </h2>
+          <p>
+            Proper hanging height transforms how large framed prints are perceived in residential and gallery spaces. Curators follow three universal spatial rules:
+          </p>
+          <ol class="list-decimal pl-5 space-y-2 text-marketing-text/90">
+            <li><strong>The 57-to-60 Inch Eye-Level Rule:</strong> The vertical center of the framed artwork should hang precisely 57 to 60 inches (145–152 cm) from the floor. To calculate nail height: divide the frame height by 2, add 58 inches, and subtract the drop distance from the top of the frame to the wire hanger.</li>
+            <li><strong>Furniture Proportionality (The 65–75% Rule):</strong> When hanging a large print or gallery cluster above a sofa, headboard, or console table, the total frame width should span approximately 65% to 75% of the furniture's width. Leave 6 to 8 inches of open wall clearance above the furniture.</li>
+            <li><strong>Consistent Gallery Spacing:</strong> In multi-frame salon clusters or triptychs, maintain a uniform <strong>2 to 3 inches (5–8 cm)</strong> of separation between adjacent frame mouldings.</li>
+          </ol>
+        </div>
+
+      </section>
+
+      <!-- Action CTA Box -->
+      <div class="p-8 sm:p-10 rounded-3xl bg-marketing-surface border border-marketing-border text-marketing-text text-center space-y-5 shadow-lg">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 text-[11px] font-mono font-bold text-accent-ink">
+          <span>FREE IN-BROWSER POSTER WORKSPACE</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">
+          Format Large Poster Prints &amp; Gang Sheets in Seconds
+        </h2>
+        <p class="text-sm sm:text-base text-marketing-muted max-w-xl mx-auto leading-relaxed">
+          Arrange photos for 11×14, 16×20, and 24×36 prints online. Export calibrated 300 DPI master files with custom bleed margins and zero server uploads.
+        </p>
+        <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href="/large-photo-prints"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 h-12 px-7 rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold text-sm tracking-tight shadow-lg shadow-accent/25 active:scale-[0.98] transition-all"
+          >
+            <Icon name="maximize" size={16} />
+            <span>Open Large Print Studio</span>
+          </a>
+          <a
+            href="/guides/how-to-make-a-contact-sheet"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 h-12 px-6 rounded-xl bg-marketing-panel border border-marketing-border hover:bg-marketing-surface text-marketing-text font-semibold text-sm transition-all"
+          >
+            <Icon name="file-text" size={16} />
+            <span>View Contact Sheet Guide</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="space-y-6 pt-6 border-t border-marketing-border">
+        <div class="space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">Frequently Asked Questions</h2>
+          <p class="text-sm text-marketing-muted">Common questions about photo frame sizing, aspect ratios, and large poster printing.</p>
+        </div>
+        <FaqAccordion faqs={faqs} />
+      </section>
+
+    </div>
+  </article>
+</MarketingLayout>

@@ -1,0 +1,249 @@
+---
+import MarketingLayout from '../../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
+import FaqAccordion from '../../components/common/FaqAccordion.astro';
+import Icon from '../../components/common/Icon.astro';
+import HighlightText from '../../components/ui/HighlightText.astro';
+import { METADATA_REGISTRY } from '../../lib/seo/metadata';
+import { buildHowToSchema, buildFAQSchema } from '../../lib/seo/schemaGenerator';
+
+const meta = METADATA_REGISTRY['/guides/wedding-photography-proofing-workflow'];
+
+const steps = [
+  {
+    name: 'Ingest raw wedding shoot files without cloud upload delays',
+    text: 'Drop your full multi-camera memory card dump (2,000 to 5,000+ files) directly into the Make Contact Sheet light-table. Because processing occurs entirely within local browser RAM, all thumbnails render immediately without waiting hours for multi-gigabyte cloud uploads.',
+  },
+  {
+    name: 'Execute Pass 1: AI sharpness filter & blinks reject cull',
+    text: 'Run the integrated local AI sharpness scanner to instantly score focus across burst shots and group formals. Use keyboard shortcuts (press 3 to Reject) to rapidly eliminate missed focus, closed eyes, and unflattering test frames in under 15 minutes.',
+  },
+  {
+    name: 'Execute Pass 2: Sequence grading and hero selection',
+    text: 'Navigate through remaining frames using arrow keys: press 1 to mark Keep for final delivery and 2 to Flag for secondary consideration (e.g. album spreads or social sneak peeks). Sort by capture timestamp to preserve wedding day chronology.',
+  },
+  {
+    name: 'Generate branded PDF proof sheets with verified camera filenames',
+    text: 'Export a lightweight, multi-page 300 DPI PDF proof document with exact camera identifiers (e.g. _DSC4821.NEF, _MG_9024.CR3) and frame numbers clearly rendered beneath every photo. Add your studio logo watermark and primary brand colors.',
+  },
+  {
+    name: 'Sync client selections back into Adobe Lightroom Classic or Capture One',
+    text: 'When your client returns their favorite frame numbers or review manifest, copy the comma-separated filename text string and paste it into Lightroom’s Library Filter bar (Text > Filename > Contains) or import the XMP sidecar rating packet for instant 5-star synchronization.',
+  },
+];
+
+const faqs = [
+  {
+    question: 'How do professional wedding photographers cull 3,000+ photos efficiently?',
+    answer: 'Professional wedding photographers use a two-pass culling strategy: Pass 1 is an aggressive rejection pass removing out-of-focus shots, lighting test frames, and awkward expressions in under 20 minutes. Pass 2 is an additive selection pass picking the strongest hero frames for color grading and album design.',
+  },
+  {
+    question: 'Why should I send clients a PDF contact sheet instead of a heavy online gallery?',
+    answer: 'Traditional cloud galleries often overwhelm wedding clients with endless scrolling grids of 800+ unorganized files and require complex account logins. A categorized PDF proof sheet offers structured pagination, works offline on any device, and preserves exact camera filenames for error-free album revisions.',
+  },
+  {
+    question: 'How does client selection sync back into Adobe Lightroom Classic without manual searching?',
+    answer: 'Make Contact Sheet generates a standardized list of client-selected filenames or an Adobe-compliant XMP sidecar archive. In Lightroom Classic, pasting the comma-separated filename string into the Library Filter instantly isolates the selected RAW master files for batch retouching.',
+  },
+  {
+    question: 'Are unreleased client wedding photos uploaded to any external server?',
+    answer: 'No. Make Contact Sheet processes all photographs, thumbnails, and metadata 100% locally in your browser memory. High-profile celebrity weddings and confidential private ceremonies remain completely secure on your local machine with zero third-party cloud exposure.',
+  },
+  {
+    question: 'What is the ideal grid size for a wedding proofing contact sheet?',
+    answer: 'A 4 × 5 grid (20 photos per page) or 3 × 4 grid (12 photos per page) on US Letter or ISO A4 paper provides the ideal balance between thumbnail clarity and manageable document page count for wedding clients evaluating portraits and reception details.',
+  },
+  {
+    question: 'Can I add custom studio branding and watermarks to client proof sheets?',
+    answer: 'Yes. You can upload your studio transparent PNG logo watermark, set opacity and corner placement, apply custom studio palette backgrounds (such as Warm Linen or Truffle Noir), and remove all platform branding for a seamless white-label client presentation.',
+  },
+];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Guides', url: '/guides/how-to-make-a-contact-sheet' },
+  { name: 'Wedding Photography Proofing Workflow' },
+];
+
+const schemas = [
+  buildHowToSchema(
+    'The Modern Wedding Photography Proofing Workflow',
+    meta.description,
+    steps
+  ),
+  buildFAQSchema(faqs),
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+  ogType={meta.ogType}
+  schema={schemas}
+>
+  <article class="py-12 sm:py-16 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[840px] mx-auto px-4 sm:px-6 space-y-10">
+      
+      <Breadcrumbs items={breadcrumbs} />
+
+      <header class="space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-accent"></span>
+          <span>WEDDING WORKFLOW GUIDE · 10 MIN READ</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-[1.15]">
+          The Modern Wedding Photography <HighlightText variant="pink">Proofing Workflow</HighlightText>
+        </h1>
+        <p class="text-base sm:text-lg text-marketing-muted leading-relaxed">
+          How to ingest, cull, and proof a 3,000+ photo wedding shoot in under two hours. Streamline client selections, preserve exact RAW camera filenames, and eliminate subscription cloud gallery bottlenecks.
+        </p>
+      </header>
+
+      <!-- Direct Answer / AEO Definition Block -->
+      <div class="p-6 sm:p-7 rounded-2xl bg-accent/10 border border-accent/30 text-marketing-text space-y-2.5">
+        <div class="text-xs font-bold uppercase tracking-wider text-accent-ink font-mono">Quick Answer / Standard Studio Workflow</div>
+        <p class="text-sm sm:text-base leading-relaxed font-medium">
+          The fastest wedding proofing workflow uses a <strong>two-pass local triage model</strong>: First, perform a rapid keyboard rejection pass (eliminating missed focus and duplicates using local AI sharpness scoring). Second, generate a structured, branded <strong>PDF contact sheet proof package</strong> displaying original camera filenames (_DSC4821.NEF) beneath every frame. Clients highlight their selects, and a single comma-separated text string syncs directly back into Adobe Lightroom Classic’s Library Filter.
+        </p>
+      </div>
+
+      <!-- Main Step-by-Step Guide -->
+      <section class="space-y-6 pt-2">
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+          How do you organize and cull a large wedding shoot step-by-step?
+        </h2>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          Follow this 5-stage studio blueprint to cut wedding proofing turnaround from two weeks down to 48 hours:
+        </p>
+
+        <div class="space-y-4">
+          {steps.map((step, i) => (
+            <div class="flex items-start gap-4 p-5 sm:p-6 rounded-2xl border border-marketing-border bg-marketing-bg shadow-xs transition-colors">
+              <div class="w-9 h-9 rounded-xl bg-accent text-white flex-shrink-0 flex items-center justify-center font-bold text-sm shadow-xs mt-0.5">
+                {i + 1}
+              </div>
+              <div class="space-y-1.5 flex-1">
+                <h3 class="text-base font-bold text-marketing-text">{step.name}</h3>
+                <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{step.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Deep Dive Comparison Breakdown -->
+      <section class="space-y-8 pt-6 border-t border-marketing-border text-sm sm:text-base text-marketing-muted leading-relaxed">
+        
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            Why are heavy cloud galleries slowing down wedding client delivery?
+          </h2>
+          <p>
+            For the past decade, wedding photographers relied almost exclusively on subscription cloud gallery platforms (such as Pixieset, ShootProof, or Pic-Time). While functional for final high-res archival delivery, using them for initial proofing introduces severe workflow friction:
+          </p>
+
+          <div class="overflow-x-auto my-4 border border-marketing-border rounded-xl bg-marketing-surface shadow-xs">
+            <table class="w-full text-left text-xs sm:text-sm border-collapse">
+              <thead>
+                <tr class="bg-marketing-panel border-b border-marketing-border text-marketing-text font-bold">
+                  <th class="p-3 sm:p-4">Workflow Factor</th>
+                  <th class="p-3 sm:p-4 bg-accent/10 border-x border-accent/25 text-marketing-text font-bold">Make Contact Sheet (Local-First)</th>
+                  <th class="p-3 sm:p-4 text-marketing-muted font-semibold">Traditional Cloud Galleries</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-marketing-border text-marketing-text/90 text-xs">
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold text-marketing-text">Upload Bandwidth &amp; Time</td>
+                  <td class="p-3 sm:p-4 bg-accent/5 border-x border-accent/20 font-bold text-accent-ink">0 Seconds (Instant Browser RAM)</td>
+                  <td class="p-3 sm:p-4">2 to 6 Hours (Gigabyte Cloud Spooling)</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold text-marketing-text">Client Privacy &amp; Data Security</td>
+                  <td class="p-3 sm:p-4 bg-accent/5 border-x border-accent/20 font-bold text-accent-ink">100% Private (Zero Cloud Ingestion)</td>
+                  <td class="p-3 sm:p-4">Stored on 3rd-Party Cloud Buckets</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold text-marketing-text">Camera Filename Fidelity</td>
+                  <td class="p-3 sm:p-4 bg-accent/5 border-x border-accent/20">Preserves Exact RAW Filenames</td>
+                  <td class="p-3 sm:p-4">Often Strips or Re-indexes Filenames</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold text-marketing-text">Lightroom Selection Sync</td>
+                  <td class="p-3 sm:p-4 bg-accent/5 border-x border-accent/20 font-semibold">1-Click Filename String or XMP Packet</td>
+                  <td class="p-3 sm:p-4">Requires Plugin or Manual CSV Cross-Check</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold text-marketing-text">Cost &amp; Subscription Fees</td>
+                  <td class="p-3 sm:p-4 bg-accent/5 border-x border-accent/20 font-bold text-accent-ink">$0 Free Forever</td>
+                  <td class="p-3 sm:p-4">$25 to $60 / Month recurring</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            By decoupling the initial <em>selection proofing phase</em> from the final <em>hi-res download delivery</em>, studios eliminate cloud upload bottlenecks, allowing couples to review proofs while the excitement of their wedding day is fresh.
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            How do you sync client proof selections directly into Adobe Lightroom Classic?
+          </h2>
+          <p>
+            When a couple reviews their proof sheet document, they mark their preferred takes (e.g. 80 photos for the luxury wedding album and 300 photos for color grading). Here is the exact procedure to sync those selections into Adobe Lightroom in under 30 seconds:
+          </p>
+          <ol class="list-decimal pl-5 space-y-2 text-marketing-text/90">
+            <li><strong>Receive Filename List:</strong> Have the client provide their selected frame numbers (e.g. <code>_DSC0412, _DSC0425, _MG_8091, _MG_8104</code>) or download their review manifest from the interactive HTML portal.</li>
+            <li><strong>Open Lightroom Classic Library Filter:</strong> Press <kbd class="px-1.5 py-0.5 rounded bg-marketing-surface border border-marketing-border font-mono text-xs">\</kbd> (backslash) in Lightroom's Library Grid view to open the top filter bar.</li>
+            <li><strong>Configure Text Filter:</strong> Click <strong>Text</strong>, set rule to <code>Filename</code> &gt; <code>Contains</code> &gt; <code>Any</code>.</li>
+            <li><strong>Paste &amp; Filter:</strong> Paste the comma-separated filename text string directly into the search field. Lightroom instantly isolates only the client-approved RAW master files.</li>
+            <li><strong>Apply Color Label or Collection:</strong> Press <kbd class="px-1.5 py-0.5 rounded bg-marketing-surface border border-marketing-border font-mono text-xs">Cmd+A</kbd> to select all filtered frames and hit <kbd class="px-1.5 py-0.5 rounded bg-marketing-surface border border-marketing-border font-mono text-xs">8</kbd> (Green Label) or drag them into a new target collection named <em>"Client Final Selects"</em>.</li>
+          </ol>
+        </div>
+
+      </section>
+
+      <!-- Action CTA Box -->
+      <div class="p-8 sm:p-10 rounded-3xl bg-marketing-surface border border-marketing-border text-marketing-text text-center space-y-5 shadow-lg">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 text-[11px] font-mono font-bold text-accent-ink">
+          <span>PRIVATE STUDIO PROOFING</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">
+          Speed Up Your Wedding Proofing Workflow Today
+        </h2>
+        <p class="text-sm sm:text-base text-marketing-muted max-w-xl mx-auto leading-relaxed">
+          Drop your wedding shoot folder into Make Contact Sheet. Cull duplicates with AI sharpness scoring, export 300 DPI proof sheets, and sync selections directly into Lightroom.
+        </p>
+        <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href="/studio/contact-sheet"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 h-12 px-7 rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold text-sm tracking-tight shadow-lg shadow-accent/25 active:scale-[0.98] transition-all"
+          >
+            <Icon name="maximize" size={16} />
+            <span>Launch Full-Screen Studio</span>
+          </a>
+          <a
+            href="/lightroom-client-selection-workflow"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 h-12 px-6 rounded-xl bg-marketing-panel border border-marketing-border hover:bg-marketing-surface text-marketing-text font-semibold text-sm transition-all"
+          >
+            <Icon name="file-text" size={16} />
+            <span>View Lightroom Sync Tutorial</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="space-y-6 pt-6 border-t border-marketing-border">
+        <div class="space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">Frequently Asked Questions</h2>
+          <p class="text-sm text-marketing-muted">Common questions about wedding culling, proof sheet generation, and Lightroom integration.</p>
+        </div>
+        <FaqAccordion faqs={faqs} />
+      </section>
+
+    </div>
+  </article>
+</MarketingLayout>

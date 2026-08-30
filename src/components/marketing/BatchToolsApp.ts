@@ -273,8 +273,8 @@ export class BatchToolsApp {
                 ${items.slice(0, 50).map((item, idx) => `
                   <tr class="hover:bg-marketing-surface/40 transition-colors">
                     <td class="p-3 text-center text-marketing-muted">${idx + 1}</td>
-                    <td class="p-3 truncate max-w-[200px] text-marketing-muted">${item.originalName}</td>
-                    <td class="p-3 font-bold text-accent-ink truncate max-w-[260px]">${item.newName}</td>
+                    <td class="p-3 truncate max-w-[200px] text-marketing-muted">${escapeHtml(item.originalName)}</td>
+                    <td class="p-3 font-bold text-accent-ink truncate max-w-[260px]">${escapeHtml(item.newName)}</td>
                     <td class="p-3 text-marketing-muted">${this.localImages[idx]?.width || '-'} × ${this.localImages[idx]?.height || '-'}</td>
                     <td class="p-3 text-marketing-muted">${Math.round(item.size / 1024)} KB</td>
                   </tr>

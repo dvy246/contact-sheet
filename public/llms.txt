@@ -1,0 +1,30 @@
+# Make Contact Sheet
+
+> Free, private, local-first in-browser photography tools.
+
+Make Contact Sheet provides professional tools for photographers to generate contact sheets, photo collages, mood boards, and large photo prints directly in the web browser. It operates entirely locally using HTML5 Canvas and Web Workers; photos and EXIF data never leave the user's device. No cloud uploads, no subscriptions.
+
+## Tools Available
+- Photo Contact Sheet Maker: Generate professional photography proof sheets with original camera filenames, index numbers, and EXIF metadata badges (https://makecontactsheet.com/photo-contact-sheet-maker).
+- Photo Collage Maker: Create visually balanced multi-photo collages (https://makecontactsheet.com/photo-collage-maker).
+- Mood Board Maker: Freeform canvas to curate aesthetic visual stories, fashion lookbooks, and photo concept boards with sticky notes and color swatches (https://makecontactsheet.com/mood-board-maker).
+- Large Photo Prints: Format and arrange photos for 11x14, 16x20, and 24x36 poster prints to create gang sheets (https://makecontactsheet.com/large-photo-prints).
+- Batch Photo Tools: Bulk rename, convert, resize, and crop images (https://makecontactsheet.com/batch-photo-tools).
+
+## In-Depth Workflow & Photography Guides
+- How to Make a Contact Sheet (https://makecontactsheet.com/guides/how-to-make-a-contact-sheet): Step-by-step photography proof sheet guide with DPI math and layout tables.
+- Standard Large Photo Frames & Print Sizes (https://makecontactsheet.com/guides/standard-large-photo-frames-and-print-sizes): Complete guide to 11x14 to 24x36 frame sizing, matting calculations, and gallery rules.
+- The Modern Wedding Photography Proofing Workflow (https://makecontactsheet.com/guides/wedding-photography-proofing-workflow): Rapid culling of 3,000+ photo wedding shoots and Lightroom Classic selection sync.
+- Large Photo Albums vs. Proof Books (https://makecontactsheet.com/guides/large-photo-albums-vs-proof-books): Heirloom flush-mount album design vs. high-density working proof book comparisons.
+- How to Make a Photo Collage (https://makecontactsheet.com/guides/how-to-make-photo-collage): Visual balance geometry and tonal harmonization.
+- How to Make a Mood Board (https://makecontactsheet.com/guides/how-to-make-a-mood-board): Pre-production styling, color swatches, and lighting ratios.
+- Photo Proof Sheet with Filenames (https://makecontactsheet.com/guides/photo-proof-sheet-with-filenames): Camera identifier retention and Lightroom filtering.
+
+## Technology & Privacy
+- Zero-Upload Architecture: All processing happens locally in the browser memory using HTML5 Canvas and Web Workers.
+- Output: Tools export at high-resolution 300 DPI for commercial printing. PDF, PNG, and JPEG exports are supported.
+- Supported Formats: Handles standard image formats and extracts EXIF/metadata from JPEG, PNG, and RAW files (CR2, CR3, NEF, ARW, DNG, etc.) via local buffering.
+
+## Usage Guide
+Users can access all tools directly at https://makecontactsheet.com. There are no accounts, paywalls, or artificial limits on the number of photos processed.
+

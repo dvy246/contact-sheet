@@ -7,7 +7,7 @@ import SeoRelatedLinks from '../components/common/SeoRelatedLinks.astro';
 import Icon from '../components/common/Icon.astro';
 import HighlightText from '../components/ui/HighlightText.astro';
 import { METADATA_REGISTRY } from '../lib/seo/metadata';
-import { buildSoftwareApplicationSchema } from '../lib/seo/schemaGenerator';
+import { buildSoftwareApplicationSchema, buildFAQSchema } from '../lib/seo/schemaGenerator';
 
 const meta = METADATA_REGISTRY['/photo-contact-sheet-maker'];
 
@@ -42,6 +42,7 @@ const schemas = [
     meta.description,
     'https://makecontactsheet.com/photo-contact-sheet-maker'
   ),
+  buildFAQSchema(faqs),
 ];
 ---
 

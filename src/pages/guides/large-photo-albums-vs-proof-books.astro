@@ -1,0 +1,248 @@
+---
+import MarketingLayout from '../../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
+import FaqAccordion from '../../components/common/FaqAccordion.astro';
+import Icon from '../../components/common/Icon.astro';
+import HighlightText from '../../components/ui/HighlightText.astro';
+import { METADATA_REGISTRY } from '../../lib/seo/metadata';
+import { buildHowToSchema, buildFAQSchema } from '../../lib/seo/schemaGenerator';
+
+const meta = METADATA_REGISTRY['/guides/large-photo-albums-vs-proof-books'];
+
+const steps = [
+  {
+    name: 'Determine project intent: Heirloom Album vs Working Proof Book',
+    text: 'Identify whether the final document is an archival luxury keepsake (40 to 80 retouched hero photographs in a heavy leather flush-mount album) or an operational selection proof book (300 to 1,000+ photos arranged in high-density grids for client review).',
+  },
+  {
+    name: 'Select page geometry and aspect ratio standards',
+    text: 'Choose standard dimensions: 10×10 in or 12×12 in square for luxury wedding albums, 11×14 in landscape for editorial lookbooks, or ISO A4 / US Letter portrait for cost-effective spiral-bound proof books.',
+  },
+  {
+    name: 'Calculate center gutter margin and outer edge bleed tolerances',
+    text: 'Account for physical binding mechanics: apply a 0.5-inch (13mm) safety margin along the center spine gutter for standard bound books (preventing heads and faces from falling into the crease) or use seamless layflat panoramic spreads.',
+  },
+  {
+    name: 'Format multi-image spreads with filename and sequence labels',
+    text: 'Arrange your photographs using balanced grid presets in Make Contact Sheet. For proof books, enable micro-typography labels to display camera filenames and sequential frame numbers beneath each thumbnail.',
+  },
+  {
+    name: 'Export calibrated 300 DPI master files for lab press or office printing',
+    text: 'Export uncompressed 300 DPI multi-page PDF documents for local spiral-bound proofing or high-resolution PNG image spreads calibrated in standard sRGB for commercial pro lab binding.',
+  },
+];
+
+const faqs = [
+  {
+    question: 'What is the main difference between a large photo album and a proof book?',
+    answer: 'A large photo album is a premium, archival heirloom designed to display 50 to 100 fully retouched final photographs on thick board pages. A proof book (or contact sheet book) is a functional studio document containing hundreds of raw thumbnail captures with filenames for client image selection.',
+  },
+  {
+    question: 'How much does it cost to produce a flush-mount album vs a spiral proof book?',
+    answer: 'A professional flush-mount leather wedding album typically costs $150 to $450+ to print at pro labs (and retails to clients for $800 to $2,500). In contrast, a 50-page spiral-bound proof book or digital PDF contact sheet costs between $0 and $15 to produce.',
+  },
+  {
+    question: 'What is the gutter margin safety rule in photo album design?',
+    answer: 'In traditional perfect-bound or magazine photo books, the inner pages curve into the spine. Designers must keep critical subject elements (especially eyes, faces, and text) at least 0.5 to 0.75 inches away from the center gutter to avoid distortion.',
+  },
+  {
+    question: 'Why are square formats (10×10 and 12×12) standard for wedding photo albums?',
+    answer: 'Square album formats (10×10 and 12×12 inches) offer maximum compositional versatility. They accommodate both 3:2 landscape orientation photos and 2:3 vertical portraits on the same spread without creating awkward negative space.',
+  },
+  {
+    question: 'Can I design proof book layouts with camera filenames in Make Contact Sheet?',
+    answer: 'Yes. Make Contact Sheet automatically formats multi-page proof book layouts (such as 4×5 or 3×4 grids per page) with original camera filenames, sequential frame index numbers, and EXIF capture data rendered cleanly beneath each image.',
+  },
+  {
+    question: 'What color profile and resolution should I use when exporting photo album spreads?',
+    answer: 'Always export photo album spreads at 300 DPI (dots per inch) in standard sRGB color space. At 300 DPI, a 12×12 inch album spread (12×24 inches open) renders at 7200×3600 pixels, ensuring razor-sharp rendering on silver halide and digital press papers.',
+  },
+];
+
+const breadcrumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Guides', url: '/guides/how-to-make-a-contact-sheet' },
+  { name: 'Large Photo Albums vs Proof Books' },
+];
+
+const schemas = [
+  buildHowToSchema(
+    'Large Photo Albums vs Proof Books: Photography Guide',
+    meta.description,
+    steps
+  ),
+  buildFAQSchema(faqs),
+];
+---
+
+<MarketingLayout
+  title={meta.title}
+  description={meta.description}
+  canonical={meta.canonical}
+  robots={meta.robots}
+  ogType={meta.ogType}
+  schema={schemas}
+>
+  <article class="py-12 sm:py-16 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[840px] mx-auto px-4 sm:px-6 space-y-10">
+      
+      <Breadcrumbs items={breadcrumbs} />
+
+      <header class="space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-accent"></span>
+          <span>ALBUM & PRINT GUIDE · 9 MIN READ</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-[1.15]">
+          Large Photo Albums vs. <HighlightText variant="cyan">Proof Books</HighlightText>
+        </h1>
+        <p class="text-base sm:text-lg text-marketing-muted leading-relaxed">
+          Compare luxury heirloom albums, magazine photo books, and working contact sheet proof books. Understand production economics, gutter safety margins, layout geometry, and client delivery strategies.
+        </p>
+      </header>
+
+      <!-- Direct Answer / AEO Definition Block -->
+      <div class="p-6 sm:p-7 rounded-2xl bg-accent/10 border border-accent/30 text-marketing-text space-y-2.5">
+        <div class="text-xs font-bold uppercase tracking-wider text-accent-ink font-mono">Quick Answer / Comparison Summary</div>
+        <p class="text-sm sm:text-base leading-relaxed font-medium">
+          The difference between a photo album and a proof book lies in <strong>intent and density</strong>: A <strong>large photo album</strong> (e.g. 12×12 flush mount) is a luxury heirloom displaying 50 to 80 fully retouched final selects with artistic white space ($200+ print cost). A <strong>proof book</strong> (or contact sheet book) is a high-density working document displaying 300 to 1,000+ raw thumbnails with verifiable camera filenames ($0 to $15 print cost) designed specifically for client culling and archival indexing.
+        </p>
+      </div>
+
+      <!-- Main Step-by-Step Guide -->
+      <section class="space-y-6 pt-2">
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+          How do you choose between an album and a proof book for client delivery?
+        </h2>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          Follow this 5-step studio framework to select the right book format, calculate margin bleed tolerances, and export press-ready files:
+        </p>
+
+        <div class="space-y-4">
+          {steps.map((step, i) => (
+            <div class="flex items-start gap-4 p-5 sm:p-6 rounded-2xl border border-marketing-border bg-marketing-bg shadow-xs transition-colors">
+              <div class="w-9 h-9 rounded-xl bg-accent text-white flex-shrink-0 flex items-center justify-center font-bold text-sm shadow-xs mt-0.5">
+                {i + 1}
+              </div>
+              <div class="space-y-1.5 flex-1">
+                <h3 class="text-base font-bold text-marketing-text">{step.name}</h3>
+                <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{step.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Deep Dive Comparison Matrix -->
+      <section class="space-y-8 pt-6 border-t border-marketing-border text-sm sm:text-base text-marketing-muted leading-relaxed">
+        
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            How do photo album formats compare in cost, capacity, and turnaround?
+          </h2>
+          <p>
+            Commercial portrait and wedding studios evaluate four distinct physical book formats when structuring client packages:
+          </p>
+
+          <div class="overflow-x-auto my-4 border border-marketing-border rounded-xl bg-marketing-surface shadow-xs">
+            <table class="w-full text-left text-xs sm:text-sm border-collapse">
+              <thead>
+                <tr class="bg-marketing-panel border-b border-marketing-border text-marketing-text font-bold">
+                  <th class="p-3 sm:p-4">Book Format</th>
+                  <th class="p-3 sm:p-4">Photo Capacity</th>
+                  <th class="p-3 sm:p-4">Production Cost</th>
+                  <th class="p-3 sm:p-4">Binding Style</th>
+                  <th class="p-3 sm:p-4">Primary Purpose</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-marketing-border text-marketing-text/90 text-xs">
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold text-marketing-text">Flush Mount Album</td>
+                  <td class="p-3 sm:p-4 font-mono">40 – 90 Photos</td>
+                  <td class="p-3 sm:p-4 font-mono text-accent-ink font-semibold">$180 – $450+</td>
+                  <td class="p-3 sm:p-4">Thick board pages, seamless layflat</td>
+                  <td class="p-3 sm:p-4">Wedding &amp; Heirloom Keepsake</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold text-marketing-text">Layflat Photo Book</td>
+                  <td class="p-3 sm:p-4 font-mono">80 – 160 Photos</td>
+                  <td class="p-3 sm:p-4 font-mono text-accent-ink font-semibold">$60 – $140</td>
+                  <td class="p-3 sm:p-4">Hinged medium paper, 180° open</td>
+                  <td class="p-3 sm:p-4">Family &amp; Commercial Lookbook</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold text-marketing-text">Magazine / Softcover</td>
+                  <td class="p-3 sm:p-4 font-mono">100 – 250 Photos</td>
+                  <td class="p-3 sm:p-4 font-mono">$20 – $45</td>
+                  <td class="p-3 sm:p-4">Perfect-bound text-weight paper</td>
+                  <td class="p-3 sm:p-4">Editorial Preview &amp; Lookbook</td>
+                </tr>
+                <tr>
+                  <td class="p-3 sm:p-4 font-semibold text-accent-ink">Contact Sheet Proof Book</td>
+                  <td class="p-3 sm:p-4 font-mono font-bold">300 – 1,200+ Photos</td>
+                  <td class="p-3 sm:p-4 font-mono text-emerald-600 dark:text-emerald-400 font-bold">$0 (PDF) or $8 – $18 (Spiral)</td>
+                  <td class="p-3 sm:p-4">Spiral wire or digital multi-page PDF</td>
+                  <td class="p-3 sm:p-4 font-semibold">Client Triage &amp; Archival Index</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            What are the critical gutter and bleed safety rules for album design?
+          </h2>
+          <p>
+            Misaligned margins can ruin an expensive photo album run. When designing two-page panoramic spreads and multi-photo grids, follow these universal mechanical safety rules:
+          </p>
+          <ul class="list-disc pl-5 space-y-2 text-marketing-text/90">
+            <li><strong>The Gutter Safety Zone:</strong> In standard bound books, keep essential subject elements (eyes, faces, and text) at least <strong>0.5 to 0.75 inches (13–19 mm)</strong> away from the center fold line. Only seamless flush-mount albums allow continuous imagery across the center crease.</li>
+            <li><strong>Outer Edge Bleed:</strong> Add <strong>0.125 inches (3 mm)</strong> of bleed beyond the trim line on all four outer sides to guarantee that no unintended white slivers appear when hydraulic bindery blades trim the pages.</li>
+            <li><strong>Safe Text Margin:</strong> Position all typography, image captions, and page numbers at least <strong>0.375 inches (10 mm)</strong> inside the final trimmed edge.</li>
+          </ul>
+        </div>
+
+      </section>
+
+      <!-- Action CTA Box -->
+      <div class="p-8 sm:p-10 rounded-3xl bg-marketing-surface border border-marketing-border text-marketing-text text-center space-y-5 shadow-lg">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 text-[11px] font-mono font-bold text-accent-ink">
+          <span>INSTANT PROOF BOOK GENERATOR</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">
+          Create Multi-Page Proof Books in Seconds
+        </h2>
+        <p class="text-sm sm:text-base text-marketing-muted max-w-xl mx-auto leading-relaxed">
+          Drop hundreds of photos into Make Contact Sheet. Format calibrated 300 DPI proof pages with camera filenames, customize margins, and export print-ready PDFs instantly.
+        </p>
+        <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href="/photo-contact-sheet-maker"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 h-12 px-7 rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold text-sm tracking-tight shadow-lg shadow-accent/25 active:scale-[0.98] transition-all"
+          >
+            <Icon name="grid" size={16} />
+            <span>Generate Proof Book Sheets</span>
+          </a>
+          <a
+            href="/guides/how-to-make-a-contact-sheet"
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2 h-12 px-6 rounded-xl bg-marketing-panel border border-marketing-border hover:bg-marketing-surface text-marketing-text font-semibold text-sm transition-all"
+          >
+            <Icon name="file-text" size={16} />
+            <span>View Contact Sheet Tutorial</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="space-y-6 pt-6 border-t border-marketing-border">
+        <div class="space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">Frequently Asked Questions</h2>
+          <p class="text-sm text-marketing-muted">Common questions about photo album printing, proof book layouts, and binding standards.</p>
+        </div>
+        <FaqAccordion faqs={faqs} />
+      </section>
+
+    </div>
+  </article>
+</MarketingLayout>
