@@ -109,7 +109,7 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
                   <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">{nav.toolAutoCull}</span>
                   <span class="text-[9px] font-mono px-1.5 py-0.2 rounded-full bg-accent-green text-zinc-950 font-bold">AI</span>
                 </div>
-                <span class="text-[11px] text-marketing-muted">Filter blurry & out-of-focus photos</span>
+                <span class="text-[11px] text-marketing-muted">{nav.toolAutoCullDesc}</span>
               </div>
             </a>
 
@@ -118,8 +118,8 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
                 <Icon name="printer" size={16} />
               </div>
               <div class="flex flex-col">
-                <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">8×10 Print Saver</span>
-                <span class="text-[11px] text-marketing-muted">Combine multiple photos on 8×10 sheet</span>
+                <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">{nav.tool8x10}</span>
+                <span class="text-[11px] text-marketing-muted">{nav.tool8x10Desc}</span>
               </div>
             </a>
 
@@ -129,7 +129,7 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
               </div>
               <div class="flex flex-col">
                 <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">{nav.toolLarge}</span>
-                <span class="text-[11px] text-marketing-muted">16×20 &amp; 24×36 poster layouts</span>
+                <span class="text-[11px] text-marketing-muted">{nav.toolLargeDesc}</span>
               </div>
             </a>
 
@@ -167,8 +167,8 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
                 <Icon name="columns" size={16} />
               </div>
               <div class="flex flex-col">
-                <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">Contact Sheet Templates</span>
-                <span class="text-[11px] text-marketing-muted">21 print, film & review presets</span>
+                <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">{nav.tplContactSheet}</span>
+                <span class="text-[11px] text-marketing-muted">{nav.tplContactSheetDesc}</span>
               </div>
             </a>
 
@@ -177,8 +177,8 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
                 <Icon name="crop" size={16} />
               </div>
               <div class="flex flex-col">
-                <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">Collage Templates</span>
-                <span class="text-[11px] text-marketing-muted">18 geometric & social story layouts</span>
+                <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">{nav.tplCollage}</span>
+                <span class="text-[11px] text-marketing-muted">{nav.tplCollageDesc}</span>
               </div>
             </a>
 
@@ -187,8 +187,8 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
                 <Icon name="layout" size={16} />
               </div>
               <div class="flex flex-col">
-                <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">Mood Board Templates</span>
-                <span class="text-[11px] text-marketing-muted">10 aesthetic & lookbook presets</span>
+                <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">{nav.tplMoodBoard}</span>
+                <span class="text-[11px] text-marketing-muted">{nav.tplMoodBoardDesc}</span>
               </div>
             </a>
           </div>
@@ -212,7 +212,7 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
               </div>
               <div class="flex flex-col">
                 <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">{nav.guideContactSheet}</span>
-                <span class="text-[11px] text-marketing-muted">Step-by-step photography guide</span>
+                <span class="text-[11px] text-marketing-muted">{nav.guideContactSheetDesc}</span>
               </div>
             </a>
 
@@ -222,7 +222,7 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
               </div>
               <div class="flex flex-col">
                 <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">{nav.guideCollage}</span>
-                <span class="text-[11px] text-marketing-muted">Composition &amp; proportions</span>
+                <span class="text-[11px] text-marketing-muted">{nav.guideCollageDesc}</span>
               </div>
             </a>
 
@@ -232,7 +232,7 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
               </div>
               <div class="flex flex-col">
                 <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">{nav.guideMoodBoard}</span>
-                <span class="text-[11px] text-marketing-muted">Visual direction &amp; styling guide</span>
+                <span class="text-[11px] text-marketing-muted">{nav.guideMoodBoardDesc}</span>
               </div>
             </a>
 
@@ -242,7 +242,7 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
               </div>
               <div class="flex flex-col">
                 <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">{nav.guideFilenames}</span>
-                <span class="text-[11px] text-marketing-muted">Camera filenames &amp; metadata</span>
+                <span class="text-[11px] text-marketing-muted">{nav.guideFilenamesDesc}</span>
               </div>
             </a>
 
@@ -433,10 +433,10 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
       </a>
       
       <div class="space-y-3">
-        <div class="text-[11px] font-mono uppercase tracking-wider text-accent-ink font-bold">Tools</div>
+        <div class="text-[11px] font-mono uppercase tracking-wider text-accent-ink font-bold">{nav.tools}</div>
         <div class="grid grid-cols-1 gap-1">
           <a href={l("/photo-contact-sheet-maker", locale)} class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
-            <span>Photo Contact Sheet Maker</span>
+            <span>{nav.toolContactSheet}</span>
             <Icon name="chevron-right" size={14} class="text-marketing-muted" />
           </a>
           <a href={l("/photo-collage-maker", locale)} class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
@@ -452,15 +452,15 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
             <Icon name="chevron-right" size={14} class="text-marketing-muted" />
           </a>
           <a href={l("/auto-cull-photos", locale)} class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
-            <span>AI Auto-Cull Photos</span>
+            <span>{nav.toolAutoCull}</span>
             <Icon name="chevron-right" size={14} class="text-marketing-muted" />
           </a>
           <a href={l("/free-8x10-photo-prints", locale)} class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
-            <span>8×10 Print Saver</span>
+            <span>{nav.tool8x10}</span>
             <Icon name="chevron-right" size={14} class="text-marketing-muted" />
           </a>
           <a href={l("/large-photo-prints", locale)} class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
-            <span>Large Poster Prints (16×20 / 24×36)</span>
+            <span>{nav.toolLarge}</span>
             <Icon name="chevron-right" size={14} class="text-marketing-muted" />
           </a>
           <a href="/studio/contact-sheet" class="py-2 px-3 rounded-lg bg-accent/10 text-sm font-semibold text-accent-ink flex items-center justify-between transition-colors">
@@ -471,25 +471,25 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
       </div>
 
       <div class="space-y-3">
-        <div class="text-[11px] font-mono uppercase tracking-wider text-accent-ink font-bold">Templates</div>
+        <div class="text-[11px] font-mono uppercase tracking-wider text-accent-ink font-bold">{nav.templates}</div>
         <div class="grid grid-cols-1 gap-1">
           <a href={l("/contact-sheet-template", locale)} class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
-            <span>Contact Sheet Templates (21 Presets)</span>
+            <span>{nav.tplContactSheet}</span>
             <Icon name="chevron-right" size={14} class="text-marketing-muted" />
           </a>
           <a href={l("/collage-templates", locale)} class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
-            <span>Collage Templates (18 Layouts)</span>
+            <span>{nav.tplCollage}</span>
             <Icon name="chevron-right" size={14} class="text-marketing-muted" />
           </a>
           <a href={l("/mood-board-templates", locale)} class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
-            <span>Mood Board Templates (10 Presets)</span>
+            <span>{nav.tplMoodBoard}</span>
             <Icon name="chevron-right" size={14} class="text-marketing-muted" />
           </a>
         </div>
       </div>
 
       <div class="space-y-3">
-        <div class="text-[11px] font-mono uppercase tracking-wider text-accent-ink font-bold">Guides & Workflows</div>
+        <div class="text-[11px] font-mono uppercase tracking-wider text-accent-ink font-bold">{nav.guides}</div>
         <div class="grid grid-cols-1 gap-1">
           <a href={l("/guides/how-to-make-a-contact-sheet", locale)} class="py-2 px-3 rounded-lg hover:bg-marketing-surface text-sm font-medium text-marketing-text flex items-center justify-between transition-colors">
             <span>{nav.guideContactSheet}</span>
