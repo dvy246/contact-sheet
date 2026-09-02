@@ -1,5 +1,243 @@
 ---
 import HighlightText from '../ui/HighlightText.astro';
+import { type Locale, DEFAULT_LOCALE } from '../../i18n/config';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = DEFAULT_LOCALE } = Astro.props;
+const isEnglish = locale === DEFAULT_LOCALE;
+
+const TRANSLATIONS: Record<Exclude<Locale, 'en'>, any> = {
+  es: {
+    badge: 'BENCHMARK Y PRIVACIDAD',
+    title: 'Cómo se compara Make Contact Sheet con las alternativas',
+    subtitle: 'Una mirada honesta a cómo se compara la revisión en el navegador con el software de escritorio pesado y las aplicaciones genéricas en la nube.',
+    colFeature: 'Capacidad / Característica',
+    colUs: 'Make Contact Sheet',
+    colPs: 'Photoshop (Contact Sheet II)',
+    colCanva: 'Canva',
+    colVizua: 'Vizua',
+    f1Name: 'Cuenta / Registro obligatorio',
+    f1Us: 'No (Acceso instantáneo)',
+    f1Ps: 'Sí (Adobe ID)',
+    f1Canva: 'Sí (Obligatorio)',
+    f1Vizua: 'No',
+    f2Name: 'Privacidad / Transferencia de archivos',
+    f2Us: '100% Local en el navegador',
+    f2Ps: 'Escritorio local',
+    f2Canva: 'Subida a la nube',
+    f2Vizua: 'Navegador local',
+    f3Name: 'Conservación de nombres de archivo',
+    f3Us: 'Siempre conservados y verificados',
+    f3Ps: 'Conservados en impresión',
+    f3Canva: 'Eliminados / Perdidos',
+    f3Vizua: 'Conservados en cuadrícula',
+    f4Name: 'Descarte y selección Keep / Flag / Reject',
+    f4Us: 'Sí (Atajos 1, 2, 3)',
+    f4Ps: 'Ninguno',
+    f4Canva: 'Ninguno',
+    f4Vizua: 'Ninguno',
+    f5Name: 'Exportación de listas CSV / TXT',
+    f5Us: 'Sí (Listo para Lightroom)',
+    f5Ps: 'Ninguno',
+    f5Canva: 'Ninguno',
+    f5Vizua: 'Ninguno',
+    f6Name: 'Modos de Collage y Mood Board',
+    f6Us: 'Estudio integrado',
+    f6Ps: 'Ninguno',
+    f6Canva: 'Plantillas extensas',
+    f6Vizua: 'Ninguno',
+    f7Name: 'Modelo de precios',
+    f7Us: 'Gratis y abierto',
+    f7Ps: '~$20-$55/mes',
+    f7Canva: 'Freemium ($13/mes)',
+    f7Vizua: 'Gratis (máx. 50 imgs)'
+  },
+  de: {
+    badge: 'BENCHMARK & PRIVATSPHÄRE',
+    title: 'Make Contact Sheet im Vergleich zu Alternativen',
+    subtitle: 'Ein ehrlicher Vergleich: Schnelle Browser-Workspaces vs. schwere Desktop-Software und generische Cloud-Dienste.',
+    colFeature: 'Funktion / Merkmal',
+    colUs: 'Make Contact Sheet',
+    colPs: 'Photoshop (Kontaktabzug II)',
+    colCanva: 'Canva',
+    colVizua: 'Vizua',
+    f1Name: 'Konto / Registrierung erforderlich',
+    f1Us: 'Nein (Sofort startklar)',
+    f1Ps: 'Ja (Adobe ID)',
+    f1Canva: 'Ja (Pflicht)',
+    f1Vizua: 'Nein',
+    f2Name: 'Datenschutz / Dateiübertragung',
+    f2Us: '100% lokal im Browser',
+    f2Ps: 'Lokaler Desktop',
+    f2Canva: 'Cloud-Upload erforderlich',
+    f2Vizua: 'Lokaler Browser',
+    f3Name: 'Dateinamenerhalt',
+    f3Us: 'Immer erhalten & geprüft',
+    f3Ps: 'Im Druck erhalten',
+    f3Canva: 'Verloren / Entfernt',
+    f3Vizua: 'Im Raster erhalten',
+    f4Name: 'Keep / Flag / Reject Triage',
+    f4Us: 'Ja (Tastenkürzel 1, 2, 3)',
+    f4Ps: 'Keine',
+    f4Canva: 'Keine',
+    f4Vizua: 'Keine',
+    f5Name: 'CSV / TXT Dateinamen-Export',
+    f5Us: 'Ja (Lightroom-kompatibel)',
+    f5Ps: 'Keine',
+    f5Canva: 'Keine',
+    f5Vizua: 'Keine',
+    f6Name: 'Collagen- & Moodboard-Modi',
+    f6Us: 'Integriertes Studio',
+    f6Ps: 'Keine',
+    f6Canva: 'Umfangreiche Vorlagen',
+    f6Vizua: 'Keine',
+    f7Name: 'Preise',
+    f7Us: 'Kostenlos & unbegrenzt',
+    f7Ps: 'ca. 20–55 €/Monat',
+    f7Canva: 'Freemium (13 €/Monat)',
+    f7Vizua: 'Kostenlos (max. 50 Bilder)'
+  },
+  fr: {
+    badge: 'COMPARATIF & CONFIDENTIALITÉ',
+    title: 'Comment Make Contact Sheet se compare aux alternatives',
+    subtitle: 'Un comparatif objectif entre notre solution dans le navigateur et les logiciels lourds ou plateformes cloud.',
+    colFeature: 'Fonctionnalité',
+    colUs: 'Make Contact Sheet',
+    colPs: 'Photoshop (Planche contact II)',
+    colCanva: 'Canva',
+    colVizua: 'Vizua',
+    f1Name: 'Compte / Inscription requise',
+    f1Us: 'Non (Accès instantané)',
+    f1Ps: 'Oui (Adobe ID)',
+    f1Canva: 'Oui (Obligatoire)',
+    f1Vizua: 'Non',
+    f2Name: 'Confidentialité / Transfert',
+    f2Us: '100% local dans le navigateur',
+    f2Ps: 'Machine locale',
+    f2Canva: 'Téléversé sur le cloud',
+    f2Vizua: 'Navigateur local',
+    f3Name: 'Préservation des noms de fichiers',
+    f3Us: 'Toujours préservés & vérifiés',
+    f3Ps: "Préservés à l'impression",
+    f3Canva: 'Supprimés / Perdus',
+    f3Vizua: 'Préservés dans la grille',
+    f4Name: 'Tri Keep / Flag / Reject',
+    f4Us: 'Oui (Raccourcis 1, 2, 3)',
+    f4Ps: 'Aucun',
+    f4Canva: 'Aucun',
+    f4Vizua: 'Aucun',
+    f5Name: 'Export de listes CSV / TXT',
+    f5Us: 'Oui (Prêt pour Lightroom)',
+    f5Ps: 'Aucun',
+    f5Canva: 'Aucun',
+    f5Vizua: 'Aucun',
+    f6Name: 'Modes Collage & Mood Board',
+    f6Us: 'Studio intégré',
+    f6Ps: 'Aucun',
+    f6Canva: 'Nombreux modèles',
+    f6Vizua: 'Aucun',
+    f7Name: 'Modèle tarifaire',
+    f7Us: 'Gratuit & illimité',
+    f7Ps: '~20-55 €/mois',
+    f7Canva: 'Freemium (13 €/mois)',
+    f7Vizua: 'Gratuit (max 50 imgs)'
+  },
+  ja: {
+    badge: '機能比較・プライバシー',
+    title: 'Make Contact Sheetと他社ツールの徹底比較',
+    subtitle: 'ブラウザ完結の高速ワークスペースと、重厚なデスクトップソフトやクラウド系ツールの実力比較。',
+    colFeature: '機能 / 特徴',
+    colUs: 'Make Contact Sheet',
+    colPs: 'Photoshop (Contact Sheet II)',
+    colCanva: 'Canva',
+    colVizua: 'Vizua',
+    f1Name: 'アカウント登録 / ログイン',
+    f1Us: '不要（即座に利用可能）',
+    f1Ps: '必要 (Adobe ID)',
+    f1Canva: '必須',
+    f1Vizua: '不要',
+    f2Name: 'プライバシー・データ転送',
+    f2Us: '100% ブラウザ内完全ローカル',
+    f2Ps: 'ローカル端末',
+    f2Canva: 'サーバーにアップロード',
+    f2Vizua: 'ブラウザ内ローカル',
+    f3Name: '元ファイル名保持',
+    f3Us: '完全保持・照合可能',
+    f3Ps: '印刷時に保持',
+    f3Canva: '削除・喪失',
+    f3Vizua: 'グリッド内で保持',
+    f4Name: '採用/保留/不採用 (1-3) 選別',
+    f4Us: '対応 (キーボード 1, 2, 3)',
+    f4Ps: '非対応',
+    f4Canva: '非対応',
+    f4Vizua: '非対応',
+    f5Name: 'ファイル名 CSV / TXT 書き出し',
+    f5Us: '対応（Lightroom直結）',
+    f5Ps: '非対応',
+    f5Canva: '非対応',
+    f5Vizua: '非対応',
+    f6Name: 'コラージュ＆ムードボード',
+    f6Us: '完全内蔵スタジオ',
+    f6Ps: '非対応',
+    f6Canva: '豊富なテンプレート',
+    f6Vizua: '非対応',
+    f7Name: '料金体系',
+    f7Us: '完全無料・無制限',
+    f7Ps: '月額約 2,000〜5,000 円',
+    f7Canva: '一部有料（月額約 1,500 円）',
+    f7Vizua: '無料（50枚まで）'
+  },
+  pt: {
+    badge: 'BENCHMARK E PRIVACIDADE',
+    title: 'Como o Make Contact Sheet se compara às alternativas',
+    subtitle: 'Uma comparação honesta: ferramentas locais no navegador versus softwares pesados e serviços em nuvem.',
+    colFeature: 'Recurso / Capacidade',
+    colUs: 'Make Contact Sheet',
+    colPs: 'Photoshop (Contact Sheet II)',
+    colCanva: 'Canva',
+    colVizua: 'Vizua',
+    f1Name: 'Conta / Cadastro obrigatório',
+    f1Us: 'Não (Acesso instantâneo)',
+    f1Ps: 'Sim (Adobe ID)',
+    f1Canva: 'Sim (Obrigatório)',
+    f1Vizua: 'Não',
+    f2Name: 'Privacidade / Transferência de arquivos',
+    f2Us: '100% Local no navegador',
+    f2Ps: 'Computador local',
+    f2Canva: 'Upload para a nuvem',
+    f2Vizua: 'Navegador local',
+    f3Name: 'Preservação de nomes de arquivos',
+    f3Us: 'Sempre preservados e verificados',
+    f3Ps: 'Preservados na impressão',
+    f3Canva: 'Removidos / Perdidos',
+    f3Vizua: 'Preservados na grade',
+    f4Name: 'Triagem Keep / Flag / Reject',
+    f4Us: 'Sim (Atalhos 1, 2, 3)',
+    f4Ps: 'Nenhum',
+    f4Canva: 'Nenhum',
+    f4Vizua: 'Nenhum',
+    f5Name: 'Exportação de listas CSV / TXT',
+    f5Us: 'Sim (Pronto para Lightroom)',
+    f5Ps: 'Nenhum',
+    f5Canva: 'Nenhum',
+    f5Vizua: 'Nenhum',
+    f6Name: 'Modos de Colagem e Mood Board',
+    f6Us: 'Estúdio integrado',
+    f6Ps: 'Nenhum',
+    f6Canva: 'Modelos variados',
+    f6Vizua: 'Nenhum',
+    f7Name: 'Preço',
+    f7Us: 'Grátis para sempre',
+    f7Ps: '~R$ 100-250/mês',
+    f7Canva: 'Freemium (R$ 35/mês)',
+    f7Vizua: 'Grátis (até 50 fotos)'
+  }
+};
+
+const t = isEnglish ? null : (TRANSLATIONS[locale as Exclude<Locale, 'en'>] || TRANSLATIONS.es);
 ---
 
 <section class="py-16 sm:py-24 lg:py-28 bg-transparent border-b border-marketing-border transition-colors w-full max-w-full overflow-hidden" data-reveal>
@@ -9,13 +247,17 @@ import HighlightText from '../ui/HighlightText.astro';
     <div class="max-w-2xl mb-12 sm:mb-14">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs mb-3.5">
         <span class="w-2 h-2 rounded-full bg-accent"></span>
-        <span>BENCHMARK &amp; PRIVACY</span>
+        <span>{isEnglish ? 'BENCHMARK & PRIVACY' : t.badge}</span>
       </div>
       <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
-        How Make Contact Sheet <HighlightText variant="lime">compares</HighlightText> to <HighlightText variant="yellow">alternatives</HighlightText>
+        {isEnglish ? (
+          <>How Make Contact Sheet <HighlightText variant="lime">compares</HighlightText> to <HighlightText variant="yellow">alternatives</HighlightText></>
+        ) : (
+          <>{t.title}</>
+        )}
       </h2>
       <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
-        An honest look at how browser-first review compares with heavy desktop software and generic cloud design apps.
+        {isEnglish ? 'An honest look at how browser-first review compares with heavy desktop software and generic cloud design apps.' : t.subtitle}
       </p>
     </div>
 
@@ -24,111 +266,112 @@ import HighlightText from '../ui/HighlightText.astro';
       <table class="w-full text-left text-xs sm:text-sm border-collapse min-w-[600px]">
         <thead>
           <tr class="bg-marketing-surface border-b border-marketing-border text-marketing-text font-bold">
-            <th class="p-4 sm:p-5">Capability / Feature</th>
+            <th class="p-4 sm:p-5">{isEnglish ? 'Capability / Feature' : t.colFeature}</th>
             <th class="p-4 sm:p-5 bg-accent/10 text-marketing-text border-x border-accent/30 font-bold">
               <span class="inline-flex items-center gap-1.5">
-                <span>Make Contact Sheet</span>
+                <span>{isEnglish ? 'Make Contact Sheet' : t.colUs}</span>
                 <span class="card-emoji text-sm" aria-hidden="true">⚡</span>
               </span>
             </th>
-            <th class="p-4 sm:p-5 text-marketing-muted font-semibold">Photoshop (Contact Sheet II)</th>
-            <th class="p-4 sm:p-5 text-marketing-muted font-semibold">Canva</th>
-            <th class="p-4 sm:p-5 text-marketing-muted font-semibold">Vizua</th>
+            <th class="p-4 sm:p-5 text-marketing-muted font-semibold">{isEnglish ? 'Photoshop (Contact Sheet II)' : t.colPs}</th>
+            <th class="p-4 sm:p-5 text-marketing-muted font-semibold">{isEnglish ? 'Canva' : t.colCanva}</th>
+            <th class="p-4 sm:p-5 text-marketing-muted font-semibold">{isEnglish ? 'Vizua' : t.colVizua}</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-marketing-border text-marketing-text">
           <tr class="group hover:bg-marketing-surface/30 transition-colors">
             <td class="p-4 sm:p-5 font-medium flex items-center gap-2">
               <span class="card-emoji text-base" aria-hidden="true">👤</span>
-              <span>Account / Signup Required</span>
+              <span>{isEnglish ? 'Account / Signup Required' : t.f1Name}</span>
             </td>
             <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold">
-              <HighlightText variant="lime">No (Instant Access)</HighlightText>
+              <HighlightText variant="lime">{isEnglish ? 'No (Instant Access)' : t.f1Us}</HighlightText>
             </td>
-            <td class="p-4 sm:p-5 text-marketing-muted">Yes (Adobe ID)</td>
-            <td class="p-4 sm:p-5 text-rose-600 dark:text-rose-400 font-medium">Yes (Mandatory)</td>
-            <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400">No</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">{isEnglish ? 'Yes (Adobe ID)' : t.f1Ps}</td>
+            <td class="p-4 sm:p-5 text-rose-600 dark:text-rose-400 font-medium">{isEnglish ? 'Yes (Mandatory)' : t.f1Canva}</td>
+            <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400">{isEnglish ? 'No' : t.f1Vizua}</td>
           </tr>
 
           <tr class="group hover:bg-marketing-surface/30 transition-colors">
             <td class="p-4 sm:p-5 font-medium flex items-center gap-2">
               <span class="card-emoji text-base" aria-hidden="true">🔒</span>
-              <span>Privacy / File Transfer</span>
+              <span>{isEnglish ? 'Privacy / File Transfer' : t.f2Name}</span>
             </td>
             <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold">
-              <HighlightText variant="lime">100% In-Browser Local</HighlightText>
+              <HighlightText variant="lime">{isEnglish ? '100% In-Browser Local' : t.f2Us}</HighlightText>
             </td>
-            <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400">Local Desktop</td>
-            <td class="p-4 sm:p-5 text-rose-600 dark:text-rose-400 font-medium">Uploaded to Cloud</td>
-            <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400">Local Browser</td>
+            <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400">{isEnglish ? 'Local Desktop' : t.f2Ps}</td>
+            <td class="p-4 sm:p-5 text-rose-600 dark:text-rose-400 font-medium">{isEnglish ? 'Uploaded to Cloud' : t.f2Canva}</td>
+            <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400">{isEnglish ? 'Local Browser' : t.f2Vizua}</td>
           </tr>
 
           <tr class="group hover:bg-marketing-surface/30 transition-colors">
             <td class="p-4 sm:p-5 font-medium flex items-center gap-2">
               <span class="card-emoji text-base" aria-hidden="true">🏷️</span>
-              <span>Filename Preservation</span>
+              <span>{isEnglish ? 'Filename Preservation' : t.f3Name}</span>
             </td>
             <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold">
-              <HighlightText variant="yellow">Always Preserved</HighlightText> &amp; Verified
+              <HighlightText variant="yellow">{isEnglish ? 'Always Preserved & Verified' : t.f3Us}</HighlightText>
             </td>
-            <td class="p-4 sm:p-5 text-marketing-muted">Preserved in Print</td>
-            <td class="p-4 sm:p-5 text-rose-600 dark:text-rose-400 font-medium">Stripped / Lost</td>
-            <td class="p-4 sm:p-5 text-marketing-muted">Preserved in Grid</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">{isEnglish ? 'Preserved in Print' : t.f3Ps}</td>
+            <td class="p-4 sm:p-5 text-rose-600 dark:text-rose-400 font-medium">{isEnglish ? 'Stripped / Lost' : t.f3Canva}</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">{isEnglish ? 'Preserved in Grid' : t.f3Vizua}</td>
           </tr>
 
           <tr class="group hover:bg-marketing-surface/30 transition-colors">
             <td class="p-4 sm:p-5 font-medium flex items-center gap-2">
               <span class="card-emoji text-base" aria-hidden="true">🎯</span>
-              <span>Keep / Reject / Flag Culling</span>
+              <span>{isEnglish ? 'Keep / Reject / Flag Culling' : t.f4Name}</span>
             </td>
             <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold">
-              <HighlightText variant="pink">Yes (Shortcuts 1, 2, 3)</HighlightText>
+              <HighlightText variant="pink">{isEnglish ? 'Yes (Shortcuts 1, 2, 3)' : t.f4Us}</HighlightText>
             </td>
-            <td class="p-4 sm:p-5 text-marketing-muted">None</td>
-            <td class="p-4 sm:p-5 text-marketing-muted">None</td>
-            <td class="p-4 sm:p-5 text-marketing-muted">None</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">{isEnglish ? 'None' : t.f4Ps}</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">{isEnglish ? 'None' : t.f4Canva}</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">{isEnglish ? 'None' : t.f4Vizua}</td>
           </tr>
 
           <tr class="group hover:bg-marketing-surface/30 transition-colors">
             <td class="p-4 sm:p-5 font-medium flex items-center gap-2">
               <span class="card-emoji text-base" aria-hidden="true">📄</span>
-              <span>Filename CSV / TXT Export</span>
+              <span>{isEnglish ? 'Filename CSV / TXT Export' : t.f5Name}</span>
             </td>
             <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold">
-              <HighlightText variant="cyan">Yes (Lightroom Ready)</HighlightText>
+              <HighlightText variant="cyan">{isEnglish ? 'Yes (Lightroom Ready)' : t.f5Us}</HighlightText>
             </td>
-            <td class="p-4 sm:p-5 text-marketing-muted">None</td>
-            <td class="p-4 sm:p-5 text-marketing-muted">None</td>
-            <td class="p-4 sm:p-5 text-marketing-muted">None</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">{isEnglish ? 'None' : t.f5Ps}</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">{isEnglish ? 'None' : t.f5Canva}</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">{isEnglish ? 'None' : t.f5Vizua}</td>
           </tr>
 
           <tr class="group hover:bg-marketing-surface/30 transition-colors">
             <td class="p-4 sm:p-5 font-medium flex items-center gap-2">
               <span class="card-emoji text-base" aria-hidden="true">🎨</span>
-              <span>Collage &amp; Mood Board Modes</span>
+              <span>{isEnglish ? 'Collage & Mood Board Modes' : t.f6Name}</span>
             </td>
             <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold">
-              <HighlightText variant="orange">Built-in Studio</HighlightText>
+              <HighlightText variant="orange">{isEnglish ? 'Built-in Studio' : t.f6Us}</HighlightText>
             </td>
-            <td class="p-4 sm:p-5 text-marketing-muted">None</td>
-            <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400">Extensive Templates</td>
-            <td class="p-4 sm:p-5 text-marketing-muted">None</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">{isEnglish ? 'None' : t.f6Ps}</td>
+            <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400">{isEnglish ? 'Extensive Templates' : t.f6Canva}</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">{isEnglish ? 'None' : t.f6Vizua}</td>
           </tr>
 
           <tr class="group hover:bg-marketing-surface/30 transition-colors">
             <td class="p-4 sm:p-5 font-medium flex items-center gap-2">
               <span class="card-emoji text-base" aria-hidden="true">💰</span>
-              <span>Pricing Model</span>
+              <span>{isEnglish ? 'Pricing Model' : t.f7Name}</span>
             </td>
             <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold">
-              <HighlightText variant="lime">Free &amp; Open</HighlightText>
+              <HighlightText variant="lime">{isEnglish ? 'Free & Open' : t.f7Us}</HighlightText>
             </td>
-            <td class="p-4 sm:p-5 text-marketing-muted">~$20-$55/month</td>
-            <td class="p-4 sm:p-5 text-marketing-muted">Freemium ($13/mo)</td>
-            <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400">Free (50 imgs max)</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">{isEnglish ? '~$20-$55/month' : t.f7Ps}</td>
+            <td class="p-4 sm:p-5 text-marketing-muted">{isEnglish ? 'Freemium ($13/mo)' : t.f7Canva}</td>
+            <td class="p-4 sm:p-5 text-emerald-600 dark:text-emerald-400">{isEnglish ? 'Free (50 imgs max)' : t.f7Vizua}</td>
           </tr>
         </tbody>
       </table>
     </div>
+
   </div>
 </section>

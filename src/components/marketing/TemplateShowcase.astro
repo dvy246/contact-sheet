@@ -4,6 +4,79 @@ import ContactSheetPreview from './ContactSheetPreview.astro';
 import CollageTemplatePreview from './CollageTemplatePreview.astro';
 import HighlightText from '../ui/HighlightText.astro';
 import { CONTACT_SHEET_PRESETS, COLLAGE_TEMPLATES } from '../../lib/engine/templates';
+import { type Locale, DEFAULT_LOCALE } from '../../i18n/config';
+import { l } from '../../i18n/utils';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = DEFAULT_LOCALE } = Astro.props;
+
+const LABELS: Record<Locale, { viewAllContact: string; viewAllCollage: string; usePreset: string; useLayout: string; headingContact: string; headingCollage: string; subContact: string; subCollage: string }> = {
+  en: {
+    viewAllContact: 'View all contact templates',
+    viewAllCollage: 'View all collage layouts',
+    usePreset: 'Use Preset',
+    useLayout: 'Use Layout',
+    headingContact: 'Proof Sheet Layouts & Presets',
+    headingCollage: 'Photo Collage Layouts',
+    subContact: 'Calibrated for standard printing, digital review boards, and client proofing.',
+    subCollage: 'Expressive compositions for client presentations, lookbooks, and hero displays.'
+  },
+  es: {
+    viewAllContact: 'Ver todas las plantillas de hojas',
+    viewAllCollage: 'Ver todas las plantillas de collage',
+    usePreset: 'Usar plantilla',
+    useLayout: 'Usar diseño',
+    headingContact: 'Diseños y ajustes de hojas de contactos',
+    headingCollage: 'Diseños de collage de fotos',
+    subContact: 'Calibrados para impresión estándar, paneles de revisión digital y pruebas de clientes.',
+    subCollage: 'Composiciones expresivas para presentaciones a clientes, lookbooks y destacados.'
+  },
+  de: {
+    viewAllContact: 'Alle Kontaktabzug-Vorlagen ansehen',
+    viewAllCollage: 'Alle Collagen-Layouts ansehen',
+    usePreset: 'Vorlage nutzen',
+    useLayout: 'Layout nutzen',
+    headingContact: 'Kontaktabzug-Layouts & Vorlagen',
+    headingCollage: 'Fotocollagen-Layouts',
+    subContact: 'Kalibriert für Standarddrucke, digitale Auswertungen und Kunden-Proofing.',
+    subCollage: 'Ausdrucksstarke Kompositionen für Kundenpräsentationen, Lookbooks und Portfolio.'
+  },
+  fr: {
+    viewAllContact: 'Voir tous les modèles de planches',
+    viewAllCollage: 'Voir tous les modèles de collages',
+    usePreset: 'Utiliser ce préréglage',
+    useLayout: 'Utiliser cette mise en page',
+    headingContact: 'Modèles de planches contact & préréglages',
+    headingCollage: 'Mises en page de collages photo',
+    subContact: 'Calibré pour tirages standard, revues numériques et épreuves clients.',
+    subCollage: 'Compositions visuelles pour présentations clients, lookbooks et portfolios.'
+  },
+  ja: {
+    viewAllContact: 'すべてのコンタクトシートを見る',
+    viewAllCollage: 'すべてのコラージュを見る',
+    usePreset: 'このプリセットを使う',
+    useLayout: 'このレイアウトを使う',
+    headingContact: 'コンタクトシートレイアウト＆プリセット',
+    headingCollage: 'フォトコラージュレイアウト',
+    subContact: '標準印刷・デジタル確認ボード・クライアント校正用に最適化。',
+    subCollage: 'クライアント向け提案、ルックブック、ポートフォリオ用の多彩な構図。'
+  },
+  pt: {
+    viewAllContact: 'Ver todos os modelos de folhas',
+    viewAllCollage: 'Ver todos os modelos de colagens',
+    usePreset: 'Usar predefinição',
+    useLayout: 'Usar layout',
+    headingContact: 'Layouts e predefinições de folhas de contato',
+    headingCollage: 'Layouts de colagem de fotos',
+    subContact: 'Calibrado para impressão padrão, quadros de revisão digital e aprovação de clientes.',
+    subCollage: 'Composições expressivas para apresentações a clientes, lookbooks e galerias.'
+  }
+};
+
+const labels = LABELS[locale] || LABELS[DEFAULT_LOCALE];
 ---
 
 <section class="py-16 sm:py-24 lg:py-28 bg-transparent border-b border-marketing-border transition-colors" data-reveal>
@@ -25,8 +98,8 @@ import { CONTACT_SHEET_PRESETS, COLLAGE_TEMPLATES } from '../../lib/engine/templ
             Calibrated for standard printing, digital review boards, and client proofing.
           </p>
         </div>
-        <a href="/contact-sheet-template" class="text-xs font-semibold text-marketing-text hover:text-accent-ink flex items-center gap-1.5 transition-colors shrink-0">
-          <span>View all contact templates</span>
+        <a href={l("/contact-sheet-template", locale)} class="text-xs font-semibold text-marketing-text hover:text-accent-ink flex items-center gap-1.5 transition-colors shrink-0">
+          <span>{labels.viewAllContact}</span>
           <Icon name="arrow-right" size={14} />
         </a>
       </div>
@@ -57,7 +130,7 @@ import { CONTACT_SHEET_PRESETS, COLLAGE_TEMPLATES } from '../../lib/engine/templ
             </div>
 
             <a 
-              href="/#workspace" 
+              href={l("/#workspace", locale)} 
               class="w-full h-10 rounded-xl bg-marketing-surface hover:bg-marketing-surface-hover text-marketing-text font-semibold text-xs text-center border border-marketing-border transition-colors flex items-center justify-center group-hover:border-accent/60 active:scale-[0.98] cursor-pointer"
             >
               Use Preset
@@ -83,7 +156,7 @@ import { CONTACT_SHEET_PRESETS, COLLAGE_TEMPLATES } from '../../lib/engine/templ
             Clean, balanced multi-photo layouts for social stories, before/after edits, and portfolios.
           </p>
         </div>
-        <a href="/collage-templates" class="text-xs font-semibold text-marketing-text hover:text-accent-ink flex items-center gap-1.5 transition-colors shrink-0">
+        <a href={l("/collage-templates", locale)} class="text-xs font-semibold text-marketing-text hover:text-accent-ink flex items-center gap-1.5 transition-colors shrink-0">
           <span>View all collage templates</span>
           <Icon name="arrow-right" size={14} />
         </a>
@@ -116,7 +189,7 @@ import { CONTACT_SHEET_PRESETS, COLLAGE_TEMPLATES } from '../../lib/engine/templ
             </div>
 
             <a 
-              href="/#workspace" 
+              href={l("/#workspace", locale)} 
               class="w-full h-10 rounded-xl bg-marketing-surface hover:bg-marketing-surface-hover text-marketing-text font-semibold text-xs text-center border border-marketing-border transition-colors flex items-center justify-center group-hover:border-accent/60 active:scale-[0.98] cursor-pointer"
             >
               Select Template

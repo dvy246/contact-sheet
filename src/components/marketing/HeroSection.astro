@@ -3,6 +3,17 @@ import Icon from '../common/Icon.astro';
 import GradientBackground from '../common/GradientBackground.astro';
 import HighlightText from '../ui/HighlightText.astro';
 import DotPattern from '../ui/DotPattern.astro';
+import { type Locale, DEFAULT_LOCALE } from '../../i18n/config';
+import { HERO_DATA } from '../../i18n/data/heroData';
+import { l } from '../../i18n/utils';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = DEFAULT_LOCALE } = Astro.props;
+const data = HERO_DATA[locale] || HERO_DATA[DEFAULT_LOCALE];
+const isEnglish = locale === DEFAULT_LOCALE;
 ---
 
 <section class="relative pt-14 pb-20 sm:pt-20 sm:pb-24 lg:pt-24 lg:pb-28 overflow-hidden bg-transparent border-b border-marketing-border transition-colors">
@@ -24,7 +35,6 @@ import DotPattern from '../ui/DotPattern.astro';
     className="opacity-45 dark:opacity-30 [mask-image:radial-gradient(ellipse_75%_65%_at_50%_35%,black_25%,transparent_85%)]"
   />
 
-
   <div class="relative z-10 max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 w-full min-w-0">
     <div class="max-w-3xl mx-auto text-center flex flex-col items-center w-full min-w-0">
 
@@ -34,36 +44,46 @@ import DotPattern from '../ui/DotPattern.astro';
           <span class="animate-ping motion-reduce:animate-none absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
           <span class="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
         </span>
-        <span>100% LOCAL IN-BROWSER ENGINE</span>
+        <span>{data.badge}</span>
       </div>
 
       <!-- Main Headline with Premium Title Shimmer -->
-      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight sm:tracking-[-0.03em] leading-[1.12] sm:leading-[1.07] text-balance mb-5 sm:mb-7 lg:mb-8">
-        <span class="title-shimmer">Free</span> <HighlightText variant="lime">Contact Sheet Maker</HighlightText> <span class="title-shimmer">&amp;</span> <HighlightText variant="pink">Photo Collage</HighlightText>
-      </h1>
-
+      {isEnglish ? (
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight sm:tracking-[-0.03em] leading-[1.12] sm:leading-[1.07] text-balance mb-5 sm:mb-7 lg:mb-8">
+          <span class="title-shimmer">Free</span> <HighlightText variant="lime">Contact Sheet Maker</HighlightText> <span class="title-shimmer">&amp;</span> <HighlightText variant="pink">Photo Collage</HighlightText>
+        </h1>
+      ) : (
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight sm:tracking-[-0.03em] leading-[1.12] sm:leading-[1.07] text-balance mb-5 sm:mb-7 lg:mb-8">
+          <span class="title-shimmer">{data.titlePrefix}</span> <HighlightText variant="lime">{data.titleHighlight1}</HighlightText> <span class="title-shimmer">{data.titleMiddle}</span> <HighlightText variant="pink">{data.titleHighlight2}</HighlightText>
+        </h1>
+      )}
 
       <!-- Supporting Subtitle with Shimmering Sweep Effect -->
-      <p class="text-[15px] sm:text-lg lg:text-xl text-shimmer font-medium leading-relaxed max-w-2xl mx-auto text-balance mb-7 sm:mb-9 lg:mb-10">
-        Arrange photos into <span class="relative inline-block font-bold text-marketing-text px-0.5">print-ready<svg class="absolute -bottom-1 sm:-bottom-1.5 left-0 w-[105%] h-2.5 sm:h-3 text-accent pointer-events-none overflow-visible opacity-85" viewBox="0 0 130 16" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M2.5 10C35 4 92 3 127 7.5C92 12.5 42 14.5 16 13C48 12 96 11.5 124 13.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span> contact sheets and photo collages online. Review client selects with fast keyboard shortcuts, keep camera filenames intact, and export 300 DPI PDFs locally.
-      </p>
-
+      {isEnglish ? (
+        <p class="text-[15px] sm:text-lg lg:text-xl text-shimmer font-medium leading-relaxed max-w-2xl mx-auto text-balance mb-7 sm:mb-9 lg:mb-10">
+          Arrange photos into <span class="relative inline-block font-bold text-marketing-text px-0.5">print-ready<svg class="absolute -bottom-1 sm:-bottom-1.5 left-0 w-[105%] h-2.5 sm:h-3 text-accent pointer-events-none overflow-visible opacity-85" viewBox="0 0 130 16" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M2.5 10C35 4 92 3 127 7.5C92 12.5 42 14.5 16 13C48 12 96 11.5 124 13.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span> contact sheets and photo collages online. Review client selects with fast keyboard shortcuts, keep camera filenames intact, and export 300 DPI PDFs locally.
+        </p>
+      ) : (
+        <p class="text-[15px] sm:text-lg lg:text-xl text-shimmer font-medium leading-relaxed max-w-2xl mx-auto text-balance mb-7 sm:mb-9 lg:mb-10">
+          {data.subtitle}
+        </p>
+      )}
 
       <!-- Action Button Group -->
       <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-3.5 mb-9 sm:mb-11 w-full sm:w-auto">
         <a
-          href="/#workspace"
+          href={l('/#workspace', locale)}
           class="w-full sm:w-auto h-12 sm:h-[52px] px-7 sm:px-8 rounded-xl bg-accent hover:bg-accent-hover text-white font-bold text-sm sm:text-[15px] tracking-tight shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/35 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 group cursor-pointer"
         >
-          <span>Start Creating</span>
+          <span>{data.ctaStart}</span>
           <Icon name="arrow-right" size={16} class="group-hover:translate-x-0.5 transition-transform" />
         </a>
 
         <a
-          href="/photo-contact-sheet-maker"
+          href={l('/photo-contact-sheet-maker', locale)}
           class="w-full sm:w-auto h-12 sm:h-[52px] px-6 sm:px-7 rounded-xl bg-marketing-surface/70 backdrop-blur-sm hover:bg-marketing-surface-hover text-marketing-text font-semibold text-sm sm:text-[15px] border border-marketing-border hover:border-marketing-text/20 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-xs"
         >
-          <span>Explore Templates</span>
+          <span>{data.ctaExplore}</span>
         </a>
       </div>
 
@@ -71,15 +91,15 @@ import DotPattern from '../ui/DotPattern.astro';
       <div class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
         <div class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-marketing-surface/70 backdrop-blur-sm border border-marketing-border text-xs sm:text-[13px] text-marketing-text font-medium shadow-xs">
           <Icon name="shield" size={14} class="text-emerald-500 shrink-0" />
-          <span>Zero Server Uploads</span>
+          <span>{data.pillZeroUploads}</span>
         </div>
         <div class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-marketing-surface/70 backdrop-blur-sm border border-marketing-border text-xs sm:text-[13px] text-marketing-text font-medium shadow-xs">
           <Icon name="check" size={14} class="text-emerald-500 shrink-0" />
-          <span>Free &amp; No Signup</span>
+          <span>{data.pillFreeNoSignup}</span>
         </div>
         <div class="flex items-center gap-2 px-3.5 py-2 rounded-full bg-marketing-surface/70 backdrop-blur-sm border border-marketing-border text-xs sm:text-[13px] text-marketing-text font-medium shadow-xs">
           <Icon name="file-check" size={14} class="text-emerald-500 shrink-0" />
-          <span>Filenames Preserved</span>
+          <span>{data.pillFilenames}</span>
         </div>
       </div>
 

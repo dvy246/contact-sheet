@@ -1,6 +1,99 @@
 ---
 import Icon from '../common/Icon.astro';
 import HighlightText from '../ui/HighlightText.astro';
+import { type Locale, DEFAULT_LOCALE } from '../../i18n/config';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = DEFAULT_LOCALE } = Astro.props;
+const isEnglish = locale === DEFAULT_LOCALE;
+
+const TRANSLATIONS: Record<Exclude<Locale, 'en'>, any> = {
+  es: {
+    badge: 'CAPACIDADES PRINCIPALES',
+    heading: 'Todo lo que necesitas para gestionar y presentar tus fotos',
+    lead: 'Organiza, revisa, maqueta y comparte tus colecciones de fotos fácilmente sin pagar suscripciones costosas ni preocuparte por la privacidad en la nube.',
+    c1Title: 'Cero subidas a servidores. Verdadera privacidad local.',
+    c1Desc: 'Las sesiones confidenciales y fotos comerciales permanecen estrictamente en tu ordenador. La decodificación, redimensionamiento y exportación a PDF ocurren en el sandbox local de tu navegador.',
+    c1Tag1: 'Confidencialidad para clientes',
+    c1Tag2: 'Aislamiento local en sandbox',
+    c1Tag3: 'Sin telemetría en la nube',
+    c2Title: 'Conservar nombres de archivo exactos',
+    c2Desc: 'Los creadores genéricos borran los nombres. Make Contact Sheet conserva los nombres de archivo de cámara en cada miniatura y exporta listas CSV/TXT para sincronizar con Lightroom.',
+    c3Title: 'Listas para imprimir en alta resolución',
+    c3Desc: 'Crea hojas PDF nítidas y vectoriales calibradas para impresoras A4 y Carta estadounidense a resolución completa de 300 DPI.',
+    c4Title: 'Motor de cuadrícula flexible',
+    c4Desc: 'Ajusta columnas, filas, espaciados, proporciones y títulos para crear exactamente la hoja de prueba que tu cliente necesita.'
+  },
+  de: {
+    badge: 'KERNFUNKTIONEN',
+    heading: 'Alles, was Sie zum Organisieren & Präsentieren Ihrer Fotos brauchen',
+    lead: 'Verwalten, sichten, layouten und teilen Sie Ihre Fotokollektionen einfach im Browser – ohne teure Abos oder Bedenken beim Cloud-Datenschutz.',
+    c1Title: 'Keine Uploads. Echte lokale Privatsphäre.',
+    c1Desc: 'Vertrauliche Kundenshootings bleiben strikt auf Ihrem Rechner. Dekodierung, Skalierung und PDF-Erstellung laufen direkt in der lokalen Browser-Sandbox.',
+    c1Tag1: 'Kundenvertraulichkeit',
+    c1Tag2: 'Lokale Sandbox-Isolation',
+    c1Tag3: 'Keine Cloud-Telemetrie',
+    c2Title: 'Exakte Dateinamen erhalten',
+    c2Desc: 'Generische Tools entfernen Dateinamen. Make Contact Sheet behält Originaldateinamen unter jedem Bild und exportiert CSV/TXT-Listen für Lightroom.',
+    c3Title: 'Druckfertig mit 300 DPI',
+    c3Desc: 'Erstellen Sie gestochen scharfe, vektorbasierte PDF-Bögen, exakt kalibriert für A4- und US-Letter-Drucker mit vollen 300 DPI.',
+    c4Title: 'Flexibles Raster-System',
+    c4Desc: 'Wählen Sie exakte Spalten, Zeilen, Abstände, Seitenverhältnisse und Kopfzeilen für den perfekten Proofbogen.'
+  },
+  fr: {
+    badge: 'FONCTIONNALITÉS CLÉS',
+    heading: 'Tout ce dont vous avez besoin pour organiser et présenter vos photos',
+    lead: "Organisez, triez, composez et partagez vos photos facilement sans payer d'abonnements coûteux ni vous soucier de la confidentialité en ligne.",
+    c1Title: 'Zéro téléversement. Vraie confidentialité locale.',
+    c1Desc: 'Vos séances photos confidentielles restent strictement sur votre machine. Tout le décodage et la génération PDF se font dans le bac à sable de votre navigateur.',
+    c1Tag1: 'Confidentialité client',
+    c1Tag2: 'Isolation locale en sandbox',
+    c1Tag3: 'Zéro télémétrie cloud',
+    c2Title: 'Préserver les noms de fichiers exacts',
+    c2Desc: 'Les outils classiques effacent les noms. Make Contact Sheet conserve les noms de fichiers de votre appareil et exporte des listes CSV/TXT pour Lightroom.',
+    c3Title: 'Impression haute résolution 300 DPI',
+    c3Desc: 'Générez des planches PDF vectorielles et nettes, parfaitement calibrées pour les formats A4 et Lettre US en 300 DPI natifs.',
+    c4Title: 'Moteur de grille ultra-flexible',
+    c4Desc: 'Définissez colonnes, rangées, espacements, ratios et en-têtes personnalisés pour une présentation impeccable.'
+  },
+  ja: {
+    badge: 'コア機能・特徴',
+    heading: '写真の整理・選別・納品に必要なすべてをワンストップで',
+    lead: '高額な月額課金やクラウドへのデータ流出の心配なく、写真コレクションの選別・レイアウト・共有をブラウザ内で完結。',
+    c1Title: 'アップロード不要。完全ローカルのプライバシー保護。',
+    c1Desc: '未公開の撮影データや機密写真はあなたの端末内に厳格に保持されます。画像のデコード、配置計算、PDF生成はすべてブラウザ内で処理されます。',
+    c1Tag1: 'クライアント機密保持',
+    c1Tag2: 'ローカルサンドボックス隔離',
+    c1Tag3: 'クラウドテレメトリ送信ゼロ',
+    c2Title: 'カメラの元ファイル名を完全保持',
+    c2Desc: '一般的なコラージュアプリと異なり、各サムネイルの下にカメラ元ファイル名を印字。Lightroom検索用の一括CSV/TXT書き出しにも対応。',
+    c3Title: '300 DPI 印刷用高解像度出力',
+    c3Desc: 'A4およびUSレター用紙に最適化された、鮮明で美しい300 DPIベクトルPDFシートを瞬時に生成します。',
+    c4Title: '自由度の高いグリッドエンジン',
+    c4Desc: '列数・行数・余白・アスペクト比・ヘッダー印字をミリ単位で調整可能。クライアントの要望に応じた完璧なシートを作成。'
+  },
+  pt: {
+    badge: 'RECURSOS PRINCIPAIS',
+    heading: 'Tudo o que você precisa para gerenciar e apresentar suas fotos',
+    lead: 'Organize, avalie, diagrame e compartilhe coleções de fotos sem mensalidades caras nem preocupações com privacidade na nuvem.',
+    c1Title: 'Zero uploads. Verdadeira privacidade local.',
+    c1Desc: 'Ensaios confidenciais permanecem estritamente no seu computador. Decodificação, redimensionamento e exportação em PDF ocorrem na sandbox do seu navegador.',
+    c1Tag1: 'Confidencialidade para clientes',
+    c1Tag2: 'Isolamento local em sandbox',
+    c1Tag3: 'Sem telemetria na nuvem',
+    c2Title: 'Preserve nomes de arquivo exatos',
+    c2Desc: 'Aplicativos comuns removem os nomes. O Make Contact Sheet mantém os nomes originais em cada miniatura e exporta listas CSV/TXT para o Lightroom.',
+    c3Title: 'Pronto para impressão em 300 DPI',
+    c3Desc: 'Gere folhas PDF nítidas e vetoriais calibradas para impressoras A4 e Carta em resolução completa de 300 DPI.',
+    c4Title: 'Mecanismo de grade flexível',
+    c4Desc: 'Ajuste colunas, linhas, espaçamentos, proporções e cabeçalhos para criar a folha de prova perfeita para o seu cliente.'
+  }
+};
+
+const t = isEnglish ? null : (TRANSLATIONS[locale as Exclude<Locale, 'en'>] || TRANSLATIONS.es);
 ---
 
 <section class="py-16 sm:py-24 lg:py-28 bg-transparent border-b border-marketing-border transition-colors" data-reveal>
@@ -10,13 +103,17 @@ import HighlightText from '../ui/HighlightText.astro';
     <div class="max-w-2xl mb-12 sm:mb-16">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs mb-3.5">
         <span class="w-2 h-2 rounded-full bg-accent"></span>
-        <span>CORE CAPABILITIES</span>
+        <span>{isEnglish ? 'CORE CAPABILITIES' : t.badge}</span>
       </div>
       <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
-        Everything you need to <HighlightText variant="lime">manage</HighlightText> &amp; <HighlightText variant="yellow">present</HighlightText> your photos
+        {isEnglish ? (
+          <>Everything you need to <HighlightText variant="lime">manage</HighlightText> &amp; <HighlightText variant="yellow">present</HighlightText> your photos</>
+        ) : (
+          <>{t.heading}</>
+        )}
       </h2>
       <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
-        Organize, review, layout, and share your photo collections easily without paying for expensive subscriptions or worrying about cloud privacy.
+        {isEnglish ? 'Organize, review, layout, and share your photo collections easily without paying for expensive subscriptions or worrying about cloud privacy.' : t.lead}
       </p>
     </div>
 
@@ -35,16 +132,26 @@ import HighlightText from '../ui/HighlightText.astro';
             <span class="card-emoji text-2xl select-none" aria-hidden="true">🔒</span>
           </div>
           <h3 class="text-xl sm:text-2xl font-bold text-marketing-text leading-snug tracking-tight mb-4">
-            Zero Uploads. <HighlightText variant="lime">True Local Privacy</HighlightText>.
+            {isEnglish ? (
+              <>Zero Uploads. <HighlightText variant="lime">True Local Privacy</HighlightText>.</>
+            ) : (
+              <>{t.c1Title}</>
+            )}
           </h3>
-          <p class="text-sm sm:text-base text-marketing-muted leading-relaxed max-w-xl mb-6">
-            Unreleased client shoots and confidential commercial photos remain strictly on your machine. All image decoding, resizing, layout calculations, and PDF generation occur directly in your browser's local sandbox.
-          </p>
+          {isEnglish ? (
+            <p class="text-sm sm:text-base text-marketing-muted leading-relaxed max-w-xl mb-6">
+              Unreleased client shoots and confidential commercial photos remain strictly on your machine. All image decoding, resizing, layout calculations, and PDF generation occur directly in your browser's local sandbox.
+            </p>
+          ) : (
+            <p class="text-sm sm:text-base text-marketing-muted leading-relaxed max-w-xl mb-6">
+              {t.c1Desc}
+            </p>
+          )}
         </div>
         <div class="relative z-10 flex flex-wrap gap-2 pt-4 border-t border-marketing-border text-xs font-mono text-marketing-muted">
-          <span class="px-2.5 py-1 rounded-lg bg-marketing-surface border border-marketing-border">Client Confidentiality</span>
-          <span class="px-2.5 py-1 rounded-lg bg-marketing-surface border border-marketing-border">Local Sandbox Isolation</span>
-          <span class="px-2.5 py-1 rounded-lg bg-marketing-surface border border-marketing-border">Zero Cloud Telemetry</span>
+          <span class="px-2.5 py-1 rounded-lg bg-marketing-surface border border-marketing-border">{isEnglish ? 'Client Confidentiality' : t.c1Tag1}</span>
+          <span class="px-2.5 py-1 rounded-lg bg-marketing-surface border border-marketing-border">{isEnglish ? 'Local Sandbox Isolation' : t.c1Tag2}</span>
+          <span class="px-2.5 py-1 rounded-lg bg-marketing-surface border border-marketing-border">{isEnglish ? 'Zero Cloud Telemetry' : t.c1Tag3}</span>
         </div>
       </div>
 
@@ -58,11 +165,25 @@ import HighlightText from '../ui/HighlightText.astro';
             <span class="card-emoji text-2xl select-none" aria-hidden="true">🏷️</span>
           </div>
           <h3 class="text-lg sm:text-xl font-bold text-marketing-text leading-snug tracking-tight mb-4">
-            <HighlightText variant="yellow">Filename Accuracy</HighlightText> is Trust
+            {isEnglish ? (
+              <><HighlightText variant="yellow">Filename Accuracy</HighlightText> is Trust</>
+            ) : (
+              <>{t.c2Title}</>
+            )}
           </h3>
-          <p class="text-sm text-marketing-muted leading-relaxed">
-            Generic collage makers strip filenames. Make Contact Sheet preserves original camera filenames on every thumbnail and provides 1-click CSV/TXT exports to match client choices back in Lightroom.
-          </p>
+          {isEnglish ? (
+            <p class="text-sm text-marketing-muted leading-relaxed mb-6">
+              Generic collage makers strip filenames. Make Contact Sheet preserves original camera filenames on every thumbnail and provides 1-click CSV/TXT exports to match client choices back in Lightroom.
+            </p>
+          ) : (
+            <p class="text-sm text-marketing-muted leading-relaxed mb-6">
+              {t.c2Desc}
+            </p>
+          )}
+        </div>
+        <div class="pt-4 border-t border-marketing-border flex items-center justify-between text-xs text-marketing-muted font-mono">
+          <span>DSC_8941.NEF</span>
+          <span class="text-accent-ink font-semibold">1-click copy</span>
         </div>
       </div>
 
@@ -77,11 +198,21 @@ import HighlightText from '../ui/HighlightText.astro';
           </div>
           <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-accent/10 text-accent-ink text-[10px] font-mono font-bold mb-2">NEW</div>
           <h3 class="text-lg sm:text-xl font-bold text-marketing-text leading-snug tracking-tight mb-3">
-            Freeform <HighlightText variant="pink">Mood Board</HighlightText> Studio
+            {isEnglish ? (
+              <>Freeform <HighlightText variant="pink">Mood Board</HighlightText> Studio</>
+            ) : (
+              <>{t.c4Title}</>
+            )}
           </h3>
-          <p class="text-sm text-marketing-muted leading-relaxed mb-4">
-            Curate visual concept boards, lighting references, and fashion lookbooks with magnetic snapping, color swatches, sticky notes, and 300 DPI exports.
-          </p>
+          {isEnglish ? (
+            <p class="text-sm text-marketing-muted leading-relaxed mb-4">
+              Curate visual concept boards, lighting references, and fashion lookbooks with magnetic snapping, color swatches, sticky notes, and 300 DPI exports.
+            </p>
+          ) : (
+            <p class="text-sm text-marketing-muted leading-relaxed mb-4">
+              {t.c4Desc}
+            </p>
+          )}
         </div>
         <a
           href="/mood-board-maker"
@@ -101,13 +232,23 @@ import HighlightText from '../ui/HighlightText.astro';
           <div class="flex-1">
             <div class="flex items-center justify-between mb-4">
               <h3 class="text-lg sm:text-xl font-bold text-marketing-text leading-snug tracking-tight">
-                High-DPI <HighlightText variant="cyan">Print-Ready PDF</HighlightText> &amp; Image Generation
+                {isEnglish ? (
+                  <>High-DPI <HighlightText variant="cyan">Print-Ready PDF</HighlightText> &amp; Image Generation</>
+                ) : (
+                  <>{t.c3Title}</>
+                )}
               </h3>
               <span class="card-emoji text-2xl select-none shrink-0 ml-2" aria-hidden="true">🖨️</span>
             </div>
-            <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
-              Export vector-wrapped multi-page PDFs formatted for standard A4 and US Letter paper with custom margins, pagination headers, index numbers, and customizable background tones, plus uncompressed PNGs and JPEGs up to 300 DPI.
-            </p>
+            {isEnglish ? (
+              <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+                Export vector-wrapped multi-page PDFs formatted for standard A4 and US Letter paper with custom margins, pagination headers, index numbers, and customizable background tones, plus uncompressed PNGs and JPEGs up to 300 DPI.
+              </p>
+            ) : (
+              <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+                {t.c3Desc}
+              </p>
+            )}
           </div>
         </div>
       </div>
