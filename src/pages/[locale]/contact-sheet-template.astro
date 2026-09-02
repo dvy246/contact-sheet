@@ -1,0 +1,184 @@
+---
+import { NON_DEFAULT_LOCALES, type Locale } from '../../i18n/config';
+import MarketingLayout from '../../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
+import FaqAccordion from '../../components/common/FaqAccordion.astro';
+import ContactSheetPreview from '../../components/marketing/ContactSheetPreview.astro';
+import HighlightText from '../../components/ui/HighlightText.astro';
+import { CONTACT_SHEET_PRESETS } from '../../lib/engine/templates';
+import { TEMPLATES_AND_COMPANY_DATA } from '../../i18n/data/templatesAndCompanyData';
+import { l, getCanonicalUrl } from '../../i18n/utils';
+import { buildFAQSchema } from '../../lib/seo/schemaGenerator';
+
+export function getStaticPaths() {
+  return NON_DEFAULT_LOCALES.map((locale) => ({
+    params: { locale },
+    props: { locale },
+  }));
+}
+
+const { locale } = Astro.props as { locale: Locale };
+const data = TEMPLATES_AND_COMPANY_DATA[locale].contactSheetTemplates;
+
+const breadcrumbs = [
+  { name: 'Home', url: l('/', locale) },
+  { name: data.breadcrumbsTitle },
+];
+
+const schemas = [
+  buildFAQSchema(data.faqs),
+];
+---
+
+<MarketingLayout
+  title={data.title}
+  description={data.description}
+  canonical={getCanonicalUrl('/contact-sheet-template', locale)}
+  robots="index, follow"
+  schema={schemas}
+  locale={locale}
+>
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="max-w-3xl space-y-3">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight">
+          {data.heroTitlePrefix}<HighlightText variant="lime">{data.heroHighlight}</HighlightText>{data.heroTitleSuffix}
+        </h1>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          {data.heroLead}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <section class="py-12 sm:py-16 lg:py-20 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
+      
+      <!-- Category Filter Bar -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-8 sm:mb-10 no-scrollbar" id="preset-filter-bar">
+        <button data-filter="all" class="filter-btn active px-3.5 py-1.5 rounded-xl text-xs font-semibold font-mono border transition-all cursor-pointer bg-accent text-white border-accent shadow-xs">
+          {data.categories.all} ({CONTACT_SHEET_PRESETS.length})
+        </button>
+        <button data-filter="standard" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold font-mono border transition-all cursor-pointer bg-marketing-surface text-marketing-text border-marketing-border hover:border-accent/40">
+          {data.categories.standard} ({CONTACT_SHEET_PRESETS.filter(p => p.category === 'standard').length})
+        </button>
+        <button data-filter="film" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold font-mono border transition-all cursor-pointer bg-marketing-surface text-marketing-text border-marketing-border hover:border-accent/40">
+          {data.categories.film} ({CONTACT_SHEET_PRESETS.filter(p => p.category === 'film').length})
+        </button>
+        <button data-filter="client" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold font-mono border transition-all cursor-pointer bg-marketing-surface text-marketing-text border-marketing-border hover:border-accent/40">
+          {data.categories.client} ({CONTACT_SHEET_PRESETS.filter(p => p.category === 'client').length})
+        </button>
+        <button data-filter="digital" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold font-mono border transition-all cursor-pointer bg-marketing-surface text-marketing-text border-marketing-border hover:border-accent/40">
+          {data.categories.digital} ({CONTACT_SHEET_PRESETS.filter(p => p.category === 'digital').length})
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        {CONTACT_SHEET_PRESETS.map((preset) => {
+          const catLabel = data.categories[preset.category as keyof typeof data.categories] || preset.category;
+          return (
+            <div 
+              data-preset-card
+              data-category={preset.category}
+              class="bg-marketing-panel border border-marketing-border rounded-2xl p-5 sm:p-6 flex flex-col justify-between space-y-5 shadow-xs hover:border-accent/40 hover:shadow-md transition-all group"
+            >
+              <div class="space-y-4">
+                <!-- Visual Contact Sheet Grid Preview -->
+                <ContactSheetPreview preset={preset} />
+
+                <div class="space-y-2.5">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-accent-ink font-mono">
+                      {catLabel}
+                    </span>
+                    <span class="text-[11px] px-2.5 py-0.5 rounded-lg bg-marketing-surface border border-marketing-border font-mono text-marketing-muted">
+                      {preset.config.columns}x{preset.config.rows} Grid
+                    </span>
+                  </div>
+                  <h2 class="text-base sm:text-lg font-bold text-marketing-text group-hover:text-accent transition-colors">{preset.name}</h2>
+                  <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
+                    {preset.description}
+                  </p>
+                </div>
+
+                <div class="pt-3 border-t border-marketing-border space-y-1.5 text-xs text-marketing-muted font-mono">
+                  <div class="flex justify-between">
+                    <span>{data.pageSizeLabel}</span>
+                    <span class="font-bold text-marketing-text">{preset.config.pageSize?.toUpperCase()} ({preset.config.orientation})</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>{data.labelsLabel}</span>
+                    <span class="font-bold text-marketing-text">{preset.config.labelType}</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>{data.marginsGapLabel}</span>
+                    <span class="font-bold text-marketing-text">{preset.config.margin}px / {preset.config.spacing}px</span>
+                  </div>
+                </div>
+              </div>
+
+              <a 
+                href={l('/#workspace', locale)} 
+                class="w-full py-2.5 px-4 rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold text-xs text-center tracking-tight shadow-sm hover:shadow transition-all block"
+              >
+                {data.usePresetBtn}
+              </a>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const filterBar = document.getElementById('preset-filter-bar');
+    if (filterBar) {
+      const filterBtns = filterBar.querySelectorAll('.filter-btn');
+      const cards = document.querySelectorAll<HTMLElement>('[data-preset-card]');
+
+      filterBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach((b) => {
+            b.classList.remove('bg-accent', 'text-white', 'border-accent', 'shadow-xs');
+            b.classList.add('bg-marketing-surface', 'text-marketing-text', 'border-marketing-border');
+          });
+          btn.classList.remove('bg-marketing-surface', 'text-marketing-text', 'border-marketing-border');
+          btn.classList.add('bg-accent', 'text-white', 'border-accent', 'shadow-xs');
+
+          const filter = btn.getAttribute('data-filter');
+          cards.forEach((card) => {
+            const cat = card.getAttribute('data-category');
+            if (filter === 'all' || cat === filter) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    }
+  </script>
+
+  <!-- Editorial Section -->
+  <section class="py-16 sm:py-20 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[900px] mx-auto px-4 sm:px-6 space-y-10">
+      <div class="space-y-4 prose-measure">
+        <h2 class="text-2xl font-bold text-marketing-text">
+          {data.editorialTitle}
+        </h2>
+        <p class="text-sm text-marketing-text/90 leading-relaxed">
+          {data.editorialP1}
+        </p>
+        <p class="text-sm text-marketing-text/90 leading-relaxed">
+          {data.editorialP2}
+        </p>
+      </div>
+
+      <div class="space-y-6">
+        <h2 class="text-2xl font-bold text-marketing-text">{data.faqTitle}</h2>
+        <FaqAccordion faqs={data.faqs} />
+      </div>
+    </div>
+  </section>
+</MarketingLayout>

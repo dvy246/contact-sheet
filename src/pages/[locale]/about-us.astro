@@ -1,0 +1,112 @@
+---
+import { NON_DEFAULT_LOCALES, type Locale } from '../../i18n/config';
+import MarketingLayout from '../../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
+import Icon from '../../components/common/Icon.astro';
+import HighlightText from '../../components/ui/HighlightText.astro';
+import { TEMPLATES_AND_COMPANY_DATA } from '../../i18n/data/templatesAndCompanyData';
+import { l, getCanonicalUrl } from '../../i18n/utils';
+import { buildOrganizationSchema } from '../../lib/seo/schemaGenerator';
+
+export function getStaticPaths() {
+  return NON_DEFAULT_LOCALES.map((locale) => ({
+    params: { locale },
+    props: { locale },
+  }));
+}
+
+const { locale } = Astro.props as { locale: Locale };
+const data = TEMPLATES_AND_COMPANY_DATA[locale].aboutUs;
+
+const breadcrumbs = [
+  { name: 'Home', url: l('/', locale) },
+  { name: data.breadcrumbsTitle },
+];
+
+const schemas = [
+  buildOrganizationSchema(),
+];
+---
+
+<MarketingLayout
+  title={data.title}
+  description={data.description}
+  canonical={getCanonicalUrl('/about-us', locale)}
+  robots="index, follow"
+  schema={schemas}
+  locale={locale}
+>
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
+    <div class="max-w-[840px] mx-auto px-4 sm:px-6 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs">
+        <span class="w-2 h-2 rounded-full bg-accent"></span>
+        <span>{data.badge}</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight">
+        {data.heroTitle}<HighlightText variant="lime">{data.heroHighlight}</HighlightText>
+      </h1>
+      <p class="text-base sm:text-lg text-marketing-muted leading-relaxed">
+        {data.heroLead}
+      </p>
+    </div>
+  </div>
+
+  <article class="py-16 sm:py-20 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[840px] mx-auto px-4 sm:px-6 space-y-12 text-sm sm:text-base text-marketing-text/90 leading-relaxed prose-measure">
+      
+      <div class="space-y-4">
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">{data.missionTitle}</h2>
+        <p>{data.missionP1}</p>
+        <p>{data.missionP2}</p>
+      </div>
+
+      <div class="space-y-4">
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">{data.archTitle}</h2>
+        <p>{data.archP1}</p>
+        <p>{data.archP2}</p>
+        <ul class="list-disc pl-5 space-y-2 text-marketing-muted">
+          {data.archBullets.map((bullet) => (
+            <li><strong>{bullet.bold}</strong> {bullet.text}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="p-6 sm:p-8 rounded-3xl bg-marketing-panel border border-marketing-border space-y-4 shadow-xs transition-colors">
+        <h3 class="text-lg font-bold text-marketing-text tracking-tight">{data.commitmentsTitle}</h3>
+        <ul class="space-y-3 text-xs sm:text-sm text-marketing-muted">
+          {data.commitments.map((commitment) => (
+            <li class="flex items-start gap-3">
+              <div class="p-1 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 mt-0.5">
+                <Icon name="check" size={15} />
+              </div>
+              <span><strong>{commitment.bold}</strong> {commitment.text}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="space-y-4">
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">{data.communityTitle}</h2>
+        <p>{data.communityP}</p>
+      </div>
+
+      <div class="pt-6 border-t border-marketing-border flex flex-col sm:flex-row items-center justify-between gap-4">
+        <a 
+          href={l('/contact-us', locale)} 
+          class="inline-flex items-center gap-2 text-marketing-text font-bold hover:text-accent-ink transition-colors"
+        >
+          <span>{data.contactCta}</span>
+          <Icon name="arrow-right" size={15} />
+        </a>
+        <a 
+          href={l('/privacy-policy', locale)} 
+          class="text-xs text-marketing-muted hover:text-marketing-text underline transition-colors"
+        >
+          {data.privacyPolicyLink}
+        </a>
+      </div>
+
+    </div>
+  </article>
+</MarketingLayout>

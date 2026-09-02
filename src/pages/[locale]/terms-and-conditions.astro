@@ -1,0 +1,51 @@
+---
+import { NON_DEFAULT_LOCALES, type Locale } from '../../i18n/config';
+import MarketingLayout from '../../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
+import { TEMPLATES_AND_COMPANY_DATA } from '../../i18n/data/templatesAndCompanyData';
+import { l, getCanonicalUrl } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return NON_DEFAULT_LOCALES.map((locale) => ({
+    params: { locale },
+    props: { locale },
+  }));
+}
+
+const { locale } = Astro.props as { locale: Locale };
+const data = TEMPLATES_AND_COMPANY_DATA[locale].termsAndConditions;
+
+const breadcrumbs = [
+  { name: 'Home', url: l('/', locale) },
+  { name: data.breadcrumbsTitle },
+];
+---
+
+<MarketingLayout
+  title={data.title}
+  description={data.description}
+  canonical={getCanonicalUrl('/terms-and-conditions', locale)}
+  robots="noindex, follow"
+  locale={locale}
+>
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
+    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-marketing-text">
+        {data.heroTitle}
+      </h1>
+      <p class="text-xs font-mono text-marketing-muted">{data.lastUpdated}</p>
+    </div>
+  </div>
+
+  <article class="py-16 sm:py-20 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-8 text-sm text-marketing-text/90 leading-relaxed prose-measure">
+      {data.sections.map((section) => (
+        <div class="space-y-3">
+          <h2 class="text-xl font-bold text-marketing-text">{section.title}</h2>
+          <p>{section.content}</p>
+        </div>
+      ))}
+    </div>
+  </article>
+</MarketingLayout>

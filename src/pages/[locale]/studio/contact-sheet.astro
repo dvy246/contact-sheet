@@ -1,0 +1,172 @@
+---
+import WorkspaceLayout from '../../../layouts/WorkspaceLayout.astro';
+import StudioApp from '../../../components/workspace/StudioApp.astro';
+import Breadcrumbs from '../../../components/common/Breadcrumbs.astro';
+import FaqAccordion from '../../../components/common/FaqAccordion.astro';
+import { NON_DEFAULT_LOCALES, type Locale } from '../../../i18n/config';
+import { l, getCanonicalUrl } from '../../../i18n/utils';
+import { useTranslations } from '../../../i18n';
+import { STUDIO_CONTACT_SHEET_DATA } from '../../../i18n/data/toolsData';
+import { buildSoftwareApplicationSchema, buildFAQSchema } from '../../../lib/seo/schemaGenerator';
+
+export function getStaticPaths() {
+  return NON_DEFAULT_LOCALES.map((locale) => ({
+    params: { locale },
+    props: { locale },
+  }));
+}
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+const data = STUDIO_CONTACT_SHEET_DATA[locale];
+
+const breadcrumbs = [
+  { name: t('nav.about') ? (locale === 'es' ? 'Inicio' : locale === 'de' ? 'Startseite' : locale === 'fr' ? 'Accueil' : locale === 'ja' ? 'ホーム' : 'Início') : 'Home', url: l('/', locale) },
+  { name: locale === 'es' ? 'Creador de hojas de contactos' : locale === 'de' ? 'Kontaktabzug-Ersteller' : locale === 'fr' ? 'Créateur de planches contact' : locale === 'ja' ? '写真コンタクトシート作成' : 'Criador de folhas de contato', url: l('/photo-contact-sheet-maker', locale) },
+  { name: data.breadcrumbName },
+];
+
+const canonical = getCanonicalUrl('/studio/contact-sheet', locale);
+
+const schemas = [
+  buildSoftwareApplicationSchema(
+    data.heading,
+    data.description,
+    canonical
+  ),
+  buildFAQSchema(data.faqs),
+];
+---
+
+<WorkspaceLayout
+  title={data.title}
+  description={data.description}
+  canonical={canonical}
+  locale={locale}
+  schema={schemas}
+  contentBelow
+>
+  <StudioApp />
+
+  <!-- Indexable copy -->
+  <div slot="content" class="bg-marketing-bg text-marketing-text border-t border-marketing-border transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 space-y-16 sm:space-y-20">
+      <!-- Intro -->
+      <header class="space-y-4 max-w-3xl">
+        <Breadcrumbs items={breadcrumbs} />
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
+          {data.heading}
+        </h1>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          {data.lead1}
+        </p>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          {data.lead2}
+        </p>
+      </header>
+
+      <!-- How it works -->
+      <section class="space-y-6">
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">{data.stepsHeading}</h2>
+        <ol class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {data.steps.map((s) => (
+            <li class="bg-marketing-panel border border-marketing-border rounded-2xl p-5 space-y-2">
+              <span class="text-xs font-mono text-accent-ink">{s.n}</span>
+              <h3 class="text-sm sm:text-base font-semibold leading-snug">{s.title}</h3>
+              <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{s.body}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <!-- Settings reference -->
+      <section class="space-y-6">
+        <div class="max-w-3xl space-y-3">
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">{data.settingsHeading}</h2>
+          <p class="text-sm text-marketing-muted leading-relaxed">
+            {data.settingsLead}
+          </p>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          {data.settingGroups.map((g) => (
+            <div class="bg-marketing-panel border border-marketing-border rounded-2xl p-5 sm:p-6 space-y-3">
+              <h3 class="text-sm sm:text-base font-bold tracking-tight">{g.title}</h3>
+              <ul class="space-y-2">
+                {g.items.map((item) => (
+                  <li class="text-xs sm:text-sm text-marketing-muted leading-relaxed flex gap-2">
+                    <span class="text-accent-ink flex-shrink-0">·</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Review + shortcuts -->
+      <section class="grid gap-6 lg:grid-cols-2 lg:gap-10">
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">{data.reviewHeading}</h2>
+          <p class="text-sm text-marketing-muted leading-relaxed">
+            {data.reviewP1}
+          </p>
+          <p class="text-sm text-marketing-muted leading-relaxed">
+            {data.reviewP2}
+          </p>
+        </div>
+        <div class="bg-marketing-panel border border-marketing-border rounded-2xl p-5 sm:p-6">
+          <h3 class="text-sm font-bold tracking-tight mb-4">{data.shortcutsHeading}</h3>
+          <dl class="space-y-2.5">
+            {data.shortcuts.map((s) => (
+              <div class="flex items-baseline gap-3">
+                <dt class="font-mono text-[11px] px-2 py-1 rounded-md bg-marketing-surface border border-marketing-border flex-shrink-0 min-w-[64px] text-center">
+                  {s.keys}
+                </dt>
+                <dd class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{s.action}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      <!-- Exports -->
+      <section class="space-y-6">
+        <div class="max-w-3xl space-y-3">
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">{data.exportsHeading}</h2>
+          <p class="text-sm text-marketing-muted leading-relaxed">
+            {data.exportsLead}
+          </p>
+        </div>
+        <dl class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {data.exports.map((e) => (
+            <div class="bg-marketing-panel border border-marketing-border rounded-2xl p-5 space-y-2">
+              <dt class="text-sm font-bold tracking-tight">{e.name}</dt>
+              <dd class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{e.body}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <!-- FAQ -->
+      <section class="space-y-6">
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">{data.faqsHeading}</h2>
+        <FaqAccordion faqs={data.faqs} class="max-w-3xl" />
+      </section>
+
+      <!-- Internal links -->
+      <section class="space-y-4">
+        <h2 class="text-lg sm:text-xl font-bold tracking-tight">{data.relatedHeading}</h2>
+        <ul class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+          {data.relatedLinks.map((link) => (
+            <li>
+              <a href={l(link.url, locale)} class="text-sm text-marketing-muted hover:text-accent-ink transition-colors">
+                {link.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  </div>
+</WorkspaceLayout>

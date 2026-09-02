@@ -1,11 +1,14 @@
 ---
 import Icon from './Icon.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { type Locale, DEFAULT_LOCALE } from '../../i18n/config';
 
 interface Props {
   variant?: 'marketing' | 'workspace';
+  locale?: Locale;
 }
 
-const { variant = 'marketing' } = Astro.props;
+const { variant = 'marketing', locale = DEFAULT_LOCALE } = Astro.props;
 const isWorkspace = variant === 'workspace';
 ---
 
@@ -352,6 +355,9 @@ const isWorkspace = variant === 'workspace';
     <!-- Header Actions & Theme Toggle -->
     <div class="flex items-center gap-2.5 sm:gap-3.5 shrink-0">
       
+      <!-- Language Switcher -->
+      <LanguageSwitcher currentLocale={locale} currentPath={Astro.url.pathname} variant="header" />
+
       <!-- Theme Switcher (Light / Dark slider) -->
       <button
         id="theme-toggle-btn"
@@ -547,6 +553,12 @@ const isWorkspace = variant === 'workspace';
             <Icon name="chevron-right" size={14} class="text-marketing-muted" />
           </a>
         </div>
+      </div>
+
+      <!-- Mobile Language Switcher -->
+      <div class="pt-2 border-t border-marketing-border">
+        <div class="text-[11px] font-mono uppercase tracking-wider text-accent-ink font-bold mb-2">Language</div>
+        <LanguageSwitcher currentLocale={locale} currentPath={Astro.url.pathname} variant="drawer" />
       </div>
     </div>
   )}

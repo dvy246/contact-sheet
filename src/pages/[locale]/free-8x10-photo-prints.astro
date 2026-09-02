@@ -1,0 +1,160 @@
+---
+import MarketingLayout from '../../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
+import WorkspaceApp from '../../components/workspace/WorkspaceApp.astro';
+import FaqAccordion from '../../components/common/FaqAccordion.astro';
+import SeoRelatedLinks from '../../components/common/SeoRelatedLinks.astro';
+import Icon from '../../components/common/Icon.astro';
+import HighlightText from '../../components/ui/HighlightText.astro';
+import { NON_DEFAULT_LOCALES, type Locale } from '../../i18n/config';
+import { l, getCanonicalUrl } from '../../i18n/utils';
+import { useTranslations } from '../../i18n';
+import { FREE_8X10_DATA } from '../../i18n/data/toolsData';
+import { buildSoftwareApplicationSchema, buildHowToSchema, buildFAQSchema } from '../../lib/seo/schemaGenerator';
+
+export function getStaticPaths() {
+  return NON_DEFAULT_LOCALES.map((locale) => ({
+    params: { locale },
+    props: { locale },
+  }));
+}
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+const data = FREE_8X10_DATA[locale];
+
+const breadcrumbs = [
+  { name: t('nav.about') ? (locale === 'es' ? 'Inicio' : locale === 'de' ? 'Startseite' : locale === 'fr' ? 'Accueil' : locale === 'ja' ? 'ホーム' : 'Início') : 'Home', url: l('/', locale) },
+  { name: data.breadcrumbName },
+];
+
+const canonical = getCanonicalUrl('/free-8x10-photo-prints', locale);
+
+const schemas = [
+  buildSoftwareApplicationSchema(
+    data.heading,
+    data.description,
+    canonical
+  ),
+  buildHowToSchema(data.howToHeading, data.lead, data.howToSteps),
+  buildFAQSchema(data.faqs),
+];
+---
+
+<MarketingLayout
+  title={data.title}
+  description={data.description}
+  canonical={canonical}
+  locale={locale}
+  schema={schemas}
+>
+  <!-- Page Header -->
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="max-w-3xl">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
+          <HighlightText variant="lime">{data.heading}</HighlightText>
+        </h1>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          {data.lead}
+        </p>
+
+        <a
+          href={l('/studio/contact-sheet', locale)}
+          class="mt-6 inline-flex items-center gap-2 h-11 px-6 rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold text-sm tracking-tight shadow-lg shadow-accent/25 active:scale-[0.98] transition-all"
+        >
+          <Icon name="maximize" size={15} />
+          <span>{locale === 'es' ? 'Abrir el estudio a pantalla completa' : locale === 'de' ? 'Vollbild-Studio öffnen' : locale === 'fr' ? 'Ouvrir le studio plein écran' : locale === 'ja' ? '全画面スタジオを開く' : 'Abrir estúdio em tela cheia'}</span>
+          <Icon name="arrow-right" size={15} />
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Framed Live Workspace -->
+  <section class="py-12 sm:py-16 lg:py-20 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="rounded-2xl overflow-hidden border border-workspace-border shadow-2xl bg-workspace-bg">
+        <!-- Window Chrome Top Bar -->
+        <div class="px-4 py-2.5 bg-workspace-panel border-b border-workspace-border flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 rounded-full bg-rose-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+          </div>
+          <div class="text-[11px] font-mono text-workspace-muted font-medium">Print Saver Studio · 8x10 Layouts</div>
+          <div class="w-12"></div>
+        </div>
+
+        <WorkspaceApp />
+      </div>
+    </div>
+  </div>
+
+  <!-- Editorial & Guide Content -->
+  <section class="py-16 sm:py-24 lg:py-28 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[850px] mx-auto px-4 sm:px-6 space-y-14">
+      
+      <!-- Step-by-Step Instructions -->
+      <div class="space-y-4 prose-measure">
+        <h2 class="text-2xl font-bold text-marketing-text">
+          {data.howToHeading}
+        </h2>
+        <div class="space-y-4 mt-6">
+          {data.howToSteps.map((step, index) => (
+            <div class="flex gap-4 p-4 rounded-xl bg-marketing-bg border border-marketing-border">
+              <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center font-bold text-sm">
+                {index + 1}
+              </div>
+              <div>
+                <h3 class="text-base font-bold text-marketing-text">{step.name}</h3>
+                <p class="text-sm text-marketing-text/90 mt-1">{step.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Technical Print Dimensions & Specs -->
+      <div class="space-y-4 prose-measure">
+        <h2 class="text-2xl font-bold text-marketing-text">
+          {data.specsHeading}
+        </h2>
+        <p class="text-sm text-marketing-text/90 leading-relaxed">
+          {data.specsP1}
+        </p>
+        <p class="text-sm text-marketing-text/90 leading-relaxed">
+          {data.specsP2}
+        </p>
+      </div>
+
+      <!-- Popular Multi-Photo Arrangements -->
+      <div class="space-y-4 prose-measure">
+        <h2 class="text-2xl font-bold text-marketing-text">
+          {data.layoutsHeading}
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+          {data.layouts.map((layout) => (
+            <div class="p-4 rounded-xl bg-marketing-surface border border-marketing-border space-y-2">
+              <span class="text-xs font-mono font-bold text-accent-ink uppercase">{layout.title}</span>
+              <p class="text-xs text-marketing-muted leading-relaxed">{layout.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+        <SeoRelatedLinks currentUrl="/free-8x10-photo-prints" />
+        <!-- FAQ Accordion -->
+        <div class="space-y-6">
+          <h2 class="text-2xl font-bold text-marketing-text">
+            {locale === 'es' ? 'Preguntas frecuentes' : locale === 'de' ? 'Häufig gestellte Fragen' : locale === 'fr' ? 'Questions fréquentes' : locale === 'ja' ? 'よくある質問' : 'Perguntas frequentes'}
+          </h2>
+          <FaqAccordion faqs={data.faqs} />
+        </div>
+      </div>
+
+    </div>
+  </section>
+</MarketingLayout>

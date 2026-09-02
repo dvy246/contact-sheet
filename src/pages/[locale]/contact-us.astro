@@ -1,0 +1,80 @@
+---
+import { NON_DEFAULT_LOCALES, type Locale } from '../../i18n/config';
+import MarketingLayout from '../../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
+import Icon from '../../components/common/Icon.astro';
+import { TEMPLATES_AND_COMPANY_DATA } from '../../i18n/data/templatesAndCompanyData';
+import { l, getCanonicalUrl } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return NON_DEFAULT_LOCALES.map((locale) => ({
+    params: { locale },
+    props: { locale },
+  }));
+}
+
+const { locale } = Astro.props as { locale: Locale };
+const data = TEMPLATES_AND_COMPANY_DATA[locale].contactUs;
+
+const breadcrumbs = [
+  { name: 'Home', url: l('/', locale) },
+  { name: data.breadcrumbsTitle },
+];
+---
+
+<MarketingLayout
+  title={data.title}
+  description={data.description}
+  canonical={getCanonicalUrl('/contact-us', locale)}
+  robots="index, follow"
+  locale={locale}
+>
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
+    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-marketing-text">
+        {data.heroTitle}
+      </h1>
+      <p class="text-base text-marketing-muted leading-relaxed">
+        {data.heroLead}
+      </p>
+    </div>
+  </div>
+
+  <section class="py-16 sm:py-20 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[800px] mx-auto px-4 sm:px-6">
+      <div class="bg-marketing-panel border border-marketing-border rounded-2xl p-6 sm:p-10 space-y-6 shadow-xs transition-colors">
+        <div class="space-y-2">
+          <h2 class="text-xl font-bold text-marketing-text">{data.cardHeading}</h2>
+          <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
+            {data.cardLead}
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+          <div class="p-5 rounded-xl bg-marketing-surface border border-marketing-border space-y-2 transition-colors">
+            <div class="flex items-center gap-2 font-bold text-marketing-text text-sm">
+              <Icon name="help" size={16} class="text-accent-ink" />
+              <span>{data.card1Title}</span>
+            </div>
+            <p class="text-xs text-marketing-muted">{data.card1Desc}</p>
+            <div class="text-xs font-mono text-marketing-text pt-1 font-semibold">support@makecontactsheet.com</div>
+          </div>
+
+          <div class="p-5 rounded-xl bg-marketing-surface border border-marketing-border space-y-2 transition-colors">
+            <div class="flex items-center gap-2 font-bold text-marketing-text text-sm">
+              <Icon name="layout" size={16} class="text-accent-ink" />
+              <span>{data.card2Title}</span>
+            </div>
+            <p class="text-xs text-marketing-muted">{data.card2Desc}</p>
+            <div class="text-xs font-mono text-marketing-text pt-1 font-semibold">features@makecontactsheet.com</div>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-marketing-border text-xs text-marketing-muted">
+          {data.responseTime}
+        </div>
+      </div>
+    </div>
+  </section>
+</MarketingLayout>

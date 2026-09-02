@@ -1,0 +1,184 @@
+---
+import MarketingLayout from '../../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
+import FaqAccordion from '../../components/common/FaqAccordion.astro';
+import Icon from '../../components/common/Icon.astro';
+import MoodBoardApp from '../../components/workspace/moodboard/MoodBoardApp.astro';
+import HighlightText from '../../components/ui/HighlightText.astro';
+import { NON_DEFAULT_LOCALES, type Locale } from '../../i18n/config';
+import { l, getCanonicalUrl } from '../../i18n/utils';
+import { useTranslations } from '../../i18n';
+import { MOODBOARD_DATA } from '../../i18n/data/toolsData';
+import { buildSoftwareApplicationSchema, buildFAQSchema } from '../../lib/seo/schemaGenerator';
+
+export function getStaticPaths() {
+  return NON_DEFAULT_LOCALES.map((locale) => ({
+    params: { locale },
+    props: { locale },
+  }));
+}
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+const data = MOODBOARD_DATA[locale];
+
+const breadcrumbs = [
+  { name: t('nav.about') ? (locale === 'es' ? 'Inicio' : locale === 'de' ? 'Startseite' : locale === 'fr' ? 'Accueil' : locale === 'ja' ? 'ホーム' : 'Início') : 'Home', url: l('/', locale) },
+  { name: data.breadcrumbName },
+];
+
+const canonical = getCanonicalUrl('/mood-board-maker', locale);
+
+const schemas = [
+  buildSoftwareApplicationSchema(
+    data.heading,
+    data.description,
+    canonical
+  ),
+  buildFAQSchema(data.faqs),
+];
+---
+
+<MarketingLayout
+  title={data.title}
+  description={data.description}
+  canonical={canonical}
+  locale={locale}
+  schema={schemas}
+>
+  <!-- Page Header Banner -->
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-accent-ink font-bold mb-3">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>{data.badge}</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
+          <HighlightText variant="pink">{data.heading}</HighlightText>
+        </h1>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          {data.lead}
+        </p>
+
+        <div class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="#moodboard-workbench"
+            class="inline-flex items-center gap-2 h-10 px-5 rounded-full bg-accent hover:bg-accent-hover text-white font-semibold text-xs sm:text-sm tracking-tight shadow-sm hover:shadow active:scale-[0.98] transition-all"
+          >
+            <Icon name="image" size={14} />
+            <span>{data.btnStudio}</span>
+          </a>
+          <a
+            href={l('/photo-collage-maker', locale)}
+            class="inline-flex items-center gap-2 h-10 px-5 rounded-full bg-marketing-surface hover:bg-marketing-surface-hover text-marketing-text font-semibold text-xs sm:text-sm border border-marketing-border transition-colors"
+          >
+            <Icon name="layout" size={14} />
+            <span>{data.btnCollage}</span>
+          </a>
+          <a
+            href={l('/studio/contact-sheet', locale)}
+            class="inline-flex items-center gap-2 h-10 px-5 rounded-full bg-marketing-surface hover:bg-marketing-surface-hover text-marketing-text font-semibold text-xs sm:text-sm border border-marketing-border transition-colors"
+          >
+            <Icon name="maximize" size={14} />
+            <span>{data.btnContactSheet}</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Mood Board Workbench Shell -->
+  <section id="moodboard-workbench" class="py-10 sm:py-14 lg:py-16 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+      <MoodBoardApp />
+    </div>
+  </section>
+
+  <!-- Editorial Pillars & Creative Direction Guide -->
+  <section class="py-14 sm:py-20 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="max-w-3xl mb-12">
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight mb-3">
+          {data.guideHeading}
+        </h2>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          {data.guideLead}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        {data.pillars.map((pillar) => (
+          <div class="p-6 rounded-2xl bg-marketing-surface border border-marketing-border space-y-3 card-surface card-interactive group">
+            <div class="flex items-center justify-between">
+              <div class="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent">
+                <Icon name={pillar.icon} size={20} />
+              </div>
+              <span class="card-emoji text-2xl select-none" aria-hidden="true">{pillar.emoji}</span>
+            </div>
+            <h3 class="text-base font-bold text-marketing-text">{pillar.title}</h3>
+            <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
+              {pillar.desc}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Links to Related Guides & Tools -->
+      <div class="p-6 sm:p-8 rounded-2xl bg-marketing-bg border border-marketing-border space-y-4 mb-16 transition-colors">
+        <h3 class="text-base font-bold text-marketing-text">
+          {locale === 'es' ? 'Explorar herramientas y guías de diseño' : locale === 'de' ? 'Werkzeuge & Anleitungen entdecken' : locale === 'fr' ? 'Explorer les outils et guides' : locale === 'ja' ? 'ワークスペースツール＆ガイド' : 'Explorar ferramentas e guias'}
+        </h3>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5 text-xs">
+          <li>
+            <a href={l('/photo-collage-maker', locale)} class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
+              <Icon name="layout" size={14} class="text-marketing-muted" />
+              <span>{locale === 'es' ? 'Creador de collages de fotos' : locale === 'de' ? 'Fotocollagen-Ersteller' : locale === 'fr' ? 'Créateur de collage photo' : locale === 'ja' ? '写真コラージュ作成ツール' : 'Criador de colagens'}</span>
+            </a>
+          </li>
+          <li>
+            <a href={l('/collage-templates', locale)} class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
+              <Icon name="crop" size={14} class="text-marketing-muted" />
+              <span>{locale === 'es' ? 'Plantillas de collage (18 diseños)' : locale === 'de' ? 'Collagen-Vorlagen (18 Layouts)' : locale === 'fr' ? 'Modèles de collage (18 dispositions)' : locale === 'ja' ? 'コラージュテンプレート（18種）' : 'Modelos de colagem (18 layouts)'}</span>
+            </a>
+          </li>
+          <li>
+            <a href={l('/photo-contact-sheet-maker', locale)} class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
+              <Icon name="grid" size={14} class="text-marketing-muted" />
+              <span>{locale === 'es' ? 'Creador de hojas de contactos' : locale === 'de' ? 'Kontaktabzug-Ersteller' : locale === 'fr' ? 'Créateur de planches contact' : locale === 'ja' ? '写真コンタクトシート作成' : 'Criador de folhas de contato'}</span>
+            </a>
+          </li>
+          <li>
+            <a href={l('/contact-sheet-template', locale)} class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
+              <Icon name="columns" size={14} class="text-marketing-muted" />
+              <span>{locale === 'es' ? 'Plantillas de hojas de contactos' : locale === 'de' ? 'Kontaktabzug-Vorlagen' : locale === 'fr' ? 'Modèles de planches contact' : locale === 'ja' ? 'コンタクトシートテンプレート' : 'Modelos de folha de contato'}</span>
+            </a>
+          </li>
+          <li>
+            <a href={l('/batch-photo-tools', locale)} class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
+              <Icon name="file-text" size={14} class="text-marketing-muted" />
+              <span>{locale === 'es' ? 'Renombrado por lotes y EXIF' : locale === 'de' ? 'Batch-Renamer & EXIF' : locale === 'fr' ? 'Renommage par lots & EXIF' : locale === 'ja' ? '一括リネーム＆EXIF抽出' : 'Renomeador em lote e EXIF'}</span>
+            </a>
+          </li>
+          <li>
+            <a href={l('/guides/how-to-make-photo-collage', locale)} class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
+              <Icon name="image" size={14} class="text-marketing-muted" />
+              <span>{locale === 'es' ? 'Tutorial: Cómo hacer un collage' : locale === 'de' ? 'Anleitung: Fotocollage online' : locale === 'fr' ? 'Tutoriel : Créer un collage' : locale === 'ja' ? 'コラージュ作成チュートリアル' : 'Como fazer colagem de fotos'}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="max-w-3xl">
+        <h2 class="text-xl sm:text-2xl font-bold text-marketing-text mb-6">
+          {locale === 'es' ? 'Preguntas frecuentes sobre Mood Boards' : locale === 'de' ? 'Häufig gestellte Fragen zu Moodboards' : locale === 'fr' ? 'Questions fréquentes sur les Mood Boards' : locale === 'ja' ? 'ムードボードに関するよくある質問' : 'Perguntas frequentes sobre Mood Boards'}
+        </h2>
+        <FaqAccordion faqs={data.faqs} />
+      </div>
+
+    </div>
+  </section>
+</MarketingLayout>

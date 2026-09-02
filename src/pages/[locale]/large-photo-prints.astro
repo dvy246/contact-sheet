@@ -1,0 +1,216 @@
+---
+import MarketingLayout from '../../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
+import WorkspaceApp from '../../components/workspace/WorkspaceApp.astro';
+import FaqAccordion from '../../components/common/FaqAccordion.astro';
+import SeoToolProse from '../../components/marketing/SeoToolProse.astro';
+import Icon from '../../components/common/Icon.astro';
+import HighlightText from '../../components/ui/HighlightText.astro';
+import { NON_DEFAULT_LOCALES, type Locale } from '../../i18n/config';
+import { l, getCanonicalUrl } from '../../i18n/utils';
+import { useTranslations } from '../../i18n';
+import { LARGE_PRINTS_DATA } from '../../i18n/data/toolsData';
+import { buildSoftwareApplicationSchema, buildHowToSchema, buildFAQSchema } from '../../lib/seo/schemaGenerator';
+
+export function getStaticPaths() {
+  return NON_DEFAULT_LOCALES.map((locale) => ({
+    params: { locale },
+    props: { locale },
+  }));
+}
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+const data = LARGE_PRINTS_DATA[locale];
+
+const breadcrumbs = [
+  { name: t('nav.about') ? (locale === 'es' ? 'Inicio' : locale === 'de' ? 'Startseite' : locale === 'fr' ? 'Accueil' : locale === 'ja' ? 'ホーム' : 'Início') : 'Home', url: l('/', locale) },
+  { name: data.breadcrumbName },
+];
+
+const canonical = getCanonicalUrl('/large-photo-prints', locale);
+
+const schemas = [
+  buildSoftwareApplicationSchema(
+    data.heading,
+    data.description,
+    canonical
+  ),
+  buildHowToSchema(data.howToHeading, data.howToLead, data.howToSteps),
+  buildFAQSchema(data.faqs),
+];
+---
+
+<MarketingLayout
+  title={data.title}
+  description={data.description}
+  canonical={canonical}
+  locale={locale}
+  schema={schemas}
+>
+  <!-- Page Header -->
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="max-w-3xl">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
+          <HighlightText variant="lime">{data.heading}</HighlightText>
+        </h1>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          {data.lead}
+        </p>
+
+        <a
+          href={l('/studio/contact-sheet', locale)}
+          class="mt-6 inline-flex items-center gap-2 h-11 px-6 rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold text-sm tracking-tight shadow-lg shadow-accent/25 active:scale-[0.98] transition-all"
+        >
+          <Icon name="maximize" size={15} />
+          <span>{locale === 'es' ? 'Abrir estudio a pantalla completa' : locale === 'de' ? 'Vollbild-Studio öffnen' : locale === 'fr' ? 'Ouvrir le studio plein écran' : locale === 'ja' ? '全画面スタジオを開く' : 'Abrir estúdio em tela cheia'}</span>
+          <Icon name="arrow-right" size={15} />
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Framed Live Workspace -->
+  <section class="py-12 sm:py-16 lg:py-20 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="rounded-2xl overflow-hidden border border-workspace-border shadow-2xl bg-workspace-bg">
+        <!-- Window Chrome Top Bar -->
+        <div class="px-4 py-2.5 bg-workspace-panel border-b border-workspace-border flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 rounded-full bg-rose-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+          </div>
+          <div class="text-[11px] font-mono text-workspace-muted font-medium">Large Print Studio · 11×14, 16×20 &amp; 24×36 Presets</div>
+          <div class="w-12"></div>
+        </div>
+
+        <WorkspaceApp />
+      </div>
+    </div>
+  </section>
+
+  <!-- Dimension Reference Guide Cards -->
+  <section class="py-16 sm:py-20 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <div class="max-w-3xl space-y-3">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/25 text-accent-ink text-xs font-mono font-semibold">
+          <Icon name="printer" size={13} />
+          <span>{data.specsBadge}</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-marketing-text">
+          {data.specsHeading}
+        </h2>
+        <p class="text-sm sm:text-base text-marketing-muted">
+          {data.specsLead}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {data.posterSpecs.map((spec) => (
+          <div class="p-6 rounded-2xl bg-marketing-surface border border-marketing-border hover:border-accent/40 shadow-xs flex flex-col justify-between transition-all group">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border border-zinc-500/20 text-zinc-400">
+                  {spec.badge}
+                </span>
+                <span class="text-xs font-mono text-marketing-muted">{spec.ratio}</span>
+              </div>
+              <div>
+                <h3 class="text-2xl font-bold text-marketing-text group-hover:text-accent-ink transition-colors">{spec.name}</h3>
+                <p class="text-xs font-mono text-marketing-muted mt-0.5">{spec.metric}</p>
+              </div>
+
+              <div class="space-y-2.5 pt-3 border-t border-marketing-border text-xs">
+                <div>
+                  <div class="text-[11px] text-marketing-muted font-medium">Fine Art (300 DPI):</div>
+                  <div class="font-mono font-semibold text-marketing-text">{spec.dpi300}</div>
+                </div>
+                <div>
+                  <div class="text-[11px] text-marketing-muted font-medium">Standard (150 DPI):</div>
+                  <div class="font-mono text-marketing-muted">{spec.dpi150}</div>
+                </div>
+                <div>
+                  <div class="text-[11px] text-marketing-muted font-medium">{locale === 'es' ? 'Capacidad combinada:' : locale === 'de' ? 'Kapazität:' : locale === 'fr' ? 'Capacité :' : locale === 'ja' ? '面付け枚数：' : 'Capacidade:'}</div>
+                  <div class="font-semibold text-accent-ink">{spec.capacity}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-marketing-border/60 text-[11px] text-marketing-muted flex items-center gap-1.5">
+              <Icon name="check" size={13} class="text-emerald-500 shrink-0" />
+              <span>{spec.labs}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Step-by-Step HowTo Guide -->
+  <section class="py-16 sm:py-24 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[850px] mx-auto px-4 sm:px-6 space-y-12">
+      <div class="space-y-4">
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text">
+          {data.howToHeading}
+        </h2>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          {data.howToLead}
+        </p>
+      </div>
+
+      <div class="space-y-6">
+        {data.howToSteps.map((step, index) => (
+          <div class="flex gap-4 p-5 rounded-2xl bg-marketing-panel border border-marketing-border shadow-xs hover:border-accent/30 transition-colors">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center font-bold text-sm shadow-xs">
+              {index + 1}
+            </div>
+            <div class="space-y-1">
+              <h3 class="text-base font-bold text-marketing-text">{step.name}</h3>
+              <p class="text-sm text-marketing-muted leading-relaxed">{step.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Comprehensive SEO Prose Section -->
+  <SeoToolProse currentUrl="/large-photo-prints">
+    <h2 class="mt-0">{data.proseH2}</h2>
+    <p>{data.proseP1}</p>
+    <p>{data.proseP2}</p>
+
+    <h3>{data.proseH3_1}</h3>
+    <p>{data.proseP3}</p>
+    <ul>
+      {data.proseBullets.map((bullet) => (
+        <li>{bullet}</li>
+      ))}
+    </ul>
+
+    <h3>{data.proseH3_2}</h3>
+    <p>{data.proseP4}</p>
+    <p>{data.proseP5}</p>
+
+    <h3>{data.proseH3_3}</h3>
+    <p>{data.proseP6}</p>
+    <p>{data.proseP7}</p>
+  </SeoToolProse>
+
+  <!-- FAQ Section -->
+  <section class="py-14 sm:py-20 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl space-y-6">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text">
+            {locale === 'es' ? 'Preguntas frecuentes' : locale === 'de' ? 'Häufig gestellte Fragen' : locale === 'fr' ? 'Questions fréquentes' : locale === 'ja' ? 'よくある質問' : 'Perguntas frequentes'}
+          </h2>
+        </div>
+        <FaqAccordion faqs={data.faqs} />
+      </div>
+    </div>
+  </section>
+</MarketingLayout>

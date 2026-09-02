@@ -1,0 +1,362 @@
+---
+import { NON_DEFAULT_LOCALES, type Locale } from '../../i18n/config';
+import MarketingLayout from '../../layouts/MarketingLayout.astro';
+import HeroSection from '../../components/marketing/HeroSection.astro';
+import StudioShowcase from '../../components/marketing/StudioShowcase.astro';
+import WorkspaceApp from '../../components/workspace/WorkspaceApp.astro';
+import WorkflowSteps from '../../components/marketing/WorkflowSteps.astro';
+import FeatureGrid from '../../components/marketing/FeatureGrid.astro';
+import TemplateShowcase from '../../components/marketing/TemplateShowcase.astro';
+import ComparisonTable from '../../components/marketing/ComparisonTable.astro';
+import FaqAccordion from '../../components/common/FaqAccordion.astro';
+import Icon from '../../components/common/Icon.astro';
+import { HOME_LOCALIZED_DATA } from '../../i18n/data/homeData';
+import { useTranslations } from '../../i18n';
+import { l, getCanonicalUrl } from '../../i18n/utils';
+import { buildWebSiteSchema, buildOrganizationSchema, buildSoftwareApplicationSchema, buildFAQSchema } from '../../lib/seo/schemaGenerator';
+
+export function getStaticPaths() {
+  return NON_DEFAULT_LOCALES.map((locale) => ({
+    params: { locale },
+    props: { locale },
+  }));
+}
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+const data = HOME_LOCALIZED_DATA[locale];
+
+const schemas = [
+  buildWebSiteSchema(),
+  buildOrganizationSchema(),
+  buildSoftwareApplicationSchema(
+    'Make Contact Sheet — Contact Sheet Maker',
+    data.description,
+    getCanonicalUrl('/', locale)
+  ),
+  buildFAQSchema(data.faqs),
+];
+---
+
+<MarketingLayout
+  title={data.title}
+  description={data.description}
+  canonical={getCanonicalUrl('/', locale)}
+  robots="index, follow"
+  schema={schemas}
+  locale={locale}
+>
+  <!-- Hero Section -->
+  <HeroSection />
+
+  <!-- Apple Keynote Style Studio Showcase -->
+  <StudioShowcase />
+
+  <!-- Framed Live Workspace Section -->
+  <section id="workspace" class="py-16 sm:py-24 lg:py-28 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Framing Bar -->
+      <div class="mb-10 sm:mb-12 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+        <div class="max-w-2xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs mb-3.5">
+            <span class="w-2 h-2 rounded-full bg-accent"></span>
+            <span>{data.workspaceBadge}</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
+            {data.workspaceHeading}
+          </h2>
+          <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+            {data.workspaceLead}
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 text-xs font-mono text-marketing-muted shrink-0">
+          <span class="px-2.5 py-1 rounded-md bg-marketing-surface border border-marketing-border">{t('home.featureZeroInstall')}</span>
+          <span class="px-2.5 py-1 rounded-md bg-marketing-surface border border-marketing-border">{t('home.featureLocal')}</span>
+          <span class="px-2.5 py-1 rounded-md bg-marketing-surface border border-marketing-border">{t('home.featureGpu')}</span>
+        </div>
+      </div>
+
+      <!-- Integrated Workspace App Component -->
+      <WorkspaceApp />
+
+    </div>
+  </section>
+
+  <!-- Step Workflow Section -->
+  <WorkflowSteps />
+
+  <!-- Bento Grid Feature Pillars -->
+  <FeatureGrid />
+
+  <!-- Tactile Freeform Moodboard Section -->
+  <section class="py-16 sm:py-24 lg:py-28 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left Column: Copy & Value Proposition -->
+        <div class="lg:col-span-6 space-y-6">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-accent-ink shadow-xs">
+            <Icon name="layout" size={12} class="text-accent" />
+            <span>{data.moodboardBadge}</span>
+          </div>
+          
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-marketing-text leading-tight">
+            {data.moodboardHeading}
+          </h2>
+          
+          <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+            {data.moodboardLead}
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div class="flex items-center gap-2 text-xs font-medium text-marketing-text">
+              <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+              <span>{t('home.pillGuides')}</span>
+            </div>
+            <div class="flex items-center gap-2 text-xs font-medium text-marketing-text">
+              <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+              <span>{t('home.pillSwatches')}</span>
+            </div>
+            <div class="flex items-center gap-2 text-xs font-medium text-marketing-text">
+              <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+              <span>{t('home.pillNotes')}</span>
+            </div>
+            <div class="flex items-center gap-2 text-xs font-medium text-marketing-text">
+              <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+              <span>{t('home.pillPrints')}</span>
+            </div>
+          </div>
+
+          <div class="pt-4 flex flex-wrap items-center gap-4">
+            <a 
+              href={l('/mood-board-maker', locale)} 
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent text-white font-medium text-xs sm:text-sm hover:brightness-110 active:scale-[0.98] transition-all shadow-sm"
+            >
+              <Icon name="image" size={15} />
+              <span>{t('home.ctaLaunchMoodboard')}</span>
+            </a>
+            <a 
+              href={l('/mood-board-templates', locale)} 
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-marketing-surface border border-marketing-border text-marketing-text font-medium text-xs sm:text-sm hover:bg-marketing-bg transition-colors"
+            >
+              <span>{t('home.ctaExploreMoodboard')}</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Column: Tactile Freeform Board Preview Card -->
+        <div class="lg:col-span-6">
+          <div class="p-4 sm:p-6 rounded-3xl bg-[#14100e] border border-white/10 shadow-2xl relative overflow-hidden text-white space-y-4">
+            
+            <div class="flex items-center justify-between pb-3 border-b border-white/10 text-[11px] font-mono text-stone-400">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
+                <span class="ml-2 font-medium text-stone-300">Mood Board Workspace</span>
+              </div>
+              <span class="text-accent font-bold">1920 × 1080 · 100% Local</span>
+            </div>
+
+            <div class="relative w-full aspect-[16/10] bg-[#1a1412] rounded-2xl border border-white/10 overflow-hidden p-4 shadow-inner">
+              <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 16px 16px;"></div>
+
+              <div class="absolute top-4 left-4 w-[48%] h-[68%] rounded-xl bg-gradient-to-tr from-stone-900 via-stone-800 to-amber-950/60 border border-white/15 shadow-xl overflow-hidden flex flex-col justify-between p-3 rotate-[-1deg]">
+                <span class="text-[9px] font-mono px-2 py-0.5 rounded bg-black/60 backdrop-blur-sm self-start text-white/90">HERO LOOK</span>
+                <div class="text-center py-4">
+                  <Icon name="camera" size={24} class="mx-auto text-accent opacity-60" />
+                </div>
+                <span class="text-[10px] font-mono text-white/70">85mm f/1.4 · ISO 100</span>
+              </div>
+
+              <div class="absolute top-4 right-4 w-[42%] h-[46%] rounded-xl bg-gradient-to-br from-amber-900/40 via-stone-900 to-stone-800 border border-white/15 shadow-xl overflow-hidden p-2.5 rotate-[1.5deg]">
+                <span class="text-[9px] font-mono px-2 py-0.5 rounded bg-black/60 backdrop-blur-sm text-white/90">DETAIL SHOT</span>
+                <div class="text-center py-2">
+                  <Icon name="image" size={18} class="mx-auto text-white/40" />
+                </div>
+              </div>
+
+              <div class="absolute bottom-4 left-4 w-24 h-24 rounded-xl bg-stone-900 border border-white/15 shadow-xl overflow-hidden flex flex-col rotate-[2deg]">
+                <div class="flex-1 bg-[#d97706] relative">
+                  <div class="absolute inset-0 bg-gradient-to-tr from-black/20 to-white/20"></div>
+                </div>
+                <div class="px-2 py-1 bg-black/90 text-[9px] font-mono flex items-center justify-between text-white/90">
+                  <span class="font-bold">Amber</span>
+                  <span class="text-white/60">#D97706</span>
+                </div>
+              </div>
+
+              <div class="absolute bottom-4 left-32 w-24 h-24 rounded-xl bg-stone-900 border border-white/15 shadow-xl overflow-hidden flex flex-col rotate-[-1deg]">
+                <div class="flex-1 bg-[#261b17] relative">
+                  <div class="absolute inset-0 bg-gradient-to-tr from-black/20 to-white/20"></div>
+                </div>
+                <div class="px-2 py-1 bg-black/90 text-[9px] font-mono flex items-center justify-between text-white/90">
+                  <span class="font-bold">Noir</span>
+                  <span class="text-white/60">#261B17</span>
+                </div>
+              </div>
+
+              <div class="absolute bottom-4 right-4 w-[42%] h-[42%] rounded-xl bg-[#fef3c7] text-stone-900 p-3 shadow-2xl rotate-[-2deg] border border-amber-300/60 flex flex-col justify-between">
+                <div class="w-10 h-3 bg-white/60 mx-auto -mt-2 rounded-xs rotate-[-1deg]"></div>
+                <div class="text-[10px] sm:text-[11px] font-medium leading-tight">
+                  Styling Directive:<br />
+                  Soft 45° overhead key with warm bounce fill.
+                </div>
+                <span class="text-[9px] font-mono text-stone-500">LOOKBOOK · SCENE 04</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Deep Dive Product & Workflow Prose (SEO & Educational Foundation) -->
+  <section class="py-16 sm:py-24 bg-marketing-surface border-b border-marketing-border transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        
+        <!-- Left: Prose Content -->
+        <div class="lg:col-span-8 space-y-8 text-marketing-muted text-sm sm:text-base leading-relaxed">
+          
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-bg border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs mb-3.5">
+              <span class="w-2 h-2 rounded-full bg-accent"></span>
+              <span>{data.proseBadge}</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
+              {data.proseHeading}
+            </h2>
+            <p>
+              {data.proseP1}
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="text-xl font-bold text-marketing-text tracking-tight">
+              {data.proseH3_1}
+            </h3>
+            <p>
+              {data.proseP2}
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="text-xl font-bold text-marketing-text tracking-tight">
+              {data.proseH3_2}
+            </h3>
+            <p>
+              {data.proseP3}
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="text-xl font-bold text-marketing-text tracking-tight">
+              {data.proseH3_3}
+            </h3>
+            <p>
+              {data.proseP4}
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="text-xl font-bold text-marketing-text tracking-tight">
+              {data.proseH3_4}
+            </h3>
+            <p>
+              {data.proseP5}
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="text-xl font-bold text-marketing-text tracking-tight">
+              {data.proseH3_5}
+            </h3>
+            <p>
+              {data.proseP6}
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Right: Practical Workflow & Quick Links Card -->
+        <div class="lg:col-span-4 space-y-6">
+          
+          <div class="p-6 sm:p-7 rounded-2xl bg-marketing-bg border border-marketing-border shadow-xs space-y-5">
+            <div class="text-xs font-mono font-semibold uppercase tracking-wider text-accent-ink">
+              {data.sidebarHeading}
+            </div>
+            <ol class="space-y-4 text-xs sm:text-sm text-marketing-muted list-decimal list-inside">
+              {data.sidebarSteps.map((s: { title: string; desc: string }) => (
+                <li class="leading-relaxed">
+                  <strong class="text-marketing-text">{s.title}:</strong> {s.desc}
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <!-- Internal Navigation Links Card -->
+          <div class="p-6 sm:p-7 rounded-2xl bg-marketing-bg border border-marketing-border shadow-xs space-y-4">
+            <div class="text-xs font-mono font-semibold uppercase tracking-wider text-marketing-muted">
+              {t('common.relatedToolsHeading')}
+            </div>
+            <div class="grid grid-cols-1 gap-2 text-xs sm:text-sm">
+              <a href={l('/photo-contact-sheet-maker', locale)} class="text-accent hover:underline font-medium flex items-center justify-between py-1">
+                <span>{t('nav.toolContactSheet')}</span>
+                <Icon name="chevron-right" size={12} />
+              </a>
+              <a href={l('/mood-board-maker', locale)} class="text-accent hover:underline font-medium flex items-center justify-between py-1">
+                <span>{t('nav.toolMoodBoard')}</span>
+                <Icon name="chevron-right" size={12} />
+              </a>
+              <a href={l('/photo-collage-maker', locale)} class="text-accent hover:underline font-medium flex items-center justify-between py-1">
+                <span>{t('nav.toolPhotoGrid')}</span>
+                <Icon name="chevron-right" size={12} />
+              </a>
+              <a href={l('/batch-photo-tools', locale)} class="text-accent hover:underline font-medium flex items-center justify-between py-1">
+                <span>{t('nav.toolBatchPhoto')}</span>
+                <Icon name="chevron-right" size={12} />
+              </a>
+              <a href={l('/free-8x10-photo-prints', locale)} class="text-accent hover:underline font-medium flex items-center justify-between py-1">
+                <span>{t('nav.toolPrintSaver8x10')}</span>
+                <Icon name="chevron-right" size={12} />
+              </a>
+              <a href={l('/guides/how-to-make-a-contact-sheet', locale)} class="text-accent hover:underline font-medium flex items-center justify-between py-1">
+                <span>{t('nav.guideContactSheet')}</span>
+                <Icon name="chevron-right" size={12} />
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Curated Template Showcase -->
+  <TemplateShowcase />
+
+  <!-- Comparison Matrix Table -->
+  <ComparisonTable />
+
+  <!-- FAQ Accordion Section -->
+  <section class="py-16 sm:py-24 bg-marketing-bg transition-colors">
+    <div class="max-w-[800px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 sm:mb-16">
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-marketing-text mb-3">
+          {t('common.faqHeading')}
+        </h2>
+        <p class="text-sm text-marketing-muted">
+          {t('common.faqSubtitle')}
+        </p>
+      </div>
+
+      <FaqAccordion faqs={data.faqs} />
+    </div>
+  </section>
+</MarketingLayout>

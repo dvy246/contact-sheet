@@ -1,0 +1,201 @@
+---
+import MarketingLayout from '../../../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../../../components/common/Breadcrumbs.astro';
+import FaqAccordion from '../../../components/common/FaqAccordion.astro';
+import Icon from '../../../components/common/Icon.astro';
+import HighlightText from '../../../components/ui/HighlightText.astro';
+import { NON_DEFAULT_LOCALES, type Locale } from '../../../i18n/config';
+import { l, getCanonicalUrl } from '../../../i18n/utils';
+import { PHOTO_COLLAGE_GUIDE_DATA } from '../../../i18n/data/guidesData';
+import { buildHowToSchema, buildFAQSchema } from '../../../lib/seo/schemaGenerator';
+
+export function getStaticPaths() {
+  return NON_DEFAULT_LOCALES.map((locale) => ({
+    params: { locale },
+    props: { locale },
+  }));
+}
+
+const { locale } = Astro.props as { locale: Locale };
+const data = PHOTO_COLLAGE_GUIDE_DATA[locale];
+const route = '/guides/how-to-make-photo-collage';
+const canonicalUrl = getCanonicalUrl(route, locale);
+
+const breadcrumbs = [
+  { name: data.breadcrumbs.home, url: l('/', locale) },
+  { name: data.breadcrumbs.guides || 'Guides', url: l('/guides/how-to-make-a-contact-sheet', locale) },
+  { name: data.breadcrumbs.current },
+];
+
+const schemas = [
+  buildHowToSchema(
+    `${data.h1Pre}${data.h1Highlight}${data.h1Post}`,
+    data.description,
+    data.steps
+  ),
+  buildFAQSchema(data.faqs),
+];
+---
+
+<MarketingLayout
+  title={data.title}
+  description={data.description}
+  canonical={canonicalUrl}
+  robots="index, follow"
+  ogType="article"
+  schema={schemas}
+  locale={locale}
+>
+  <article class="py-12 sm:py-16 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[840px] mx-auto px-4 sm:px-6 space-y-10">
+      
+      <Breadcrumbs items={breadcrumbs} />
+
+      <header class="space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-accent"></span>
+          <span>{data.badge}</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-[1.15]">
+          {data.h1Pre}<HighlightText variant="pink">{data.h1Highlight}</HighlightText>{data.h1Post}
+        </h1>
+        <p class="text-base sm:text-lg text-marketing-muted leading-relaxed">
+          {data.lead}
+        </p>
+      </header>
+
+      <!-- Direct Answer / AEO Definition Block -->
+      <div class="p-6 sm:p-7 rounded-2xl bg-accent/10 border border-accent/30 text-marketing-text space-y-2.5">
+        <div class="text-xs font-bold uppercase tracking-wider text-accent-ink font-mono">{data.quickAnswerLabel}</div>
+        <p class="text-sm sm:text-base leading-relaxed font-medium">
+          {data.quickAnswerText}
+        </p>
+      </div>
+
+      <!-- Main Step-by-Step Guide -->
+      <section class="space-y-6 pt-2">
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+          {data.stepsHeading}
+        </h2>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          {data.stepsIntro}
+        </p>
+
+        <div class="space-y-4">
+          {data.steps.map((step, i) => (
+            <div class="flex items-start gap-4 p-5 sm:p-6 rounded-2xl border border-marketing-border bg-marketing-bg shadow-xs transition-colors">
+              <div class="w-9 h-9 rounded-xl bg-accent text-white flex-shrink-0 flex items-center justify-center font-bold text-sm shadow-xs mt-0.5">
+                {i + 1}
+              </div>
+              <div class="space-y-1.5 flex-1">
+                <h3 class="text-base font-bold text-marketing-text">{step.name}</h3>
+                <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{step.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Deep Dive Educational Content -->
+      <section class="space-y-8 pt-6 border-t border-marketing-border text-sm sm:text-base text-marketing-muted leading-relaxed">
+        
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            {data.balanceHeading}
+          </h2>
+          <p>{data.balanceP1}</p>
+          <p>{data.balanceP2}</p>
+          <ul class="list-disc pl-5 space-y-2 text-marketing-text/90">
+            {data.balanceBullets.map((bullet) => (
+              <li><strong>{bullet.label}:</strong> {bullet.text}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            {data.colorHeading}
+          </h2>
+          <p>{data.colorP1}</p>
+          <p>{data.colorP2}</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-3">
+            {data.colorSteps.map((step) => (
+              <div class="p-4 rounded-xl bg-marketing-surface border border-marketing-border space-y-1">
+                <span class="text-xs font-mono font-bold text-accent-ink">{step.label}</span>
+                <p class="text-xs text-marketing-muted leading-relaxed">{step.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">
+            {data.aspectRatioHeading}
+          </h2>
+          <p>{data.aspectRatioIntro}</p>
+
+          <div class="overflow-x-auto my-4 border border-marketing-border rounded-xl bg-marketing-surface shadow-xs">
+            <table class="w-full text-left text-xs sm:text-sm border-collapse">
+              <thead>
+                <tr class="bg-marketing-panel border-b border-marketing-border text-marketing-text font-bold">
+                  <th class="p-3 sm:p-4">{data.tableHeaders.ratio}</th>
+                  <th class="p-3 sm:p-4">{data.tableHeaders.dimensions}</th>
+                  <th class="p-3 sm:p-4">{data.tableHeaders.platform}</th>
+                  <th class="p-3 sm:p-4">{data.tableHeaders.layout}</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-marketing-border text-marketing-text/90">
+                {data.tableRows.map((row) => (
+                  <tr>
+                    <td class="p-3 sm:p-4 font-semibold">{row.ratio}</td>
+                    <td class="p-3 sm:p-4 font-mono text-xs">{row.dimensions}</td>
+                    <td class="p-3 sm:p-4">{row.platform}</td>
+                    <td class="p-3 sm:p-4">{row.layout}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Action CTA Box -->
+      <div class="p-8 sm:p-10 rounded-3xl bg-marketing-surface border border-marketing-border text-marketing-text text-center space-y-5 shadow-lg">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/15 border border-accent/30 text-[11px] font-mono font-bold text-accent-ink">
+          <span>{data.cta.badge}</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">{data.cta.title}</h2>
+        <p class="text-sm text-marketing-muted max-w-lg mx-auto leading-relaxed">
+          {data.cta.text}
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+          <a 
+            href={l('/photo-collage-maker', locale)} 
+            class="inline-flex items-center gap-2 h-12 px-7 rounded-xl bg-accent hover:bg-accent-hover text-white font-bold text-sm tracking-tight shadow-md hover:shadow-lg active:scale-[0.98] transition-all cursor-pointer"
+          >
+            <span>{data.cta.btnPrimary}</span>
+            <Icon name="arrow-right" size={16} />
+          </a>
+          <a 
+            href={l('/collage-templates', locale)} 
+            class="inline-flex items-center gap-2 h-12 px-6 rounded-xl bg-marketing-bg hover:bg-marketing-surface text-marketing-text font-semibold text-sm border border-marketing-border transition-colors cursor-pointer"
+          >
+            <Icon name="layout" size={15} />
+            <span>{data.cta.btnSecondary}</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="space-y-6 pt-6 border-t border-marketing-border">
+        <div class="space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-bold text-marketing-text tracking-tight">{data.faqHeading}</h2>
+          <p class="text-sm text-marketing-muted">{data.faqSub}</p>
+        </div>
+        <FaqAccordion faqs={data.faqs} />
+      </section>
+
+    </div>
+  </article>
+</MarketingLayout>

@@ -1,0 +1,165 @@
+---
+import { NON_DEFAULT_LOCALES, type Locale } from '../../../i18n/config';
+import MarketingLayout from '../../../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../../../components/common/Breadcrumbs.astro';
+import FaqAccordion from '../../../components/common/FaqAccordion.astro';
+import Icon from '../../../components/common/Icon.astro';
+import HighlightText from '../../../components/ui/HighlightText.astro';
+import { TEMPLATES_AND_COMPANY_DATA } from '../../../i18n/data/templatesAndCompanyData';
+import { l, getCanonicalUrl } from '../../../i18n/utils';
+import { buildFAQSchema } from '../../../lib/seo/schemaGenerator';
+
+export function getStaticPaths() {
+  return NON_DEFAULT_LOCALES.map((locale) => ({
+    params: { locale },
+    props: { locale },
+  }));
+}
+
+const { locale } = Astro.props as { locale: Locale };
+const data = TEMPLATES_AND_COMPANY_DATA[locale].comparePhotoshop;
+
+const breadcrumbs = [
+  { name: 'Home', url: l('/', locale) },
+  { name: data.breadcrumbsCompare, url: l('/compare/photoshop-contact-sheet-alternative', locale) },
+  { name: data.breadcrumbsTitle },
+];
+
+const schemas = [
+  buildFAQSchema(data.faqs),
+];
+---
+
+<MarketingLayout
+  title={data.title}
+  description={data.description}
+  canonical={getCanonicalUrl('/compare/photoshop-contact-sheet-alternative', locale)}
+  robots="index, follow"
+  schema={schemas}
+  locale={locale}
+  ogType="article"
+>
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="max-w-3xl space-y-3">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight">
+          {data.heroTitle}
+        </h1>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          {data.heroLead}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Responsive Localized Comparison Table Container -->
+  <section class="py-16 sm:py-24 lg:py-28 bg-transparent border-b border-marketing-border transition-colors w-full max-w-full overflow-hidden">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 w-full min-w-0">
+      
+      <!-- Section Introduction Header -->
+      <div class="max-w-2xl mb-12 sm:mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs mb-3.5">
+          <span class="w-2 h-2 rounded-full bg-accent"></span>
+          <span>{data.badge}</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
+          {data.heroTitle}
+        </h2>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          {data.heroLead}
+        </p>
+      </div>
+
+      <div class="w-full max-w-full overflow-x-auto custom-scrollbar border border-marketing-border rounded-2xl bg-marketing-panel card-surface">
+        <table class="w-full text-left text-xs sm:text-sm border-collapse min-w-[600px]">
+          <thead>
+            <tr class="bg-marketing-surface border-b border-marketing-border text-marketing-text font-bold">
+              <th class="p-4 sm:p-5">{data.tableHeaderCapability}</th>
+              <th class="p-4 sm:p-5 bg-accent/10 text-marketing-text border-x border-accent/30 font-bold">
+                <span class="inline-flex items-center gap-1.5">
+                  <span>{data.tableHeaderMcs}</span>
+                  <span class="card-emoji text-sm" aria-hidden="true">⚡</span>
+                </span>
+              </th>
+              <th class="p-4 sm:p-5 text-marketing-muted font-semibold">{data.tableHeaderPs}</th>
+              <th class="p-4 sm:p-5 text-marketing-muted font-semibold">{data.tableHeaderCanva}</th>
+              <th class="p-4 sm:p-5 text-marketing-muted font-semibold">{data.tableHeaderVizua}</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-marketing-border text-marketing-text">
+            {data.comparisonRows.map((row) => (
+              <tr class="group hover:bg-marketing-surface/30 transition-colors">
+                <td class="p-4 sm:p-5 font-medium flex items-center gap-2">
+                  <span class="card-emoji text-base" aria-hidden="true">{row.icon}</span>
+                  <span>{row.feature}</span>
+                </td>
+                <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold">
+                  {row.mcsHighlight ? (
+                    <HighlightText variant={row.mcsHighlight}>{row.mcs}</HighlightText>
+                  ) : (
+                    <span>{row.mcs}</span>
+                  )}
+                </td>
+                <td class="p-4 sm:p-5 text-marketing-muted">{row.ps}</td>
+                <td class="p-4 sm:p-5 text-marketing-muted">{row.canva}</td>
+                <td class="p-4 sm:p-5 text-marketing-muted">{row.vizua}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Detailed Editorial Breakdown -->
+  <section class="py-16 sm:py-20 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[800px] mx-auto px-4 sm:px-6 space-y-10">
+      
+      <div class="space-y-4 prose-measure">
+        <h2 class="text-2xl font-bold text-marketing-text">
+          {data.section1Title}
+        </h2>
+        <p class="text-sm text-marketing-text/90 leading-relaxed">
+          {data.section1P}
+        </p>
+      </div>
+
+      <div class="space-y-4 prose-measure">
+        <h2 class="text-2xl font-bold text-marketing-text">
+          {data.section2Title}
+        </h2>
+        <p class="text-sm text-marketing-text/90 leading-relaxed">
+          {data.section2P}
+        </p>
+        <ul class="space-y-2 text-sm text-marketing-text/90 list-disc pl-5">
+          {data.section2List.map((item) => (
+            <li><strong>{item.bold}</strong> {item.text}</li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Action CTA Box -->
+      <div class="p-8 rounded-2xl bg-marketing-surface border border-marketing-border text-marketing-text text-center space-y-4 shadow-md">
+        <h2 class="text-xl font-bold text-marketing-text">{data.ctaTitle}</h2>
+        <p class="text-xs text-marketing-muted max-w-md mx-auto">
+          {data.ctaDesc}
+        </p>
+        <a 
+          href={l('/photo-contact-sheet-maker', locale)} 
+          class="inline-flex items-center gap-2 h-11 px-6 rounded-xl bg-accent hover:bg-accent-hover text-white font-semibold text-xs tracking-tight shadow-md transition-all"
+        >
+          <span>{data.ctaBtn}</span>
+          <Icon name="arrow-right" size={15} />
+        </a>
+      </div>
+
+      <!-- FAQs -->
+      <div class="space-y-6 pt-6 border-t border-marketing-border">
+        <h2 class="text-2xl font-bold text-marketing-text">{data.faqTitle}</h2>
+        <FaqAccordion faqs={data.faqs} />
+      </div>
+
+    </div>
+  </section>
+</MarketingLayout>

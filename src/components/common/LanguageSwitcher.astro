@@ -1,0 +1,94 @@
+---
+import { LOCALES, LOCALE_MAP, type Locale, DEFAULT_LOCALE } from '../../i18n/config';
+import { getLocalizedPath } from '../../i18n/utils';
+
+interface Props {
+  currentLocale?: Locale;
+  currentPath?: string;
+  variant?: 'header' | 'footer' | 'drawer';
+}
+
+const {
+  currentLocale = DEFAULT_LOCALE,
+  currentPath = Astro.url.pathname,
+  variant = 'header',
+} = Astro.props;
+
+const currentConfig = LOCALE_MAP[currentLocale] || LOCALE_MAP[DEFAULT_LOCALE];
+---
+
+<div class:list={[
+  'relative inline-block text-left language-switcher-container',
+  variant === 'drawer' ? 'w-full' : ''
+]}>
+  <details class="group relative">
+    <summary class:list={[
+      'cursor-pointer list-none flex items-center justify-between gap-1.5 transition-colors select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-lg',
+      variant === 'header' ? 'px-2.5 py-1.5 text-xs font-medium text-marketing-text-subtle hover:text-marketing-text hover:bg-white/5 border border-white/10 rounded-full' : '',
+      variant === 'footer' ? 'px-2 py-1 text-xs text-marketing-text-subtle hover:text-marketing-text hover:bg-white/5 border border-white/5 rounded-md' : '',
+      variant === 'drawer' ? 'w-full px-3 py-2 text-sm font-medium text-marketing-text bg-white/5 border border-white/10 rounded-lg' : ''
+    ]} aria-label="Select language">
+      <span class="flex items-center gap-1.5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent opacity-90">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+          <path d="M2 12h20"></path>
+        </svg>
+        <span>{currentConfig.nativeName}</span>
+      </span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200 group-open:rotate-180 opacity-60">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </summary>
+
+    <div class:list={[
+      'absolute z-50 mt-1.5 min-w-[140px] rounded-xl border border-white/15 bg-marketing-surface/95 backdrop-blur-md shadow-2xl p-1.5 text-xs space-y-0.5 animate-in fade-in zoom-in-95',
+      variant === 'header' ? 'right-0 top-full' : '',
+      variant === 'footer' ? 'left-0 bottom-full mb-1.5' : '',
+      variant === 'drawer' ? 'left-0 right-0 top-full' : ''
+    ]}>
+      {LOCALES.map((loc) => {
+        const config = LOCALE_MAP[loc];
+        const isSelected = loc === currentLocale;
+        const targetHref = getLocalizedPath(currentPath, loc);
+
+        return (
+          <a
+            href={targetHref}
+            class:list={[
+              'flex items-center justify-between px-2.5 py-1.5 rounded-lg transition-colors',
+              isSelected
+                ? 'bg-accent/15 text-accent font-semibold'
+                : 'text-marketing-text-subtle hover:text-marketing-text hover:bg-white/5'
+            ]}
+            hreflang={config.langAttr}
+          >
+            <span>{config.nativeName}</span>
+            <span class="text-[10px] uppercase tracking-wider opacity-60">{config.code}</span>
+          </a>
+        );
+      })}
+    </div>
+  </details>
+</div>
+
+<script>
+  // Close language switcher when clicking outside
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (!target.closest('.language-switcher-container')) {
+      document.querySelectorAll('.language-switcher-container details[open]').forEach((el) => {
+        el.removeAttribute('open');
+      });
+    }
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.language-switcher-container details[open]').forEach((el) => {
+        el.removeAttribute('open');
+      });
+    }
+  });
+</script>

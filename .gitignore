@@ -33,3 +33,4 @@ screenshot*.png
 .wrangler/
 .security-audit/
 
+.i18n-baseline/

@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
+import { type Locale, DEFAULT_LOCALE } from '../i18n/config';
 
 interface Props {
   title?: string;
@@ -10,42 +11,29 @@ interface Props {
   robots?: string;
   ogType?: string;
   schema?: object | object[];
-  /**
-   * Render indexable copy under the app instead of locking the document to one
-   * screen. The tool still opens at full height; the page just keeps scrolling
-   * past it, so a crawler gets real content and the studio route can be a
-   * first-class MPA page rather than a noindex shell.
-   */
   contentBelow?: boolean;
+  locale?: Locale;
 }
 
-const { contentBelow = false, ...props } = Astro.props;
+const { contentBelow = false, locale = DEFAULT_LOCALE, ...props } = Astro.props;
 ---
 
-<BaseLayout {...props}>
+<BaseLayout {...props} locale={locale}>
   {
     contentBelow ? (
       <div class="min-h-dvh bg-workspace-bg text-workspace-text flex flex-col antialiased">
-        <Header variant="workspace" />
+        <Header variant="workspace" locale={locale} />
         <main class="flex flex-col w-full min-w-0">
-          {/* One screen of app. The height must be definite (a calc, not a
-              percentage or min-height) or the studio's nested flex columns fall
-              back to content size and the shell grows unbounded. */}
           <div class="studio-viewport flex flex-col w-full min-w-0">
             <slot />
           </div>
           <slot name="content" />
         </main>
-        <Footer />
+        <Footer locale={locale} />
       </div>
     ) : (
-      /* `h-dvh`, not `min-h-screen`: the studio shell inside sizes itself from
-         this height, and a min-height leaves the height indefinite, so every
-         nested flex column falls back to its content size and the app grows into
-         a multi-thousand-pixel page instead of filling one screen. `dvh` so
-         mobile browser chrome does not push the export drawer off-screen. */
       <div class="h-dvh overflow-hidden bg-workspace-bg text-workspace-text flex flex-col antialiased">
-        <Header variant="workspace" />
+        <Header variant="workspace" locale={locale} />
         <main class="flex-1 min-h-0 flex flex-col overflow-hidden">
           <slot />
         </main>

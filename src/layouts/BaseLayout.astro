@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 import GlobalAtmosphere from '../components/common/GlobalAtmosphere.astro';
+import { type Locale, DEFAULT_LOCALE, LOCALE_MAP } from '../i18n/config';
+import { getHreflangLinks, getCanonicalUrl } from '../i18n/utils';
 
 interface Props {
   title?: string;
@@ -9,12 +11,14 @@ interface Props {
   robots?: string;
   ogType?: string;
   schema?: object | object[];
+  locale?: Locale;
 }
 
 const {
   title = 'Make Contact Sheet - Free Contact Sheet & Collage Maker',
   description = 'Create professional contact sheets and photo collages directly in your browser. Fast, secure, and free. No signup required.',
-  canonical = Astro.url.href.replace(/\/$/, '') || 'https://makecontactsheet.com',
+  locale = DEFAULT_LOCALE,
+  canonical = getCanonicalUrl(Astro.url.pathname, locale),
   robots = 'index, follow',
   ogType = 'website',
   schema,
@@ -22,10 +26,12 @@ const {
 
 const siteName = 'Make Contact Sheet';
 const ogImageUrl = 'https://makecontactsheet.com/og-image.png';
+const currentLocaleConfig = LOCALE_MAP[locale] || LOCALE_MAP[DEFAULT_LOCALE];
+const hreflangLinks = getHreflangLinks(Astro.url.pathname);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={currentLocaleConfig.langAttr} dir={currentLocaleConfig.dir || 'ltr'}>
   <head>
     <!-- Google tag (gtag.js) -->
     <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-PESBYZ7MLZ"></script>
@@ -59,6 +65,11 @@ const ogImageUrl = 'https://makecontactsheet.com/og-image.png';
     <meta name="robots" content={robots} />
     <link rel="canonical" href={canonical} />
 
+    <!-- Hreflang Alternates (Strict International SEO) -->
+    {!robots.includes('noindex') && hreflangLinks.map((link) => (
+      <link rel="alternate" hreflang={link.hreflang} href={link.href} />
+    ))}
+
     <!-- Favicon & Brand Icons -->
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -73,6 +84,7 @@ const ogImageUrl = 'https://makecontactsheet.com/og-image.png';
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:type" content={ogType} />
+    <meta property="og:locale" content={currentLocaleConfig.ogLocale} />
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:secure_url" content={ogImageUrl} />
     <meta property="og:image:type" content="image/png" />

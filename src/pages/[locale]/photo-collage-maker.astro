@@ -1,0 +1,156 @@
+---
+import MarketingLayout from '../../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
+import WorkspaceApp from '../../components/workspace/WorkspaceApp.astro';
+import FaqAccordion from '../../components/common/FaqAccordion.astro';
+import SeoRelatedLinks from '../../components/common/SeoRelatedLinks.astro';
+import Icon from '../../components/common/Icon.astro';
+import HighlightText from '../../components/ui/HighlightText.astro';
+import { NON_DEFAULT_LOCALES, type Locale } from '../../i18n/config';
+import { l, getCanonicalUrl } from '../../i18n/utils';
+import { useTranslations } from '../../i18n';
+import { COLLAGE_DATA } from '../../i18n/data/toolsData';
+import { buildSoftwareApplicationSchema, buildFAQSchema } from '../../lib/seo/schemaGenerator';
+
+export function getStaticPaths() {
+  return NON_DEFAULT_LOCALES.map((locale) => ({
+    params: { locale },
+    props: { locale },
+  }));
+}
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+const data = COLLAGE_DATA[locale];
+
+const breadcrumbs = [
+  { name: t('nav.about') ? (locale === 'es' ? 'Inicio' : locale === 'de' ? 'Startseite' : locale === 'fr' ? 'Accueil' : locale === 'ja' ? 'ホーム' : 'Início') : 'Home', url: l('/', locale) },
+  { name: data.breadcrumbName },
+];
+
+const canonical = getCanonicalUrl('/photo-collage-maker', locale);
+
+const schemas = [
+  buildSoftwareApplicationSchema(
+    data.heading,
+    data.description,
+    canonical
+  ),
+  buildFAQSchema(data.faqs),
+];
+---
+
+<MarketingLayout
+  title={data.title}
+  description={data.description}
+  canonical={canonical}
+  locale={locale}
+  schema={schemas}
+>
+  <!-- Page Header -->
+  <div class="bg-marketing-panel border-b border-marketing-border py-12 sm:py-16 transition-colors">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="max-w-3xl">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
+          <HighlightText variant="pink">{data.heading}</HighlightText>
+        </h1>
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          {data.lead}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Framed Live Workspace -->
+  <section class="py-12 sm:py-16 lg:py-20 bg-marketing-bg border-b border-marketing-border transition-colors">
+    <div class="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="rounded-2xl overflow-hidden border border-workspace-border shadow-2xl bg-workspace-bg">
+        <!-- Window Chrome Top Bar -->
+        <div class="px-4 py-2.5 bg-workspace-panel border-b border-workspace-border flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 rounded-full bg-rose-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+          </div>
+          <div class="text-[11px] font-mono text-workspace-muted font-medium">Make Contact Sheet Light-Table · Collage Mode</div>
+          <div class="w-12"></div>
+        </div>
+
+        <WorkspaceApp />
+      </div>
+    </div>
+  </div>
+
+  <!-- Editorial & Educational Content -->
+  <section class="py-16 sm:py-24 lg:py-28 bg-marketing-panel border-b border-marketing-border transition-colors">
+    <div class="max-w-[850px] mx-auto px-4 sm:px-6 space-y-14">
+      
+      <div class="space-y-4 prose-measure">
+        <h2 class="text-2xl font-bold text-marketing-text">
+          {data.sec1Heading}
+        </h2>
+        <p class="text-sm text-marketing-text/90 leading-relaxed">
+          {data.sec1P1}
+        </p>
+        <p class="text-sm text-marketing-text/90 leading-relaxed">
+          {data.sec1P2}
+        </p>
+      </div>
+
+      <div class="space-y-4 prose-measure">
+        <h2 class="text-2xl font-bold text-marketing-text">
+          {data.sec2Heading}
+        </h2>
+        <p class="text-sm text-marketing-text/90 leading-relaxed">
+          {data.sec2P1}
+        </p>
+      </div>
+
+      <!-- Links to Related Guides -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <SeoRelatedLinks currentUrl="/photo-collage-maker" />
+        <div class="p-6 sm:p-7 rounded-2xl bg-marketing-bg border border-marketing-border space-y-4 transition-colors self-start">
+          <h3 class="text-base font-bold text-marketing-text">
+            {locale === 'es' ? 'Guías de collage y diseño' : locale === 'de' ? 'Collagen- & Layout-Anleitungen' : locale === 'fr' ? 'Guides de collage et mise en page' : locale === 'ja' ? 'コラージュ＆レイアウトガイド' : 'Guias de colagem e layout'}
+          </h3>
+          <ul class="flex flex-col gap-3.5 text-xs">
+            <li>
+              <a href={l('/guides/how-to-make-photo-collage', locale)} class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
+                <Icon name="file-text" size={14} class="text-marketing-muted" />
+                <span>{locale === 'es' ? 'Cómo hacer un collage de fotos' : locale === 'de' ? 'Fotocollage online erstellen (Tutorial)' : locale === 'fr' ? 'Comment créer un collage photo' : locale === 'ja' ? '写真コラージュの作り方チュートリアル' : 'Como fazer colagem de fotos'}</span>
+              </a>
+            </li>
+            <li>
+              <a href={l('/collage-templates', locale)} class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
+                <Icon name="layout" size={14} class="text-marketing-muted" />
+                <span>{locale === 'es' ? 'Ver plantillas de collage' : locale === 'de' ? 'Collagen-Vorlagen entdecken' : locale === 'fr' ? 'Parcourir les modèles de collage' : locale === 'ja' ? 'コラージュテンプレート一覧' : 'Modelos de colagem'}</span>
+              </a>
+            </li>
+            <li>
+              <a href={l('/photo-contact-sheet-maker', locale)} class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
+                <Icon name="grid" size={14} class="text-marketing-muted" />
+                <span>{locale === 'es' ? 'Creador de hojas de contactos' : locale === 'de' ? 'Kontaktabzug-Ersteller' : locale === 'fr' ? 'Créateur de planches contact' : locale === 'ja' ? 'コンタクトシート作成ツール' : 'Criador de folhas de contato'}</span>
+              </a>
+            </li>
+            <li>
+              <a href={l('/guides/how-to-make-a-contact-sheet', locale)} class="font-medium text-marketing-text hover:text-accent-ink flex items-center gap-2 transition-colors">
+                <Icon name="file-text" size={14} class="text-marketing-muted" />
+                <span>{locale === 'es' ? 'Cómo hacer una hoja de contactos' : locale === 'de' ? 'Anleitung Kontaktabzug' : locale === 'fr' ? 'Créer une planche contact pas à pas' : locale === 'ja' ? 'コンタクトシート作成ガイド' : 'Como fazer folha de contato'}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="space-y-6 pt-4">
+        <h2 class="text-2xl font-bold text-marketing-text">
+          {locale === 'es' ? 'Preguntas frecuentes sobre collages' : locale === 'de' ? 'Häufig gestellte Fragen zu Collagen' : locale === 'fr' ? 'Questions fréquentes sur les collages' : locale === 'ja' ? 'コラージュに関するよくある質問' : 'Perguntas frequentes sobre colagens'}
+        </h2>
+        <FaqAccordion faqs={data.faqs} />
+      </div>
+
+    </div>
+  </section>
+</MarketingLayout>

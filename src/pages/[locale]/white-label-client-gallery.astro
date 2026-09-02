@@ -1,0 +1,99 @@
+---
+import MarketingLayout from '../../layouts/MarketingLayout.astro';
+import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
+import WorkspaceApp from '../../components/workspace/WorkspaceApp.astro';
+import FaqAccordion from '../../components/common/FaqAccordion.astro';
+import { NON_DEFAULT_LOCALES, type Locale } from '../../i18n/config';
+import { l, getCanonicalUrl } from '../../i18n/utils';
+import { useTranslations } from '../../i18n';
+import { WHITE_LABEL_DATA } from '../../i18n/data/toolsData';
+import { buildSoftwareApplicationSchema, buildFAQSchema } from '../../lib/seo/schemaGenerator';
+
+export function getStaticPaths() {
+  return NON_DEFAULT_LOCALES.map((locale) => ({
+    params: { locale },
+    props: { locale },
+  }));
+}
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+const data = WHITE_LABEL_DATA[locale];
+
+const breadcrumbs = [
+  { name: t('nav.about') ? (locale === 'es' ? 'Inicio' : locale === 'de' ? 'Startseite' : locale === 'fr' ? 'Accueil' : locale === 'ja' ? 'ホーム' : 'Início') : 'Home', url: l('/', locale) },
+  { name: data.breadcrumbName },
+];
+
+const canonical = getCanonicalUrl('/white-label-client-gallery', locale);
+
+const schemas = [
+  buildSoftwareApplicationSchema(
+    data.heading,
+    data.description,
+    canonical
+  ),
+  buildFAQSchema(data.faqs),
+];
+---
+
+<MarketingLayout
+  title={data.title}
+  description={data.description}
+  canonical={canonical}
+  locale={locale}
+  schema={schemas}
+>
+  <div class="pt-24 pb-16 bg-white dark:bg-[#09090b]">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <Breadcrumbs items={breadcrumbs} class="mb-8" />
+      
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-stone-900 dark:text-white mb-6">
+          {data.heading}
+        </h1>
+        <p class="text-lg text-stone-600 dark:text-stone-400">
+          {data.lead}
+        </p>
+      </div>
+
+      <div class="my-12">
+        <WorkspaceApp initialMode="contact-sheet" contentBelow={true} />
+      </div>
+
+      <div class="max-w-5xl mx-auto space-y-12 my-20">
+        <section>
+          <h2 class="text-2xl font-bold text-stone-900 dark:text-white mb-6 text-center">{data.tableHeading}</h2>
+          
+          <div class="overflow-hidden rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#121215]">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-stone-50 dark:bg-[#18181b] border-b border-stone-200 dark:border-stone-800 text-stone-900 dark:text-white">
+                <tr>
+                  <th class="p-4 font-semibold">{locale === 'es' ? 'Característica' : locale === 'de' ? 'Funktion' : locale === 'fr' ? 'Fonctionnalité' : locale === 'ja' ? '機能' : 'Recurso'}</th>
+                  <th class="p-4 font-semibold border-l border-stone-200 dark:border-stone-800">Pixieset / Pic-Time</th>
+                  <th class="p-4 font-semibold border-l border-stone-200 dark:border-stone-800 text-blue-600 dark:text-blue-400">Make Contact Sheet</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-stone-200 dark:divide-stone-800 text-stone-700 dark:text-stone-300">
+                {data.tableRows.map((row) => (
+                  <tr>
+                    <td class="p-4 font-medium">{row.feature}</td>
+                    <td class="p-4 border-l border-stone-200 dark:border-stone-800 text-red-600 dark:text-red-400 font-medium">{row.cloudLabel}</td>
+                    <td class="p-4 border-l border-stone-200 dark:border-stone-800 text-emerald-600 dark:text-emerald-400 font-medium">{row.freeLabel}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="border-t border-stone-200 dark:border-stone-800 pt-12 max-w-3xl mx-auto">
+          <h2 class="text-2xl font-bold text-stone-900 dark:text-white mb-8">
+            {locale === 'es' ? 'Preguntas frecuentes' : locale === 'de' ? 'Häufig gestellte Fragen' : locale === 'fr' ? 'Questions fréquentes' : locale === 'ja' ? 'よくある質問' : 'Perguntas frequentes'}
+          </h2>
+          <FaqAccordion faqs={data.faqs} />
+        </section>
+      </div>
+    </div>
+  </div>
+</MarketingLayout>
