@@ -1,5 +1,7 @@
 ---
 import Icon from './Icon.astro';
+import { type Locale, DEFAULT_LOCALE } from '../../i18n/config';
+import { l } from '../../i18n/utils';
 
 interface Link {
   title: string;
@@ -10,71 +12,95 @@ interface Link {
 
 interface Props {
   currentUrl: string;
+  locale?: Locale;
 }
 
-const { currentUrl } = Astro.props;
+const { currentUrl, locale = DEFAULT_LOCALE } = Astro.props;
 
-const allLinks: Link[] = [
-  {
-    title: 'AI Auto-Culling',
-    description: 'Filter blurry shots offline',
-    url: '/auto-cull-photos',
-    icon: 'wand'
-  },
-  {
-    title: '8×10 Print Saver',
-    description: 'Combine photos for cheap printing',
-    url: '/free-8x10-photo-prints',
-    icon: 'printer'
-  },
-  {
-    title: 'Large Print Maker',
-    description: '16x20 & 24x36 poster layouts',
-    url: '/large-photo-prints',
-    icon: 'printer'
-  },
-  {
-    title: 'Contact Sheet Studio',
-    description: 'Full-screen EXIF light table',
-    url: '/photo-contact-sheet-maker',
-    icon: 'camera'
-  },
-  {
-    title: 'Photo Collage Maker',
-    description: 'Geometric grid templates',
-    url: '/photo-collage-maker',
-    icon: 'layout'
-  },
-  {
-    title: 'Mood Board Maker',
-    description: 'Freeform visual lookbooks',
-    url: '/mood-board-maker',
-    icon: 'image'
-  },
-  {
-    title: 'Mood Board Templates',
-    description: 'Aesthetic photoshoot & style presets',
-    url: '/mood-board-templates',
-    icon: 'layout'
-  },
-  {
-    title: 'Batch Photo Toolkit',
-    description: 'Rename, crop, & format convert',
-    url: '/batch-photo-tools',
-    icon: 'file-text'
-  }
-];
+const HEADINGS: Record<Locale, string> = {
+  en: 'Related Tools & Workflows',
+  es: 'Herramientas y flujos relacionados',
+  de: 'Verwandte Tools & Workflows',
+  fr: 'Outils et workflows associés',
+  ja: '関連ツール＆ワークフロー',
+  pt: 'Ferramentas e fluxos relacionados'
+};
 
-// Filter out the current page
-const displayLinks = allLinks.filter(link => link.url !== currentUrl).slice(0, 5);
+const LINKS_BY_LOCALE: Record<Locale, Link[]> = {
+  en: [
+    { title: 'AI Auto-Culling', description: 'Filter blurry shots offline', url: '/auto-cull-photos', icon: 'wand' },
+    { title: '8×10 Print Saver', description: 'Combine photos for cheap printing', url: '/free-8x10-photo-prints', icon: 'printer' },
+    { title: 'Large Print Maker', description: '16x20 & 24x36 poster layouts', url: '/large-photo-prints', icon: 'printer' },
+    { title: 'Contact Sheet Studio', description: 'Full-screen EXIF light table', url: '/photo-contact-sheet-maker', icon: 'camera' },
+    { title: 'Photo Collage Maker', description: 'Geometric grid templates', url: '/photo-collage-maker', icon: 'layout' },
+    { title: 'Mood Board Maker', description: 'Freeform visual lookbooks', url: '/mood-board-maker', icon: 'image' },
+    { title: 'Mood Board Templates', description: 'Aesthetic photoshoot & style presets', url: '/mood-board-templates', icon: 'layout' },
+    { title: 'Batch Photo Toolkit', description: 'Rename, crop, & format convert', url: '/batch-photo-tools', icon: 'file-text' }
+  ],
+  es: [
+    { title: 'Selección con IA', description: 'Filtra fotos borrosas sin conexión', url: '/auto-cull-photos', icon: 'wand' },
+    { title: 'Ahorro de impresión 8×10', description: 'Combina fotos para imprimir barato', url: '/free-8x10-photo-prints', icon: 'printer' },
+    { title: 'Impresiones gran formato', description: 'Pósteres en 16×20 y 24×36', url: '/large-photo-prints', icon: 'printer' },
+    { title: 'Estudio de hojas de contactos', description: 'Mesa de luz con datos EXIF', url: '/photo-contact-sheet-maker', icon: 'camera' },
+    { title: 'Creador de collage de fotos', description: 'Plantillas geométricas de cuadrícula', url: '/photo-collage-maker', icon: 'layout' },
+    { title: 'Creador de Mood Boards', description: 'Lookbooks visuales libres', url: '/mood-board-maker', icon: 'image' },
+    { title: 'Plantillas de Mood Board', description: 'Ajustes para sesiones y estilos', url: '/mood-board-templates', icon: 'layout' },
+    { title: 'Herramientas por lote', description: 'Renombra, recorta y convierte formato', url: '/batch-photo-tools', icon: 'file-text' }
+  ],
+  de: [
+    { title: 'KI-Fotoauswahl', description: 'Unscharfe Fotos offline filtern', url: '/auto-cull-photos', icon: 'wand' },
+    { title: '8×10 Druck-Sparer', description: 'Fotos für günstigen Druck kombinieren', url: '/free-8x10-photo-prints', icon: 'printer' },
+    { title: 'Großformatdruck-Studio', description: '16×20 & 24×36 Poster-Layouts', url: '/large-photo-prints', icon: 'printer' },
+    { title: 'Kontaktabzug-Studio', description: 'Vollbild-Leuchttisch mit EXIF', url: '/photo-contact-sheet-maker', icon: 'camera' },
+    { title: 'Fotocollagen-Maker', description: 'Geometrische Rastervorlagen', url: '/photo-collage-maker', icon: 'layout' },
+    { title: 'Mood Board Studio', description: 'Freie visuelle Lookbooks', url: '/mood-board-maker', icon: 'image' },
+    { title: 'Mood Board Vorlagen', description: 'Ästhetische Shooting-Presets', url: '/mood-board-templates', icon: 'layout' },
+    { title: 'Stapel-Fotowerkzeuge', description: 'Umbenennen, zuschneiden & konvertieren', url: '/batch-photo-tools', icon: 'file-text' }
+  ],
+  fr: [
+    { title: 'Tri auto par IA', description: 'Filtrez les photos floues hors ligne', url: '/auto-cull-photos', icon: 'wand' },
+    { title: 'Économiseur tirages 8×10', description: 'Combinez pour imprimer à bas coût', url: '/free-8x10-photo-prints', icon: 'printer' },
+    { title: 'Tirages grand format', description: 'Mises en page posters 16×20 & 24×36', url: '/large-photo-prints', icon: 'printer' },
+    { title: 'Studio planche contact', description: 'Table lumineuse avec métadonnées EXIF', url: '/photo-contact-sheet-maker', icon: 'camera' },
+    { title: 'Créateur de collage photo', description: 'Modèles de grilles géométriques', url: '/photo-collage-maker', icon: 'layout' },
+    { title: 'Créateur de Mood Board', description: 'Lookbooks visuels intuitifs', url: '/mood-board-maker', icon: 'image' },
+    { title: 'Modèles de Mood Board', description: 'Préréglages séances & direction artistique', url: '/mood-board-templates', icon: 'layout' },
+    { title: 'Outils photo par lot', description: 'Renommez, recadrez et convertissez', url: '/batch-photo-tools', icon: 'file-text' }
+  ],
+  ja: [
+    { title: 'AI写真自動選別', description: '手ブレ・ピンボケ写真をオフライン選別', url: '/auto-cull-photos', icon: 'wand' },
+    { title: '8×10プリント節約', description: '写真をまとめて格安プリント', url: '/free-8x10-photo-prints', icon: 'printer' },
+    { title: '大判プリント作成', description: '16×20＆24×36ポスターレイアウト', url: '/large-photo-prints', icon: 'printer' },
+    { title: 'コンタクトシートスタジオ', description: 'EXIF情報付き全画面ライトテーブル', url: '/photo-contact-sheet-maker', icon: 'camera' },
+    { title: 'フォトコラージュ作成', description: '幾何学グリッドテンプレート', url: '/photo-collage-maker', icon: 'layout' },
+    { title: 'ムードボード作成', description: '自由なビジュアルルックブック', url: '/mood-board-maker', icon: 'image' },
+    { title: 'ムードボードテンプレート', description: '撮影＆スタイル別デザインプリセット', url: '/mood-board-templates', icon: 'layout' },
+    { title: '一括写真処理ツール', description: 'リネーム・トリミング・フォーマット変換', url: '/batch-photo-tools', icon: 'file-text' }
+  ],
+  pt: [
+    { title: 'Seleção por IA', description: 'Filtre fotos borradas offline', url: '/auto-cull-photos', icon: 'wand' },
+    { title: 'Economizador de impressão 8×10', description: 'Combine fotos para impressão econômica', url: '/free-8x10-photo-prints', icon: 'printer' },
+    { title: 'Impressões em grande formato', description: 'Pôsteres em 16×20 e 24×36', url: '/large-photo-prints', icon: 'printer' },
+    { title: 'Estúdio de folhas de contato', description: 'Mesa de luz com dados EXIF', url: '/photo-contact-sheet-maker', icon: 'camera' },
+    { title: 'Criador de colagens', description: 'Modelos geométricos de grade', url: '/photo-collage-maker', icon: 'layout' },
+    { title: 'Criador de Mood Boards', description: 'Lookbooks visuais livres', url: '/mood-board-maker', icon: 'image' },
+    { title: 'Modelos de Mood Board', description: 'Predefinições de estilo e ensaios', url: '/mood-board-templates', icon: 'layout' },
+    { title: 'Ferramentas em lote', description: 'Renomeie, recorte e converta formato', url: '/batch-photo-tools', icon: 'file-text' }
+  ]
+};
+
+const links = LINKS_BY_LOCALE[locale] || LINKS_BY_LOCALE.en;
+// Normalize currentUrl to root path for filtering
+const cleanCurrentUrl = currentUrl.replace(/^\/(es|de|fr|ja|pt)/, '') || '/';
+const displayLinks = links.filter(link => link.url !== cleanCurrentUrl).slice(0, 5);
 ---
 
 <div class="space-y-5">
-  <h3 class="text-lg font-bold text-marketing-text border-b border-marketing-border pb-3">Related Tools & Workflows</h3>
+  <h3 class="text-lg font-bold text-marketing-text border-b border-marketing-border pb-3">{HEADINGS[locale] || HEADINGS.en}</h3>
   <ul class="space-y-4">
     {displayLinks.map((link) => (
       <li>
-        <a href={link.url} class="group flex items-start gap-3 p-3 -m-3 rounded-xl hover:bg-marketing-surface transition-colors">
+        <a href={l(link.url, locale)} class="group flex items-start gap-3 p-3 -m-3 rounded-xl hover:bg-marketing-surface transition-colors">
           <div class="w-8 h-8 rounded-lg bg-marketing-surface border border-marketing-border flex items-center justify-center shrink-0 group-hover:border-accent/40 text-marketing-text group-hover:text-accent shadow-xs transition-colors">
             <Icon name={link.icon} size={16} />
           </div>

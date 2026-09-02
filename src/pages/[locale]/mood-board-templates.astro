@@ -4,6 +4,7 @@ import MarketingLayout from '../../layouts/MarketingLayout.astro';
 import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
 import MoodBoardTemplatePreview from '../../components/marketing/MoodBoardTemplatePreview.astro';
 import FaqAccordion from '../../components/common/FaqAccordion.astro';
+import SeoRelatedLinks from '../../components/common/SeoRelatedLinks.astro';
 import HighlightText from '../../components/ui/HighlightText.astro';
 import Icon from '../../components/common/Icon.astro';
 import { MOODBOARD_TEMPLATES } from '../../lib/moodboardStore';
@@ -20,7 +21,6 @@ export function getStaticPaths() {
 
 const { locale } = Astro.props as { locale: Locale };
 const data = TEMPLATES_AND_COMPANY_DATA[locale].moodBoardTemplates;
-const globalData = TEMPLATES_AND_COMPANY_DATA[locale];
 
 const breadcrumbs = [
   { name: 'Home', url: l('/', locale) },
@@ -190,55 +190,7 @@ const editorialCategories = [
 
       <!-- FAQ & Interlinking -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
-        <div class="space-y-5">
-          <h3 class="text-lg font-bold text-marketing-text border-b border-marketing-border pb-3">{data.relatedToolsTitle}</h3>
-          <ul class="space-y-4">
-            <li>
-              <a href={l('/photo-contact-sheet-maker', locale)} class="group flex items-start gap-3 p-3 -m-3 rounded-xl hover:bg-marketing-surface transition-colors">
-                <div class="w-8 h-8 rounded-lg bg-marketing-surface border border-marketing-border flex items-center justify-center shrink-0 group-hover:border-accent/40 text-marketing-text group-hover:text-accent shadow-xs transition-colors">
-                  <Icon name="camera" size={16} />
-                </div>
-                <div class="flex flex-col">
-                  <span class="font-semibold text-marketing-text text-sm group-hover:text-accent transition-colors">{globalData.contactSheetTemplates.breadcrumbsTitle}</span>
-                  <span class="text-xs text-marketing-muted leading-snug mt-0.5">{globalData.contactSheetTemplates.description}</span>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href={l('/photo-collage-maker', locale)} class="group flex items-start gap-3 p-3 -m-3 rounded-xl hover:bg-marketing-surface transition-colors">
-                <div class="w-8 h-8 rounded-lg bg-marketing-surface border border-marketing-border flex items-center justify-center shrink-0 group-hover:border-accent/40 text-marketing-text group-hover:text-accent shadow-xs transition-colors">
-                  <Icon name="layout" size={16} />
-                </div>
-                <div class="flex flex-col">
-                  <span class="font-semibold text-marketing-text text-sm group-hover:text-accent transition-colors">{globalData.collageTemplates.breadcrumbsTitle}</span>
-                  <span class="text-xs text-marketing-muted leading-snug mt-0.5">{globalData.collageTemplates.description}</span>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href={l('/batch-photo-tools', locale)} class="group flex items-start gap-3 p-3 -m-3 rounded-xl hover:bg-marketing-surface transition-colors">
-                <div class="w-8 h-8 rounded-lg bg-marketing-surface border border-marketing-border flex items-center justify-center shrink-0 group-hover:border-accent/40 text-marketing-text group-hover:text-accent shadow-xs transition-colors">
-                  <Icon name="file-text" size={16} />
-                </div>
-                <div class="flex flex-col">
-                  <span class="font-semibold text-marketing-text text-sm group-hover:text-accent transition-colors">Batch Photo Tools</span>
-                  <span class="text-xs text-marketing-muted leading-snug mt-0.5">Token renamer, EXIF metadata inspector & converter</span>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href={l('/free-8x10-photo-prints', locale)} class="group flex items-start gap-3 p-3 -m-3 rounded-xl hover:bg-marketing-surface transition-colors">
-                <div class="w-8 h-8 rounded-lg bg-marketing-surface border border-marketing-border flex items-center justify-center shrink-0 group-hover:border-accent/40 text-marketing-text group-hover:text-accent shadow-xs transition-colors">
-                  <Icon name="printer" size={16} />
-                </div>
-                <div class="flex flex-col">
-                  <span class="font-semibold text-marketing-text text-sm group-hover:text-accent transition-colors">8×10 Print Saver</span>
-                  <span class="text-xs text-marketing-muted leading-snug mt-0.5">Multi-photo layouts optimized for store prints</span>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </div>
+        <SeoRelatedLinks currentUrl="/mood-board-templates" locale={locale} />
         <div class="space-y-6">
           <h2 class="text-2xl font-bold text-marketing-text">{data.faqTitle}</h2>
           <FaqAccordion faqs={data.faqs} />

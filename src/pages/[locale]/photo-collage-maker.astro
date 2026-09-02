@@ -109,7 +109,7 @@ const schemas = [
 
       <!-- Links to Related Guides -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <SeoRelatedLinks currentUrl="/photo-collage-maker" />
+        <SeoRelatedLinks currentUrl="/photo-collage-maker" locale={locale} />
         <div class="p-6 sm:p-7 rounded-2xl bg-marketing-bg border border-marketing-border space-y-4 transition-colors self-start">
           <h3 class="text-base font-bold text-marketing-text">
             {locale === 'es' ? 'Guías de collage y diseño' : locale === 'de' ? 'Collagen- & Layout-Anleitungen' : locale === 'fr' ? 'Guides de collage et mise en page' : locale === 'ja' ? 'コラージュ＆レイアウトガイド' : 'Guias de colagem e layout'}
