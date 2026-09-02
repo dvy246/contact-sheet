@@ -29,3 +29,7 @@ pnpm-debug.log*
 screenshot*.png
 
 
+
+.wrangler/
+.security-audit/
+

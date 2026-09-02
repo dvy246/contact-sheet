@@ -26,7 +26,7 @@ export function buildOrganizationSchema() {
     '@type': 'Organization',
     'name': 'Make Contact Sheet',
     'url': `${SITE_URL}/`,
-    'logo': `${SITE_URL}/favicon.svg`,
+    'logo': `${SITE_URL}/apple-touch-icon.png`,
   };
 }
 
