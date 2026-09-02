@@ -12,71 +12,192 @@ interface Props {
 }
 
 const { locale = DEFAULT_LOCALE } = Astro.props;
+const isEnglish = locale === DEFAULT_LOCALE;
 
-const LABELS: Record<Locale, { viewAllContact: string; viewAllCollage: string; usePreset: string; useLayout: string; headingContact: string; headingCollage: string; subContact: string; subCollage: string }> = {
-  en: {
-    viewAllContact: 'View all contact templates',
-    viewAllCollage: 'View all collage layouts',
-    usePreset: 'Use Preset',
-    useLayout: 'Use Layout',
-    headingContact: 'Proof Sheet Layouts & Presets',
-    headingCollage: 'Photo Collage Layouts',
-    subContact: 'Calibrated for standard printing, digital review boards, and client proofing.',
-    subCollage: 'Expressive compositions for client presentations, lookbooks, and hero displays.'
-  },
+const TRANSLATIONS: Record<Exclude<Locale, 'en'>, any> = {
   es: {
-    viewAllContact: 'Ver todas las plantillas de hojas',
-    viewAllCollage: 'Ver todas las plantillas de collage',
+    badgePresets: 'AJUSTES DE PRUEBA',
+    headingPresets1: '',
+    headingPresetsHighlight1: 'Diseños',
+    headingPresets2: ' y ',
+    headingPresetsHighlight2: 'Ajustes',
+    headingPresetsSuffix: ' de hojas de prueba',
+    subPresets: 'Calibrados para impresión estándar, paneles de revisión digital y pruebas para clientes.',
+    viewAllPresets: 'Ver todas las plantillas de hojas',
     usePreset: 'Usar plantilla',
+
+    preset1Name: 'Hoja de prueba A4 vertical',
+    preset1Desc: 'Formato de revisión estándar para impresión (cuadrícula 4×5, 20 fotos por página)',
+    preset2Name: 'Hoja técnica EXIF de estudio',
+    preset2Desc: 'Marcos grandes 3×3 con etiquetas de cámara, objetivo, apertura, obturación e ISO',
+    preset3Name: 'Prueba para clientes con título',
+    preset3Desc: 'Horizontal 4×3 con banda de título, números de página y marcas de selección',
+
+    badgeCollage: 'COMPOSICIONES CREATIVAS',
+    headingCollage1: 'Plantillas creativas de ',
+    headingCollageHighlight1: 'Collage',
+    headingCollage2: ' y ',
+    headingCollageHighlight2: 'Mosaico',
+    subCollage: 'Diseños multifoto limpios y equilibrados para redes, comparativas antes/después y portafolios.',
+    viewAllCollage: 'Ver todas las plantillas de collage',
     useLayout: 'Usar diseño',
-    headingContact: 'Diseños y ajustes de hojas de contactos',
-    headingCollage: 'Diseños de collage de fotos',
-    subContact: 'Calibrados para impresión estándar, paneles de revisión digital y pruebas de clientes.',
-    subCollage: 'Composiciones expresivas para presentaciones a clientes, lookbooks y destacados.'
+
+    col1Name: 'Tríptico con héroe central',
+    col1Desc: '1 foto central grande flanqueada por 2 paneles verticales',
+    col2Name: 'Doble formato panorámico',
+    col2Desc: 'Composición equilibrada de 2 fotos lado a lado',
+    col3Name: 'Mosaico editorial (5 fotos)',
+    col3Desc: 'Diseño de revista con héroe asimétrico',
+    col4Name: 'Cuarteto proporción áurea',
+    col4Desc: '1 imagen dominante con 3 paneles apilados'
   },
   de: {
-    viewAllContact: 'Alle Kontaktabzug-Vorlagen ansehen',
-    viewAllCollage: 'Alle Collagen-Layouts ansehen',
+    badgePresets: 'PROOFING-VORLAGEN',
+    headingPresets1: 'Kontaktabzug-',
+    headingPresetsHighlight1: 'Layouts',
+    headingPresets2: ' & ',
+    headingPresetsHighlight2: 'Vorlagen',
+    headingPresetsSuffix: '',
+    subPresets: 'Kalibriert für Standarddrucke, digitale Auswertungen und Kunden-Proofing.',
+    viewAllPresets: 'Alle Kontaktabzug-Vorlagen ansehen',
     usePreset: 'Vorlage nutzen',
+
+    preset1Name: 'A4 Hochformat Kontaktabzug',
+    preset1Desc: 'Standard-Druckformat (4×5 Raster, 20 Fotos pro Seite)',
+    preset2Name: 'Studio-EXIF Kontaktabzug',
+    preset2Desc: 'Großes 3×3 Raster mit Kamera-, Objektiv-, Blenden- und ISO-Werten',
+    preset3Name: 'Kunden-Proofing mit Titel',
+    preset3Desc: '4×3 Querformat mit Titelband, Seitenzahlen und Auswahletiketten',
+
+    badgeCollage: 'KREATIVE KOMPOSITIONEN',
+    headingCollage1: 'Kreative ',
+    headingCollageHighlight1: 'Collagen',
+    headingCollage2: '-',
+    headingCollageHighlight2: 'Vorlagen',
+    subCollage: 'Harmonische Mehrfach-Layouts für Stories, Vorher-Nachher-Vergleiche und Portfolios.',
+    viewAllCollage: 'Alle Collagen-Layouts ansehen',
     useLayout: 'Layout nutzen',
-    headingContact: 'Kontaktabzug-Layouts & Vorlagen',
-    headingCollage: 'Fotocollagen-Layouts',
-    subContact: 'Kalibriert für Standarddrucke, digitale Auswertungen und Kunden-Proofing.',
-    subCollage: 'Ausdrucksstarke Kompositionen für Kundenpräsentationen, Lookbooks und Portfolio.'
+
+    col1Name: 'Triptychon mit Master-Hero',
+    col1Desc: '1 großes Zentrumsfoto flankiert von 2 vertikalen Bildern',
+    col2Name: 'Cinematische 2er-Teilung',
+    col2Desc: 'Ausgewogene 2-Fotos-Nebeneinander-Komposition',
+    col3Name: 'Editoriales Mosaik (5 Fotos)',
+    col3Desc: 'Magazin-Layout mit asymmetrischem Hero-Bild',
+    col4Name: 'Goldenes Quartett (Hero + 3)',
+    col4Desc: '1 dominantes Hero-Bild mit 3 gestapelten Begleitbildern'
   },
   fr: {
-    viewAllContact: 'Voir tous les modèles de planches',
-    viewAllCollage: 'Voir tous les modèles de collages',
+    badgePresets: 'MODÈLES D\x27ÉPREUVES',
+    headingPresets1: '',
+    headingPresetsHighlight1: 'Mises en page',
+    headingPresets2: ' et ',
+    headingPresetsHighlight2: 'Modèles',
+    headingPresetsSuffix: ' de planches',
+    subPresets: 'Calibré pour tirages standard, revues numériques et épreuves clients.',
+    viewAllPresets: 'Voir tous les modèles de planches',
     usePreset: 'Utiliser ce préréglage',
+
+    preset1Name: 'Planche contact A4 portrait',
+    preset1Desc: 'Format d\x27impression standard (grille 4×5, 20 photos par page)',
+    preset2Name: 'Planche technique EXIF de studio',
+    preset2Desc: 'Grandes vues 3×3 avec boîtier, optique, ouverture, vitesse et ISO',
+    preset3Name: 'Planche client avec titre',
+    preset3Desc: 'Format 4×3 paysage avec bandeau de titre, pagination et annotations',
+
+    badgeCollage: 'COMPOSITIONS CRÉATIVES',
+    headingCollage1: 'Modèles de ',
+    headingCollageHighlight1: 'Collages',
+    headingCollage2: ' ',
+    headingCollageHighlight2: 'Créatifs',
+    subCollage: 'Mises en page équilibrées pour réseaux sociaux, avant/après et portfolios.',
+    viewAllCollage: 'Voir tous les modèles de collages',
     useLayout: 'Utiliser cette mise en page',
-    headingContact: 'Modèles de planches contact & préréglages',
-    headingCollage: 'Mises en page de collages photo',
-    subContact: 'Calibré pour tirages standard, revues numériques et épreuves clients.',
-    subCollage: 'Compositions visuelles pour présentations clients, lookbooks et portfolios.'
+
+    col1Name: 'Triptyque avec vue vedette',
+    col1Desc: '1 grande image centrale entourée de 2 panneaux verticaux',
+    col2Name: 'Duo cinématographique',
+    col2Desc: 'Composition équilibrée de 2 photos côte à côte',
+    col3Name: 'Mosaïque éditoriale (5 photos)',
+    col3Desc: 'Mise en page magazine avec image vedette asymétrique',
+    col4Name: 'Quatuor au nombre d\x27or',
+    col4Desc: '1 vue dominante et 3 vues secondaires empilées'
   },
   ja: {
-    viewAllContact: 'すべてのコンタクトシートを見る',
-    viewAllCollage: 'すべてのコラージュを見る',
+    badgePresets: '校正シートプリセット',
+    headingPresets1: 'コンタクトシートの',
+    headingPresetsHighlight1: 'レイアウト',
+    headingPresets2: 'と',
+    headingPresetsHighlight2: 'プリセット',
+    headingPresetsSuffix: '',
+    subPresets: '標準印刷・デジタル確認ボード・クライアント校正用に最適化。',
+    viewAllPresets: 'すべてのコンタクトシートを見る',
     usePreset: 'このプリセットを使う',
+
+    preset1Name: 'A4縦型校正シート',
+    preset1Desc: '標準印刷フォーマット（4×5グリッド、1ページあたり20枚）',
+    preset2Name: 'スタジオ撮影EXIFシート',
+    preset2Desc: 'カメラ、レンズ、絞り、シャッター速度、ISO感度を表示する大判3×3グリッド',
+    preset3Name: 'タイトル帯付き校正シート',
+    preset3Desc: '4×3横型レイアウト。ヘッダータイトル帯、ページ番号、採用マーク付き',
+
+    badgeCollage: 'クリエイティブな構図',
+    headingCollage1: '自由な',
+    headingCollageHighlight1: 'コラージュ',
+    headingCollage2: '＆',
+    headingCollageHighlight2: 'テンプレート',
+    subCollage: 'SNS投稿、ビフォーアフター比較、ポートフォリオ用の美しいマルチレイアウト。',
+    viewAllCollage: 'すべてのコラージュを見る',
     useLayout: 'このレイアウトを使う',
-    headingContact: 'コンタクトシートレイアウト＆プリセット',
-    headingCollage: 'フォトコラージュレイアウト',
-    subContact: '標準印刷・デジタル確認ボード・クライアント校正用に最適化。',
-    subCollage: 'クライアント向け提案、ルックブック、ポートフォリオ用の多彩な構図。'
+
+    col1Name: 'センターヒーロー三連祭壇画',
+    col1Desc: '中央の大型メイン写真と両サイドの縦型2枚',
+    col2Name: 'シネマティックスプリット',
+    col2Desc: '横並びの美しい2枚構成',
+    col3Name: 'エディトリアルモザイク（5枚）',
+    col3Desc: 'アシンメトリーな雑誌風レイアウト',
+    col4Name: 'ゴールデンクアッド（黄金比4分割）',
+    col4Desc: '大型ヒーロー写真1枚とスタック写真3枚'
   },
   pt: {
-    viewAllContact: 'Ver todos os modelos de folhas',
-    viewAllCollage: 'Ver todos os modelos de colagens',
+    badgePresets: 'PREDEFINIÇÕES DE PROVA',
+    headingPresets1: '',
+    headingPresetsHighlight1: 'Layouts',
+    headingPresets2: ' e ',
+    headingPresetsHighlight2: 'Predefinições',
+    headingPresetsSuffix: ' de folhas de prova',
+    subPresets: 'Calibrado para impressão padrão, quadros de revisão digital e aprovação de clientes.',
+    viewAllPresets: 'Ver todos os modelos de folhas',
     usePreset: 'Usar predefinição',
+
+    preset1Name: 'Folha de prova A4 vertical',
+    preset1Desc: 'Formato de impressão padrão (grade 4×5, 20 fotos por página)',
+    preset2Name: 'Folha técnica EXIF de estúdio',
+    preset2Desc: 'Quadros grandes 3×3 com câmera, lente, abertura, obturador e ISO',
+    preset3Name: 'Prova de cliente com título',
+    preset3Desc: 'Horizontal 4×3 com faixa de título, numeração de páginas e marcas de seleção',
+
+    badgeCollage: 'COMPOSIÇÕES CRIATIVAS',
+    headingCollage1: 'Modelos criativos de ',
+    headingCollageHighlight1: 'Colagem',
+    headingCollage2: ' e ',
+    headingCollageHighlight2: 'Mosaico',
+    subCollage: 'Layouts equilibrados para redes sociais, antes/depois e portfólios.',
+    viewAllCollage: 'Ver todos os modelos de colagens',
     useLayout: 'Usar layout',
-    headingContact: 'Layouts e predefinições de folhas de contato',
-    headingCollage: 'Layouts de colagem de fotos',
-    subContact: 'Calibrado para impressão padrão, quadros de revisão digital e aprovação de clientes.',
-    subCollage: 'Composições expressivas para apresentações a clientes, lookbooks e galerias.'
+
+    col1Name: 'Tríptico com destaque central',
+    col1Desc: '1 foto central ampla com 2 painéis verticais',
+    col2Name: 'Duo cinematográfico',
+    col2Desc: 'Composição equilibrada de 2 fotos lado a lado',
+    col3Name: 'Mosaico editorial (5 fotos)',
+    col3Desc: 'Layout de revista com foto principal assimétrica',
+    col4Name: 'Quarteto proporção áurea',
+    col4Desc: '1 imagem dominante e 3 fotos complementares'
   }
 };
 
-const labels = LABELS[locale] || LABELS[DEFAULT_LOCALE];
+const t = isEnglish ? null : (TRANSLATIONS[locale as Exclude<Locale, 'en'>] || TRANSLATIONS.es);
 ---
 
 <section class="py-16 sm:py-24 lg:py-28 bg-transparent border-b border-marketing-border transition-colors" data-reveal>
@@ -88,28 +209,44 @@ const labels = LABELS[locale] || LABELS[DEFAULT_LOCALE];
         <div class="max-w-2xl">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs mb-3.5">
             <span class="w-2 h-2 rounded-full bg-accent"></span>
-            <span>PROOFING PRESETS</span>
+            <span>{isEnglish ? 'PROOFING PRESETS' : t.badgePresets}</span>
           </div>
           <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
-            Proof Sheet <HighlightText variant="lime">Layouts</HighlightText> &amp; <HighlightText variant="yellow">Presets</HighlightText>
+            {isEnglish ? (
+              <>Proof Sheet <HighlightText variant="lime">Layouts</HighlightText> &amp; <HighlightText variant="yellow">Presets</HighlightText></>
+            ) : (
+              <>{t.headingPresets1}<HighlightText variant="lime">{t.headingPresetsHighlight1}</HighlightText>{t.headingPresets2}<HighlightText variant="yellow">{t.headingPresetsHighlight2}</HighlightText>{t.headingPresetsSuffix}</>
+            )}
           </h2>
 
           <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
-            Calibrated for standard printing, digital review boards, and client proofing.
+            {isEnglish ? 'Calibrated for standard printing, digital review boards, and client proofing.' : t.subPresets}
           </p>
         </div>
         <a href={l("/contact-sheet-template", locale)} class="text-xs font-semibold text-marketing-text hover:text-accent-ink flex items-center gap-1.5 transition-colors shrink-0">
-          <span>{labels.viewAllContact}</span>
+          <span>{isEnglish ? 'View all contact templates' : t.viewAllPresets}</span>
           <Icon name="arrow-right" size={14} />
         </a>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {[
-          CONTACT_SHEET_PRESETS.find(p => p.id === 'a4-portrait-proof')!,
-          CONTACT_SHEET_PRESETS.find(p => p.id === 'studio-tech-exif')!,
-          CONTACT_SHEET_PRESETS.find(p => p.id === 'wedding-client-proof')!
-        ].map((preset) => (
+          {
+            preset: CONTACT_SHEET_PRESETS.find(p => p.id === 'a4-portrait-proof')!,
+            name: isEnglish ? 'A4 Portrait Proof Sheet' : t.preset1Name,
+            desc: isEnglish ? 'Standard print review format (4×5 grid, 20 photos per page)' : t.preset1Desc
+          },
+          {
+            preset: CONTACT_SHEET_PRESETS.find(p => p.id === 'studio-tech-exif')!,
+            name: isEnglish ? 'Studio Technical EXIF Sheet' : t.preset2Name,
+            desc: isEnglish ? '3×3 large frames with live camera, lens, aperture, shutter and ISO metadata badges' : t.preset2Desc
+          },
+          {
+            preset: CONTACT_SHEET_PRESETS.find(p => p.id === 'wedding-client-proof')!,
+            name: isEnglish ? 'Client Proof — Titled' : t.preset3Name,
+            desc: isEnglish ? '4×3 landscape with a titled band, page numbers and keep/reject marks' : t.preset3Desc
+          }
+        ].map(({ preset, name, desc }) => (
           <div class="bg-marketing-surface border border-marketing-border rounded-2xl p-5 sm:p-6 flex flex-col justify-between space-y-5 transition-all group card-surface card-interactive hover:border-accent/40">
             <div class="space-y-4">
               <!-- Visual Grid Preview -->
@@ -124,8 +261,8 @@ const labels = LABELS[locale] || LABELS[DEFAULT_LOCALE];
                     {preset.config.columns}x{preset.config.rows} Grid
                   </span>
                 </div>
-                <h3 class="text-base sm:text-lg font-bold text-marketing-text group-hover:text-accent transition-colors">{preset.name}</h3>
-                <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{preset.description}</p>
+                <h3 class="text-base sm:text-lg font-bold text-marketing-text group-hover:text-accent transition-colors">{name}</h3>
+                <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{desc}</p>
               </div>
             </div>
 
@@ -133,7 +270,7 @@ const labels = LABELS[locale] || LABELS[DEFAULT_LOCALE];
               href={l("/#workspace", locale)} 
               class="w-full h-10 rounded-xl bg-marketing-surface hover:bg-marketing-surface-hover text-marketing-text font-semibold text-xs text-center border border-marketing-border transition-colors flex items-center justify-center group-hover:border-accent/60 active:scale-[0.98] cursor-pointer"
             >
-              Use Preset
+              {isEnglish ? 'Use Preset' : t.usePreset}
             </a>
           </div>
         ))}
@@ -146,29 +283,49 @@ const labels = LABELS[locale] || LABELS[DEFAULT_LOCALE];
         <div class="max-w-2xl">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs mb-3.5">
             <span class="w-2 h-2 rounded-full bg-accent"></span>
-            <span>CREATIVE COMPOSITIONS</span>
+            <span>{isEnglish ? 'CREATIVE COMPOSITIONS' : t.badgeCollage}</span>
           </div>
           <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
-            Creative <HighlightText variant="pink">Collage</HighlightText> <HighlightText variant="cyan">Templates</HighlightText>
+            {isEnglish ? (
+              <>Creative <HighlightText variant="pink">Collage</HighlightText> <HighlightText variant="cyan">Templates</HighlightText></>
+            ) : (
+              <>{t.headingCollage1}<HighlightText variant="pink">{t.headingCollageHighlight1}</HighlightText>{t.headingCollage2}<HighlightText variant="cyan">{t.headingCollageHighlight2}</HighlightText></>
+            )}
           </h2>
 
           <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
-            Clean, balanced multi-photo layouts for social stories, before/after edits, and portfolios.
+            {isEnglish ? 'Clean, balanced multi-photo layouts for social stories, before/after edits, and portfolios.' : t.subCollage}
           </p>
         </div>
         <a href={l("/collage-templates", locale)} class="text-xs font-semibold text-marketing-text hover:text-accent-ink flex items-center gap-1.5 transition-colors shrink-0">
-          <span>View all collage templates</span>
+          <span>{isEnglish ? 'View all collage layouts' : t.viewAllCollage}</span>
           <Icon name="arrow-right" size={14} />
         </a>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
         {[
-          COLLAGE_TEMPLATES.find(t => t.id === 'three-hero-split')!,
-          COLLAGE_TEMPLATES.find(t => t.id === 'cinematic-split')!,
-          COLLAGE_TEMPLATES.find(t => t.id === 'editorial-mosaic-5')!,
-          COLLAGE_TEMPLATES.find(t => t.id === 'hero-golden-quad')!
-        ].map((template) => (
+          {
+            template: COLLAGE_TEMPLATES.find(t => t.id === 'three-hero-split')!,
+            name: isEnglish ? 'Three-Hero Split (Triptych)' : t.col1Name,
+            desc: isEnglish ? '1 wide master hero flanked by 2 tall vertical panels' : t.col1Desc
+          },
+          {
+            template: COLLAGE_TEMPLATES.find(t => t.id === 'cinematic-split')!,
+            name: isEnglish ? 'Cinematic 2-Panel Split' : t.col2Name,
+            desc: isEnglish ? 'Balanced side-by-side duo for editorial comparisons' : t.col2Desc
+          },
+          {
+            template: COLLAGE_TEMPLATES.find(t => t.id === 'editorial-mosaic-5')!,
+            name: isEnglish ? 'Editorial Center Mosaic (5 Photos)' : t.col3Name,
+            desc: isEnglish ? 'Magazine-style centerpiece with 4 surrounding insets' : t.col3Desc
+          },
+          {
+            template: COLLAGE_TEMPLATES.find(t => t.id === 'hero-golden-quad')!,
+            name: isEnglish ? 'Master Hero + 3 Stacked (Golden Quad)' : t.col4Name,
+            desc: isEnglish ? 'Dominant landscape lead with 3 stacked column photos' : t.col4Desc
+          }
+        ].map(({ template, name, desc }) => (
           <div class="bg-marketing-surface border border-marketing-border rounded-2xl p-5 sm:p-6 flex flex-col justify-between space-y-5 transition-all group card-surface card-interactive hover:border-accent/40">
             <div class="space-y-4">
               <!-- Visual Grid Preview -->
@@ -183,8 +340,8 @@ const labels = LABELS[locale] || LABELS[DEFAULT_LOCALE];
                     {template.cells.length} Photos
                   </span>
                 </div>
-                <h3 class="text-base font-bold text-marketing-text group-hover:text-accent transition-colors">{template.name}</h3>
-                <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{template.description}</p>
+                <h3 class="text-base font-bold text-marketing-text group-hover:text-accent transition-colors">{name}</h3>
+                <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">{desc}</p>
               </div>
             </div>
 
@@ -192,7 +349,7 @@ const labels = LABELS[locale] || LABELS[DEFAULT_LOCALE];
               href={l("/#workspace", locale)} 
               class="w-full h-10 rounded-xl bg-marketing-surface hover:bg-marketing-surface-hover text-marketing-text font-semibold text-xs text-center border border-marketing-border transition-colors flex items-center justify-center group-hover:border-accent/60 active:scale-[0.98] cursor-pointer"
             >
-              Select Template
+              {isEnglish ? 'Select Template' : t.useLayout}
             </a>
           </div>
         ))}

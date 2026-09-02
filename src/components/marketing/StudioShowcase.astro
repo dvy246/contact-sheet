@@ -1,6 +1,89 @@
 ---
 import Icon from '../common/Icon.astro';
 import HighlightText from '../ui/HighlightText.astro';
+import { type Locale, DEFAULT_LOCALE } from '../../i18n/config';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = DEFAULT_LOCALE } = Astro.props;
+const isEnglish = locale === DEFAULT_LOCALE;
+
+const SHOWCASE_DATA: Record<Exclude<Locale, 'en'>, any> = {
+  es: {
+    badge: 'DESCUBRE LO QUE PUEDES CREAR',
+    heading1: 'Crea hojas de contactos ',
+    headingHighlight1: 'profesionales',
+    heading2: ' y limpias en ',
+    headingHighlight2: 'segundos',
+    headingDot: '.',
+    subtitle: 'Organiza, revisa y comparte fácilmente tus sesiones fotográficas. Muestra los ajustes de cámara en cada fotograma, crea impresiones de galería o permite que los clientes elijan sus fotos favoritas.',
+    tabExif: 'Ajustes de cámara y estilo analógico',
+    tabGallery: 'Impresión limpia de galería',
+    tabProofing: 'Galería de revisión para clientes',
+    fullPageView: 'Vista de página completa · Clic en una foto para ampliar',
+    highResOutput: 'Salida en alta resolución'
+  },
+  de: {
+    badge: 'ENTDECKEN SIE DIE MÖGLICHKEITEN',
+    heading1: 'Erstellen Sie ',
+    headingHighlight1: 'professionelle',
+    heading2: ' Kontaktabzüge in ',
+    headingHighlight2: 'Sekunden',
+    headingDot: '.',
+    subtitle: 'Organisieren, sichten und teilen Sie Ihre Fotoserien mühelos. Zeigen Sie Kameraeinstellungen auf jedem Bild an, erstellen Sie Galerie-Drucke oder lassen Sie Kunden ihre Favoriten wählen.',
+    tabExif: 'Kamera-Einstellungen & Film-Look',
+    tabGallery: 'Eleganter Galerie-Druck',
+    tabProofing: 'Kunden-Proofing-Galerie',
+    fullPageView: 'Ganzseitenansicht · Klick auf ein Foto zum Zoomen',
+    highResOutput: 'Hochauflösende Ausgabe'
+  },
+  fr: {
+    badge: 'DÉCOUVREZ CE QUE VOUS POUVEZ CRÉER',
+    heading1: 'Créez des planches contact ',
+    headingHighlight1: 'professionnelles',
+    heading2: ' en ',
+    headingHighlight2: 'quelques secondes',
+    headingDot: '.',
+    subtitle: 'Organisez, examinez et partagez facilement vos séries de photos. Affichez les réglages de prise de vue sur chaque vue, réalisez des tirages d\x27exposition ou laissez vos clients sélectionner leurs clichés favoris.',
+    tabExif: 'Réglages appareil & style argentique',
+    tabGallery: 'Tirage d\x27exposition épuré',
+    tabProofing: 'Galerie de révision client',
+    fullPageView: 'Pleine page · Cliquez sur une photo pour zoomer',
+    highResOutput: 'Rendu haute résolution'
+  },
+  ja: {
+    badge: '作成できるシートの例',
+    heading1: '洗練された',
+    headingHighlight1: 'プロ品質',
+    heading2: 'のコンタクトシートを',
+    headingHighlight2: '数秒',
+    headingDot: 'で作成。',
+    subtitle: '撮影した写真セットの整理・選別・共有をシンプルに。各コマにカメラの撮影設定を表示したり、ギャラリープリントを作成したり、クライアントによる写真セレクトをスムーズに実現。',
+    tabExif: '撮影設定＆フィルムスタイル',
+    tabGallery: 'シンプルなギャラリープリント',
+    tabProofing: 'クライアント確認ギャラリー',
+    fullPageView: '全画面プレビュー · クリックで拡大',
+    highResOutput: '高解像度出力'
+  },
+  pt: {
+    badge: 'VEJA O QUE VOCÊ PODE CRIAR',
+    heading1: 'Crie folhas de contato ',
+    headingHighlight1: 'profissionais',
+    heading2: ' e elegantes em ',
+    headingHighlight2: 'segundos',
+    headingDot: '.',
+    subtitle: 'Organize, avalie e compartilhe suas sessões de fotos com facilidade. Exiba configurações de câmera em cada quadro, faça impressões de galeria ou permita que clientes escolham suas fotos favoritas.',
+    tabExif: 'Configurações de câmera e estilo filme',
+    tabGallery: 'Impressão de galeria limpa',
+    tabProofing: 'Galeria de revisão do cliente',
+    fullPageView: 'Visualização de página inteira · Clique em uma foto para ampliar',
+    highResOutput: 'Saída em alta resolução'
+  }
+};
+
+const s = isEnglish ? null : (SHOWCASE_DATA[locale as Exclude<Locale, 'en'>] || SHOWCASE_DATA.es);
 ---
 
 
@@ -16,16 +99,19 @@ import HighlightText from '../ui/HighlightText.astro';
     <div class="text-center max-w-3xl mx-auto mb-8 sm:mb-12 scroll-reveal">
       <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-marketing-surface/80 backdrop-blur-md border border-marketing-border text-[11px] font-mono font-medium tracking-[0.15em] text-accent-ink shadow-xs mb-4">
         <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
-        <span>SEE WHAT YOU CAN CREATE</span>
+        <span>{isEnglish ? 'SEE WHAT YOU CAN CREATE' : s.badge}</span>
       </div>
 
       <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-[-0.035em] text-marketing-text leading-[1.1] mb-4 text-balance">
-        Create Clean, <HighlightText variant="lime">Professional</HighlightText> Contact Sheets in <HighlightText variant="yellow">Seconds</HighlightText>.
+        {isEnglish ? (
+          <>Create Clean, <HighlightText variant="lime">Professional</HighlightText> Contact Sheets in <HighlightText variant="yellow">Seconds</HighlightText>.</>
+        ) : (
+          <>{s.heading1}<HighlightText variant="lime">{s.headingHighlight1}</HighlightText>{s.heading2}<HighlightText variant="yellow">{s.headingHighlight2}</HighlightText>{s.headingDot}</>
+        )}
       </h2>
 
-
       <p class="text-sm sm:text-base lg:text-lg text-marketing-muted leading-relaxed max-w-2xl mx-auto text-balance font-normal">
-        Easily organize, review, and share your photo sets. Display camera settings on every frame, make gallery prints, or let clients pick their favorite shots with ease.
+        {isEnglish ? 'Easily organize, review, and share your photo sets. Display camera settings on every frame, make gallery prints, or let clients pick their favorite shots with ease.' : s.subtitle}
       </p>
 
       <!-- Segmented View Tabs -->
@@ -39,7 +125,7 @@ import HighlightText from '../ui/HighlightText.astro';
             aria-selected="true"
           >
             <Icon name="camera" size={14} class="text-accent" />
-            <span>Camera Settings &amp; Film Style</span>
+            <span>{isEnglish ? 'Camera Settings & Film Style' : s.tabExif}</span>
           </button>
 
           <button 
@@ -50,7 +136,7 @@ import HighlightText from '../ui/HighlightText.astro';
             aria-selected="false"
           >
             <Icon name="grid" size={14} />
-            <span>Clean Gallery Print</span>
+            <span>{isEnglish ? 'Clean Gallery Print' : s.tabGallery}</span>
           </button>
 
           <button 
@@ -61,7 +147,7 @@ import HighlightText from '../ui/HighlightText.astro';
             aria-selected="false"
           >
             <Icon name="file-check" size={14} />
-            <span>Client Review Gallery</span>
+            <span>{isEnglish ? 'Client Review Gallery' : s.tabProofing}</span>
           </button>
         </div>
       </div>
@@ -83,7 +169,7 @@ import HighlightText from '../ui/HighlightText.astro';
         </div>
 
         <div class="flex items-center gap-2 text-[10px] sm:text-[11px] font-mono text-accent-ink font-semibold">
-          <span>High-Resolution Output</span>
+          <span>{isEnglish ? 'High-Resolution Output' : s.highResOutput}</span>
         </div>
       </div>
 

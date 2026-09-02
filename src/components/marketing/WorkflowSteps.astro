@@ -2,15 +2,128 @@
 import Icon from '../common/Icon.astro';
 import HighlightText from '../ui/HighlightText.astro';
 import { type Locale, DEFAULT_LOCALE } from '../../i18n/config';
-import { useTranslations } from '../../i18n';
 
 interface Props {
   locale?: Locale;
 }
 
 const { locale = DEFAULT_LOCALE } = Astro.props;
-const t = useTranslations(locale);
 const isEnglish = locale === DEFAULT_LOCALE;
+
+const WORKFLOW_DATA: Record<Exclude<Locale, 'en'>, any> = {
+  es: {
+    badge: 'FLUJO DE TRABAJO EN 3 PASOS',
+    headingPrefix: 'Una forma ',
+    headingHighlight: 'sencilla y rápida',
+    headingSuffix: ' de ordenar tus fotos',
+    lead: 'Pasa de una carpeta de fotos a una selección final en minutos. Todo ocurre directamente en tu ordenador, sin esperas de subida.',
+    step1Tag: '01 / IMPORTAR',
+    step1Title: 'Importación por lote y maquetación automática',
+    step1Desc: 'Arrastra cientos de archivos JPG, PNG o WebP. Make Contact Sheet analiza al instante las dimensiones y las organiza en hojas A4, Carta o 16:9.',
+    step1Point1: 'Nombres de archivo originales intactos',
+    step1Point2: 'Soporte para carpetas y arrastre múltiple',
+    step2Tag: '02 / SELECCIÓN',
+    step2Title: 'Revisión rápida y atajos',
+    step2Desc: 'Evalúa el encuadre y el color en una mesa de luz. Marca favoritas, destacadas o descartadas usando las teclas 1, 2 y 3.',
+    step2Point1: 'Etiquetado Conservar / Destacar / Descartar',
+    step2Point2: 'Contadores en vivo y vistas filtradas',
+    step3Tag: '03 / EXPORTAR',
+    step3Title: 'Entrega para Lightroom y PDF',
+    step3Desc: 'Exporta PDFs de varias páginas a 300 DPI, hojas de alta resolución y listas CSV/TXT para filtros de búsqueda en Adobe Lightroom.',
+    step3Point1: 'PDF listo para imprimir a 300 DPI',
+    step3Point2: 'Archivos XMP para Lightroom'
+  },
+  de: {
+    badge: '3-SCHRITTE-WORKFLOW',
+    headingPrefix: 'Ein ',
+    headingHighlight: 'einfacher, schneller Weg',
+    headingSuffix: ', Ihre Fotos zu sortieren',
+    lead: 'Von einem Ordner voller Fotos zur fertigen Auswahl in wenigen Minuten. Alles läuft lokal auf Ihrem Rechner ohne Upload-Wartezeiten.',
+    step1Tag: '01 / IMPORT',
+    step1Title: 'Stapelimport & automatisches Layout',
+    step1Desc: 'Laden Sie Hunderte von JPG-, PNG- oder WebP-Dateien hoch. Die Engine erkennt Bildmaße sofort und ordnet sie auf Standardbögen an.',
+    step1Point1: 'Exakte Originaldateinamen erhalten',
+    step1Point2: 'Ordner- und Mehrfachauswahl-Upload',
+    step2Tag: '02 / AUSWAHL',
+    step2Title: 'Schnelle Sichtung & Shortcuts',
+    step2Desc: 'Bewerten Sie Bildausschnitt und Farben auf dem Leuchttisch. Markieren Sie Favoriten oder Ausschuss mit den Tasten 1, 2 und 3.',
+    step2Point1: 'Keep / Flag / Reject Status-Tagging',
+    step2Point2: 'Live-Zähler und Filteransichten',
+    step3Tag: '03 / EXPORT',
+    step3Title: 'Lightroom- & PDF-Übergabe',
+    step3Desc: 'Exportieren Sie mehrseitige 300 DPI PDFs, hochauflösende Bögen und CSV/TXT-Dateinamenlisten für Lightroom-Suchfilter.',
+    step3Point1: 'Druckfertiges 300 DPI PDF',
+    step3Point2: 'Lightroom XMP-Sidecars'
+  },
+  fr: {
+    badge: 'WORKFLOW EN 3 ÉTAPES',
+    headingPrefix: 'Une méthode ',
+    headingHighlight: 'simple et rapide',
+    headingSuffix: ' de trier vos photos',
+    lead: 'Passez d\x27un dossier de photos à une sélection finale en quelques minutes. Tout se passe sur votre ordinateur, sans attente de téléversement.',
+    step1Tag: '01 / IMPORTER',
+    step1Title: 'Import par lot & mise en page auto',
+    step1Desc: 'Déposez des centaines de fichiers JPG, PNG ou WebP. Make Contact Sheet analyse instantanément les dimensions et les organise en planches A4, Lettre ou 16:9.',
+    step1Point1: 'Noms de fichiers d\x27origine préservés',
+    step1Point2: 'Glisser-déposer de dossiers et fichiers multiples',
+    step2Tag: '02 / TRI RAPIDE',
+    step2Title: 'Revue rapide & raccourcis',
+    step2Desc: 'Évaluez le cadrage et la colorimétrie sur une table lumineuse. Marquez favoris ou rejets avec les touches 1, 2 et 3.',
+    step2Point1: 'Étiquetage Garder / Marquer / Rejeter',
+    step2Point2: 'Compteurs en direct et vues filtrées',
+    step3Tag: '03 / EXPORT',
+    step3Title: 'Export Lightroom & PDF',
+    step3Desc: 'Exportez des PDF multi-pages à 300 DPI, des planches haute résolution et des listes CSV/TXT pour Lightroom.',
+    step3Point1: 'PDF 300 DPI prêt pour impression',
+    step3Point2: 'Fichiers XMP pour Lightroom'
+  },
+  ja: {
+    badge: '簡単3ステップのワークフロー',
+    headingPrefix: '写真を整理する',
+    headingHighlight: 'シンプルで高速な方法',
+    headingSuffix: '',
+    lead: '写真フォルダから最終選別まで数分で完了。すべてお使いのPC内で処理されるため、アップロード待ち時間はゼロ。',
+    step1Tag: '01 / 読み込み',
+    step1Title: '一括読み込み＆自動レイアウト',
+    step1Desc: '数百枚のJPG、PNG、WebPをドラッグ＆ドロップ。画像の縦横比を瞬時に解析し、A4やレターサイズに自動配置。',
+    step1Point1: 'カメラ元ファイル名を完全保持',
+    step1Point2: 'フォルダごとの一括ドラッグに対応',
+    step2Tag: '02 / 選別・トリアージ',
+    step2Title: '高速プレビュー＆ショートカット',
+    step2Desc: 'ライトテーブル上で構図と色味を確認。キーボードの1（採用）、2（保留）、3（不採用）キーで素早くレーティング。',
+    step2Point1: '採用・保留・不採用のステータス付与',
+    step2Point2: 'リアルタイム集計と絞り込み表示',
+    step3Tag: '03 / 書き出し・納品',
+    step3Title: 'Lightroom連携＆印刷用PDF出力',
+    step3Desc: '印刷用300 DPIマルチページPDF、高解像度画像、Lightroom検索用のCSV/TXTファイル名リストを出力。',
+    step3Point1: '300 DPI印刷用PDF',
+    step3Point2: 'Lightroom XMPサイドカー'
+  },
+  pt: {
+    badge: 'FLUXO DE TRABALHO EM 3 PASSOS',
+    headingPrefix: 'Uma forma ',
+    headingHighlight: 'simples e rápida',
+    headingSuffix: ' de organizar suas fotos',
+    lead: 'Passe de uma pasta de fotos para a seleção final em minutos. Tudo acontece no seu computador, sem esperar por uploads.',
+    step1Tag: '01 / IMPORTAR',
+    step1Title: 'Importação em lote e layout automático',
+    step1Desc: 'Arraste centenas de arquivos JPG, PNG ou WebP. O Make Contact Sheet analisa instantaneamente as dimensões e organiza em folhas A4, Carta ou 16:9.',
+    step1Point1: 'Nomes de arquivos originais preservados',
+    step1Point2: 'Suporte a pastas e múltiplos arquivos',
+    step2Tag: '02 / TRIAGEM',
+    step2Title: 'Revisão rápida e atalhos',
+    step2Desc: 'Avalie enquadramento e consistência de cores em uma mesa de luz. Marque favoritos ou rejeitados usando as teclas 1, 2 e 3.',
+    step2Point1: 'Marcação Manter / Destacar / Rejeitar',
+    step2Point2: 'Contadores em tempo real e filtros',
+    step3Tag: '03 / EXPORTAR',
+    step3Title: 'Entrega para Lightroom e PDF',
+    step3Desc: 'Exporte PDFs com várias páginas em 300 DPI, folhas de alta resolução e listas CSV/TXT para o Lightroom.',
+    step3Point1: 'PDF pronto para impressão em 300 DPI',
+    step3Point2: 'Arquivos XMP para Lightroom'
+  }
+};
+
+const w = isEnglish ? null : (WORKFLOW_DATA[locale as Exclude<Locale, 'en'>] || WORKFLOW_DATA.es);
 ---
 
 <section class="py-16 sm:py-24 lg:py-28 bg-transparent border-b border-marketing-border transition-colors" data-reveal>
@@ -20,18 +133,24 @@ const isEnglish = locale === DEFAULT_LOCALE;
     <div class="max-w-2xl mb-12 sm:mb-16">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-marketing-surface border border-marketing-border text-[11px] font-mono text-marketing-text/90 shadow-xs mb-3.5">
         <span class="w-2 h-2 rounded-full bg-accent"></span>
-        <span>{t('workflow.badge')}</span>
+        <span>{isEnglish ? 'THREE-STEP WORKFLOW' : w.badge}</span>
       </div>
       <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-marketing-text leading-tight mb-4">
         {isEnglish ? (
           <>A <HighlightText variant="lime">simple, fast way</HighlightText> to sort your photos</>
         ) : (
-          <>{t('workflow.heading')}</>
+          <>{w.headingPrefix}<HighlightText variant="lime">{w.headingHighlight}</HighlightText>{w.headingSuffix}</>
         )}
       </h2>
-      <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
-        {t('workflow.lead')}
-      </p>
+      {isEnglish ? (
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          Go from a folder of photos to a final selection in minutes. Everything happens directly on your computer, so there's no waiting for uploads.
+        </p>
+      ) : (
+        <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
+          {w.lead}
+        </p>
+      )}
     </div>
 
     <!-- 3-Column Structured Workflow System with Upward Float Parallax -->
@@ -43,7 +162,7 @@ const isEnglish = locale === DEFAULT_LOCALE;
           <!-- Step Header with Number + Icon -->
           <div class="flex items-center justify-between mb-6">
             <span class="px-2.5 py-1 rounded-md bg-accent/10 border border-accent/20 text-xs font-mono font-bold text-accent-ink">
-              {t('workflow.step1Tag')}
+              {isEnglish ? '01 / INGEST' : w.step1Tag}
             </span>
             <div class="flex items-center gap-2">
               <span class="card-emoji text-xl select-none" aria-hidden="true">📥</span>
@@ -57,11 +176,11 @@ const isEnglish = locale === DEFAULT_LOCALE;
             {isEnglish ? (
               <><HighlightText variant="yellow">Batch Import</HighlightText> &amp; Auto-Layout</>
             ) : (
-              <>{t('workflow.step1Title')}</>
+              <>{w.step1Title}</>
             )}
           </h3>
           <p class="text-sm text-marketing-muted leading-relaxed mb-6">
-            {t('workflow.step1Desc')}
+            {isEnglish ? 'Drop hundreds of JPG, PNG, or WebP files. Make Contact Sheet instantly parses image dimensions and arranges them into standard A4, Letter, or 16:9 contact sheets.' : w.step1Desc}
           </p>
         </div>
 
@@ -69,11 +188,11 @@ const isEnglish = locale === DEFAULT_LOCALE;
         <div class="pt-5 border-t border-marketing-border space-y-2.5 text-xs text-marketing-text/90">
           <div class="flex items-center gap-2">
             <Icon name="check" size={14} class="text-emerald-500 shrink-0" />
-            <span>{t('workflow.step1Point1')}</span>
+            <span>{isEnglish ? 'Exact original filenames preserved' : w.step1Point1}</span>
           </div>
           <div class="flex items-center gap-2">
             <Icon name="check" size={14} class="text-emerald-500 shrink-0" />
-            <span>{t('workflow.step1Point2')}</span>
+            <span>{isEnglish ? 'Folder and multi-file drag support' : w.step1Point2}</span>
           </div>
         </div>
       </div>
@@ -84,7 +203,7 @@ const isEnglish = locale === DEFAULT_LOCALE;
           <!-- Step Header with Number + Icon -->
           <div class="flex items-center justify-between mb-6">
             <span class="px-2.5 py-1 rounded-md bg-accent/10 border border-accent/20 text-xs font-mono font-bold text-accent-ink">
-              {t('workflow.step2Tag')}
+              {isEnglish ? '02 / CULLING' : w.step2Tag}
             </span>
             <div class="flex items-center gap-2">
               <span class="card-emoji text-xl select-none" aria-hidden="true">⌨️</span>
@@ -98,14 +217,14 @@ const isEnglish = locale === DEFAULT_LOCALE;
             {isEnglish ? (
               <>Rapid Review &amp; <HighlightText variant="pink">Shortcuts</HighlightText></>
             ) : (
-              <>{t('workflow.step2Title')}</>
+              <>{w.step2Title}</>
             )}
           </h3>
           <p class="text-sm text-marketing-muted leading-relaxed mb-6">
             {isEnglish ? (
               <>Evaluate framing and color consistency on an archival light-table. Mark favorites, flags, or rejects using fast <kbd class="px-1.5 py-0.5 rounded bg-marketing-surface border border-marketing-border text-xs font-mono">1</kbd>, <kbd class="px-1.5 py-0.5 rounded bg-marketing-surface border border-marketing-border text-xs font-mono">2</kbd>, and <kbd class="px-1.5 py-0.5 rounded bg-marketing-surface border border-marketing-border text-xs font-mono">3</kbd> keyboard keys.</>
             ) : (
-              <>{t('workflow.step2Desc')}</>
+              <>{w.step2Desc}</>
             )}
           </p>
         </div>
@@ -114,11 +233,11 @@ const isEnglish = locale === DEFAULT_LOCALE;
         <div class="pt-5 border-t border-marketing-border space-y-2.5 text-xs text-marketing-text/90">
           <div class="flex items-center gap-2">
             <Icon name="check" size={14} class="text-emerald-500 shrink-0" />
-            <span>{t('workflow.step2Point1')}</span>
+            <span>{isEnglish ? 'Keep / Flag / Reject status tagging' : w.step2Point1}</span>
           </div>
           <div class="flex items-center gap-2">
             <Icon name="check" size={14} class="text-emerald-500 shrink-0" />
-            <span>{t('workflow.step2Point2')}</span>
+            <span>{isEnglish ? 'Live status counts and filter views' : w.step2Point2}</span>
           </div>
         </div>
       </div>
@@ -129,7 +248,7 @@ const isEnglish = locale === DEFAULT_LOCALE;
           <!-- Step Header with Number + Icon -->
           <div class="flex items-center justify-between mb-6">
             <span class="px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono font-bold text-emerald-500">
-              {t('workflow.step3Tag')}
+              {isEnglish ? '03 / EXPORT' : w.step3Tag}
             </span>
             <div class="flex items-center gap-2">
               <span class="card-emoji text-xl select-none" aria-hidden="true">🚀</span>
@@ -143,11 +262,11 @@ const isEnglish = locale === DEFAULT_LOCALE;
             {isEnglish ? (
               <><HighlightText variant="cyan">Lightroom &amp; PDF</HighlightText> Handoff</>
             ) : (
-              <>{t('workflow.step3Title')}</>
+              <>{w.step3Title}</>
             )}
           </h3>
           <p class="text-sm text-marketing-muted leading-relaxed mb-6">
-            {t('workflow.step3Desc')}
+            {isEnglish ? 'Export print-ready multi-page PDFs, high-res visual sheets, and structured CSV/TXT filename lists that plug directly into Adobe Lightroom search filters.' : w.step3Desc}
           </p>
         </div>
 
