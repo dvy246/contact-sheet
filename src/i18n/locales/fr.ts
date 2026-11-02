@@ -24,7 +24,7 @@ export const fr: TranslationDict = {
     "toolPrintSaver8x10Desc": "Mises en page multi-photos optimisées pour tirages économiques",
     "toolLargePhotoPrints": "Grands tirages photo",
     "toolLargePhotoPrintsDesc": "Mises en page combinées pour posters 11×14, 16×20, 24×36",
-    "toolAutoCull": "Tri automatique par IA",
+    "toolAutoCull": "Tri automatique des photos",
     "toolAutoCullDesc": "Score de netteté local et détection du flou",
     "toolWhiteLabel": "Portail marque blanche",
     "toolWhiteLabelDesc": "Galeries de sélection client avec votre propre image de marque",
@@ -50,7 +50,7 @@ export const fr: TranslationDict = {
     "guidesHeading": "Guides & flux de travail",
     "aboutHeading": "À propos & mentions légales",
     "trustTitle": "Aucun téléversement sur serveur — 100% privé",
-    "trustDesc": "Vos photos ne quittent jamais votre appareil. Tout le rendu, le décodage EXIF, l'analyse de netteté par IA et la génération de PDF s'exécutent localement dans la mémoire de votre navigateur.",
+    "trustDesc": "Vos photos ne quittent jamais votre appareil. Tout le rendu, le décodage EXIF, l'analyse de netteté et la génération de PDF s'exécutent localement dans la mémoire de votre navigateur.",
     "copyright": "Conçu pour les photographes, designers et créateurs visuels.",
     "aboutUs": "À propos de nous",
     "contactUs": "Contactez-nous",
@@ -135,7 +135,7 @@ export const fr: TranslationDict = {
     "card4Desc": "Générez des planches en A4, US Letter, 8×10, 11×14, 16×20 et 24×36 prêtes pour le laboratoire, le studio ou l'imprimeur."
   },
   "workflow": {
-    "step1Title": "01. Importer & analyser par IA",
+    "step1Title": "01. Importer & analyser",
     "step1Desc": "Glissez-déposez vos photos RAW, JPG, PNG ou HEIC. La variance laplacienne locale identifie immédiatement les clichés les plus nets.",
     "step2Title": "02. Agencer & personnaliser",
     "step2Desc": "Choisissez des grilles prédéfinies, étiquettes EXIF dynamiques, palettes d'arrière-plan et filigranes personnalisés.",

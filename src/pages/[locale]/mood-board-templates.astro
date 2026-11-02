@@ -1,4 +1,5 @@
 ---
+import { templateCopy } from '../../i18n/data/templateCopyData';
 import { NON_DEFAULT_LOCALES, type Locale } from '../../i18n/config';
 import MarketingLayout from '../../layouts/MarketingLayout.astro';
 import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
@@ -107,6 +108,7 @@ const editorialCategories = [
       <!-- Templates Cards Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {MOODBOARD_TEMPLATES.map((template) => {
+          const copy = templateCopy(locale, 'moodBoard', template);
           const imageCount = template.elements.filter(e => e.type === 'image').length;
           const swatchCount = template.elements.filter(e => e.type === 'swatch').length;
           const canvasWidth = template.canvas.width || 1920;
@@ -134,10 +136,10 @@ const editorialCategories = [
                     </span>
                   </div>
                   <h2 class="text-base sm:text-lg font-bold text-marketing-text group-hover:text-accent transition-colors">
-                    {template.name}
+                    {copy.name}
                   </h2>
                   <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
-                    {template.description}
+                    {copy.description}
                   </p>
                 </div>
 

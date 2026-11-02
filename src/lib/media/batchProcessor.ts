@@ -143,10 +143,12 @@ export function generateBashRenameScript(items: BatchRenameItem[]): string {
 
   for (const item of items) {
     if (item.originalName !== item.newName) {
-      // Escape single quotes for bash safety and use -- to prevent option injection
+      // Escape single quotes for bash safety and use -- to prevent option injection.
+      // `test` does not accept `--` (`[ -f -- x ]` is a syntax error that reads as
+      // false, so nothing was renamed); a `./` prefix guards leading dashes instead.
       const origEscaped = item.originalName.replace(/'/g, "'\\''");
       const newEscaped = item.newName.replace(/'/g, "'\\''");
-      lines.push(`if [ -f -- '${origEscaped}' ]; then`);
+      lines.push(`if [ -f './${origEscaped}' ]; then`);
       lines.push(`  mv -n -- '${origEscaped}' '${newEscaped}'`);
       lines.push('fi');
     }

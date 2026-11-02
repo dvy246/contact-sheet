@@ -1,30 +1,50 @@
 # Make Contact Sheet
 
-> Free, private, local-first in-browser photography tools.
+> Free browser-based tools for photographers: contact sheets (proof sheets) with camera filenames, photo collages, mood boards, print layouts, and client photo review. Photos are processed on the user's device and never uploaded. No account, no subscription.
 
-Make Contact Sheet provides professional tools for photographers to generate contact sheets, photo collages, mood boards, and large photo prints directly in the web browser. It operates entirely locally using HTML5 Canvas and Web Workers; photos and EXIF data never leave the user's device. No cloud uploads, no subscriptions.
+Make Contact Sheet runs in the browser with the HTML5 Canvas API. Image files, filenames and EXIF metadata stay on the user's device; the site itself uses anonymous page analytics only. Every page exists in English plus Spanish (/es), German (/de), French (/fr), Japanese (/ja) and Portuguese (/pt).
 
-## Tools Available
-- Photo Contact Sheet Maker: Generate professional photography proof sheets with original camera filenames, index numbers, and EXIF metadata badges (https://makecontactsheet.com/photo-contact-sheet-maker).
-- Photo Collage Maker: Create visually balanced multi-photo collages (https://makecontactsheet.com/photo-collage-maker).
-- Mood Board Maker: Freeform canvas to curate aesthetic visual stories, fashion lookbooks, and photo concept boards with sticky notes and color swatches (https://makecontactsheet.com/mood-board-maker).
-- Large Photo Prints: Format and arrange photos for 11x14, 16x20, and 24x36 poster prints to create gang sheets (https://makecontactsheet.com/large-photo-prints).
-- Batch Photo Tools: Bulk rename, convert, resize, and crop images (https://makecontactsheet.com/batch-photo-tools).
+## Tools
 
-## In-Depth Workflow & Photography Guides
-- How to Make a Contact Sheet (https://makecontactsheet.com/guides/how-to-make-a-contact-sheet): Step-by-step photography proof sheet guide with DPI math and layout tables.
-- Standard Large Photo Frames & Print Sizes (https://makecontactsheet.com/guides/standard-large-photo-frames-and-print-sizes): Complete guide to 11x14 to 24x36 frame sizing, matting calculations, and gallery rules.
-- The Modern Wedding Photography Proofing Workflow (https://makecontactsheet.com/guides/wedding-photography-proofing-workflow): Rapid culling of 3,000+ photo wedding shoots and Lightroom Classic selection sync.
-- Large Photo Albums vs. Proof Books (https://makecontactsheet.com/guides/large-photo-albums-vs-proof-books): Heirloom flush-mount album design vs. high-density working proof book comparisons.
-- How to Make a Photo Collage (https://makecontactsheet.com/guides/how-to-make-photo-collage): Visual balance geometry and tonal harmonization.
-- How to Make a Mood Board (https://makecontactsheet.com/guides/how-to-make-a-mood-board): Pre-production styling, color swatches, and lighting ratios.
-- Photo Proof Sheet with Filenames (https://makecontactsheet.com/guides/photo-proof-sheet-with-filenames): Camera identifier retention and Lightroom filtering.
+- [Contact Sheet Maker (home)](https://makecontactsheet.com/): Drop a folder of photos and get a paginated contact sheet with filenames, then review, select and export.
+- [Photo Contact Sheet Maker](https://makecontactsheet.com/photo-contact-sheet-maker): Proof sheets with original camera filenames, index numbers, custom grids and 300 DPI PDF export.
+- [Contact Sheet Editor (full screen)](https://makecontactsheet.com/studio/contact-sheet): Full-screen studio with keyboard culling (1 Keep, 2 Flag, 3 Reject), loupe view and undo.
+- [Photo Collage Maker](https://makecontactsheet.com/photo-collage-maker): Grid, story and comparison collage layouts exported as high-resolution images.
+- [Mood Board Maker](https://makecontactsheet.com/mood-board-maker): Freeform canvas with photos, color swatches and notes, exported as PNG, JPEG or PDF.
+- [Auto-Cull Photos](https://makecontactsheet.com/auto-cull-photos): Sharpness scoring (Laplacian variance, not a machine-learning model) that flags blurry and out-of-focus frames.
+- [8×10 Photo Print Saver](https://makecontactsheet.com/free-8x10-photo-prints): Fit two 5×7s, four 4×5s or eight wallets on one 8×10 print at 300 DPI.
+- [Large Photo Prints](https://makecontactsheet.com/large-photo-prints): Layouts and gang sheets for 11×14, 16×20 and 24×36 poster prints.
+- [Batch Photo Tools](https://makecontactsheet.com/batch-photo-tools): Token-based batch renaming, EXIF inspection, and JPEG/PNG/WebP conversion.
+- [Bulk Resize Photos to 16:9](https://makecontactsheet.com/bulk-resize-photos-to-16-9): Center-crop and resize photo batches to widescreen.
+- [Compress Photos for Web](https://makecontactsheet.com/compress-photos-for-web): Re-encode photos as smaller JPEG or WebP files for websites.
+- [White-Label Client Gallery](https://makecontactsheet.com/white-label-client-gallery): A self-contained offline HTML proofing gallery with your studio logo and colors.
+- [Lightroom Client Selection Workflow](https://makecontactsheet.com/lightroom-client-selection-workflow): Sync client picks into Lightroom Classic with a filename filter or XMP sidecars.
 
-## Technology & Privacy
-- Zero-Upload Architecture: All processing happens locally in the browser memory using HTML5 Canvas and Web Workers.
-- Output: Tools export at high-resolution 300 DPI for commercial printing. PDF, PNG, and JPEG exports are supported.
-- Supported Formats: Handles standard image formats and extracts EXIF/metadata from JPEG, PNG, and RAW files (CR2, CR3, NEF, ARW, DNG, etc.) via local buffering.
+## Templates
 
-## Usage Guide
-Users can access all tools directly at https://makecontactsheet.com. There are no accounts, paywalls, or artificial limits on the number of photos processed.
+- [Contact Sheet Templates](https://makecontactsheet.com/contact-sheet-template): Printable proof-sheet presets for A4, US Letter, 16:9 and film formats.
+- [Photo Collage Templates](https://makecontactsheet.com/collage-templates): Hero, triptych, social and comparison collage layouts.
+- [Mood Board Templates](https://makecontactsheet.com/mood-board-templates): Editorial, lookbook, palette, film and minimal mood board presets.
 
+## Guides
+
+- [How to Make a Contact Sheet](https://makecontactsheet.com/guides/how-to-make-a-contact-sheet): Proof sheet basics, 300 DPI pixel maths for A4 and Letter, and Photoshop/Lightroom comparisons.
+- [Photo Proof Sheet with Filenames](https://makecontactsheet.com/guides/photo-proof-sheet-with-filenames): Keeping camera filenames visible and syncing selects to a Lightroom Library Filter.
+- [Wedding Photography Proofing Workflow](https://makecontactsheet.com/guides/wedding-photography-proofing-workflow): Culling a large wedding shoot and returning client selects to Lightroom.
+- [How to Make a Photo Collage](https://makecontactsheet.com/guides/how-to-make-photo-collage): Layout hierarchy, balance and consistent color across a collage.
+- [How to Make a Mood Board](https://makecontactsheet.com/guides/how-to-make-a-mood-board): Building a visual direction board for a shoot or brand.
+- [Large Photo Frames & Print Sizes](https://makecontactsheet.com/guides/standard-large-photo-frames-and-print-sizes): Frame and print dimensions from 11×14 to 24×36, matting and DPI.
+- [Large Photo Albums vs Proof Books](https://makecontactsheet.com/guides/large-photo-albums-vs-proof-books): Choosing between flush-mount albums and working proof books.
+- [Photoshop Contact Sheet Alternative](https://makecontactsheet.com/compare/photoshop-contact-sheet-alternative): How this tool compares with Photoshop's Contact Sheet II.
+
+## Facts
+
+- Exports: PNG, JPEG, multi-page PDF (each page rendered at 300 DPI and embedded as a high-quality JPEG; optional password), self-contained HTML client review portal, CSV filename list, comma-separated Lightroom filter text, Adobe XMP sidecars (Keep = 5 stars + green label, Flag = 3 stars + yellow label, Reject = rejected + red label), and a .makecontactsheet.json session file.
+- Inputs: JPEG, PNG, WebP, AVIF, GIF, BMP, HEIC where the browser can decode it, and camera RAW files (CR2, CR3, NEF, ARW, DNG, ORF, RW2, RAF, PEF) through their embedded JPEG previews.
+- Layout: page sizes are laid out at 150 DPI and exported at 2× scale, so A4 becomes 2480×3508 px and 8×10 becomes 2400×3000 px.
+- Cost: free, with no account and no photo-count limit.
+
+## Company
+
+- [About](https://makecontactsheet.com/about-us)
+- [Contact](https://makecontactsheet.com/contact-us)

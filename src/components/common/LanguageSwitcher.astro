@@ -34,7 +34,8 @@ const currentConfig = LOCALE_MAP[currentLocale] || LOCALE_MAP[DEFAULT_LOCALE];
           <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
           <path d="M2 12h20"></path>
         </svg>
-        <span>{currentConfig.nativeName}</span>
+        <span class={variant === 'header' ? 'hidden sm:inline' : ''}>{currentConfig.nativeName}</span>
+        {variant === 'header' && <span class="sm:hidden uppercase">{currentConfig.code}</span>}
       </span>
       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200 group-open:rotate-180 opacity-60">
         <polyline points="6 9 12 15 18 9"></polyline>

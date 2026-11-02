@@ -614,7 +614,7 @@ export const CONTACT_SHEET_GUIDE_DATA: Record<Locale, ContactSheetGuideData> = {
       },
       {
         "criteria": "Batch Processing Speed",
-        "tool": "Real-time Web Workers",
+        "tool": "Live in-browser preview",
         "lightroom": "Slow Background Spooling",
         "photoshop": "Slow Single-Thread Automation"
       },
@@ -626,7 +626,7 @@ export const CONTACT_SHEET_GUIDE_DATA: Record<Locale, ContactSheetGuideData> = {
       },
       {
         "criteria": "Cost & Licensing",
-        "tool": "100% Free & Open",
+        "tool": "100% Free, no account",
         "lightroom": "$19.99+/mo Creative Cloud",
         "photoshop": "$20.99+/mo Creative Cloud"
       }
@@ -680,7 +680,7 @@ export const CONTACT_SHEET_GUIDE_DATA: Record<Locale, ContactSheetGuideData> = {
       },
       {
         "question": "Are my confidential client photographs uploaded to an external server?",
-        "answer": "No. Make Contact Sheet executes 100% locally in your web browser using HTML5 Canvas and client-side Web Workers. Your files, pixels, filenames, and EXIF metadata never leave your computer or touch a cloud server."
+        "answer": "No. Make Contact Sheet executes 100% locally in your web browser using HTML5 Canvas. Your files, pixels, filenames, and EXIF metadata never leave your computer or touch a cloud server."
       }
     ],
     "breadcrumbs": {
@@ -784,7 +784,7 @@ export const CONTACT_SHEET_GUIDE_DATA: Record<Locale, ContactSheetGuideData> = {
       },
       {
         "criteria": "Velocidad de procesamiento por lotes",
-        "tool": "En tiempo real con Web Workers",
+        "tool": "Vista previa en vivo en el navegador",
         "lightroom": "Lenta cola en segundo plano",
         "photoshop": "Automatización lenta monohilo"
       },
@@ -796,7 +796,7 @@ export const CONTACT_SHEET_GUIDE_DATA: Record<Locale, ContactSheetGuideData> = {
       },
       {
         "criteria": "Coste y suscripción",
-        "tool": "100% Gratuito y de libre acceso",
+        "tool": "100% gratis, sin cuenta",
         "lightroom": "19,99+ €/mes Creative Cloud",
         "photoshop": "20,99+ €/mes Creative Cloud"
       }
@@ -850,7 +850,7 @@ export const CONTACT_SHEET_GUIDE_DATA: Record<Locale, ContactSheetGuideData> = {
       },
       {
         "question": "¿Se suben las fotografías confidenciales de mis clientes a algún servidor?",
-        "answer": "No. Make Contact Sheet se ejecuta al 100% de manera local en tu navegador con Canvas HTML5 y Web Workers. Tus imágenes, píxeles, nombres de archivo y metadatos jamás salen de tu ordenador ni tocan servidores en la nube."
+        "answer": "No. Make Contact Sheet se ejecuta al 100% de manera local en tu navegador con Canvas HTML5. Tus imágenes, píxeles, nombres de archivo y metadatos jamás salen de tu ordenador ni tocan servidores en la nube."
       }
     ],
     "breadcrumbs": {
@@ -954,7 +954,7 @@ export const CONTACT_SHEET_GUIDE_DATA: Record<Locale, ContactSheetGuideData> = {
       },
       {
         "criteria": "Stapelverarbeitungsgeschwindigkeit",
-        "tool": "Echtzeit mit Web Workern",
+        "tool": "Live-Vorschau im Browser",
         "lightroom": "Langsame Hintergrundverarbeitung",
         "photoshop": "Langsame Single-Thread-Automatisierung"
       },
@@ -966,7 +966,7 @@ export const CONTACT_SHEET_GUIDE_DATA: Record<Locale, ContactSheetGuideData> = {
       },
       {
         "criteria": "Kosten & Lizenzierung",
-        "tool": "100% Kostenlos & Open",
+        "tool": "100% kostenlos, ohne Konto",
         "lightroom": "Ab 19,99 €/Monat Creative Cloud",
         "photoshop": "Ab 20,99 €/Monat Creative Cloud"
       }
@@ -1020,7 +1020,7 @@ export const CONTACT_SHEET_GUIDE_DATA: Record<Locale, ContactSheetGuideData> = {
       },
       {
         "question": "Werden Kundenfotos auf externe Server hochgeladen?",
-        "answer": "Nein. Make Contact Sheet arbeitet zu 100 % lokal in Ihrem Browser via HTML5 Canvas und Web Workers. Keine Datei verlässt Ihr Gerät."
+        "answer": "Nein. Make Contact Sheet arbeitet zu 100 % lokal in Ihrem Browser via HTML5 Canvas. Keine Datei verlässt Ihr Gerät."
       }
     ],
     "breadcrumbs": {
@@ -1124,7 +1124,7 @@ export const CONTACT_SHEET_GUIDE_DATA: Record<Locale, ContactSheetGuideData> = {
       },
       {
         "criteria": "Rapidité de traitement par lot",
-        "tool": "Temps réel avec Web Workers",
+        "tool": "Aperçu en direct dans le navigateur",
         "lightroom": "Traitement d'arrière-plan lent",
         "photoshop": "Automatisation monothread lente"
       },
@@ -1136,7 +1136,7 @@ export const CONTACT_SHEET_GUIDE_DATA: Record<Locale, ContactSheetGuideData> = {
       },
       {
         "criteria": "Tarification et abonnement",
-        "tool": "100% Gratuit et ouvert",
+        "tool": "100% gratuit, sans compte",
         "lightroom": "19,99+ €/mois Creative Cloud",
         "photoshop": "20,99+ €/mois Creative Cloud"
       }
@@ -1190,7 +1190,7 @@ export const CONTACT_SHEET_GUIDE_DATA: Record<Locale, ContactSheetGuideData> = {
       },
       {
         "question": "Les photos de mes clients sont-elles transmises à un serveur externe ?",
-        "answer": "Non. Make Contact Sheet fonctionne à 100 % en local dans votre navigateur grâce à Canvas HTML5 et aux Web Workers. Vos fichiers et métadonnées restent sur votre ordinateur."
+        "answer": "Non. Make Contact Sheet fonctionne à 100 % en local dans votre navigateur grâce à Canvas HTML5. Vos fichiers et métadonnées restent sur votre ordinateur."
       }
     ],
     "breadcrumbs": {
@@ -1294,7 +1294,7 @@ export const CONTACT_SHEET_GUIDE_DATA: Record<Locale, ContactSheetGuideData> = {
       },
       {
         "criteria": "バッチ処理速度",
-        "tool": "Web Workerによるリアルタイム並列処理",
+        "tool": "ブラウザ内でリアルタイムにプレビュー",
         "lightroom": "バックグラウンドのスプール待ちが発生",
         "photoshop": "単一スレッドの低速自動処理"
       },
@@ -1360,7 +1360,7 @@ export const CONTACT_SHEET_GUIDE_DATA: Record<Locale, ContactSheetGuideData> = {
       },
       {
         "question": "写真データが外部サーバーにアップロードされる心配はありませんか？",
-        "answer": "一切ありません。Make Contact SheetはHTML5 CanvasとWeb Workersを利用して100%お使いの端末ローカルで動作します。写真やメタデータが外部に送信されることはありません。"
+        "answer": "一切ありません。Make Contact SheetはHTML5 Canvasを利用して100%お使いの端末ローカルで動作します。写真やメタデータが外部に送信されることはありません。"
       }
     ],
     "breadcrumbs": {
@@ -1464,7 +1464,7 @@ export const CONTACT_SHEET_GUIDE_DATA: Record<Locale, ContactSheetGuideData> = {
       },
       {
         "criteria": "Velocidade de processamento",
-        "tool": "Tempo real com Web Workers",
+        "tool": "Pré-visualização ao vivo no navegador",
         "lightroom": "Fila lenta em segundo plano",
         "photoshop": "Automação lenta monothread"
       },
@@ -1476,7 +1476,7 @@ export const CONTACT_SHEET_GUIDE_DATA: Record<Locale, ContactSheetGuideData> = {
       },
       {
         "criteria": "Custo e assinatura",
-        "tool": "100% Gratuito e aberto",
+        "tool": "100% grátis, sem conta",
         "lightroom": "Mensalidade Creative Cloud",
         "photoshop": "Mensalidade Creative Cloud"
       }
@@ -1530,7 +1530,7 @@ export const CONTACT_SHEET_GUIDE_DATA: Record<Locale, ContactSheetGuideData> = {
       },
       {
         "question": "As fotos dos clientes são enviadas para algum servidor?",
-        "answer": "Não. O Make Contact Sheet roda 100% no seu navegador com HTML5 Canvas e Web Workers. Nenhum arquivo ou dado sai do seu computador."
+        "answer": "Não. O Make Contact Sheet roda 100% no seu navegador com HTML5 Canvas. Nenhum arquivo ou dado sai do seu computador."
       }
     ],
     "breadcrumbs": {
@@ -3397,7 +3397,7 @@ export const PHOTO_PROOF_SHEET_DATA: Record<Locale, PhotoProofSheetData> = {
     "walkthroughIntro": "Once your client provides their selection list, syncing those picks into your post-processing software requires only a single copy-paste operation:",
     "walkthroughBoxTitle": "Step-by-Step Adobe Lightroom Classic Search Sync",
     "walkthroughSteps": [
-      "In Make Contact Sheet, click Export Drawer → Scope: Kept Only → Format: Lightroom TXT to copy the comma-separated filename string to your clipboard.",
+      "In Make Contact Sheet, click Export Drawer → Scope: Kept Only → Format: Lightroom Filter to copy the comma-separated filename string to your clipboard.",
       "Open Adobe Lightroom Classic and select the target shoot folder in the Library Grid view (press G).",
       "Press the \\ key to display the top Library Filter bar.",
       "Click on Text, set the first dropdown to Filename, and set the second dropdown to Contains.",
@@ -3518,7 +3518,7 @@ export const PHOTO_PROOF_SHEET_DATA: Record<Locale, PhotoProofSheetData> = {
     "walkthroughIntro": "Una vez recibidas las elecciones del cliente, sincronizarlas en tu revelador requiere una sola operación de copiar y pegar:",
     "walkthroughBoxTitle": "Sincronización paso a paso en Adobe Lightroom Classic",
     "walkthroughSteps": [
-      "En Make Contact Sheet, abre el menú de exportación → Ámbito: Solo conservadas → Formato: Lightroom TXT para copiar los nombres al portapapeles.",
+      "En Make Contact Sheet, abre el menú de exportación → Ámbito: Solo conservadas → Formato: Lightroom Filter para copiar los nombres al portapapeles.",
       "Abre Adobe Lightroom Classic y selecciona la carpeta de la sesión en la vista de cuadrícula de la biblioteca (pulsa G).",
       "Pulsa la tecla \\ para mostrar la barra superior de Filtro de biblioteca.",
       "Haz clic en Texto, selecciona Nombre de archivo y la condición Contiene.",
@@ -3639,7 +3639,7 @@ export const PHOTO_PROOF_SHEET_DATA: Record<Locale, PhotoProofSheetData> = {
     "walkthroughIntro": "Sobald die Kundenliste vorliegt, reicht ein einfacher Kopiervorgang zur Synchronisation:",
     "walkthroughBoxTitle": "Lightroom Classic Filtersuche im Detail",
     "walkthroughSteps": [
-      "In Make Contact Sheet auf Export → Umfang: Nur Behaltene → Format: Lightroom TXT klicken, um die Dateinamen in die Zwischenablage zu kopieren.",
+      "In Make Contact Sheet auf Export → Umfang: Nur Behaltene → Format: Lightroom Filter klicken, um die Dateinamen in die Zwischenablage zu kopieren.",
       "Lightroom Classic öffnen und den Shooting-Ordner in der Rasteransicht der Bibliothek (G) auswählen.",
       "Die Taste \\ drücken, um die Bibliotheksfilter-Leiste einzublenden.",
       "Auf Text klicken, das Dropdown auf Dateiname und Enthält setzen.",
@@ -3760,7 +3760,7 @@ export const PHOTO_PROOF_SHEET_DATA: Record<Locale, PhotoProofSheetData> = {
     "walkthroughIntro": "Une fois les choix reçus, la synchronisation dans votre logiciel d'édition se résume à un simple copier-coller :",
     "walkthroughBoxTitle": "Recherche filtrée dans Adobe Lightroom Classic",
     "walkthroughSteps": [
-      "Dans Make Contact Sheet, cliquez sur Exporter → Périmètre : Photos retenues → Format : Lightroom TXT pour copier les noms de fichiers.",
+      "Dans Make Contact Sheet, cliquez sur Exporter → Périmètre : Photos retenues → Format : Lightroom Filter pour copier les noms de fichiers.",
       "Ouvrez Lightroom Classic et sélectionnez le dossier de la séance dans la grille Bibliothèque (G).",
       "Appuyez sur la touche \\ pour afficher la barre supérieure de filtre de bibliothèque.",
       "Cliquez sur Texte, définissez le filtre sur Nom de fichier et Contient.",
@@ -3881,7 +3881,7 @@ export const PHOTO_PROOF_SHEET_DATA: Record<Locale, PhotoProofSheetData> = {
     "walkthroughIntro": "クライアントの選定結果が届いたら、わずか1回のコピー＆ペーストで現像ソフトに反映できます：",
     "walkthroughBoxTitle": "Adobe Lightroom Classic 検索フィルター同期手順",
     "walkthroughSteps": [
-      "Make Contact Sheetのエクスポート画面で「対象：キープのみ」「形式：Lightroom TXT」を選び、ファイル名文字列をクリップボードにコピーします。",
+      "Make Contact Sheetのエクスポート画面で「対象：キープのみ」「形式：Lightroom Filter」を選び、ファイル名文字列をクリップボードにコピーします。",
       "Lightroom Classicを開き、ライブラリのグリッド表示（Gキー）で撮影フォルダを選択します。",
       "キーボードの「\\」キーを押してライブラリフィルターバーを表示します。",
       "「テキスト」をクリックし、プルダウンを「ファイル名」「含む」に設定します。",
@@ -4002,7 +4002,7 @@ export const PHOTO_PROOF_SHEET_DATA: Record<Locale, PhotoProofSheetData> = {
     "walkthroughIntro": "Com a lista de escolhas em mãos, basta um copiar e colar para filtrar as fotos no programa:",
     "walkthroughBoxTitle": "Filtro de biblioteca no Adobe Lightroom Classic",
     "walkthroughSteps": [
-      "No Make Contact Sheet, clique em Exportar → Escopo: Apenas Mantidas → Formato: Lightroom TXT para copiar os nomes.",
+      "No Make Contact Sheet, clique em Exportar → Escopo: Apenas Mantidas → Formato: Lightroom Filter para copiar os nomes.",
       "Abra o Lightroom Classic e selecione a pasta da sessão na visualização em grade da Biblioteca (G).",
       "Pressione a tecla \\ para abrir a barra de filtros da biblioteca.",
       "Clique em Texto, defina o primeiro campo como Nome do arquivo e a condição como Contém.",
@@ -4083,7 +4083,7 @@ export const LARGE_FRAMES_GUIDE_DATA: Record<Locale, LargeFramesGuideData> = {
       },
       {
         "name": "Export at 300 DPI sRGB and assemble with archival hardware",
-        "text": "Export your print-ready master file as an uncompressed 300 DPI PNG or JPEG in sRGB color profile. Mount the print behind UV-filtering acrylic or museum glass with acid-free corner hinges to prevent paper buckling over time."
+        "text": "Export your print-ready master file as a lossless 300 DPI PNG (or maximum-quality JPEG) in sRGB color profile. Mount the print behind UV-filtering acrylic or museum glass with acid-free corner hinges to prevent paper buckling over time."
       }
     ],
     "matrixHeading": "What are the standard large photo frame dimensions and pixel requirements?",
@@ -5066,7 +5066,7 @@ export const WEDDING_WORKFLOW_DATA: Record<Locale, WeddingWorkflowData> = {
     "h1Highlight": "Proofing Workflow",
     "lead": "How to ingest, cull, and proof a 3,000+ photo wedding shoot in under two hours. Streamline client selections, preserve exact RAW camera filenames, and eliminate subscription cloud gallery bottlenecks.",
     "quickAnswerLabel": "Quick Answer / Standard Studio Workflow",
-    "quickAnswerText": "The fastest wedding proofing workflow uses a two-pass local triage model: First, perform a rapid keyboard rejection pass (eliminating missed focus and duplicates using local AI sharpness scoring). Second, generate a structured, branded PDF contact sheet proof package displaying original camera filenames (_DSC4821.NEF) beneath every frame. Clients highlight their selects, and a single comma-separated text string syncs directly back into Adobe Lightroom Classic’s Library Filter.",
+    "quickAnswerText": "The fastest wedding proofing workflow uses a two-pass local triage model: First, perform a rapid keyboard rejection pass (eliminating missed focus and duplicates using local sharpness scoring). Second, generate a structured, branded PDF contact sheet proof package displaying original camera filenames (_DSC4821.NEF) beneath every frame. Clients highlight their selects, and a single comma-separated text string syncs directly back into Adobe Lightroom Classic’s Library Filter.",
     "stepsHeading": "How do you organize and cull a large wedding shoot step-by-step?",
     "stepsIntro": "Follow this 5-stage studio blueprint to cut wedding proofing turnaround from two weeks down to 48 hours:",
     "steps": [
@@ -5075,8 +5075,8 @@ export const WEDDING_WORKFLOW_DATA: Record<Locale, WeddingWorkflowData> = {
         "text": "Drop your full multi-camera memory card dump (2,000 to 5,000+ files) directly into the Make Contact Sheet light-table. Because processing occurs entirely within local browser RAM, all thumbnails render immediately without waiting hours for multi-gigabyte cloud uploads."
       },
       {
-        "name": "Execute Pass 1: AI sharpness filter & blinks reject cull",
-        "text": "Run the integrated local AI sharpness scanner to instantly score focus across burst shots and group formals. Use keyboard shortcuts (press 3 to Reject) to rapidly eliminate missed focus, closed eyes, and unflattering test frames in under 15 minutes."
+        "name": "Execute Pass 1: sharpness filter & reject cull",
+        "text": "Run the built-in sharpness scanner to instantly score focus across burst shots and group formals. Use keyboard shortcuts (press 3 to Reject) to rapidly eliminate missed focus, closed eyes, and unflattering test frames in under 15 minutes."
       },
       {
         "name": "Execute Pass 2: Sequence grading and hero selection",
@@ -5153,7 +5153,7 @@ export const WEDDING_WORKFLOW_DATA: Record<Locale, WeddingWorkflowData> = {
     "cta": {
       "badge": "PRIVATE STUDIO PROOFING",
       "title": "Speed Up Your Wedding Proofing Workflow Today",
-      "text": "Drop your wedding shoot folder into Make Contact Sheet. Cull duplicates with AI sharpness scoring, export 300 DPI proof sheets, and sync selections directly into Lightroom.",
+      "text": "Drop your wedding shoot folder into Make Contact Sheet. Cull soft frames with sharpness scoring, export 300 DPI proof sheets, and sync selections directly into Lightroom.",
       "btnPrimary": "Launch Full-Screen Studio",
       "btnSecondary": "View Lightroom Sync Tutorial"
     },
@@ -5199,7 +5199,7 @@ export const WEDDING_WORKFLOW_DATA: Record<Locale, WeddingWorkflowData> = {
     "h1Highlight": "Pruebas en fotografía de bodas",
     "lead": "Cómo importar, descartar y preparar pruebas de una boda de más de 3.000 fotos en menos de dos horas. Acelera la selección de los novios, conserva los nombres RAW y elimina los cuellos de botella de la nube.",
     "quickAnswerLabel": "Respuesta rápida / Flujo de trabajo de estudio",
-    "quickAnswerText": "El flujo más ágil de selección de bodas utiliza un modelo de triaje local en dos fases: Primero, un descarte rápido por teclado (eliminando fotos desenfocadas y ojos cerrados mediante análisis local de nitidez por IA). Segundo, la generación de un paquete de hojas de contacto en PDF con los nombres originales de cámara (_DSC4821.NEF) bajo cada foto. Los novios marcan sus favoritas y una sencilla cadena de texto separada por comas se sincroniza directamente en el filtro de Adobe Lightroom Classic.",
+    "quickAnswerText": "El flujo más ágil de selección de bodas utiliza un modelo de triaje local en dos fases: Primero, un descarte rápido por teclado (eliminando fotos desenfocadas y ojos cerrados con ayuda del análisis local de nitidez). Segundo, la generación de un paquete de hojas de contacto en PDF con los nombres originales de cámara (_DSC4821.NEF) bajo cada foto. Los novios marcan sus favoritas y una sencilla cadena de texto separada por comas se sincroniza directamente en el filtro de Adobe Lightroom Classic.",
     "stepsHeading": "¿Cómo organizar y descartar una boda multitudinaria paso a paso?",
     "stepsIntro": "Sigue esta guía de 5 etapas para reducir los plazos de entrega de pruebas de dos semanas a tan solo 48 horas:",
     "steps": [
@@ -5208,8 +5208,8 @@ export const WEDDING_WORKFLOW_DATA: Record<Locale, WeddingWorkflowData> = {
         "text": "Arrastra la descarga completa de las tarjetas de memoria (2.000 a 5.000+ fotos) a la mesa de luz de Make Contact Sheet. Al procesarse en la memoria RAM del navegador, las miniaturas cargan al instante sin esperar horas de subida."
       },
       {
-        "name": "Fase 1: Filtro de nitidez por IA y descarte de parpadeos",
-        "text": "Ejecuta el detector local de nitidez por IA para puntuar el foco en ráfagas y fotos de grupo. Usa atajos de teclado (tecla 3 para Descartar) para eliminar tomas movidas u ojos cerrados en menos de 15 minutos."
+        "name": "Fase 1: Filtro de nitidez y descarte de parpadeos",
+        "text": "Ejecuta el detector local de nitidez para puntuar el foco en ráfagas y fotos de grupo. Usa atajos de teclado (tecla 3 para Descartar) para eliminar tomas movidas u ojos cerrados en menos de 15 minutos."
       },
       {
         "name": "Fase 2: Valoración secuencial y selección de fotos estrella",
@@ -5286,7 +5286,7 @@ export const WEDDING_WORKFLOW_DATA: Record<Locale, WeddingWorkflowData> = {
     "cta": {
       "badge": "REVISIÓN PRIVADA PARA ESTUDIOS",
       "title": "Acelera hoy el flujo de selección de tus bodas",
-      "text": "Arrastra la carpeta del enlace a Make Contact Sheet. Descarta duplicadas con IA de nitidez, exporta hojas de prueba a 300 DPI y sincroniza con Lightroom.",
+      "text": "Arrastra la carpeta del enlace a Make Contact Sheet. Descarta las tomas borrosas con la puntuación de nitidez, exporta hojas de prueba a 300 DPI y sincroniza con Lightroom.",
       "btnPrimary": "Abrir estudio a pantalla completa",
       "btnSecondary": "Ver tutorial de sincronización XMP"
     },
@@ -5332,7 +5332,7 @@ export const WEDDING_WORKFLOW_DATA: Record<Locale, WeddingWorkflowData> = {
     "h1Highlight": "Hochzeitsfotografie-Workflow",
     "lead": "Wie Sie ein Shooting mit über 3.000 Fotos in unter zwei Stunden sichten, aussortieren und dem Brautpaar vorlegen. Original-Dateinamen beibehalten und Cloud-Ladezeiten eliminieren.",
     "quickAnswerLabel": "Kurzantwort / Studio-Standardablauf",
-    "quickAnswerText": "Der schnellste Workflow für Hochzeitsreportagen setzt auf ein lokales 2-Phasen-Culling: Zuerst werden Fehlschüsse und geschlossene Augen per Tastatur und lokaler KI-Schärfebewertung aussortiert. Danach wird ein gebrandeter PDF-Kontaktabzug mit Original-Dateinamen (_DSC4821.NEF) unter jedem Bild erstellt. Das Brautpaar nennt seine Favoriten und eine kommagetrennte Liste isoliert die RAWs direkt in Lightroom Classic.",
+    "quickAnswerText": "Der schnellste Workflow für Hochzeitsreportagen setzt auf ein lokales 2-Phasen-Culling: Zuerst werden Fehlschüsse und geschlossene Augen per Tastatur und lokaler Schärfebewertung aussortiert. Danach wird ein gebrandeter PDF-Kontaktabzug mit Original-Dateinamen (_DSC4821.NEF) unter jedem Bild erstellt. Das Brautpaar nennt seine Favoriten und eine kommagetrennte Liste isoliert die RAWs direkt in Lightroom Classic.",
     "stepsHeading": "Große Hochzeitsreportagen Schritt für Schritt sortieren",
     "stepsIntro": "Mit diesem 5-Stufen-Plan verkürzen Sie die Bereitstellung der Auswahl von zwei Wochen auf 48 Stunden:",
     "steps": [
@@ -5341,8 +5341,8 @@ export const WEDDING_WORKFLOW_DATA: Record<Locale, WeddingWorkflowData> = {
         "text": "Ziehen Sie alle Speicherkarten-Dumps (2.000 bis 5.000+ Fotos) in Make Contact Sheet. Da die Verarbeitung im lokalen Browser-RAM erfolgt, laden alle Vorschauen sofort ohne stundenlanges Hochladen."
       },
       {
-        "name": "Phase 1: KI-Schärfeprüfung & Blinzel-Aussortierung",
-        "text": "Starten Sie die lokale KI-Schärfeanalyse für Serienbilder. Nutzen Sie die Taste 3 (Ablehnen), um unscharfe Bilder und unvorteilhafte Ausdrücke in unter 15 Minuten zu entfernen."
+        "name": "Phase 1: Schärfeprüfung & Blinzel-Aussortierung",
+        "text": "Starten Sie die lokale Schärfeanalyse für Serienbilder. Nutzen Sie die Taste 3 (Ablehnen), um unscharfe Bilder und unvorteilhafte Ausdrücke in unter 15 Minuten zu entfernen."
       },
       {
         "name": "Phase 2: Favoritenauswahl für Album und Reportage",
@@ -5419,7 +5419,7 @@ export const WEDDING_WORKFLOW_DATA: Record<Locale, WeddingWorkflowData> = {
     "cta": {
       "badge": "PRIVATES STUDIO-PROOFING",
       "title": "Beschleunigen Sie Ihren Hochzeits-Workflow",
-      "text": "Ziehen Sie Ihre Hochzeitsfotos in Make Contact Sheet. Sortieren Sie mit KI-Schärfebewertung, erstellen Sie 300-DPI-PDFs und synchronisieren Sie mit Lightroom.",
+      "text": "Ziehen Sie Ihre Hochzeitsfotos in Make Contact Sheet. Sortieren Sie mit der Schärfebewertung, erstellen Sie 300-DPI-PDFs und synchronisieren Sie mit Lightroom.",
       "btnPrimary": "Vollbild-Studio öffnen",
       "btnSecondary": "Lightroom-Sync-Anleitung lesen"
     },
@@ -5465,7 +5465,7 @@ export const WEDDING_WORKFLOW_DATA: Record<Locale, WeddingWorkflowData> = {
     "h1Highlight": "Validation en photo de mariage",
     "lead": "Comment décharger, trier et présenter un mariage de plus de 3 000 photos en moins de deux heures. Préservez les noms de fichiers RAW et supprimez la lenteur des galeries en ligne.",
     "quickAnswerLabel": "Réponse rapide / Méthode standard de studio",
-    "quickAnswerText": "Le flux de sélection de mariage le plus rapide repose sur un tri local en deux temps : d'abord, une élimination rapide au clavier (des clichés flous et yeux fermés grâce à l'IA de netteté locale). Ensuite, la création d'une planche d'épreuves PDF personnalisée mentionnant le nom exact de chaque cliché (_DSC4821.NEF). Les mariés indiquent leurs choix et une simple chaîne de texte filtrera directement les fichiers dans Adobe Lightroom Classic.",
+    "quickAnswerText": "Le flux de sélection de mariage le plus rapide repose sur un tri local en deux temps : d'abord, une élimination rapide au clavier (des clichés flous et yeux fermés avec l'aide de l'analyse locale de netteté). Ensuite, la création d'une planche d'épreuves PDF personnalisée mentionnant le nom exact de chaque cliché (_DSC4821.NEF). Les mariés indiquent leurs choix et une simple chaîne de texte filtrera directement les fichiers dans Adobe Lightroom Classic.",
     "stepsHeading": "Comment organiser et trier un grand mariage pas à pas ?",
     "stepsIntro": "Suivez ce protocole pour réduire la livraison des épreuves de deux semaines à 48 heures :",
     "steps": [
@@ -5474,7 +5474,7 @@ export const WEDDING_WORKFLOW_DATA: Record<Locale, WeddingWorkflowData> = {
         "text": "Déposez l'intégralité des cartes mémoire (2 000 à 5 000+ photos) dans Make Contact Sheet. Le traitement s'effectue dans la mémoire vive de votre navigateur : les vignettes s'affichent instantanément."
       },
       {
-        "name": "Passe 1 : Filtrage de netteté par IA et rejet des yeux fermés",
+        "name": "Passe 1 : Filtrage de netteté et rejet des yeux fermés",
         "text": "Lancez l'analyse locale de netteté pour noter les rafales. Utilisez la touche 3 (Rejeter) pour écarter les photos floues et expressions maladroites en moins de 15 minutes."
       },
       {
@@ -5552,7 +5552,7 @@ export const WEDDING_WORKFLOW_DATA: Record<Locale, WeddingWorkflowData> = {
     "cta": {
       "badge": "STUDIO DE VALIDATION PRIVÉ",
       "title": "Accélérez vos validations de mariage dès aujourd'hui",
-      "text": "Déposez votre dossier de mariage dans Make Contact Sheet. Triez les doublons par IA, exportez des planches 300 DPI et synchronisez avec Lightroom.",
+      "text": "Déposez votre dossier de mariage dans Make Contact Sheet. Écartez les clichés flous grâce au score de netteté, exportez des planches 300 DPI et synchronisez avec Lightroom.",
       "btnPrimary": "Ouvrir le studio plein écran",
       "btnSecondary": "Voir le tutoriel de synchronisation XMP"
     },
@@ -5598,7 +5598,7 @@ export const WEDDING_WORKFLOW_DATA: Record<Locale, WeddingWorkflowData> = {
     "h1Highlight": "ウェディング写真選定ワークフロー",
     "lead": "3,000枚を超える挙式・披露宴の撮影データを2時間以内に選別・納品準備。新郎新婦の選定をスムーズにし、クラウドアップロードの待ち時間をゼロにします。",
     "quickAnswerLabel": "クイック回答 / 標準スタジオワークフロー",
-    "quickAnswerText": "最速のウェディング写真選定ワークフローは「ローカル2段階セレクト」を採用します：第1段階としてAIピント判定とショートカットキーで手ブレ・目つぶり写真を高速除外。第2段階として、正確なカメラファイル名（_DSC4821.NEF）を明記したブランド入りPDFプルーフシートを作成します。新郎新婦が選んだ番号をコピーし、カンマ区切りテキストとしてLightroom Classicの検索バーにペーストするだけで即座にRAWデータが同期されます。",
+    "quickAnswerText": "最速のウェディング写真選定ワークフローは「ローカル2段階セレクト」を採用します：第1段階としてピント判定とショートカットキーで手ブレ・目つぶり写真を高速除外。第2段階として、正確なカメラファイル名（_DSC4821.NEF）を明記したブランド入りPDFプルーフシートを作成します。新郎新婦が選んだ番号をコピーし、カンマ区切りテキストとしてLightroom Classicの検索バーにペーストするだけで即座にRAWデータが同期されます。",
     "stepsHeading": "膨大なウェディング撮影をステップバイステップで選別する手順",
     "stepsIntro": "撮影後、選定シートの提出までにかかる日数を2週間から48時間以内へと大幅短縮する5工程です：",
     "steps": [
@@ -5607,8 +5607,8 @@ export const WEDDING_WORKFLOW_DATA: Record<Locale, WeddingWorkflowData> = {
         "text": "複数台のカメラから読み込んだカードデータ（2,000〜5,000枚以上）をMake Contact Sheetに直接ドロップ。ブラウザRAM内で完結するため、数ギガバイトの送信待ちなしでサムネイルが即時表示されます。"
       },
       {
-        "name": "ステップ1：AIシャープネス判定と目つぶり写真の高速除外",
-        "text": "端末内AIによるピントスコアリングを実行。3キー（除外）を使い、集合写真の目つぶりや連写のピンボケカットを15分以内に一掃します。"
+        "name": "ステップ1：シャープネス判定と目つぶり写真の高速除外",
+        "text": "端末内でピントのスコアリングを実行。3キー（除外）を使い、集合写真の目つぶりや連写のピンボケカットを15分以内に一掃します。"
       },
       {
         "name": "ステップ2：本番カットの格付けとアルバム候補選定",
@@ -5685,7 +5685,7 @@ export const WEDDING_WORKFLOW_DATA: Record<Locale, WeddingWorkflowData> = {
     "cta": {
       "badge": "スタジオ向け高機密プルーフ作成",
       "title": "ウェディング写真選定を今すぐ高速化しませんか？",
-      "text": "撮影フォルダをMake Contact Sheetにドロップ。AIピント判定で重複を削り、300 DPIシートを出力してLightroomと即座に連携。",
+      "text": "撮影フォルダをMake Contact Sheetにドロップ。ピント判定でボケた写真を削り、300 DPIシートを出力してLightroomと即座に連携。",
       "btnPrimary": "フルスクリーンスタジオを開く",
       "btnSecondary": "Lightroom同期ガイドを見る"
     },
@@ -5731,7 +5731,7 @@ export const WEDDING_WORKFLOW_DATA: Record<Locale, WeddingWorkflowData> = {
     "h1Highlight": "Aprovação em fotografia de casamento",
     "lead": "Como descarregar, triar e apresentar um casamento de mais de 3.000 fotos em menos de duas horas. Preserve os nomes de arquivo RAW e acabe com a lentidão da nuvem.",
     "quickAnswerLabel": "Resposta rápida / Fluxo padrão de estúdio",
-    "quickAnswerText": "O fluxo de triagem de casamento mais ágil adota um modelo local em duas etapas: Primeiro, um descarte rápido no teclado (eliminando fotos desfocadas e olhos fechados com IA local de nitidez). Segundo, a geração de uma folha de contato em PDF exibindo os nomes reais da câmera (_DSC4821.NEF) sob cada imagem. Os noivos informam seus favoritos e uma lista de nomes em texto filtra os arquivos RAW diretamente no Lightroom Classic.",
+    "quickAnswerText": "O fluxo de triagem de casamento mais ágil adota um modelo local em duas etapas: Primeiro, um descarte rápido no teclado (eliminando fotos desfocadas e olhos fechados com a ajuda da análise local de nitidez). Segundo, a geração de uma folha de contato em PDF exibindo os nomes reais da câmera (_DSC4821.NEF) sob cada imagem. Os noivos informam seus favoritos e uma lista de nomes em texto filtra os arquivos RAW diretamente no Lightroom Classic.",
     "stepsHeading": "Como organizar e triar casamentos grandes passo a passo",
     "stepsIntro": "Siga este roteiro de 5 passos para reduzir o prazo de entrega das prévias de duas semanas para 48 horas:",
     "steps": [
@@ -5740,8 +5740,8 @@ export const WEDDING_WORKFLOW_DATA: Record<Locale, WeddingWorkflowData> = {
         "text": "Arraste as fotos de todos os cartões de memória (2.000 a 5.000+ fotos) para o Make Contact Sheet. O processamento ocorre na memória RAM do navegador, abrindo as miniaturas imediatamente."
       },
       {
-        "name": "Etapa 1: Filtro de nitidez por IA e eliminação de piscadas",
-        "text": "Rode o verificador local de nitidez por IA. Use a tecla 3 (Rejeitar) para eliminar fotos desfocadas e expressões inadequadas em menos de 15 minutos."
+        "name": "Etapa 1: Filtro de nitidez e eliminação de piscadas",
+        "text": "Rode o verificador local de nitidez. Use a tecla 3 (Rejeitar) para eliminar fotos desfocadas e expressões inadequadas em menos de 15 minutos."
       },
       {
         "name": "Etapa 2: Seleção das fotos principais para o álbum",
@@ -5818,7 +5818,7 @@ export const WEDDING_WORKFLOW_DATA: Record<Locale, WeddingWorkflowData> = {
     "cta": {
       "badge": "PROVAS PRIVADAS DE ESTÚDIO",
       "title": "Acelere a aprovação dos seus casamentos hoje",
-      "text": "Arraste sua pasta de fotos para o Make Contact Sheet. Faça a triagem com IA de nitidez, gere folhas em 300 DPI e sincronize com o Lightroom.",
+      "text": "Arraste sua pasta de fotos para o Make Contact Sheet. Faça a triagem pela nitidez, gere folhas em 300 DPI e sincronize com o Lightroom.",
       "btnPrimary": "Abrir estúdio em tela cheia",
       "btnSecondary": "Ver tutorial de sincronização XMP"
     },
@@ -5889,7 +5889,7 @@ export const ALBUMS_VS_PROOFS_DATA: Record<Locale, AlbumsVsProofsData> = {
       },
       {
         "name": "Export calibrated 300 DPI master files for lab press or office printing",
-        "text": "Export uncompressed 300 DPI multi-page PDF documents for local spiral-bound proofing or high-resolution PNG image spreads calibrated in standard sRGB for commercial pro lab binding."
+        "text": "Export high-resolution 300 DPI multi-page PDF documents for local spiral-bound proofing or high-resolution PNG image spreads calibrated in standard sRGB for commercial pro lab binding."
       }
     ],
     "matrixHeading": "How do photo album formats compare in cost, capacity, and turnaround?",

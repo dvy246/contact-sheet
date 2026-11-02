@@ -393,7 +393,7 @@ export const TEMPLATES_AND_COMPANY_DATA: Record<Locale, TemplatesAndCompanyPageD
         {
           feature: "Modelo de precio",
           icon: "💰",
-          mcs: "Gratuito y abierto",
+          mcs: "Gratis, sin cuenta",
           mcsHighlight: "lime",
           ps: "~20€-60€/mes",
           canva: "Freemium (12€/mes)",
@@ -447,7 +447,7 @@ export const TEMPLATES_AND_COMPANY_DATA: Record<Locale, TemplatesAndCompanyPageD
     },
     aboutUs: {
       title: "Acerca de nosotros — Make Contact Sheet",
-      description: "Conoce al equipo detrás de Make Contact Sheet, el espacio de trabajo en el navegador para hojas de contactos, collages y revisión para clientes.",
+      description: "Descubre por qué existe Make Contact Sheet, el espacio de trabajo en el navegador para hojas de contactos, collages y revisión para clientes.",
       breadcrumbsTitle: "Acerca de Make Contact Sheet",
       badge: "INGENIERÍA Y MISIÓN",
       heroTitle: "Acerca de ",
@@ -462,7 +462,7 @@ export const TEMPLATES_AND_COMPANY_DATA: Record<Locale, TemplatesAndCompanyPageD
       archBullets: [
         {
           bold: "Cero transferencia por red:",
-          text: "Cada píxel, nombre de archivo y metadato EXIF se decodifica y procesa localmente en tu navegador mediante HTML5 Canvas y Web Workers.",
+          text: "Cada píxel, nombre de archivo y metadato EXIF se decodifica y procesa localmente en tu navegador mediante HTML5 Canvas.",
         },
         {
           bold: "Cero almacenamiento en servidores:",
@@ -795,7 +795,7 @@ export const TEMPLATES_AND_COMPANY_DATA: Record<Locale, TemplatesAndCompanyPageD
         {
           feature: "Preise & Lizenzmodell",
           icon: "💰",
-          mcs: "Kostenlos & Open",
+          mcs: "Kostenlos, ohne Konto",
           mcsHighlight: "lime",
           ps: "~24€-65€/Monat",
           canva: "Freemium (12€/Monat)",
@@ -849,7 +849,7 @@ export const TEMPLATES_AND_COMPANY_DATA: Record<Locale, TemplatesAndCompanyPageD
     },
     aboutUs: {
       title: "Über uns — Make Contact Sheet",
-      description: "Lernen Sie das Team hinter Make Contact Sheet kennen: Der kostenlose, browserbasierte Arbeitsbereich für Kontaktabzüge, Collagen und Kundenproofs.",
+      description: "Warum es Make Contact Sheet gibt: der kostenlose, browserbasierte Arbeitsbereich für Kontaktabzüge, Collagen und Kundenproofs.",
       breadcrumbsTitle: "Über Make Contact Sheet",
       badge: "MISSION & TECHNOLOGIE",
       heroTitle: "Über ",
@@ -864,7 +864,7 @@ export const TEMPLATES_AND_COMPANY_DATA: Record<Locale, TemplatesAndCompanyPageD
       archBullets: [
         {
           bold: "Keine Netzwerkübertragung:",
-          text: "Jedes Pixel, jeder Dateiname und alle EXIF-Metadaten werden lokal im Browser über HTML5 Canvas und Web Worker gerendert.",
+          text: "Jedes Pixel, jeder Dateiname und alle EXIF-Metadaten werden lokal im Browser über HTML5 Canvas gerendert.",
         },
         {
           bold: "Keine Serverspeicherung:",
@@ -1197,7 +1197,7 @@ export const TEMPLATES_AND_COMPANY_DATA: Record<Locale, TemplatesAndCompanyPageD
         {
           feature: "Modèle de tarification",
           icon: "💰",
-          mcs: "Gratuit & Libre",
+          mcs: "Gratuit, sans compte",
           mcsHighlight: "lime",
           ps: "~24€-65€/mois",
           canva: "Freemium (12€/mois)",
@@ -1251,7 +1251,7 @@ export const TEMPLATES_AND_COMPANY_DATA: Record<Locale, TemplatesAndCompanyPageD
     },
     aboutUs: {
       title: "À propos de nous — Make Contact Sheet",
-      description: "Découvrez l'équipe derrière Make Contact Sheet, l'espace de travail en ligne pour planches contact, collages et outils de sélection client.",
+      description: "Découvrez pourquoi Make Contact Sheet existe : l'espace de travail en ligne pour planches contact, collages et outils de sélection client.",
       breadcrumbsTitle: "À propos de Make Contact Sheet",
       badge: "INGÉNIERIE ET MISSION",
       heroTitle: "À propos de ",
@@ -1266,7 +1266,7 @@ export const TEMPLATES_AND_COMPANY_DATA: Record<Locale, TemplatesAndCompanyPageD
       archBullets: [
         {
           bold: "Zéro transfert réseau :",
-          text: "Chaque pixel, chaque nom de fichier et chaque donnée EXIF est décodé et affiché localement dans votre navigateur grâce à HTML5 Canvas et aux Web Workers.",
+          text: "Chaque pixel, chaque nom de fichier et chaque donnée EXIF est décodé et affiché localement dans votre navigateur grâce à HTML5 Canvas.",
         },
         {
           bold: "Zéro stockage serveur :",
@@ -1599,7 +1599,7 @@ export const TEMPLATES_AND_COMPANY_DATA: Record<Locale, TemplatesAndCompanyPageD
         {
           feature: "料金体系",
           icon: "💰",
-          mcs: "完全無料・オープン",
+          mcs: "完全無料・登録不要",
           mcsHighlight: "lime",
           ps: "月額約2,000円〜7,000円",
           canva: "フリーミアム（月額1,500円〜）",
@@ -1668,7 +1668,7 @@ export const TEMPLATES_AND_COMPANY_DATA: Record<Locale, TemplatesAndCompanyPageD
       archBullets: [
         {
           bold: "ネットワーク通信ゼロ：",
-          text: "画像ピクセル、ファイル名、EXIFメタデータは、ブラウザ内のHTML5 CanvasとWeb Workersにより端末メモリ内でのみ処理されます。",
+          text: "画像ピクセル、ファイル名、EXIFメタデータは、ブラウザ内のHTML5 Canvasにより端末メモリ内でのみ処理されます。",
         },
         {
           bold: "サーバー保存ゼロ：",
@@ -2001,7 +2001,7 @@ export const TEMPLATES_AND_COMPANY_DATA: Record<Locale, TemplatesAndCompanyPageD
         {
           feature: "Modelo de preços",
           icon: "💰",
-          mcs: "Gratuito & Aberto",
+          mcs: "Grátis, sem conta",
           mcsHighlight: "lime",
           ps: "~R$120-R$300/mês",
           canva: "Freemium (R$35/mês)",
@@ -2055,7 +2055,7 @@ export const TEMPLATES_AND_COMPANY_DATA: Record<Locale, TemplatesAndCompanyPageD
     },
     aboutUs: {
       title: "Sobre nós — Make Contact Sheet",
-      description: "Conheça a equipe por trás do Make Contact Sheet, o espaço de trabalho gratuito no navegador para folhas de contato, colagens e provas para clientes.",
+      description: "Descubra por que o Make Contact Sheet existe: o espaço de trabalho gratuito no navegador para folhas de contato, colagens e provas para clientes.",
       breadcrumbsTitle: "Sobre o Make Contact Sheet",
       badge: "ENGENHARIA E MISSÃO",
       heroTitle: "Sobre o ",
@@ -2070,7 +2070,7 @@ export const TEMPLATES_AND_COMPANY_DATA: Record<Locale, TemplatesAndCompanyPageD
       archBullets: [
         {
           bold: "Zero transferência de rede:",
-          text: "Cada pixel, nome de arquivo e metadado EXIF é processado localmente no seu navegador via HTML5 Canvas e Web Workers.",
+          text: "Cada pixel, nome de arquivo e metadado EXIF é processado localmente no seu navegador via HTML5 Canvas.",
         },
         {
           bold: "Zero armazenamento em servidores:",
@@ -2403,7 +2403,7 @@ export const TEMPLATES_AND_COMPANY_DATA: Record<Locale, TemplatesAndCompanyPageD
         {
           feature: "Pricing Model",
           icon: "💰",
-          mcs: "Free & Open",
+          mcs: "Free, no account",
           mcsHighlight: "lime",
           ps: "~$20-$55/month",
           canva: "Freemium ($13/mo)",
@@ -2457,7 +2457,7 @@ export const TEMPLATES_AND_COMPANY_DATA: Record<Locale, TemplatesAndCompanyPageD
     },
     aboutUs: {
       title: "About Us — Make Contact Sheet",
-      description: "Meet the team behind Make Contact Sheet, the free browser-first workspace for photo proof sheets, collages, and client review tools.",
+      description: "Why Make Contact Sheet exists: a free browser-based workspace for photo proof sheets, collages, and client review that never uploads your photos.",
       breadcrumbsTitle: "About Make Contact Sheet",
       badge: "ENGINEERING & MISSION",
       heroTitle: "About ",
@@ -2472,7 +2472,7 @@ export const TEMPLATES_AND_COMPANY_DATA: Record<Locale, TemplatesAndCompanyPageD
       archBullets: [
         {
           bold: "Zero Network Transfer:",
-          text: "Every byte of raw pixel bitmap data, camera filename text, and technical EXIF metadata is decoded and rendered directly within your local browser sandbox using HTML5 Canvas and client-side Web Workers.",
+          text: "Every byte of raw pixel bitmap data, camera filename text, and technical EXIF metadata is decoded and rendered directly within your local browser sandbox using HTML5 Canvas.",
         },
         {
           bold: "Zero Server Storage:",

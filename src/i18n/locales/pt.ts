@@ -24,7 +24,7 @@ export const pt: TranslationDict = {
     "toolPrintSaver8x10Desc": "Layouts multifoto otimizados para impressão em lojas",
     "toolLargePhotoPrints": "Grandes impressões fotográficas",
     "toolLargePhotoPrintsDesc": "Layouts de folha combinada para 11×14, 16×20 e 24×36",
-    "toolAutoCull": "Triagem automática com IA",
+    "toolAutoCull": "Triagem automática de fotos",
     "toolAutoCullDesc": "Pontuação de nitidez local e detecção de desfoque",
     "toolWhiteLabel": "Portal white-label",
     "toolWhiteLabelDesc": "Galerias de prova para clientes com sua identidade visual",
@@ -50,7 +50,7 @@ export const pt: TranslationDict = {
     "guidesHeading": "Guias e fluxos de trabalho",
     "aboutHeading": "Sobre e termos legais",
     "trustTitle": "Zero uploads para servidores — 100% privado",
-    "trustDesc": "Suas fotos nunca saem do seu dispositivo. Toda a renderização, decodificação EXIF, pontuação de nitidez com IA e compilação de PDF rodam localmente na memória do seu navegador.",
+    "trustDesc": "Suas fotos nunca saem do seu dispositivo. Toda a renderização, decodificação EXIF, pontuação de nitidez e compilação de PDF rodam localmente na memória do seu navegador.",
     "copyright": "Desenvolvido para fotógrafos, designers e criadores visuais.",
     "aboutUs": "Sobre nós",
     "contactUs": "Fale conosco",
@@ -135,7 +135,7 @@ export const pt: TranslationDict = {
     "card4Desc": "Gere folhas combinadas em A4, Carta, 8×10, 11×14, 16×20 e 24×36 prontas para laboratório, estúdio ou impressão comercial."
   },
   "workflow": {
-    "step1Title": "01. Importar e pontuar com IA",
+    "step1Title": "01. Importar e pontuar",
     "step1Desc": "Arraste fotos RAW, JPG, PNG ou HEIC. A variância laplaciana local identifica instantaneamente os quadros mais nítidos.",
     "step2Title": "02. Organizar e personalizar",
     "step2Desc": "Escolha predefinições de grade, rótulos EXIF por tokens, paletas de fundo de designer e marcas d'água personalizadas.",

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+@import "./palettes.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -39,11 +40,11 @@
      A lighter #B4681F measures 4.25:1 against white and fails. The lighter
      tint is kept below for translucent glows and borders, where contrast is
      moot. */
-  --color-accent: #9c5a1c;
-  --color-accent-hover: #824a16;
-  --color-accent-dark: #6b3c12;
-  --color-accent-light: #c98a46;
-  --color-accent-glow: rgba(201, 138, 70, 0.15);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-dark: var(--accent-dark);
+  --color-accent-light: var(--accent-light);
+  --color-accent-glow: rgb(var(--accent-rgb) / 0.15);
   --color-accent-glow-border: var(--accent-glow-border);
 
   /* Accent used as *text or icon colour* rather than as a fill. Adaptive,
@@ -118,10 +119,26 @@
   --elevation-card-hover:
     0 2px 4px -2px rgba(59, 36, 24, 0.1),
     0 12px 28px -8px rgba(59, 36, 24, 0.14),
-    0 0 0 1px rgba(201, 138, 70, 0.2);
+    0 0 0 1px rgb(var(--accent-rgb) / 0.2);
   --accent-ink: #9c5a1c;
-  --accent-glow-border: rgba(201, 138, 70, 0.5);
+  --accent-ink-rgb: 156 90 28;
+  --accent-glow-border: rgb(var(--accent-ink-rgb) / 0.5);
   --accent-green: #c5f83a;
+
+  /* Accent fills are the same in both modes. They live here as variables —
+     not as literals in @theme — so a header palette (html[data-palette]) can
+     swap the whole 10% without touching markup. --accent-rgb is the light
+     tint as a space-separated triplet, for translucent glows. */
+  --accent: #9c5a1c;
+  --accent-hover: #824a16;
+  --accent-dark: #6b3c12;
+  --accent-light: #c98a46;
+  --accent-rgb: 201 138 70;
+
+  /* Surfaces that sit outside the 8-step neutral scale. */
+  --light-table-bg: #e8dcce;
+  --dropzone-hover-top: #fffaf4;
+  --dropzone-hover-bottom: #fbf2e7;
 }
 
 html.dark {
@@ -156,10 +173,14 @@ html.dark {
   --elevation-card-hover:
     0 2px 6px 0 rgba(0, 0, 0, 0.55),
     0 18px 40px -14px rgba(0, 0, 0, 0.8),
-    0 0 0 1px rgba(217, 154, 78, 0.22);
+    0 0 0 1px rgb(var(--accent-ink-rgb) / 0.22);
   --accent-ink: #d99a4e;
-  --accent-glow-border: rgba(217, 154, 78, 0.5);
+  --accent-ink-rgb: 217 154 78;
   --accent-green: #b2eb1e;
+
+  --light-table-bg: #0d0806;
+  --dropzone-hover-top: #20150f;
+  --dropzone-hover-bottom: #0d0806;
 }
 
 
@@ -408,7 +429,7 @@ body {
     width: 22px;
     height: 22px;
     border-radius: 999px;
-    background: linear-gradient(180deg, #ffffff 0%, #f5eee5 100%);
+    background: linear-gradient(180deg, var(--marketing-panel) 0%, var(--marketing-surface) 100%);
     box-shadow:
       0 1px 2px rgba(59, 36, 24, 0.16),
       0 2px 6px -1px rgba(59, 36, 24, 0.18);
@@ -419,10 +440,10 @@ body {
   .theme-switch[aria-checked="true"] .theme-switch-knob {
     /* 58 track - 2×3 inset - 22 knob = 28px of travel */
     transform: translateX(28px);
-    background: linear-gradient(180deg, #d99a4e 0%, #c98a46 100%);
+    background: linear-gradient(180deg, var(--accent-ink) 0%, var(--accent-light) 100%);
     box-shadow:
       0 1px 2px rgba(0, 0, 0, 0.4),
-      0 2px 8px -1px rgba(201, 138, 70, 0.5);
+      0 2px 8px -1px rgb(var(--accent-rgb) / 0.5);
   }
 
   .theme-switch:active .theme-switch-knob {
@@ -622,12 +643,12 @@ html {
 html.dark .text-shimmer {
   background: linear-gradient(
     110deg,
-    #b39c89 0%,
-    #b39c89 36%,
-    #ffd7a8 48%,
-    #fff2db 52%,
-    #b39c89 64%,
-    #b39c89 100%
+    var(--marketing-muted) 0%,
+    var(--marketing-muted) 36%,
+    var(--shimmer-dark-hi, #ffd7a8) 48%,
+    var(--shimmer-dark-peak, #fff2db) 52%,
+    var(--marketing-muted) 64%,
+    var(--marketing-muted) 100%
   );
   background-size: 250% 100%;
   -webkit-background-clip: text;
@@ -640,12 +661,12 @@ html.dark .text-shimmer {
 /* Shimmer Badge Border & Glow Effect */
 @keyframes badgeBorderShimmer {
   0%, 100% {
-    border-color: rgba(201, 138, 70, 0.28);
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 0 16px -2px rgba(201, 138, 70, 0.12);
+    border-color: rgb(var(--accent-rgb) / 0.28);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 0 16px -2px rgb(var(--accent-rgb) / 0.12);
   }
   50% {
-    border-color: rgba(201, 138, 70, 0.65);
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 0 24px 0 rgba(201, 138, 70, 0.28);
+    border-color: rgb(var(--accent-rgb) / 0.65);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 0 24px 0 rgb(var(--accent-rgb) / 0.28);
   }
 }
 
@@ -686,13 +707,13 @@ html.dark .text-shimmer {
 .title-shimmer {
   background: linear-gradient(
     110deg,
-    #1b1310 0%,
-    #1b1310 32%,
-    #b4681f 44%,
-    #e89a42 50%,
-    #b4681f 56%,
-    #1b1310 68%,
-    #1b1310 100%
+    var(--title-shimmer-base, #1b1310) 0%,
+    var(--title-shimmer-base, #1b1310) 32%,
+    var(--title-shimmer-mid, #b4681f) 44%,
+    var(--title-shimmer-peak, #e89a42) 50%,
+    var(--title-shimmer-mid, #b4681f) 56%,
+    var(--title-shimmer-base, #1b1310) 68%,
+    var(--title-shimmer-base, #1b1310) 100%
   );
   background-size: 250% 100%;
   -webkit-background-clip: text;
@@ -705,13 +726,13 @@ html.dark .text-shimmer {
 html.dark .title-shimmer {
   background: linear-gradient(
     110deg,
-    #fbf6f0 0%,
-    #fbf6f0 32%,
-    #fed7aa 42%,
+    var(--marketing-text) 0%,
+    var(--marketing-text) 32%,
+    var(--title-shimmer-dark-lo, #fed7aa) 42%,
     #ffffff 50%,
-    #fde68a 58%,
-    #fbf6f0 68%,
-    #fbf6f0 100%
+    var(--title-shimmer-dark-hi, #fde68a) 58%,
+    var(--marketing-text) 68%,
+    var(--marketing-text) 100%
   );
   background-size: 250% 100%;
   -webkit-background-clip: text;
@@ -724,3 +745,38 @@ html.dark .title-shimmer {
 
 
 
+
+/* Header flavour picker. A swatch is a scoop seen from above: the flavour's
+   cream, its accent and a sliver of its dark surface, so each option previews
+   both modes. The trigger reads the *live* tokens, so it always shows the
+   active flavour. */
+@layer components {
+  .palette-swatch,
+  .palette-current {
+    display: inline-block;
+    flex-shrink: 0;
+    border-radius: 999px;
+  }
+
+  .palette-swatch {
+    width: 26px;
+    height: 26px;
+    background: conic-gradient(from 210deg, var(--sw-cream) 0 42%, var(--sw-accent) 0 84%, var(--sw-cocoa) 0);
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.12);
+  }
+
+  .palette-current {
+    width: 18px;
+    height: 18px;
+    background: conic-gradient(from 210deg, var(--marketing-surface-hover) 0 42%, var(--accent) 0 100%);
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.14);
+  }
+
+  .palette-check {
+    opacity: 0;
+  }
+
+  .palette-option[aria-checked="true"] .palette-check {
+    opacity: 1;
+  }
+}

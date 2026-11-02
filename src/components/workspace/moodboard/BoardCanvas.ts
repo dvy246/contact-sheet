@@ -110,14 +110,14 @@ export class BoardCanvas {
 
     // 6. Marquee Selection Rectangle
     this.marqueeBox = document.createElement('div');
-    this.marqueeBox.className = 'moodboard-marquee absolute pointer-events-none border-[1.5px] border-dashed border-[#c98a46] bg-[#c98a46]/10 rounded-sm z-50 hidden';
+    this.marqueeBox.className = 'moodboard-marquee absolute pointer-events-none border-[1.5px] border-dashed border-accent-light bg-accent-light/10 rounded-sm z-50 hidden';
 
     // 7. Drop Target Highlight Overlay
     this.dropOverlay = document.createElement('div');
-    this.dropOverlay.className = 'moodboard-drop-overlay absolute inset-0 pointer-events-none border-2 border-dashed border-[#c98a46] bg-[#c98a46]/10 rounded-lg z-50 transition-opacity opacity-0 flex items-center justify-center';
+    this.dropOverlay.className = 'moodboard-drop-overlay absolute inset-0 pointer-events-none border-2 border-dashed border-accent-light bg-accent-light/10 rounded-lg z-50 transition-opacity opacity-0 flex items-center justify-center';
     this.dropOverlay.innerHTML = `
-      <div class="px-4 py-2 rounded-full bg-black/80 backdrop-blur-md border border-[#c98a46]/40 text-xs font-medium text-white shadow-xl flex items-center gap-2">
-        <svg class="w-4 h-4 text-[#c98a46] animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <div class="px-4 py-2 rounded-full bg-black/80 backdrop-blur-md border border-accent-light/40 text-xs font-medium text-white shadow-xl flex items-center gap-2">
+        <svg class="w-4 h-4 text-accent-light animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M12 5v14M19 12l-7 7-7-7"/>
         </svg>
         <span>Drop photos onto mood board</span>

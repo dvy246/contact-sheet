@@ -10,6 +10,18 @@
  */
 import Icon from '../../common/Icon.astro';
 import '../../../styles/workspace.css';
+
+// The empty-board prompt is server-rendered main content on every localized
+// mood board page; locale comes from Astro's i18n routing.
+const PROMPT = {
+  en: { title: 'Assemble Your Mood Board', body: 'Drag & drop photos from the tray, apply a curated template, or add color swatches and text notes.', template: 'Choose Template', text: 'Add Headline' },
+  es: { title: 'Arma tu moodboard', body: 'Arrastra fotos desde la bandeja, aplica una plantilla seleccionada o añade muestras de color y notas de texto.', template: 'Elegir plantilla', text: 'Añadir titular' },
+  de: { title: 'Stelle dein Moodboard zusammen', body: 'Ziehe Fotos aus der Leiste, wende eine kuratierte Vorlage an oder füge Farbfelder und Textnotizen hinzu.', template: 'Vorlage wählen', text: 'Überschrift hinzufügen' },
+  fr: { title: 'Composez votre moodboard', body: 'Glissez-déposez des photos depuis le panneau, appliquez un modèle prêt à l’emploi ou ajoutez des nuanciers et des notes.', template: 'Choisir un modèle', text: 'Ajouter un titre' },
+  ja: { title: 'ムードボードを作成', body: 'トレイから写真をドラッグ＆ドロップするか、厳選テンプレートを適用するか、カラースウォッチやテキストメモを追加しましょう。', template: 'テンプレートを選択', text: '見出しを追加' },
+  pt: { title: 'Monte seu mood board', body: 'Arraste fotos da bandeja, aplique um modelo selecionado ou adicione amostras de cor e notas de texto.', template: 'Escolher modelo', text: 'Adicionar título' },
+} as const;
+const prompt = PROMPT[(Astro.currentLocale ?? 'en') as keyof typeof PROMPT] ?? PROMPT.en;
 ---
 
 <div
@@ -42,7 +54,7 @@ import '../../../styles/workspace.css';
         </span>
         <span
           id="mb-elements-badge"
-          class="px-2 py-0.5 rounded-full bg-workspace-surface border border-workspace-border text-[10px] font-mono text-workspace-muted font-medium"
+          class="hidden sm:inline px-2 py-0.5 rounded-full bg-workspace-surface border border-workspace-border text-[10px] font-mono text-workspace-muted font-medium"
         >
           0 elements
         </span>
@@ -142,11 +154,12 @@ import '../../../styles/workspace.css';
       <button
         id="btn-mb-export"
         type="button"
-        class="h-8 px-3.5 rounded-lg bg-accent hover:bg-accent-hover text-white text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+        aria-label="Export Board"
+        class="h-8 px-2.5 min-[360px]:px-3.5 rounded-lg bg-accent hover:bg-accent-hover text-white text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-colors cursor-pointer"
         title="Export Mood Board (PNG / JPEG / PDF)"
       >
         <Icon name="download" size={13} />
-        <span>Export Board</span>
+        <span class="hidden min-[360px]:inline">Export Board</span>
       </button>
     </div>
 
@@ -183,29 +196,29 @@ import '../../../styles/workspace.css';
         class="absolute inset-0 pointer-events-none flex flex-col items-center justify-center p-6 text-center z-10 transition-opacity duration-300"
       >
         <div class="p-6 rounded-2xl bg-black/70 backdrop-blur-md border border-white/10 max-w-sm space-y-3 pointer-events-auto shadow-2xl">
-          <div class="w-12 h-12 mx-auto rounded-xl bg-[#c98a46]/20 border border-[#c98a46]/30 flex items-center justify-center text-[#c98a46]">
+          <div class="w-12 h-12 mx-auto rounded-xl bg-accent-light/20 border border-accent-light/30 flex items-center justify-center text-accent-light">
             <Icon name="image" size={24} />
           </div>
           <div class="space-y-1">
-            <h3 class="text-sm font-bold text-white">Assemble Your Mood Board</h3>
+            <h3 class="text-sm font-bold text-white">{prompt.title}</h3>
             <p class="text-xs text-stone-300 leading-relaxed">
-              Drag &amp; drop photos from the tray, apply a curated template, or add color swatches and text notes.
+              {prompt.body}
             </p>
           </div>
           <div class="flex flex-wrap items-center justify-center gap-2 pt-1">
             <button
               id="btn-prompt-template"
               type="button"
-              class="px-3 py-1.5 rounded-lg bg-[#c98a46] hover:bg-[#b57635] text-white text-xs font-semibold transition-colors cursor-pointer shadow-sm"
+              class="px-3 py-1.5 rounded-lg bg-accent-light hover:bg-accent text-white text-xs font-semibold transition-colors cursor-pointer shadow-sm"
             >
-              Choose Template
+              {prompt.template}
             </button>
             <button
               id="btn-prompt-text"
               type="button"
               class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-medium border border-white/15 transition-colors cursor-pointer"
             >
-              Add Headline
+              {prompt.text}
             </button>
           </div>
         </div>
@@ -537,7 +550,6 @@ import '../../../styles/workspace.css';
       if (canvasSizeText) {
         canvasSizeText.textContent = `${config.width} × ${config.height}`;
       }
-      updateDimensionsReadout();
     });
 
     // -------------------------------------------------------------------------
@@ -572,6 +584,11 @@ import '../../../styles/workspace.css';
       const outputH = Math.round(config.height * currentScale);
       dimensionsReadout.textContent = `${outputW} × ${outputH} px`;
     }
+
+    // nanostores calls subscribers synchronously on subscribe, so this must sit
+    // below the `const` it reads — subscribing earlier threw a TDZ ReferenceError
+    // that aborted the rest of this script and left the export modal unbound.
+    $moodboardConfig.subscribe(() => updateDimensionsReadout());
 
     function openExportModal() {
       if (!exportModal || !exportModalCard) return;

@@ -3,17 +3,12 @@ import { ZipBuilder } from './zipBuilder';
 import { sanitizeFilename } from '../media/fileSanitizer';
 
 function getBaseFilename(filename: string): string {
+  // Lightroom and Capture One pair `IMG_0001.xmp` with `IMG_0001.CR2`, so the
+  // extension is always dropped — keeping unknown ones produced `IMG_0001.cr2.xmp`
+  // for exactly the RAW files sidecars exist for.
   const clean = sanitizeFilename(filename);
-  const parts = clean.split('.');
-  if (parts.length > 1) {
-    const ext = parts.pop()?.toLowerCase();
-    if (ext === 'jpg' || ext === 'jpeg' || ext === 'png' || ext === 'webp' || ext === 'heic') {
-      return parts.join('.');
-    }
-    // Reattach if it was an unknown extension
-    return parts.join('.') + '.' + ext;
-  }
-  return clean;
+  const dot = clean.lastIndexOf('.');
+  return dot > 0 ? clean.slice(0, dot) : clean;
 }
 
 function escapeXml(str: string): string {
@@ -27,18 +22,16 @@ function escapeXml(str: string): string {
 }
 
 export function generateXmpString(item: ImageItem): string {
-  let rating = 0;
-  let label = '';
-  
+  // Rejects use the Adobe Bridge `-1` rating plus a Red label so they stay
+  // distinguishable from unreviewed frames. Unreviewed frames carry no rating at
+  // all: writing 0 would wipe stars already set in the catalog on metadata read.
+  let ratingAttrs = '';
   if (item.status === 'keep') {
-    rating = 5;
-    label = 'Green';
+    ratingAttrs = '\n    xmp:Rating="5"\n    xmp:Label="Green"';
   } else if (item.status === 'flag') {
-    rating = 3;
-    label = 'Yellow';
-  } else if (item.status === 'reject' || item.status === 'unreviewed') {
-    rating = 0;
-    label = '';
+    ratingAttrs = '\n    xmp:Rating="3"\n    xmp:Label="Yellow"';
+  } else if (item.status === 'reject') {
+    ratingAttrs = '\n    xmp:Rating="-1"\n    xmp:Label="Red"';
   }
 
   const noteDescription = item.notes ? `\n   <dc:description>\n    <rdf:Alt>\n     <rdf:li xml:lang="x-default">${escapeXml(item.notes)}</rdf:li>\n    </rdf:Alt>\n   </dc:description>` : '';
@@ -49,9 +42,7 @@ export function generateXmpString(item: ImageItem): string {
  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about=""
     xmlns:xmp="http://ns.adobe.com/xap/1.0/"
-    xmlns:dc="http://purl.org/dc/elements/1.1/"
-    xmp:Rating="${rating}"
-    xmp:Label="${escapeXml(label)}">
+    xmlns:dc="http://purl.org/dc/elements/1.1/"${ratingAttrs}>
 ${item.tags && item.tags.length > 0 ? `   <dc:subject>
     <rdf:Bag>
 ${item.tags.map(t => `     <rdf:li>${escapeXml(t)}</rdf:li>`).join('\n')}

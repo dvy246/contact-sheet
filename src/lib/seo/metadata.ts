@@ -19,8 +19,8 @@ export const METADATA_REGISTRY: Record<string, RouteMetadata> = {
     schemaType: ['WebSite', 'Organization', 'SoftwareApplication'],
   },
   '/auto-cull-photos': {
-    title: 'Auto-Cull Blurry Photos — Free AI Sharpness Filter',
-    description: 'Automatically cull blurry and out-of-focus photos with local AI sharpness scoring. Runs in your browser with zero uploads.',
+    title: 'Auto-Cull Blurry Photos — Free Sharpness Scoring',
+    description: 'Automatically flag blurry and out-of-focus photos with sharpness scoring that runs in your browser. Free, no account, and your photos are never uploaded.',
     canonical: `${SITE_URL}/auto-cull-photos`,
     robots: 'index, follow',
     ogType: 'website',
@@ -52,7 +52,7 @@ export const METADATA_REGISTRY: Record<string, RouteMetadata> = {
   },
   '/compress-photos-for-web': {
     title: 'Compress Photos for Web — Free JPEG, WebP & PNG Tool',
-    description: 'Compress photos for websites and social media in your browser. Reduce file size without quality loss. No server uploads, 100% private.',
+    description: 'Compress photos for websites and social media in your browser. Shrink file sizes with minimal visible quality loss. No server uploads, 100% private.',
     canonical: `${SITE_URL}/compress-photos-for-web`,
     robots: 'index, follow',
     ogType: 'website',
@@ -178,7 +178,7 @@ export const METADATA_REGISTRY: Record<string, RouteMetadata> = {
   },
   '/about-us': {
     title: 'About Us — Make Contact Sheet',
-    description: 'Meet the team behind Make Contact Sheet, the free browser-first workspace for photo proof sheets, collages, and client review tools.',
+    description: 'Why Make Contact Sheet exists: a free browser-based workspace for photo proof sheets, collages, and client review that never uploads your photos.',
     canonical: `${SITE_URL}/about-us`,
     robots: 'index, follow',
     ogType: 'website',

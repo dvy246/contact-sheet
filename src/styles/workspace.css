@@ -1,7 +1,7 @@
 /* Light-Table Workspace Custom Styles */
 
 .light-table-canvas-wrap {
-  background-color: #e8dcce;
+  background-color: var(--light-table-bg);
   background-image: 
     radial-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px),
     radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px);
@@ -11,7 +11,7 @@
 }
 
 html.dark .light-table-canvas-wrap {
-  background-color: #0d0806;
+  background-color: var(--light-table-bg);
   background-image: 
     radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
     radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px);
@@ -150,10 +150,10 @@ html.dark .light-table-canvas-wrap {
    transform, opacity or box-shadow, so nothing here triggers layout. */
 .studio-dropzone {
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(201, 138, 70, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 0%, rgb(var(--accent-rgb) / 0.04) 0%, transparent 60%),
     radial-gradient(circle at 50% 100%, rgba(107, 60, 18, 0.05) 0%, transparent 50%),
-    linear-gradient(to bottom, #ffffff 0%, #fbf7f2 100%);
-  border: 1.5px dashed #dcc9b5;
+    linear-gradient(to bottom, var(--marketing-panel) 0%, var(--marketing-bg) 100%);
+  border: 1.5px dashed var(--workspace-border);
   box-shadow:
     0 1px 2px rgba(59, 36, 24, 0.04),
     0 8px 24px -4px rgba(59, 36, 24, 0.06),
@@ -168,15 +168,15 @@ html.dark .light-table-canvas-wrap {
 .studio-dropzone:hover,
 .studio-dropzone:focus-visible,
 .studio-dropzone.drag-over-active {
-  border-color: #c98a46;
+  border-color: var(--accent-light);
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(201, 138, 70, 0.08) 0%, transparent 60%),
-    radial-gradient(circle at 50% 100%, rgba(201, 138, 70, 0.03) 0%, transparent 50%),
-    linear-gradient(to bottom, #fffaf4 0%, #fbf2e7 100%);
+    radial-gradient(ellipse at 50% 0%, rgb(var(--accent-rgb) / 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 50% 100%, rgb(var(--accent-rgb) / 0.03) 0%, transparent 50%),
+    linear-gradient(to bottom, var(--dropzone-hover-top) 0%, var(--dropzone-hover-bottom) 100%);
   box-shadow:
-    0 1px 2px rgba(201, 138, 70, 0.06),
-    0 12px 32px -4px rgba(201, 138, 70, 0.14),
-    0 0 0 3px rgba(201, 138, 70, 0.1),
+    0 1px 2px rgb(var(--accent-rgb) / 0.06),
+    0 12px 32px -4px rgb(var(--accent-rgb) / 0.14),
+    0 0 0 3px rgb(var(--accent-rgb) / 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
   transform: translateY(-1px);
 }
@@ -189,10 +189,10 @@ html.dark .light-table-canvas-wrap {
 
 html.dark .studio-dropzone {
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(201, 138, 70, 0.05) 0%, transparent 60%),
-    radial-gradient(circle at 50% 100%, rgba(58, 41, 33, 0.45) 0%, transparent 50%),
-    linear-gradient(to bottom, #1a1210 0%, #0d0806 100%);
-  border: 1.5px dashed #3a2921;
+    radial-gradient(ellipse at 50% 0%, rgb(var(--accent-rgb) / 0.05) 0%, transparent 60%),
+    radial-gradient(circle at 50% 100%, color-mix(in srgb, var(--workspace-border) 45%, transparent) 0%, transparent 50%),
+    linear-gradient(to bottom, var(--workspace-panel) 0%, var(--light-table-bg) 100%);
+  border: 1.5px dashed var(--workspace-border);
   box-shadow:
     0 1px 2px rgba(0, 0, 0, 0.2),
     0 12px 32px -4px rgba(0, 0, 0, 0.5),
@@ -202,15 +202,15 @@ html.dark .studio-dropzone {
 html.dark .studio-dropzone:hover,
 html.dark .studio-dropzone:focus-visible,
 html.dark .studio-dropzone.drag-over-active {
-  border-color: #c98a46;
+  border-color: var(--accent-light);
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(201, 138, 70, 0.1) 0%, transparent 60%),
-    radial-gradient(circle at 50% 100%, rgba(58, 41, 33, 0.45) 0%, transparent 50%),
-    linear-gradient(to bottom, #20150f 0%, #0d0806 100%);
+    radial-gradient(ellipse at 50% 0%, rgb(var(--accent-rgb) / 0.1) 0%, transparent 60%),
+    radial-gradient(circle at 50% 100%, color-mix(in srgb, var(--workspace-border) 45%, transparent) 0%, transparent 50%),
+    linear-gradient(to bottom, var(--dropzone-hover-top) 0%, var(--dropzone-hover-bottom) 100%);
   box-shadow:
     0 1px 2px rgba(0, 0, 0, 0.3),
     0 16px 40px -4px rgba(0, 0, 0, 0.6),
-    0 0 0 3px rgba(201, 138, 70, 0.14),
+    0 0 0 3px rgb(var(--accent-rgb) / 0.14),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
@@ -224,7 +224,7 @@ html.dark .studio-dropzone.drag-over-active {
 
 .studio-dropzone:hover .dz-icon {
   transform: translateY(-2px) scale(1.04);
-  border-color: rgba(201, 138, 70, 0.6);
+  border-color: rgb(var(--accent-rgb) / 0.6);
 }
 
 .studio-dropzone.drag-over-active .dz-icon {
@@ -302,7 +302,7 @@ html.dark .studio-dropzone.drag-over-active {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(201, 138, 70, 0.1);
+  background-color: rgb(var(--accent-rgb) / 0.1);
   color: var(--color-accent);
 }
 
@@ -409,5 +409,34 @@ input[type="range"] {
   .light-table-canvas-wrap {
     background: none !important;
     padding: 0 !important;
+  }
+}
+
+/* Touch sizing. The studio panel is dense on purpose for mouse users, but a
+   6px-tall slider or a 16px checkbox is a missed tap on a phone. Coarse
+   pointers get ~28–32px hit areas; the visible track stays 6px via a
+   background band, so the controls look the same, they are just easier to hit.
+   Fine pointers (desktop) are untouched. */
+@media (pointer: coarse) {
+  :is(#frameproof-studio, #frameproof-workspace) input[type="range"] {
+    height: 28px;
+    background: linear-gradient(var(--workspace-border), var(--workspace-border)) center / 100% 6px no-repeat;
+  }
+
+  :is(#frameproof-studio, #frameproof-workspace) input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+  }
+
+  :is(#frameproof-studio, #frameproof-workspace) [data-seg],
+  #layout-controls-mount button,
+  :is(#btn-zoom-in, #btn-zoom-out, #btn-zoom-reset, #btn-prev-page, #btn-next-page) {
+    min-height: 32px;
+    min-width: 32px;
+  }
+
+  nav[aria-label="Breadcrumb"] a {
+    display: inline-block;
+    padding-block: 6px;
   }
 }

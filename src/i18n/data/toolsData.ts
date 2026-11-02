@@ -355,7 +355,7 @@ export const MOODBOARD_DATA: Record<Locale, MoodBoardToolData> = {
     pillars: [
       { title: 'Freeform Canvas & Snapping', desc: 'Freely position, scale, rotate, and layer visual assets. Magnetic snapping guides ensure precise element-to-element alignment without rigid grid constraints.', emoji: '📐', icon: 'crop' },
       { title: 'Color Palettes & Notes', desc: 'Add harmonic color swatch pills, typography labels, and sticky notes to capture mood, lighting instructions, wardrobe references, and styling notes.', emoji: '🎨', icon: 'columns' },
-      { title: 'High-DPI 300 DPI Export', desc: 'Export uncompressed high-resolution PNGs, web-optimized JPEGs, or multi-page presentation PDFs ready for client pitches, creative decks, and studio wall prints.', emoji: '🖨️', icon: 'download' }
+      { title: 'High-DPI 300 DPI Export', desc: 'Export lossless high-resolution PNGs, web-optimized JPEGs, or multi-page presentation PDFs ready for client pitches, creative decks, and studio wall prints.', emoji: '🖨️', icon: 'download' }
     ],
     faqs: [
       { question: 'How do I create a photo mood board in Make Contact Sheet?', answer: 'Simply drag and drop your inspiration photos directly onto the canvas. You can freely position, resize, rotate, and layer images, add typographic text notes and color swatches, and align elements using real-time magnetic snapping guides. When you are finished, export your high-resolution mood board as a PNG, JPEG, or 300 DPI print-ready PDF.' },
@@ -1178,10 +1178,10 @@ export interface AutoCullToolData {
 
 export const AUTO_CULL_DATA: Record<Locale, AutoCullToolData> = {
   en: {
-    title: 'AI Photo Culling Online — Local In-Browser Smart Culling',
+    title: 'Auto Cull Photos Online — Free In-Browser Sharpness Culling',
     description: 'Fast, private photo culling in your browser. Automatic sharpness scoring using Laplacian variance without uploading files to the cloud.',
-    heading: 'AI-Powered In-Browser Photo Culling',
-    lead: 'Review and cull thousands of photos in seconds. Our client-side sharpness analysis automatically detects blurry shots, closed eyes, and misfocused burst frames directly in your browser with zero cloud uploads.',
+    heading: 'Automatic In-Browser Photo Culling',
+    lead: 'Review and cull thousands of photos in seconds. Our client-side sharpness analysis automatically detects blurry shots and misfocused burst frames directly in your browser with zero cloud uploads.',
     breadcrumbName: 'Auto Cull Photos',
     prose: {
       h2: 'How Browser-Side Laplacian Variance Sharpness Scoring Works',
@@ -1200,14 +1200,14 @@ export const AUTO_CULL_DATA: Record<Locale, AutoCullToolData> = {
     },
     faqs: [
       { question: 'How does the automatic photo culling work?', answer: 'Make Contact Sheet uses local computer vision algorithms (modified Laplacian variance) to measure edge sharpness across image luminance channels. It detects soft focus and camera shake instantly in your browser.' },
-      { question: 'Are my photos uploaded to any AI cloud server?', answer: 'No! Unlike cloud AI culling services, 100% of the analysis runs in your local browser memory using Web Workers. Your client photos never leave your device.' },
+      { question: 'Are my photos uploaded to a cloud server?', answer: 'No. Unlike cloud AI culling services, 100% of the analysis runs in your local browser memory. Your client photos never leave your device.' },
       { question: 'Can I export my selections back into Lightroom Classic?', answer: 'Yes. You can copy a comma-separated filename list formatted specifically for Lightroom Classic\'s Library Filter bar, or export Adobe XMP sidecar XMLs.' }
     ]
   },
   es: {
-    title: 'Selección inteligente de fotos con IA — Culling local en navegador',
+    title: 'Selección automática de fotos — Culling local en el navegador',
     description: 'Selecciona y descarta fotos rápidamente en tu navegador. Análisis de nitidez con varianza de Laplace sin subir archivos a la nube.',
-    heading: 'Selección Fotográfica con IA en el Navegador',
+    heading: 'Selección Fotográfica Automática en el Navegador',
     lead: 'Revisa y selecciona miles de fotos en segundos. Nuestro análisis de nitidez local detecta tomas desenfocadas y ráfagas defectuosas directamente en tu navegador sin subir nada a la nube.',
     breadcrumbName: 'Selección inteligente',
     prose: {
@@ -1227,14 +1227,14 @@ export const AUTO_CULL_DATA: Record<Locale, AutoCullToolData> = {
     },
     faqs: [
       { question: '¿Cómo funciona la selección automática de fotos?', answer: 'Make Contact Sheet emplea algoritmos locales de visión por computador (varianza laplaciana) para medir la nitidez de bordes y detectar fotos movidas o fuera de foco en el navegador.' },
-      { question: '¿Se suben mis fotos a algún servidor con IA?', answer: '¡No! Todo el procesamiento se realiza en la memoria local del navegador mediante Web Workers. Ninguna foto sale de tu equipo.' },
+      { question: '¿Se suben mis fotos a algún servidor?', answer: '¡No! Todo el procesamiento se realiza en la memoria local del navegador. Ninguna foto sale de tu equipo.' },
       { question: '¿Puedo exportar mi selección a Lightroom Classic?', answer: 'Sí. Puedes copiar una lista de nombres de archivo separada por comas lista para el filtro de biblioteca de Lightroom o descargar archivos XMP.' }
     ]
   },
   de: {
-    title: 'KI-Fotoauswahl online — Lokales Smart Culling im Browser',
+    title: 'Automatische Fotoauswahl online — Lokales Culling im Browser',
     description: 'Schnelle, private Fotoauswahl im Browser. Automatische Schärfebewertung mit Laplace-Varianz ohne Cloud-Uploads.',
-    heading: 'KI-gestützte Fotoauswahl direkt im Browser',
+    heading: 'Automatische Fotoauswahl direkt im Browser',
     lead: 'Sichte tausende Bilder in Sekundenschnelle. Unsere lokale Schärfeanalyse erkennt unscharfe Aufnahmen und Fehlfokus direkt im Browser ohne Datenübertragung.',
     breadcrumbName: 'Automatische Bildauswahl',
     prose: {
@@ -1254,14 +1254,14 @@ export const AUTO_CULL_DATA: Record<Locale, AutoCullToolData> = {
     },
     faqs: [
       { question: 'Wie funktioniert das automatische Culling?', answer: 'Make Contact Sheet nutzt lokale Bildverarbeitungsalgorithmen (Laplace-Varianz), um Kantenschärfe zu berechnen und Verwacklungen im Browser zu erkennen.' },
-      { question: 'Werden Bilder zu Cloud-Servern gesendet?', answer: 'Nein! Die Analyse läuft komplett offline im Browser über Web Worker. Deine Kundendaten verlassen niemals deinen Rechner.' },
+      { question: 'Werden Bilder zu Cloud-Servern gesendet?', answer: 'Nein! Die Analyse läuft komplett offline im Browser. Deine Kundendaten verlassen niemals deinen Rechner.' },
       { question: 'Kann ich die Auswahl in Lightroom Classic übernehmen?', answer: 'Ja. Du kannst eine kommagetrennte Dateiliste für die Lightroom-Bibliothekssuche kopieren oder XMP-Dateien exportieren.' }
     ]
   },
   fr: {
-    title: 'Tri photo intelligent par IA — Tri local et privé dans le navigateur',
+    title: 'Tri photo automatique — Tri local et privé dans le navigateur',
     description: 'Triez vos photos rapidement et en toute confidentialité. Détection automatique de la netteté par variance laplacienne sans téléversement.',
-    heading: 'Tri Photo Intelligent Assisté par IA dans le Navigateur',
+    heading: 'Tri Photo Automatique dans le Navigateur',
     lead: 'Passez au crible des milliers de clichés en un clin d\'œil. Notre analyse locale de netteté détecte flous de bougé et erreurs de mise au point directement dans votre navigateur.',
     breadcrumbName: 'Tri automatique',
     prose: {
@@ -1281,14 +1281,14 @@ export const AUTO_CULL_DATA: Record<Locale, AutoCullToolData> = {
     },
     faqs: [
       { question: 'Comment s\'effectue le tri automatique ?', answer: 'Make Contact Sheet applique des calculs de vision par ordinateur (variance laplacienne) pour jauger la netteté des contours et repérer les flous dans le navigateur.' },
-      { question: 'Mes clichés sont-ils analysés sur un serveur distant ?', answer: 'Non ! Tout s\'exécute localement dans la mémoire de votre navigateur via des Web Workers sans aucun envoi réseau.' },
+      { question: 'Mes clichés sont-ils analysés sur un serveur distant ?', answer: 'Non ! Tout s\'exécute localement dans la mémoire de votre navigateur, sans aucun envoi réseau.' },
       { question: 'Peut-on importer la sélection dans Lightroom Classic ?', answer: 'Oui. Vous pouvez copier une liste de noms de fichiers séparés par des virgules pour le filtre de recherche Lightroom ou exporter des fichiers sidecar XMP.' }
     ]
   },
   ja: {
-    title: 'AI写真セレクト・写真選別ツール — ブラウザ内完結スマートカーリング',
+    title: '写真の自動セレクト・選別ツール — ブラウザ内で完結',
     description: '高速かつプライベートな写真セレクト。ラプラシアン分散による鮮明度自動スコアリングでピンボケ写真を瞬時に検出。外部アップロード不要。',
-    heading: 'ブラウザ完結型 AI写真セレクト＆選別ツール',
+    heading: 'ブラウザ完結型 写真の自動セレクト＆選別ツール',
     lead: '大量の写真の中からベストショットを素早く判定。ブラウザ上で動作する鮮明度解析アルゴリズムが、ピンボケや手ブレ、連写時のピント外れを自動判別し、選別作業の時間を大幅に削減します。',
     breadcrumbName: '写真の自動選別',
     prose: {
@@ -1308,14 +1308,14 @@ export const AUTO_CULL_DATA: Record<Locale, AutoCullToolData> = {
     },
     faqs: [
       { question: '写真の自動選別はどのように行われますか？', answer: 'Make Contact Sheetはブラウザ上でコンピュータビジョンアルゴリズム（ラプラシアン分散）を実行し、画像のエッジ輪郭の鋭さを解析してピンボケやブレを自動検出します。' },
-      { question: '写真がクラウドのAIサーバーに送信されることはありますか？', answer: 'いいえ。すべての画像解析はWeb Workerを通じてお使いのパソコンのメモリ上でのみ実行されます。大切な撮影データが外部に出ることはありません。' },
+      { question: '写真がクラウドのサーバーに送信されることはありますか？', answer: 'いいえ。すべての画像解析はお使いのパソコンのメモリ上でのみ実行されます。大切な撮影データが外部に出ることはありません。' },
       { question: '選別結果をLightroom Classicに引き継げますか？', answer: 'はい。Lightroomのライブラリフィルター用ファイル名テキスト（カンマ区切り）や、5つ星評価を含むAdobe XMPサイドカーファイルをダウンロードできます。' }
     ]
   },
   pt: {
-    title: 'Seleção inteligente de fotos com IA — Culling local no navegador',
+    title: 'Seleção automática de fotos — Culling local no navegador',
     description: 'Faça a triagem de milhares de fotos com rapidez e privacidade. Análise de nitidez por variância laplaciana sem envio para a nuvem.',
-    heading: 'Seleção Fotográfica com IA Direto no Navegador',
+    heading: 'Seleção Fotográfica Automática Direto no Navegador',
     lead: 'Revise e selecione milhares de fotos em instantes. Nossa análise de nitidez local identifica fotos fora de foco e disparos tremidos diretamente no navegador sem enviar dados para a nuvem.',
     breadcrumbName: 'Seleção automática',
     prose: {
@@ -1335,7 +1335,7 @@ export const AUTO_CULL_DATA: Record<Locale, AutoCullToolData> = {
     },
     faqs: [
       { question: 'Como funciona a seleção automática de fotos?', answer: 'O Make Contact Sheet utiliza algoritmos locais de visão computacional (variância laplaciana) para mensurar a nitidez das bordas e identificar imagens tremidas no navegador.' },
-      { question: 'Minhas fotos são enviadas para algum servidor de IA?', answer: 'Não! Toda a análise é realizada localmente na memória do navegador com Web Workers. Suas fotos nunca saem da sua máquina.' },
+      { question: 'Minhas fotos são enviadas para algum servidor?', answer: 'Não! Toda a análise é realizada localmente na memória do navegador. Suas fotos nunca saem da sua máquina.' },
       { question: 'Posso exportar minha seleção para o Lightroom Classic?', answer: 'Sim. Você pode copiar a lista de arquivos formatada para a barra de filtros do Lightroom ou baixar arquivos sidecar XMP.' }
     ]
   }
@@ -1533,7 +1533,7 @@ export const BULK_RESIZE_DATA: Record<Locale, BulkResizeToolData> = {
         '4K Ultra HD (3840 × 2160 px): Recommended for video background plates, TV slide broadcasts, and high-end digital signage.'
       ],
       h3_2: '100% In-Browser Privacy and Speed',
-      p4: 'Unlike online photo converters that require uploading hundreds of gigabytes of commercial images to remote cloud servers, Make Contact Sheet executes every resize operation in local browser memory. Files are processed with multi-threaded Web Workers and Canvas rendering.'
+      p4: 'Unlike online photo converters that require uploading hundreds of gigabytes of commercial images to remote cloud servers, Make Contact Sheet executes every resize operation in local browser memory. Files are processed with the browser\'s Canvas API.'
     },
     faqs: [
       { question: 'How does the 16:9 bulk resize tool crop photos?', answer: 'The tool uses intelligent optical center-cropping. It calculates the largest possible 16:9 rectangle that fits inside your image and trims equal margins from the opposing edges, keeping your subject centered.' },
@@ -1559,7 +1559,7 @@ export const BULK_RESIZE_DATA: Record<Locale, BulkResizeToolData> = {
         '4K Ultra HD (3840 × 2160 px): Recomendado para vídeos de fondo, pantallas de televisión y cartelería digital.'
       ],
       h3_2: 'Privacidad y rapidez 100% en el navegador',
-      p4: 'A diferencia de los convertidores en la nube, Make Contact Sheet ejecuta cada operación de recorte en la memoria local mediante Web Workers y aceleración por Canvas.'
+      p4: 'A diferencia de los convertidores en la nube, Make Contact Sheet ejecuta cada operación de recorte en la memoria local mediante Canvas.'
     },
     faqs: [
       { question: '¿Cómo recorta las fotos a 16:9 la herramienta por lotes?', answer: 'Aplica un recorte central simétrico: calcula el mayor rectángulo 16:9 posible dentro de la imagen y recorta los márgenes sobrantes de forma equidistante manteniendo el motivo centrado.' },
@@ -1611,7 +1611,7 @@ export const BULK_RESIZE_DATA: Record<Locale, BulkResizeToolData> = {
         '4K Ultra HD (3840 × 2160 px) : Parfait pour la vidéo et l\'affichage dynamique.'
       ],
       h3_2: 'Confidentialité totale et rapidité locale',
-      p4: 'Toutes les opérations de recadrage et de redimensionnement sont opérées en mémoire locale via Web Workers.'
+      p4: 'Toutes les opérations de recadrage et de redimensionnement sont opérées en mémoire locale, dans votre navigateur.'
     },
     faqs: [
       { question: 'Comment le recadrage 16:9 est-il calculé ?', answer: 'L\'outil effectue un cadrage centré symétrique en conservant le centre de la scène et en égalisant les marges.' },
@@ -1637,7 +1637,7 @@ export const BULK_RESIZE_DATA: Record<Locale, BulkResizeToolData> = {
         '4K Ultra HD（3840 × 2160 px）：高精細ディスプレイや動画背景素材に最適。'
       ],
       h3_2: '100% ブラウザ内完結の安全性と処理速度',
-      p4: 'ファイルをクラウドへアップロードすることなく、パソコンのブラウザメモリ上でマルチスレッドWeb Workerを用いて高速に処理されます。'
+      p4: 'ファイルをクラウドへアップロードすることなく、パソコンのブラウザメモリ上で高速に処理されます。'
     },
     faqs: [
       { question: '16:9のトリミングはどのように行われますか？', answer: '画像の光学的な中心を自動認識し、最大の16:9矩形を切り出して不要な両端を均等にクロップします。' },
@@ -1663,7 +1663,7 @@ export const BULK_RESIZE_DATA: Record<Locale, BulkResizeToolData> = {
         '4K Ultra HD (3840 × 2160 px): Recomendado para fundos de vídeo e telas 4K.'
       ],
       h3_2: 'Privacidade e processamento 100% no navegador',
-      p4: 'Nenhum arquivo é enviado para a nuvem. O redimensionamento é executado no navegador com Web Workers.'
+      p4: 'Nenhum arquivo é enviado para a nuvem. O redimensionamento é executado no navegador.'
     },
     faqs: [
       { question: 'Como o recorte 16:9 é realizado?', answer: 'A ferramenta faz um corte central simétrico, preservando o centro da foto e eliminando bordas em excesso.' },
@@ -1898,7 +1898,7 @@ export const STUDIO_CONTACT_SHEET_DATA: Record<Locale, StudioContactSheetData> =
     exportsHeading: 'Professional Export Formats',
     exportsLead: 'Six versatile export formats supporting visual handoffs and automated software pipelines.',
     exports: [
-      { name: 'Multi-Page PDF', body: 'Print-calibrated 300 DPI vector PDF document with custom margins.' },
+      { name: 'Multi-Page PDF', body: 'Print-calibrated 300 DPI PDF document with custom margins.' },
       { name: 'High-Res PNG', body: 'Lossless full-resolution image of the active page.' },
       { name: 'Compressed JPEG', body: 'Web-optimized image for quick messaging and client emails.' },
       { name: 'CSV Manifest', body: 'Structured spreadsheet table with filenames, ratings, and EXIF parameters.' },
@@ -1958,7 +1958,7 @@ export const STUDIO_CONTACT_SHEET_DATA: Record<Locale, StudioContactSheetData> =
     exportsHeading: 'Formatos de exportación profesionales',
     exportsLead: 'Seis opciones adaptadas tanto para entrega a clientes como para programas de edición.',
     exports: [
-      { name: 'PDF multipágina', body: 'Documento vectorial a 300 DPI en escala de impresión.' },
+      { name: 'PDF multipágina', body: 'Documento a 300 DPI en escala de impresión.' },
       { name: 'PNG en alta resolución', body: 'Imagen sin compresión de la página activa.' },
       { name: 'JPEG optimizado', body: 'Archivo ligero para envíos rápidos por correo o mensajería.' },
       { name: 'Manifiesto CSV', body: 'Hoja de cálculo con nombres, calificaciones y parámetros EXIF.' },
@@ -2078,7 +2078,7 @@ export const STUDIO_CONTACT_SHEET_DATA: Record<Locale, StudioContactSheetData> =
     exportsHeading: 'Formats d\'exportation professionnels',
     exportsLead: 'Six formats polyvalents pour les présentations clients et l\'intégration dans vos logiciels photo.',
     exports: [
-      { name: 'PDF multi-pages', body: 'Document vectoriel à 300 DPI calibré pour l\'impression.' },
+      { name: 'PDF multi-pages', body: 'Document à 300 DPI calibré pour l\'impression.' },
       { name: 'PNG haute résolution', body: 'Fichier sans perte de la page en cours d\'affichage.' },
       { name: 'JPEG optimisé', body: 'Fichier compact pour les envois rapides par courriel.' },
       { name: 'Manifeste CSV', body: 'Tableau avec noms, statuts et valeurs EXIF.' },
@@ -2138,7 +2138,7 @@ export const STUDIO_CONTACT_SHEET_DATA: Record<Locale, StudioContactSheetData> =
     exportsHeading: 'プロ仕様の多様なエクスポート形式',
     exportsLead: '印刷、納品、後工程の編集ソフト連携に対応した6種類のエクスポート形式を用意しています。',
     exports: [
-      { name: '複数ページPDF', body: '余白や解像度が印刷用に最適化された300 DPIベクターPDF文書。' },
+      { name: '複数ページPDF', body: '余白や解像度が印刷用に最適化された300 DPIのPDF文書。' },
       { name: '高解像度PNG', body: '現在表示中のページの劣化なしフル解像度画像。' },
       { name: '軽量JPEG', body: 'メール添付やメッセージ送信用に最適化された軽量画像。' },
       { name: 'CSVマニフェスト', body: 'ファイル名、選別ステータス、EXIF設定を含む表計算用データ。' },
@@ -2198,7 +2198,7 @@ export const STUDIO_CONTACT_SHEET_DATA: Record<Locale, StudioContactSheetData> =
     exportsHeading: 'Formatos profissionais de exportação',
     exportsLead: 'Seis opções versáteis para entrega ao cliente e integração com softwares de edição.',
     exports: [
-      { name: 'PDF multipágina', body: 'Documento vetorial a 300 DPI calibrado para impressão.' },
+      { name: 'PDF multipágina', body: 'Documento a 300 DPI calibrado para impressão.' },
       { name: 'PNG de alta resolução', body: 'Imagem sem perdas da página selecionada.' },
       { name: 'JPEG comprimido', body: 'Arquivo leve para envio rápido por e-mail.' },
       { name: 'Planilha CSV', body: 'Tabela estruturada com nomes, notas e parâmetros EXIF.' },

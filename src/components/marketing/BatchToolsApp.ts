@@ -48,8 +48,9 @@ export class BatchToolsApp {
       this.localImages = [...existing];
     }
 
+    // render() binds its own listeners; calling attachEvents() here as well
+    // double-bound the first render, so the first import loaded every file twice.
     this.render();
-    this.attachEvents();
   }
 
   private render(): void {
@@ -75,7 +76,7 @@ export class BatchToolsApp {
             <label class="px-4 py-2 rounded-xl bg-accent hover:bg-accent-hover text-white text-xs font-semibold cursor-pointer shadow-xs transition-all flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
               <span>Add Photos</span>
-              <input type="file" id="batch-file-input" multiple accept="image/*" class="hidden" />
+              <input type="file" id="batch-file-input" multiple accept="image/*,.heic,.heif,.cr2,.cr3,.nef,.arw,.dng,.orf,.rw2,.raf,.pef" class="hidden" />
             </label>
 
             <label class="px-4 py-2 rounded-xl bg-marketing-surface hover:bg-marketing-surface-hover border border-marketing-border text-marketing-text text-xs font-semibold cursor-pointer transition-colors flex items-center gap-2">
@@ -220,12 +221,12 @@ export class BatchToolsApp {
         <!-- Token Quick Insertion Chips -->
         <div class="flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
           <span class="text-marketing-muted mr-1">Dynamic Tokens:</span>
-          <button data-token="{name}" class="token-chip px-2 py-0.5 rounded bg-marketing-surface border border-marketing-border hover:border-accent text-marketing-text cursor-pointer">+{'{name}'}</button>
-          <button data-token="{index}" class="token-chip px-2 py-0.5 rounded bg-marketing-surface border border-marketing-border hover:border-accent text-marketing-text cursor-pointer">+{'{index}'}</button>
-          <button data-token="{date}" class="token-chip px-2 py-0.5 rounded bg-marketing-surface border border-marketing-border hover:border-accent text-marketing-text cursor-pointer">+{'{date}'}</button>
-          <button data-token="{camera}" class="token-chip px-2 py-0.5 rounded bg-marketing-surface border border-marketing-border hover:border-accent text-marketing-text cursor-pointer">+{'{camera}'}</button>
-          <button data-token="{fstop}" class="token-chip px-2 py-0.5 rounded bg-marketing-surface border border-marketing-border hover:border-accent text-marketing-text cursor-pointer">+{'{fstop}'}</button>
-          <button data-token="{iso}" class="token-chip px-2 py-0.5 rounded bg-marketing-surface border border-marketing-border hover:border-accent text-marketing-text cursor-pointer">+{'{iso}'}</button>
+          <button data-token="{name}" class="token-chip px-2 py-0.5 rounded bg-marketing-surface border border-marketing-border hover:border-accent text-marketing-text cursor-pointer">+{name}</button>
+          <button data-token="{index}" class="token-chip px-2 py-0.5 rounded bg-marketing-surface border border-marketing-border hover:border-accent text-marketing-text cursor-pointer">+{index}</button>
+          <button data-token="{date}" class="token-chip px-2 py-0.5 rounded bg-marketing-surface border border-marketing-border hover:border-accent text-marketing-text cursor-pointer">+{date}</button>
+          <button data-token="{camera}" class="token-chip px-2 py-0.5 rounded bg-marketing-surface border border-marketing-border hover:border-accent text-marketing-text cursor-pointer">+{camera}</button>
+          <button data-token="{fstop}" class="token-chip px-2 py-0.5 rounded bg-marketing-surface border border-marketing-border hover:border-accent text-marketing-text cursor-pointer">+{fstop}</button>
+          <button data-token="{iso}" class="token-chip px-2 py-0.5 rounded bg-marketing-surface border border-marketing-border hover:border-accent text-marketing-text cursor-pointer">+{iso}</button>
         </div>
 
         <!-- Export Action Bar -->

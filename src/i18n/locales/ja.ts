@@ -24,7 +24,7 @@ export const ja: TranslationDict = {
     "toolPrintSaver8x10Desc": "量販店プリントを格安にする複数枚面付けレイアウト",
     "toolLargePhotoPrints": "大型写真ポスタープリント",
     "toolLargePhotoPrintsDesc": "11×14、16×20、24×36ポスターの複数面付けレイアウト",
-    "toolAutoCull": "AI自動写真選別（スマートカリング）",
+    "toolAutoCull": "写真の自動選別（スマートカリング）",
     "toolAutoCullDesc": "完全ローカル処理による鮮鋭度スコアリングとピンボケ検出",
     "toolWhiteLabel": "ホワイトレーベル校正ポータル",
     "toolWhiteLabelDesc": "スタジオの独自ロゴと配色で納品できる校正ギャラリー",
@@ -50,7 +50,7 @@ export const ja: TranslationDict = {
     "guidesHeading": "ガイド & ワークフロー",
     "aboutHeading": "運営情報 & 利用規約",
     "trustTitle": "サーバー送信ゼロ — 100% プライベート",
-    "trustDesc": "写真が端末から送信されることは一切ありません。画像のレンダリング、EXIF解析、AI鮮鋭度判定、PDF生成のすべてがブラウザのローカルメモリ上で安全に実行されます。",
+    "trustDesc": "写真が端末から送信されることは一切ありません。画像のレンダリング、EXIF解析、鮮鋭度判定、PDF生成のすべてがブラウザのローカルメモリ上で安全に実行されます。",
     "copyright": "フォトグラファー、デザイナー、視覚表現者のために設計。",
     "aboutUs": "会社概要・理念",
     "contactUs": "お問い合わせ",
@@ -135,7 +135,7 @@ export const ja: TranslationDict = {
     "card4Desc": "A4、USレター、8×10、11×14、16×20、24×36規格に対応し、写真ラボや店頭プリントに即座に入稿可能な面付けデータを生成。"
   },
   "workflow": {
-    "step1Title": "01. 取り込み & AI鮮鋭度判定",
+    "step1Title": "01. 取り込み & 鮮鋭度判定",
     "step1Desc": "RAW、JPG、PNG、HEIC写真をドラッグ＆ドロップ。ローカルのラプラシアン分散演算で最もピントの合ったコマを即座に特定。",
     "step2Title": "02. 配置 & カスタマイズ",
     "step2Desc": "グリッドプリセット、トークン形式のEXIFラベル、デザイナー背景色、透かしロゴスタンプを自在に設定。",

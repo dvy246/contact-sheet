@@ -49,7 +49,7 @@ export const HOME_LOCALIZED_DATA: Record<Locale, HomeLocalizedSection> = {
     "proseH3_4": "Mood boards libres y dirección visual creativa",
     "proseP5": "Cuando un proyecto requiere planificación conceptual en lugar de una cuadrícula rígida, nuestro creador de mood boards ofrece un lienzo libre sin restricciones. Puedes arrastrar, rotar y superponer fotos junto con tarjetas de muestras de color y notas adhesivas con ajuste magnético y exportación a 300 DPI.",
     "proseH3_5": "Ejecución en el navegador y privacidad estricta del cliente",
-    "proseP6": "Todo el procesamiento de imágenes, decodificación EXIF y generación de PDF se ejecuta localmente en el hardware de tu dispositivo utilizando Canvas HTML5 y Web Workers. Tus fotos y datos confidenciales nunca se cargan en servidores externos.",
+    "proseP6": "Todo el procesamiento de imágenes, decodificación EXIF y generación de PDF se ejecuta localmente en el hardware de tu dispositivo utilizando Canvas HTML5. Tus fotos y datos confidenciales nunca se cargan en servidores externos.",
     "sidebarHeading": "Cuatro pasos para la entrega al cliente",
     "sidebarSteps": [
       {
@@ -133,7 +133,7 @@ export const HOME_LOCALIZED_DATA: Record<Locale, HomeLocalizedSection> = {
     "proseH3_4": "Freie Moodboards und kreative Bildregie",
     "proseP5": "Für konzeptionelle Shootings bietet der integrierte Moodboard-Maker eine freie Arbeitsfläche mit magnetischen Hilfslinien, Farbfeldern mit Hex-Codes und Notizzetteln.",
     "proseH3_5": "Browserbasierte Ausführung und garantierte Privatsphäre",
-    "proseP6": "Alle Bildverarbeitungen erfolgen lokal im Speicher Ihres Geräts über HTML5 Canvas und Web Worker. Keine Datei wird auf externe Server hochgeladen.",
+    "proseP6": "Alle Bildverarbeitungen erfolgen lokal im Speicher Ihres Geräts über HTML5 Canvas. Keine Datei wird auf externe Server hochgeladen.",
     "sidebarHeading": "Vier Schritte zur Kundenübergabe",
     "sidebarSteps": [
       {
@@ -142,7 +142,7 @@ export const HOME_LOCALIZED_DATA: Record<Locale, HomeLocalizedSection> = {
       },
       {
         "title": "Auswählen & Sortieren",
-        "desc": "Mit Tasten 1–3 schnell beurteilen oder Schärfe-KI nutzen."
+        "desc": "Mit Tasten 1–3 schnell beurteilen oder die Schärfebewertung nutzen."
       },
       {
         "title": "Layout festlegen",
@@ -217,7 +217,7 @@ export const HOME_LOCALIZED_DATA: Record<Locale, HomeLocalizedSection> = {
     "proseH3_4": "Mood boards libres et direction artistique",
     "proseP5": "Notre créateur de mood boards offre une toile libre avec alignement magnétique, palettes de couleurs avec codes hexadécimaux et notes stylistes.",
     "proseH3_5": "Traitement local dans le navigateur et confidentialité absolue",
-    "proseP6": "Tout s'exécute dans la mémoire locale de votre appareil via Canvas HTML5 et Web Workers. Vos clichés confidentiels ne sont jamais téléversés.",
+    "proseP6": "Tout s'exécute dans la mémoire locale de votre appareil via Canvas HTML5. Vos clichés confidentiels ne sont jamais téléversés.",
     "sidebarHeading": "Quatre étapes pour livrer vos sélections",
     "sidebarSteps": [
       {
@@ -301,7 +301,7 @@ export const HOME_LOCALIZED_DATA: Record<Locale, HomeLocalizedSection> = {
     "proseH3_4": "自由配置ムードボードとビジュアル演出",
     "proseP5": "厳密なグリッドだけでなく、撮影コンセプトやスタイリング指示をまとめるムードボード機能も搭載。写真、カラー見本、付箋メモを自由に配置できます。",
     "proseH3_5": "完全ブラウザ内実行と徹底したデータプライバシー",
-    "proseP6": "画像デコードやPDF生成はHTML5 CanvasとWeb Workersを用い、すべて端末のローカルメモリ内で完結。機密写真や未公開素材が外部サーバーに送信されることは一切ありません。",
+    "proseP6": "画像デコードやPDF生成はHTML5 Canvasを用い、すべて端末のローカルメモリ内で完結。機密写真や未公開素材が外部サーバーに送信されることは一切ありません。",
     "sidebarHeading": "クライアント納品までの4ステップ",
     "sidebarSteps": [
       {
@@ -310,7 +310,7 @@ export const HOME_LOCALIZED_DATA: Record<Locale, HomeLocalizedSection> = {
       },
       {
         "title": "選別 & カリング",
-        "desc": "1〜3キーで採用・不採用を瞬時にタグ付け、AI鮮鋭度判定も活用。"
+        "desc": "1〜3キーで採用・不採用を瞬時にタグ付け、鮮鋭度判定も活用。"
       },
       {
         "title": "レイアウト設定",
@@ -385,7 +385,7 @@ export const HOME_LOCALIZED_DATA: Record<Locale, HomeLocalizedSection> = {
     "proseH3_4": "Mood boards livres e direção artística",
     "proseP5": "Para planejamento conceitual, nosso criador de mood boards oferece uma tela livre com guias magnéticas, paletas de cores com códigos hexadecimais e notas adesivas de styling.",
     "proseH3_5": "Execução local no navegador e privacidade garantida",
-    "proseP6": "Todo o processamento roda localmente na memória do seu dispositivo via HTML5 Canvas e Web Workers. Seus arquivos confidenciais nunca são enviados a servidores.",
+    "proseP6": "Todo o processamento roda localmente na memória do seu dispositivo via HTML5 Canvas. Seus arquivos confidenciais nunca são enviados a servidores.",
     "sidebarHeading": "Quatro etapas para entrega ao cliente",
     "sidebarSteps": [
       {
@@ -469,7 +469,7 @@ export const HOME_LOCALIZED_DATA: Record<Locale, HomeLocalizedSection> = {
     "proseH3_4": "Freeform Mood Boards and Creative Visual Direction",
     "proseP5": "When a project calls for conceptual planning rather than a rigid grid, our integrated mood board maker provides an unconstrained freeform canvas with magnetic snapping guides and scaled 300 DPI exports.",
     "proseH3_5": "In-Browser Execution and Client-Side Data Privacy",
-    "proseP6": "All image decoding, thumbnail generation, EXIF parsing, and rendering operations execute locally on your device hardware using HTML5 Canvas and client Web Workers. Your files are never uploaded to an external server.",
+    "proseP6": "All image decoding, thumbnail generation, EXIF parsing, and rendering operations execute locally on your device hardware using HTML5 Canvas. Your files are never uploaded to an external server.",
     "sidebarHeading": "Four Steps to Client Delivery",
     "sidebarSteps": [
       {

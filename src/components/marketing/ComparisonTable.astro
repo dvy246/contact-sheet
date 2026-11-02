@@ -50,7 +50,7 @@ const TRANSLATIONS: Record<Exclude<Locale, 'en'>, any> = {
     f6Canva: 'Plantillas extensas',
     f6Vizua: 'Ninguno',
     f7Name: 'Modelo de precios',
-    f7Us: 'Gratis y abierto',
+    f7Us: 'Gratis, sin cuenta',
     f7Ps: '~$20-$55/mes',
     f7Canva: 'Freemium ($13/mes)',
     f7Vizua: 'Gratis (máx. 50 imgs)'
@@ -363,7 +363,7 @@ const t = isEnglish ? null : (TRANSLATIONS[locale as Exclude<Locale, 'en'>] || T
               <span>{isEnglish ? 'Pricing Model' : t.f7Name}</span>
             </td>
             <td class="p-4 sm:p-5 bg-accent/5 border-x border-accent/20 font-semibold">
-              <HighlightText variant="lime">{isEnglish ? 'Free & Open' : t.f7Us}</HighlightText>
+              <HighlightText variant="lime">{isEnglish ? 'Free, No Account' : t.f7Us}</HighlightText>
             </td>
             <td class="p-4 sm:p-5 text-marketing-muted">{isEnglish ? '~$20-$55/month' : t.f7Ps}</td>
             <td class="p-4 sm:p-5 text-marketing-muted">{isEnglish ? 'Freemium ($13/mo)' : t.f7Canva}</td>

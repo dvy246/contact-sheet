@@ -121,8 +121,13 @@ import '../../styles/workspace.css';
   import { ExportDrawer } from './ExportDrawer';
   import { KeyboardShortcutsManager } from './KeyboardShortcutsModal';
 
-  // Initialize Workspace Components once DOM is ready
-  document.addEventListener('DOMContentLoaded', () => {
+  // Building every panel (preset cards, canvas, drawers) is a ~0.6s main-thread
+  // task on a phone — measured as a 2.5s long task under Lighthouse's mobile
+  // throttling, which pushed the hero's LCP past 7s on pages where this island
+  // sits below the fold. So construct it only when it approaches the viewport,
+  // or on the first interaction (a drag onto the page must still be caught by
+  // DropZone's window-level handler, which is bound in its constructor).
+  function initWorkspace() {
     const dropzoneEl = document.getElementById('main-dropzone');
     const thumbMount = document.getElementById('thumbnail-grid-mount');
     const layoutMount = document.getElementById('layout-controls-mount');
@@ -179,5 +184,33 @@ import '../../styles/workspace.css';
         tabPanePhotos?.classList.add('hidden');
       });
     }
-  });
+  }
+
+  function scheduleWorkspaceInit() {
+    const root = document.getElementById('frameproof-workspace');
+    if (!root) return;
+    let done = false;
+    const triggers = ['pointerdown', 'keydown', 'dragenter', 'touchstart'] as const;
+    const run = () => {
+      if (done) return;
+      done = true;
+      observer?.disconnect();
+      triggers.forEach((type) => window.removeEventListener(type, run, true));
+      initWorkspace();
+    };
+    const observer = 'IntersectionObserver' in window
+      ? new IntersectionObserver((entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) run();
+        }, { rootMargin: '400px 0px' })
+      : null;
+    if (observer) observer.observe(root);
+    else run();
+    triggers.forEach((type) => window.addEventListener(type, run, { capture: true, passive: true }));
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', scheduleWorkspaceInit);
+  } else {
+    scheduleWorkspaceInit();
+  }
 </script>

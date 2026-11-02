@@ -52,7 +52,9 @@ export class DropZone {
     this.fileInput = document.createElement('input');
     this.fileInput.type = 'file';
     this.fileInput.multiple = true;
-    this.fileInput.accept = 'image/jpeg,image/png,image/webp,image/avif,image/gif,image/bmp,.json';
+    // Mirrors fileSanitizer's allowlist; without the HEIC/RAW entries the OS
+    // picker greyed out files the loader can actually import.
+    this.fileInput.accept = 'image/jpeg,image/png,image/webp,image/avif,image/gif,image/bmp,image/heic,image/heif,.heic,.heif,.cr2,.cr3,.nef,.arw,.dng,.orf,.rw2,.raf,.pef,.json';
     this.fileInput.className = 'hidden';
 
     this.folderInput = document.createElement('input');

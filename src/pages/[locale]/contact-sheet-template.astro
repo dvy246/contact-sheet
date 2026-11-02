@@ -1,4 +1,5 @@
 ---
+import { templateCopy } from '../../i18n/data/templateCopyData';
 import { NON_DEFAULT_LOCALES, type Locale } from '../../i18n/config';
 import MarketingLayout from '../../layouts/MarketingLayout.astro';
 import Breadcrumbs from '../../components/common/Breadcrumbs.astro';
@@ -76,6 +77,7 @@ const schemas = [
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {CONTACT_SHEET_PRESETS.map((preset) => {
+          const copy = templateCopy(locale, 'contactSheet', preset);
           const catLabel = data.categories[preset.category as keyof typeof data.categories] || preset.category;
           return (
             <div 
@@ -96,9 +98,9 @@ const schemas = [
                       {preset.config.columns}x{preset.config.rows} Grid
                     </span>
                   </div>
-                  <h2 class="text-base sm:text-lg font-bold text-marketing-text group-hover:text-accent transition-colors">{preset.name}</h2>
+                  <h2 class="text-base sm:text-lg font-bold text-marketing-text group-hover:text-accent transition-colors">{copy.name}</h2>
                   <p class="text-xs sm:text-sm text-marketing-muted leading-relaxed">
-                    {preset.description}
+                    {copy.description}
                   </p>
                 </div>
 

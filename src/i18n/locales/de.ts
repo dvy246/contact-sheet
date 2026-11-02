@@ -24,7 +24,7 @@ export const de: TranslationDict = {
     "toolPrintSaver8x10Desc": "Multi-Foto-Layouts optimiert für günstige Fotodrucke",
     "toolLargePhotoPrints": "Großformat-Fotodrucke",
     "toolLargePhotoPrintsDesc": "Sammelbögen für 11×14, 16×20, 24×36",
-    "toolAutoCull": "KI-Vorsortierung (Auto-Cull)",
+    "toolAutoCull": "Automatische Vorsortierung (Auto-Cull)",
     "toolAutoCullDesc": "Lokale Schärfebewertung & Unschärfeerkennung",
     "toolWhiteLabel": "White-Label Kundenportal",
     "toolWhiteLabelDesc": "Kunden-Auswahlgalerien mit eigenem Branding",
@@ -50,7 +50,7 @@ export const de: TranslationDict = {
     "guidesHeading": "Anleitungen & Workflows",
     "aboutHeading": "Über uns & Rechtliches",
     "trustTitle": "Keine Server-Uploads — 100% privat",
-    "trustDesc": "Ihre Fotos verlassen niemals Ihr Gerät. Das gesamte Rendering, die EXIF-Dekodierung, die KI-Schärfebewertung und die PDF-Kompilierung laufen lokal im Browserspeicher.",
+    "trustDesc": "Ihre Fotos verlassen niemals Ihr Gerät. Das gesamte Rendering, die EXIF-Dekodierung, die Schärfebewertung und die PDF-Kompilierung laufen lokal im Browserspeicher.",
     "copyright": "Entwickelt für Fotografen, Designer und visuelle Kreative.",
     "aboutUs": "Über uns",
     "contactUs": "Kontakt",
@@ -135,7 +135,7 @@ export const de: TranslationDict = {
     "card4Desc": "Erstellen Sie Bögen in A4, US Letter, 8×10, 11×14, 16×20 und 24×36 – bereit für Fotolabor, Studio oder Copyshop."
   },
   "workflow": {
-    "step1Title": "01. Importieren & KI-Bewertung",
+    "step1Title": "01. Importieren & automatisch bewerten",
     "step1Desc": "RAW-, JPG-, PNG- oder HEIC-Fotos per Drag & Drop importieren. Lokale Laplace-Varianz markiert sofort schärfste Bilder.",
     "step2Title": "02. Anordnen & Anpassen",
     "step2Desc": "Wählen Sie Raster-Presets, tokenbasierte EXIF-Labels, Designer-Hintergrundfarben und Wasserzeichen.",

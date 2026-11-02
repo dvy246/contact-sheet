@@ -19,11 +19,11 @@ const TRANSLATIONS: Record<Exclude<Locale, 'en'>, any> = {
     c1Desc: 'Las sesiones confidenciales y fotos comerciales permanecen estrictamente en tu ordenador. La decodificación, redimensionamiento y exportación a PDF ocurren en el sandbox local de tu navegador.',
     c1Tag1: 'Confidencialidad para clientes',
     c1Tag2: 'Aislamiento local en sandbox',
-    c1Tag3: 'Sin telemetría en la nube',
+    c1Tag3: 'Sin subir fotos',
     c2Title: 'Conservar nombres de archivo exactos',
     c2Desc: 'Los creadores genéricos borran los nombres. Make Contact Sheet conserva los nombres de archivo de cámara en cada miniatura y exporta listas CSV/TXT para sincronizar con Lightroom.',
     c3Title: 'Listas para imprimir en alta resolución',
-    c3Desc: 'Crea hojas PDF nítidas y vectoriales calibradas para impresoras A4 y Carta estadounidense a resolución completa de 300 DPI.',
+    c3Desc: 'Crea hojas PDF nítidas calibradas para impresoras A4 y Carta estadounidense a resolución completa de 300 DPI.',
     c4Title: 'Motor de cuadrícula flexible',
     c4Desc: 'Ajusta columnas, filas, espaciados, proporciones y títulos para crear exactamente la hoja de prueba que tu cliente necesita.'
   },
@@ -35,7 +35,7 @@ const TRANSLATIONS: Record<Exclude<Locale, 'en'>, any> = {
     c1Desc: 'Vertrauliche Kundenshootings bleiben strikt auf Ihrem Rechner. Dekodierung, Skalierung und PDF-Erstellung laufen direkt in der lokalen Browser-Sandbox.',
     c1Tag1: 'Kundenvertraulichkeit',
     c1Tag2: 'Lokale Sandbox-Isolation',
-    c1Tag3: 'Keine Cloud-Telemetrie',
+    c1Tag3: 'Kein Foto-Upload',
     c2Title: 'Exakte Dateinamen erhalten',
     c2Desc: 'Generische Tools entfernen Dateinamen. Make Contact Sheet behält Originaldateinamen unter jedem Bild und exportiert CSV/TXT-Listen für Lightroom.',
     c3Title: 'Druckfertig mit 300 DPI',
@@ -51,11 +51,11 @@ const TRANSLATIONS: Record<Exclude<Locale, 'en'>, any> = {
     c1Desc: 'Vos séances photos confidentielles restent strictement sur votre machine. Tout le décodage et la génération PDF se font dans le bac à sable de votre navigateur.',
     c1Tag1: 'Confidentialité client',
     c1Tag2: 'Isolation locale en sandbox',
-    c1Tag3: 'Zéro télémétrie cloud',
+    c1Tag3: 'Aucun envoi de photos',
     c2Title: 'Préserver les noms de fichiers exacts',
     c2Desc: 'Les outils classiques effacent les noms. Make Contact Sheet conserve les noms de fichiers de votre appareil et exporte des listes CSV/TXT pour Lightroom.',
     c3Title: 'Impression haute résolution 300 DPI',
-    c3Desc: 'Générez des planches PDF vectorielles et nettes, parfaitement calibrées pour les formats A4 et Lettre US en 300 DPI natifs.',
+    c3Desc: 'Générez des planches PDF nettes, parfaitement calibrées pour les formats A4 et Lettre US en 300 DPI natifs.',
     c4Title: 'Moteur de grille ultra-flexible',
     c4Desc: 'Définissez colonnes, rangées, espacements, ratios et en-têtes personnalisés pour une présentation impeccable.'
   },
@@ -67,7 +67,7 @@ const TRANSLATIONS: Record<Exclude<Locale, 'en'>, any> = {
     c1Desc: '未公開の撮影データや機密写真はあなたの端末内に厳格に保持されます。画像のデコード、配置計算、PDF生成はすべてブラウザ内で処理されます。',
     c1Tag1: 'クライアント機密保持',
     c1Tag2: 'ローカルサンドボックス隔離',
-    c1Tag3: 'クラウドテレメトリ送信ゼロ',
+    c1Tag3: '写真のアップロードなし',
     c2Title: 'カメラの元ファイル名を完全保持',
     c2Desc: '一般的なコラージュアプリと異なり、各サムネイルの下にカメラ元ファイル名を印字。Lightroom検索用の一括CSV/TXT書き出しにも対応。',
     c3Title: '300 DPI 印刷用高解像度出力',
@@ -83,7 +83,7 @@ const TRANSLATIONS: Record<Exclude<Locale, 'en'>, any> = {
     c1Desc: 'Ensaios confidenciais permanecem estritamente no seu computador. Decodificação, redimensionamento e exportação em PDF ocorrem na sandbox do seu navegador.',
     c1Tag1: 'Confidencialidade para clientes',
     c1Tag2: 'Isolamento local em sandbox',
-    c1Tag3: 'Sem telemetria na nuvem',
+    c1Tag3: 'Sem upload de fotos',
     c2Title: 'Preserve nomes de arquivo exatos',
     c2Desc: 'Aplicativos comuns removem os nomes. O Make Contact Sheet mantém os nomes originais em cada miniatura e exporta listas CSV/TXT para o Lightroom.',
     c3Title: 'Pronto para impressão em 300 DPI',
@@ -151,7 +151,7 @@ const t = isEnglish ? null : (TRANSLATIONS[locale as Exclude<Locale, 'en'>] || T
         <div class="relative z-10 flex flex-wrap gap-2 pt-4 border-t border-marketing-border text-xs font-mono text-marketing-muted">
           <span class="px-2.5 py-1 rounded-lg bg-marketing-surface border border-marketing-border">{isEnglish ? 'Client Confidentiality' : t.c1Tag1}</span>
           <span class="px-2.5 py-1 rounded-lg bg-marketing-surface border border-marketing-border">{isEnglish ? 'Local Sandbox Isolation' : t.c1Tag2}</span>
-          <span class="px-2.5 py-1 rounded-lg bg-marketing-surface border border-marketing-border">{isEnglish ? 'Zero Cloud Telemetry' : t.c1Tag3}</span>
+          <span class="px-2.5 py-1 rounded-lg bg-marketing-surface border border-marketing-border">{isEnglish ? 'No Photo Uploads' : t.c1Tag3}</span>
         </div>
       </div>
 
@@ -242,7 +242,7 @@ const t = isEnglish ? null : (TRANSLATIONS[locale as Exclude<Locale, 'en'>] || T
             </div>
             {isEnglish ? (
               <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">
-                Export vector-wrapped multi-page PDFs formatted for standard A4 and US Letter paper with custom margins, pagination headers, index numbers, and customizable background tones, plus uncompressed PNGs and JPEGs up to 300 DPI.
+                Export high-resolution 300 DPI multi-page PDFs formatted for standard A4 and US Letter paper with custom margins, pagination headers, index numbers, and customizable background tones, plus lossless PNGs and JPEGs up to 300 DPI.
               </p>
             ) : (
               <p class="text-sm sm:text-base text-marketing-muted leading-relaxed">

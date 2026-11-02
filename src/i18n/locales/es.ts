@@ -24,7 +24,7 @@ export const es: TranslationDict = {
     "toolPrintSaver8x10Desc": "Diseños multifoto optimizados para impresión económica",
     "toolLargePhotoPrints": "Impresiones de fotos grandes",
     "toolLargePhotoPrintsDesc": "Pliegos combinados en 11×14, 16×20 y 24×36",
-    "toolAutoCull": "Selección automática por IA",
+    "toolAutoCull": "Selección automática de fotos",
     "toolAutoCullDesc": "Puntuación de nitidez local y detección de desenfoque",
     "toolWhiteLabel": "Portal de marca blanca",
     "toolWhiteLabelDesc": "Galerías de prueba para clientes con tu propia marca",
@@ -50,7 +50,7 @@ export const es: TranslationDict = {
     "guidesHeading": "Guías y flujos de trabajo",
     "aboutHeading": "Acerca de y legal",
     "trustTitle": "Cero cargas al servidor — 100% privado",
-    "trustDesc": "Tus fotos nunca salen de tu dispositivo. Todo el renderizado, decodificación EXIF, puntuación de nitidez con IA y compilación de PDF se ejecutan localmente en la memoria de tu navegador.",
+    "trustDesc": "Tus fotos nunca salen de tu dispositivo. Todo el renderizado, decodificación EXIF, puntuación de nitidez y compilación de PDF se ejecutan localmente en la memoria de tu navegador.",
     "copyright": "Creado para fotógrafos, diseñadores y creadores visuales.",
     "aboutUs": "Sobre nosotros",
     "contactUs": "Contáctanos",
@@ -135,7 +135,7 @@ export const es: TranslationDict = {
     "card4Desc": "Genera pliegos en A4, Carta, 8×10, 11×14, 16×20 y 24×36 listos para cuarto oscuro, estudio o impresión comercial."
   },
   "workflow": {
-    "step1Title": "01. Importar y puntuar con IA",
+    "step1Title": "01. Importar y puntuar",
     "step1Desc": "Arrastra fotos RAW, JPG, PNG o HEIC. La varianza laplaciana local marca instantáneamente los fotogramas más nítidos.",
     "step2Title": "02. Organizar y personalizar",
     "step2Desc": "Elige ajustes de cuadrícula, etiquetas EXIF basadas en tokens, paletas de fondo y marcas de agua personalizadas.",

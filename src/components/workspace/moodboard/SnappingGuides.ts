@@ -319,7 +319,7 @@ export class SnappingGuidesRenderer {
         lineEl.setAttribute('opacity', '0.6');
       } else {
         // Standard edge snapping: Warm Caramel accent
-        lineEl.setAttribute('stroke', '#c98a46');
+        lineEl.style.stroke = 'var(--accent-light)';
         lineEl.setAttribute('stroke-width', '1.5');
         lineEl.setAttribute('opacity', '0.95');
       }

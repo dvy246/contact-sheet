@@ -1,5 +1,31 @@
 # AGENTS.md
 
+- **Technical SEO audit fixes (2026-10-11)**:
+  - **`build.format: 'file'` in `astro.config.mjs` is load-bearing — do not remove it.** With the default directory format, Cloudflare Pages served every page only at `/page/` and 308-redirected `/page`, while every canonical, hreflang and sitemap URL is slash-less (`trailingSlash: 'never'`). All 155 non-root URLs Google was told to index were redirects. Now `/page` → 200 and `/page/` → 308 to it. Because `Astro.url.pathname` is `/page.html` in this mode, `l()` in `src/i18n/utils.ts` strips `.html`; `scripts/test-no-broken-pages.js` resolves both layouts.
+  - **Locale content leakage fixed**: template hub pages in all 5 locales served English template names/descriptions (their main content) and every tool page served the English import panel. Copy now comes from `src/i18n/data/templateCopyData.ts` (keyed by template id, English fallback) and `Astro.currentLocale` in `ImportPanel.astro` / the mood board prompt. **A new template needs its translations added there** or its card stays English on localized hubs.
+  - **Homepage performance**: `WorkspaceApp` now constructs on approach (IntersectionObserver, 400px) or first interaction instead of DOMContentLoaded — it was a 2.5s long task under mobile throttling. Google Fonts load non-blocking. Lighthouse mobile (local build, simulated throttling): perf 29→96, LCP 7.8s→2.3s, TBT 2870→110ms.
+
+- Added a **header flavour palette picker** (desktop popover + mobile drawer grid, localized in all 6 locales): Chocolate Truffle (default), Pistachio, Strawberry, Blueberry, Mint Chip, Mango Sorbet, Ube Lavender, plus two owner-supplied palettes, Cotton Candy (`#425B9A`/`#76C0EC`/`#FFF6DC`/`#FF95A5`) and Butterscotch (`#FEF3E2`/`#F4AE52`/`#D4621A`/`#2A1A0E`). Butterscotch's button fill is a deeper `#c25402` because white on `#D4621A` is 3.78:1; `#D4621A` is kept as its accent-light.
+  - Accent colours are now **variables** (`--accent`, `--accent-hover`, `--accent-dark`, `--accent-light`, `--accent-rgb`, `--accent-ink-rgb`, `--light-table-bg`, `--dropzone-hover-*`, `--gb-*` glow triplets) whose defaults are the exact Truffle hexes, so the default site is pixel-identical. **Do not reintroduce literal caramel hexes/rgba(201,138,70,…) in CSS or markup** — they will not follow the palette.
+  - `src/styles/palettes.css` is **generated** (Truffle tokens re-hued in OKLCH, accent lightness solved for WCAG AA on every surface); `src/lib/palettes.ts` holds swatch colours; BaseLayout's inline anti-flash script applies `localStorage.palette` before paint and carries an allowlist of ids — add new ids in all three places.
+- **Mobile responsiveness pass** (Playwright sweep of all 28 English routes + 35 localized routes at 320/375/414, plus populated studio, export drawer, loupe and drawer states — 0 overflowing or clipped controls after fixes):
+  - The marketing header action row overflowed every page below ~452px (brand + language switcher + theme + menu), clipping the theme toggle and menu button. The header language switcher now shows from `md` (the drawer has one) or as a compact globe + code on workspace pages; the logo tile drops below 360px.
+  - The studio header overflowed by ~219px at 375px; the wordmark and privacy pill now hide below `sm`/`md` and New Batch becomes icon-only.
+  - Mood board toolbar clipped "Export Board" at 320px; badge hides and the button goes icon-only below 360px.
+  - Touch devices (`pointer: coarse`) get 28–32px hit areas for studio sliders, checkboxes, segment buttons, zoom/page buttons and breadcrumbs; desktop sizing is unchanged.
+
+- Ran an **end-to-end functionality audit** (import → 28 presets / 25 collage templates → review → all 8 export formats → session reopen, plus mood board and batch tools) and fixed what it found:
+  - Mood board export was dead: a `$moodboardConfig.subscribe` fired synchronously into a `const` declared later (TDZ), aborting `MoodBoardApp`'s init script before the export modal was bound.
+  - Batch tools bound every listener twice on first render (constructor called `attachEvents()` after `render()` already had), so the first import loaded each file twice; token chips rendered the literal JSX escape `+{'{name}'}`.
+  - The downloadable Mac/Linux rename script renamed nothing — `[ -f -- file ]` is a `test` syntax error that reads as false. Now `[ -f './file' ]`.
+  - Global shortcuts swallowed arrow-key page scrolling on embedded pages and let Backspace on any focused page link delete a photo; they now apply only after the user last pointed at/focused the workspace, and ignore ⌘/Ctrl/Alt chords.
+  - Smart Cull overwrote manual Keep/Flag/Reject decisions and stacked duplicate score notes; it now scores unreviewed photos only.
+  - XMP sidecars: rejects now write `xmp:Rating="-1"` + Red label (were indistinguishable from unreviewed), unreviewed frames carry no rating (0 wiped catalog stars), and RAW files get `IMG_0001.xmp` instead of `IMG_0001.cr2.xmp`.
+  - The `?` help button died after the first review change (toolbar re-render dropped its listener) — now delegated. Studio file pickers now accept the HEIC/RAW formats the sanitizer already allowed. Fixed the header moon icon's malformed arc path.
+- Added **Undo/Redo** (`⌘Z` / `⇧⌘Z`, toolbar buttons) over every `$images` change, recorded by listening to the atom so no action needs to know about history. **Blob URLs are no longer revoked when a photo leaves the sheet** — `releaseUnreachableUrls()` in `store.ts` revokes them once no history snapshot (50 steps) can restore them. Do not reintroduce direct `revokeObjectURL` calls in store actions.
+- Added a **full-screen Loupe** (`LoupeViewer.ts`, Space or toolbar button) for judging focus at full size with a 1:1 pixel toggle (`Z`) and 1/2/3/0 culling; it is owned by `KeyboardShortcutsManager`, which routes keys to it first.
+- PNG/JPEG export of a multi-page contact sheet now offers **All pages (ZIP)** (default) or the current page; previously only the visible page was exported.
+
 - Implemented **Production Multilingual Internationalization (i18n) & Zero-Harm Migration Architecture**:
   - **Zero-Harm English Baseline Preservation**: Kept the default English production site 100% untouched and identical in markup, typography, URLs, and styling, preserving all existing SEO equity. Created permanent git tag `pre-i18n-baseline` on commit `ccfdc7a` for guaranteed 1-click rollback.
   - **5 Non-Default Locales Fully Translated**: Added high-intent native localizations across Spanish (`/es`), German (`/de`), French (`/fr`), Japanese (`/ja`), and Portuguese (`/pt`), expanding site coverage from 26 to 169 static pages.
@@ -390,10 +416,20 @@ This is the part most likely to be "fixed" into breakage:
   Do not point two indexable pages at the same query.
 - JSON-LD comes from `schemaGenerator.ts` and is passed as `schema` to the
   layout. **Anything in FAQPage or HowTo markup must be true and visible on the
-  page.** There is already one live violation to be careful not to copy: the
-  homepage and `/photo-contact-sheet-maker` FAQs claim "Web Worker incremental
-  decoding", and no worker is ever instantiated (`decoder.worker.ts` is dead
-  code). Do not repeat that claim in new copy.
+  page.** The 2026-11-01 audit purged claims the code does not back, in all 6
+  locales and `public/llms.txt`. Do not reintroduce any of them:
+  - "Web Workers": no worker is ever instantiated (`decoder.worker.ts` is dead code).
+  - "AI" culling, WebAssembly, blink detection: `cullingEngine.ts` is Laplacian
+    variance, a classical blur measure.
+  - A "forensic" watermark that traces social-media leaks: it is a blue-channel
+    LSB tag that any JPEG recompression destroys.
+  - "Vector" or "uncompressed" PDFs: pages are rasterised to JPEG at 0.88.
+  - WebP contact-sheet export.
+  - "Zero telemetry" without the word *photo*: GA4 runs on every page.
+  - "Free & Open": there is no public repo.
+  - "Lightroom TXT" / "CSV Table": the real export buttons are "Lightroom Filter"
+    and "Selected Filenames".
+  Full audit: `research/seo-aeo-geo-audit-2026-11-01.md`.
 - Do not promise rankings, traffic or revenue in docs or copy, and never invent
   keyword volumes, competitor features or pricing. Where evidence is missing, say
   "I could not verify this" — `research/` and `seo.md` mark their own numbers as

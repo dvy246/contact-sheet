@@ -14,7 +14,7 @@ const meta = METADATA_REGISTRY['/large-photo-prints'];
 const faqs = [
   {
     question: 'What pixel dimensions and DPI do I need for 16×20 and 24×36 poster prints?',
-    answer: 'For standard poster viewing distances (3+ feet), 150 DPI is standard (2400×3000 px for 16×20, 3600×5400 px for 24×36). For gallery-quality fine art prints viewed up close, 300 DPI is the gold standard (4800×6000 px for 16×20, 7200×10800 px for 24×36). Make Contact Sheet allows you to export at 150 DPI or full 300 DPI resolution with zero compression artifacts.',
+    answer: 'For standard poster viewing distances (3+ feet), 150 DPI is standard (2400×3000 px for 16×20, 3600×5400 px for 24×36). For gallery-quality fine art prints viewed up close, 300 DPI is the gold standard (4800×6000 px for 16×20, 7200×10800 px for 24×36). Make Contact Sheet allows you to export at 150 DPI or full 300 DPI resolution, as a lossless PNG or a maximum-quality JPEG.',
   },
   {
     question: 'How much money can I save with the multi-photo gang sheet poster hack?',
@@ -295,6 +295,9 @@ const schemas = [
     </p>
     <p>
       <strong>Make Contact Sheet</strong> renders your layout using high-precision Canvas 2D rasterization. Images are composited directly from their original decoded source bitmaps without intermediate lossy JPEG compression. When you click Export, the canvas is rendered at full sub-pixel accuracy, preserving every ounce of optical sharpness captured by your camera sensor and lens.
+    </p>
+    <p>
+      A sharp file is only half of a good poster; the other half is judging color on a screen you can trust. An uncalibrated display that runs too warm or too bright will make a balanced photo look off, so you end up correcting problems that are not in the file and the print comes back darker or more muted than the preview. Before you approve a 24×36 gang sheet, run a quick <a href="https://displaytestonline.com/monitor-color-calibration/" target="_blank" rel="noopener">monitor color calibration test</a> to check white balance, gamma, and grayscale, so the colors you sign off on screen are the colors the lab prints.
     </p>
 
     <h3>100% In-Browser Privacy for Professional &amp; Personal Work</h3>

@@ -115,8 +115,14 @@ export async function runSmartCull(
           if (newStatus === 'reject') rejectedCount++;
           else flaggedCount++;
 
-          const existingNote = imgInfo.notes || imgInfo.note || '';
-          const newNote = existingNote ? `${existingNote}\nSharpness Score: ${score}% (${sharpnessRank})` : `Sharpness Score: ${score}% (${sharpnessRank})`;
+          // Replace a previous run's score line instead of stacking duplicates.
+          const existingNote = (imgInfo.notes || imgInfo.note || '')
+            .split('\n')
+            .filter(line => !line.startsWith('Sharpness Score:'))
+            .join('\n')
+            .trim();
+          const scoreLine = `Sharpness Score: ${score}% (${sharpnessRank})`;
+          const newNote = existingNote ? `${existingNote}\n${scoreLine}` : scoreLine;
           
           updateImageProperties(imgInfo.id, {
             status: newStatus,

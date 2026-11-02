@@ -351,9 +351,9 @@ export class FloatingToolbar {
       dot.className =
         'w-4 h-4 rounded-full border transition-transform hover:scale-125 cursor-pointer flex-shrink-0';
       dot.style.backgroundColor = c.hex;
-      dot.style.borderColor = el.backgroundColor === c.hex ? '#c98a46' : 'rgba(255,255,255,0.2)';
+      dot.style.borderColor = el.backgroundColor === c.hex ? 'var(--accent-light)' : 'rgba(255,255,255,0.2)';
       if (el.backgroundColor === c.hex) {
-        dot.style.boxShadow = '0 0 0 1.5px #c98a46';
+        dot.style.boxShadow = '0 0 0 1.5px var(--accent-light)';
       }
       dot.title = `${c.name} Note`;
       dot.addEventListener('click', (e) => {

@@ -8,8 +8,17 @@ export const SITE_URL = "https://makecontactsheet.com";
  * If locale is non-default, path is prefixed with /locale.
  */
 export function l(path: string, locale: Locale = DEFAULT_LOCALE): string {
+  // Hash/query are split off first: normalising `/#workspace` as a whole left
+  // `/de/#workspace`, a slash URL Cloudflare 308-redirects to `/de`.
+  const suffixAt = path.search(/[?#]/);
+  const suffix = suffixAt === -1 ? "" : path.slice(suffixAt);
+  if (suffixAt !== -1) path = path.slice(0, suffixAt) || "/";
+
   // Normalize path: ensure leading slash, remove trailing slash (unless root)
   let cleanPath = path.startsWith("/") ? path : `/${path}`;
+  // With `build.format: 'file'`, Astro.url.pathname is `/page.html` at build
+  // time; the public URL Cloudflare serves (and every canonical) has no suffix.
+  cleanPath = cleanPath.replace(/(\/index)?\.html$/, "") || "/";
   if (cleanPath.length > 1 && cleanPath.endsWith("/")) {
     cleanPath = cleanPath.slice(0, -1);
   }
@@ -23,10 +32,10 @@ export function l(path: string, locale: Locale = DEFAULT_LOCALE): string {
   }
 
   if (locale === DEFAULT_LOCALE) {
-    return cleanPath;
+    return cleanPath + suffix;
   }
 
-  return cleanPath === "/" ? `/${locale}` : `/${locale}${cleanPath}`;
+  return (cleanPath === "/" ? `/${locale}` : `/${locale}${cleanPath}`) + suffix;
 }
 
 /**

@@ -2,12 +2,16 @@ import {
   $filteredImages, 
   $selectedImageId, 
   setImageStatus, 
-  removeImage 
+  removeImage,
+  undo,
+  redo
 } from '../../lib/store';
+import { LoupeViewer } from './LoupeViewer';
 
 export class KeyboardShortcutsManager {
   private modal: HTMLElement | null = null;
   private isOpen = false;
+  private loupe = new LoupeViewer();
 
   constructor() {
     this.createModalDOM();
@@ -57,6 +61,18 @@ export class KeyboardShortcutsManager {
             <kbd class="px-2 py-0.5 rounded bg-workspace-surface border border-workspace-border font-mono">Del</kbd>
           </div>
           <div class="flex items-center justify-between p-2 rounded bg-workspace-bg border border-workspace-border">
+            <span class="text-workspace-muted">Loupe Review</span>
+            <kbd class="px-2 py-0.5 rounded bg-workspace-surface border border-workspace-border font-mono">Space</kbd>
+          </div>
+          <div class="flex items-center justify-between p-2 rounded bg-workspace-bg border border-workspace-border">
+            <span class="text-workspace-muted">Undo</span>
+            <kbd class="px-2 py-0.5 rounded bg-workspace-surface border border-workspace-border font-mono">⌘Z</kbd>
+          </div>
+          <div class="flex items-center justify-between p-2 rounded bg-workspace-bg border border-workspace-border">
+            <span class="text-workspace-muted">Redo</span>
+            <kbd class="px-2 py-0.5 rounded bg-workspace-surface border border-workspace-border font-mono">⇧⌘Z</kbd>
+          </div>
+          <div class="flex items-center justify-between p-2 rounded bg-workspace-bg border border-workspace-border">
             <span class="text-workspace-muted">Help Modal</span>
             <kbd class="px-2 py-0.5 rounded bg-workspace-surface border border-workspace-border font-mono">?</kbd>
           </div>
@@ -75,7 +91,13 @@ export class KeyboardShortcutsManager {
       if (e.target === this.modal) this.toggleModal(false);
     });
 
-    document.getElementById('btn-help-shortcuts')?.addEventListener('click', () => this.toggleModal(true));
+    // ReviewToolbar rebuilds its markup on every review change, so a listener
+    // bound to these buttons once went dead after the first Keep. Delegate.
+    document.addEventListener('click', (e) => {
+      const target = e.target as Element | null;
+      if (target?.closest('#btn-help-shortcuts')) this.toggleModal(true);
+      else if (target?.closest('#btn-open-loupe')) this.loupe.openAt($selectedImageId.get());
+    });
   }
 
   public toggleModal(open?: boolean) {
@@ -90,21 +112,54 @@ export class KeyboardShortcutsManager {
   }
 
   private setupGlobalListener() {
+    // The workspace is embedded in long marketing pages, so a window-wide
+    // handler swallowed arrow-key scrolling and let Backspace on a footer link
+    // delete a photo. Shortcuts only apply once the user last pointed at or
+    // focused the workspace; the full-screen studio is the workspace.
+    const root = document.getElementById('frameproof-studio') ?? document.getElementById('frameproof-workspace');
+    let workspaceActive = root?.id === 'frameproof-studio';
+    const trackActive = (e: Event) => {
+      const target = e.target as Node | null;
+      workspaceActive = !!target && (!!root?.contains(target) || !!this.modal?.contains(target) || this.loupe.contains(target));
+    };
+    document.addEventListener('pointerdown', trackActive, true);
+    document.addEventListener('focusin', trackActive, true);
+
     window.addEventListener('keydown', (e: KeyboardEvent) => {
       // Don't trigger if typing in an input/textarea
       const activeTag = document.activeElement?.tagName.toLowerCase();
       if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') {
         return;
       }
+      if ((document.activeElement as HTMLElement | null)?.isContentEditable) return;
+
+      const focused = document.activeElement;
+      const focusOutside = !!focused && focused !== document.body && !!root
+        && !root.contains(focused) && !this.modal?.contains(focused) && !this.loupe.contains(focused);
+      const inWorkspace = (workspaceActive || this.loupe.isOpen) && !focusOutside;
+
+      // ⌘Z / Ctrl+Z undo, ⇧⌘Z / Ctrl+Y redo. Inputs keep their own text undo
+      // because the early return above already skipped them.
+      const mod = e.metaKey || e.ctrlKey;
+      if (inWorkspace && mod && !e.altKey) {
+        const key = e.key.toLowerCase();
+        if (key === 'z' && !e.shiftKey) { e.preventDefault(); undo(); return; }
+        if ((key === 'z' && e.shiftKey) || key === 'y') { e.preventDefault(); redo(); return; }
+      }
+      // Leave Cmd/Ctrl/Alt chords (tab switching, browser back) to the browser.
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+      if (e.key === 'Escape' && this.isOpen) {
+        this.toggleModal(false);
+        return;
+      }
+
+      if (this.loupe.handleKey(e)) return;
+      if (!inWorkspace) return;
 
       if (e.key === '?') {
         e.preventDefault();
         this.toggleModal();
-        return;
-      }
-
-      if (e.key === 'Escape' && this.isOpen) {
-        this.toggleModal(false);
         return;
       }
 
@@ -113,6 +168,16 @@ export class KeyboardShortcutsManager {
 
       const selectedId = $selectedImageId.get();
       const currentIndex = selectedId ? images.findIndex(img => img.id === selectedId) : 0;
+
+      // Space would also press a focused button, so it only opens the loupe
+      // when nothing interactive has focus.
+      const interactiveFocus = !!focused && focused !== document.body
+        && !!(focused as HTMLElement).closest('button, a, summary, [role="button"]');
+      if (e.key === ' ' && !interactiveFocus) {
+        e.preventDefault();
+        this.loupe.openAt(selectedId);
+        return;
+      }
 
       if (e.key === '1') {
         // Keep

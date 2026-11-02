@@ -13,7 +13,7 @@ import {
 import { calculateContactSheetPages } from '../../lib/engine/contactSheetEngine';
 import { calculateCollageLayout } from '../../lib/engine/collageEngine';
 import { COLLAGE_TEMPLATES } from '../../lib/engine/templates';
-import { exportLayoutAsImage } from '../../lib/export/imageExporter';
+import { exportLayoutAsImage, exportPagesAsImageZip } from '../../lib/export/imageExporter';
 import { exportFilenamesAsCSV, exportFilenamesAsTXT } from '../../lib/export/filenameExporter';
 import { exportProjectManifest } from '../../lib/export/projectManifest';
 import type { ExportFormat, FilterStatus } from '../../lib/types';
@@ -25,6 +25,7 @@ export class ExportDrawer {
   private quality = 0.92;
   private scale = 2; // 2x high-resolution by default
   private pdfPassword = '';
+  private pageScope: 'all' | 'current' = 'all';
   private isRendered = false;
 
   constructor(container: HTMLElement) {
@@ -108,6 +109,17 @@ export class ExportDrawer {
               <div class="font-medium text-xs">Lightroom XMP</div>
               <div class="text-[10px] text-workspace-muted mt-0.5">Zero-Click Sidecars</div>
             </button>
+          </div>
+
+          <!-- Page scope (multi-page PNG/JPEG contact sheets only) -->
+          <div id="export-pages-group" class="hidden p-3 rounded-xl bg-workspace-surface border border-workspace-border">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <span class="text-xs font-medium text-workspace-text">Pages to export</span>
+              <div class="flex items-center rounded-lg bg-workspace-panel p-0.5 border border-workspace-border" role="radiogroup" aria-label="Pages to export">
+                <button type="button" data-page-scope="all" role="radio" class="export-page-scope h-7 px-3 rounded-md text-[11px] font-semibold cursor-pointer"></button>
+                <button type="button" data-page-scope="current" role="radio" class="export-page-scope h-7 px-3 rounded-md text-[11px] font-semibold cursor-pointer"></button>
+              </div>
+            </div>
           </div>
 
           <!-- Password Protection (PDF only) -->
@@ -214,6 +226,18 @@ export class ExportDrawer {
       passwordInput.value = this.pdfPassword;
     }
 
+    const pageCount = this.imagePageCount();
+    const pagesGroup = document.getElementById('export-pages-group');
+    if (pagesGroup) pagesGroup.classList.toggle('hidden', pageCount < 2);
+    this.container.querySelectorAll<HTMLButtonElement>('.export-page-scope').forEach((btn) => {
+      const active = btn.dataset.pageScope === this.pageScope;
+      btn.setAttribute('aria-checked', String(active));
+      btn.textContent = btn.dataset.pageScope === 'all'
+        ? `All ${pageCount} pages (ZIP)`
+        : `Page ${Math.min($activePage.get(), Math.max(0, pageCount - 1)) + 1} only`;
+      btn.className = `export-page-scope h-7 px-3 rounded-md text-[11px] font-semibold cursor-pointer transition-colors ${active ? 'bg-accent text-white shadow-xs' : 'text-workspace-muted hover:text-workspace-text'}`;
+    });
+
     const desc = document.getElementById('export-desc');
     if (desc) {
       desc.textContent = this.selectedFormat === 'pdf' ? 'Multi-page 300 DPI print document' : this.selectedFormat === 'html' ? 'Standalone offline HTML proofing gallery with client culling & review tools' : this.selectedFormat === 'txt' ? 'Comma-separated filename string ready to paste into Lightroom search' : this.selectedFormat === 'csv' ? 'Lightroom-compatible structured metadata table with review statuses and ratings' : this.selectedFormat === 'json' ? 'Portable JSON review session manifest with full layout config and statuses' : 'Export rendered at 2x studio quality';
@@ -256,6 +280,13 @@ export class ExportDrawer {
     scopeSelect?.addEventListener('change', () => {
       this.exportScope = scopeSelect.value as FilterStatus;
       this.sync();
+    });
+
+    this.container.querySelectorAll<HTMLButtonElement>('.export-page-scope').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        this.pageScope = btn.dataset.pageScope === 'current' ? 'current' : 'all';
+        this.sync();
+      });
     });
 
     document.getElementById('btn-trigger-export')?.addEventListener('click', () => {
@@ -303,21 +334,27 @@ export class ExportDrawer {
     }
   }
 
-  private async executeExport() {
+  private scopedImages() {
     const rawImages = $images.get();
-    let targetImages = rawImages;
+    if (this.exportScope === 'keep') return rawImages.filter(img => img.status === 'keep');
+    if (this.exportScope === 'flag') return rawImages.filter(img => img.status === 'flag');
+    if (this.exportScope === 'reject') return rawImages.filter(img => img.status === 'reject');
+    if (this.exportScope === 'unreviewed') return rawImages.filter(img => img.status === 'unreviewed');
+    if (this.exportScope === 'exclude-rejected') return rawImages.filter(img => img.status !== 'reject');
+    return rawImages;
+  }
 
-    if (this.exportScope === 'keep') {
-      targetImages = rawImages.filter(img => img.status === 'keep');
-    } else if (this.exportScope === 'flag') {
-      targetImages = rawImages.filter(img => img.status === 'flag');
-    } else if (this.exportScope === 'reject') {
-      targetImages = rawImages.filter(img => img.status === 'reject');
-    } else if (this.exportScope === 'unreviewed') {
-      targetImages = rawImages.filter(img => img.status === 'unreviewed');
-    } else if (this.exportScope === 'exclude-rejected') {
-      targetImages = rawImages.filter(img => img.status !== 'reject');
-    }
+  /** Page count of a PNG/JPEG contact sheet export; 0 when the choice does not apply. */
+  private imagePageCount(): number {
+    if (this.selectedFormat !== 'png' && this.selectedFormat !== 'jpeg') return 0;
+    if ($workspaceMode.get() !== 'contact-sheet') return 0;
+    const images = this.scopedImages();
+    if (images.length === 0) return 0;
+    return calculateContactSheetPages(images, $layoutConfig.get(), 1).length;
+  }
+
+  private async executeExport() {
+    const targetImages = this.scopedImages();
 
     if (targetImages.length === 0) {
       alert('No images match the selected export scope!');
@@ -392,10 +429,17 @@ export class ExportDrawer {
       } else {
         if (mode === 'contact-sheet') {
           const pages = calculateContactSheetPages(targetImages, config, this.scale);
-          const currentPageIndex = Math.min($activePage.get(), pages.length - 1);
-          const activePage = pages[currentPageIndex] || pages[0];
-          if (activePage) {
-            await exportLayoutAsImage(activePage, config, this.selectedFormat as 'png' | 'jpeg', this.quality, `makecontactsheet-sheet-page-${currentPageIndex + 1}`);
+          const format = this.selectedFormat as 'png' | 'jpeg';
+          if (pages.length > 1 && this.pageScope === 'all') {
+            await exportPagesAsImageZip(pages, config, format, this.quality, 'makecontactsheet-sheet', (done, total) => {
+              $exportProgress.set(Math.round((done / total) * 95));
+            });
+          } else {
+            const currentPageIndex = Math.min($activePage.get(), pages.length - 1);
+            const activePage = pages[currentPageIndex] || pages[0];
+            if (activePage) {
+              await exportLayoutAsImage(activePage, config, format, this.quality, `makecontactsheet-sheet-page-${currentPageIndex + 1}`);
+            }
           }
         } else {
           const template = COLLAGE_TEMPLATES.find(t => t.id === $activeTemplateId.get()) || COLLAGE_TEMPLATES[0];
@@ -421,5 +465,9 @@ export class ExportDrawer {
     $reviewCounts.subscribe(() => this.render());
     $isExporting.subscribe(() => this.render());
     $exportProgress.subscribe(() => this.render());
+    // The page-scope control depends on how many pages the layout produces.
+    $layoutConfig.listen(() => this.sync());
+    $workspaceMode.listen(() => this.sync());
+    $activePage.listen(() => this.sync());
   }
 }

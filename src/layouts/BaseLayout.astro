@@ -56,6 +56,12 @@ const hreflangLinks = getHreflangLinks(Astro.url.pathname);
         } else {
           document.documentElement.classList.remove('dark');
         }
+        // Header flavour palette. Allowlisted so a stale or hand-edited value
+        // falls back to the default Chocolate Truffle instead of an unstyled page.
+        const palette = localStorage.getItem('palette');
+        if (['pistachio', 'strawberry', 'blueberry', 'mint', 'mango', 'ube', 'cotton-candy', 'butterscotch'].indexOf(palette) !== -1) {
+          document.documentElement.setAttribute('data-palette', palette);
+        }
       })();
     </script>
     
@@ -100,7 +106,19 @@ const hreflangLinks = getHreflangLinks(Astro.url.pathname);
     <!-- Google Fonts Preconnect & Inter / Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+    <!-- Loaded non-blocking: as a plain stylesheet it held first paint ~0.9s on
+         mobile. The fallback stack renders immediately and display=swap
+         already allowed the web font to arrive late. -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" media="print" id="font-stylesheet" />
+    <script is:inline>
+      (function () {
+        var link = document.getElementById('font-stylesheet');
+        if (!link) return;
+        if (link.sheet) { link.media = 'all'; return; }
+        link.addEventListener('load', function () { link.media = 'all'; });
+      })();
+    </script>
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" /></noscript>
 
     <!-- Schema.org JSON-LD structured data -->
     {schema && (

@@ -90,7 +90,7 @@ export class BoardElement {
 
     // Selection border outline
     const outline = document.createElement('div');
-    outline.className = 'absolute -inset-0.5 border-[1.5px] border-[#c98a46] rounded-[inherit] pointer-events-none shadow-[0_0_0_1px_rgba(201,138,70,0.35),0_4px_12px_rgba(0,0,0,0.15)]';
+    outline.className = 'absolute -inset-0.5 border-[1.5px] border-accent-light rounded-[inherit] pointer-events-none shadow-[0_0_0_1px_rgb(var(--accent-rgb)/0.35),0_4px_12px_rgba(0,0,0,0.15)]';
     this.selectionChrome.appendChild(outline);
 
     // 8-Point Resize Handles definition
@@ -107,21 +107,21 @@ export class BoardElement {
 
     for (const h of handles) {
       const handleEl = document.createElement('div');
-      handleEl.className = `absolute w-3 h-3 bg-white dark:bg-stone-900 border-[1.5px] border-[#9c5a1c] dark:border-[#d99a4e] rounded-full shadow-md pointer-events-auto hover:scale-125 transition-transform z-30 ${h.classes}`;
+      handleEl.className = `absolute w-3 h-3 bg-white dark:bg-stone-900 border-[1.5px] border-accent-ink rounded-full shadow-md pointer-events-auto hover:scale-125 transition-transform z-30 ${h.classes}`;
       handleEl.dataset.handle = h.type;
       this.selectionChrome.appendChild(handleEl);
     }
 
     // Rotation Handle & Stem
     const stem = document.createElement('div');
-    stem.className = 'absolute -top-6 left-1/2 -translate-x-1/2 w-[1.5px] h-6 bg-[#c98a46] pointer-events-none';
+    stem.className = 'absolute -top-6 left-1/2 -translate-x-1/2 w-[1.5px] h-6 bg-accent-light pointer-events-none';
     this.selectionChrome.appendChild(stem);
 
     const rotateHandle = document.createElement('div');
-    rotateHandle.className = 'absolute -top-8 left-1/2 -translate-x-1/2 w-4 h-4 bg-white dark:bg-stone-900 border-[1.5px] border-[#9c5a1c] dark:border-[#d99a4e] rounded-full shadow-md pointer-events-auto cursor-grab active:cursor-grabbing hover:scale-125 transition-transform flex items-center justify-center z-30';
+    rotateHandle.className = 'absolute -top-8 left-1/2 -translate-x-1/2 w-4 h-4 bg-white dark:bg-stone-900 border-[1.5px] border-accent-ink rounded-full shadow-md pointer-events-auto cursor-grab active:cursor-grabbing hover:scale-125 transition-transform flex items-center justify-center z-30';
     rotateHandle.dataset.handle = 'rotate';
     rotateHandle.innerHTML = `
-      <svg class="w-2.5 h-2.5 text-[#9c5a1c] dark:text-[#d99a4e]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <svg class="w-2.5 h-2.5 text-accent-ink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
         <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/>
         <path d="M21 3v5h-5"/>
       </svg>
@@ -480,7 +480,7 @@ export class BoardElement {
       this.selectionChrome.classList.add('hidden');
 
       const textarea = document.createElement('textarea');
-      textarea.className = 'moodboard-inline-editor absolute inset-0 w-full h-full p-3 bg-transparent border-2 border-[#c98a46] rounded-[inherit] outline-none resize-none z-50 font-inherit';
+      textarea.className = 'moodboard-inline-editor absolute inset-0 w-full h-full p-3 bg-transparent border-2 border-accent-light rounded-[inherit] outline-none resize-none z-50 font-inherit';
       textarea.style.color = el.type === 'note' ? (el.color || '#1c1917') : (el.color || '#ffffff');
       textarea.style.fontSize = `${el.fontSize || (el.type === 'note' ? 13 : 24)}px`;
       textarea.style.fontFamily = el.fontFamily || 'system-ui, sans-serif';

@@ -102,6 +102,100 @@ export const $reviewCounts = computed($images, (images) => {
   };
 });
 
+// Undo / redo
+//
+// Every change to $images is recorded by listening to the atom rather than by
+// instrumenting each action, so culling, labels, reorders, sorts, edits, removals
+// and Smart Cull are all undoable without any of them knowing about history.
+// Changes made in one synchronous task coalesce into one step.
+//
+// Blob URLs can no longer be revoked the moment a photo leaves the sheet: an
+// undone delete would come back as a broken image. They are released once no
+// snapshot in the history can bring them back (see releaseUnreachableUrls).
+const HISTORY_LIMIT = 50;
+let historyPast: (readonly ImageItem[])[] = [];
+let historyFuture: (readonly ImageItem[])[] = [];
+let historyCurrent: readonly ImageItem[] = [];
+let applyingHistory = false;
+let coalescing = false;
+const trackedUrls = new Set<string>();
+
+export const $canUndo = atom(false);
+export const $canRedo = atom(false);
+
+function imageUrls(img: ImageItem): string[] {
+  return img.thumbnailUrl && img.thumbnailUrl !== img.previewUrl
+    ? [img.previewUrl, img.thumbnailUrl]
+    : [img.previewUrl];
+}
+
+function revokeUrl(url: string) {
+  URL.revokeObjectURL(url);
+  clearImageElementCache(url);
+  trackedUrls.delete(url);
+}
+
+let releaseScheduled = false;
+function releaseUnreachableUrls() {
+  if (releaseScheduled) return;
+  releaseScheduled = true;
+  queueMicrotask(() => {
+    releaseScheduled = false;
+    const reachable = new Set<string>();
+    for (const snapshot of [historyCurrent, ...historyPast, ...historyFuture]) {
+      for (const img of snapshot) for (const url of imageUrls(img)) reachable.add(url);
+    }
+    for (const url of [...trackedUrls]) {
+      if (!reachable.has(url)) revokeUrl(url);
+    }
+  });
+}
+
+function syncHistoryFlags() {
+  $canUndo.set(historyPast.length > 0);
+  $canRedo.set(historyFuture.length > 0);
+}
+
+$images.listen((next) => {
+  for (const img of next) for (const url of imageUrls(img)) trackedUrls.add(url);
+  if (!applyingHistory) {
+    if (!coalescing) {
+      historyPast.push(historyCurrent);
+      if (historyPast.length > HISTORY_LIMIT) historyPast.shift();
+      coalescing = true;
+      queueMicrotask(() => { coalescing = false; });
+    }
+    historyFuture = [];
+  }
+  historyCurrent = next;
+  syncHistoryFlags();
+  releaseUnreachableUrls();
+});
+
+function applyHistorySnapshot(snapshot: readonly ImageItem[]) {
+  applyingHistory = true;
+  $images.set([...snapshot]);
+  applyingHistory = false;
+  const selected = $selectedImageId.get();
+  if (!selected || !snapshot.some(img => img.id === selected)) {
+    $selectedImageId.set(snapshot[0]?.id ?? null);
+  }
+}
+
+export function undo() {
+  const previous = historyPast.pop();
+  if (!previous) return;
+  historyFuture.push(historyCurrent);
+  applyHistorySnapshot(previous);
+}
+
+export function redo() {
+  const next = historyFuture.pop();
+  if (!next) return;
+  historyPast.push(historyCurrent);
+  applyHistorySnapshot(next);
+}
+
 // Store Actions
 export function addImages(newImages: ImageItem[]) {
   const current = $images.get();
@@ -118,15 +212,6 @@ export function addImages(newImages: ImageItem[]) {
 
 export function removeImage(id: string) {
   const current = $images.get();
-  const target = current.find(img => img.id === id);
-  if (target) {
-    URL.revokeObjectURL(target.previewUrl);
-    clearImageElementCache(target.previewUrl);
-    if (target.thumbnailUrl && target.thumbnailUrl !== target.previewUrl) {
-      URL.revokeObjectURL(target.thumbnailUrl);
-      clearImageElementCache(target.thumbnailUrl);
-    }
-  }
   const filtered = current.filter(img => img.id !== id).map((img, idx) => ({
     ...img,
     order: idx,
@@ -179,15 +264,6 @@ export function replaceImages(
     const at = indices.length > 0 ? indices[indices.length - 1] + 1 : current.length;
     next = [...current.slice(0, at), ...inherited, ...current.slice(at)];
   } else {
-    for (const idx of indices) {
-      const target = current[idx];
-      URL.revokeObjectURL(target.previewUrl);
-      clearImageElementCache(target.previewUrl);
-      if (target.thumbnailUrl && target.thumbnailUrl !== target.previewUrl) {
-        URL.revokeObjectURL(target.thumbnailUrl);
-        clearImageElementCache(target.thumbnailUrl);
-      }
-    }
     const kept = current.filter((img) => !idSet.has(img.id));
     // Count how many survivors precede the first source: that index in the
     // filtered array is where the replacements belong.
@@ -371,17 +447,14 @@ export function setActiveTemplate(templateId: string) {
 }
 
 export function resetWorkspace() {
-  const current = $images.get();
-  for (const img of current) {
-    URL.revokeObjectURL(img.previewUrl);
-    clearImageElementCache(img.previewUrl);
-    if (img.thumbnailUrl && img.thumbnailUrl !== img.previewUrl) {
-      URL.revokeObjectURL(img.thumbnailUrl);
-      clearImageElementCache(img.thumbnailUrl);
-    }
-  }
-  clearImageElementCache();
+  // A reset is a fresh start, not an undoable step: drop the history so every
+  // blob URL becomes unreachable and is released.
   $images.set([]);
+  historyPast = [];
+  historyFuture = [];
+  syncHistoryFlags();
+  for (const url of [...trackedUrls]) revokeUrl(url);
+  clearImageElementCache();
   $selectedImageId.set(null);
   $layoutConfig.set({ ...DEFAULT_LAYOUT_CONFIG });
   $filterStatus.set('all');
@@ -413,17 +486,6 @@ export function restoreWorkspaceFromManifest(manifest: ProjectManifest) {
 }
 
 export function setImages(images: ImageItem[]) {
-  const current = $images.get();
-  for (const img of current) {
-    if (!images.some(n => n.id === img.id)) {
-      URL.revokeObjectURL(img.previewUrl);
-      clearImageElementCache(img.previewUrl);
-      if (img.thumbnailUrl && img.thumbnailUrl !== img.previewUrl) {
-        URL.revokeObjectURL(img.thumbnailUrl);
-        clearImageElementCache(img.thumbnailUrl);
-      }
-    }
-  }
   $images.set(images);
   if (images.length > 0) {
     $selectedImageId.set(images[0].id);

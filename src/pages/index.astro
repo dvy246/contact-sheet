@@ -51,11 +51,11 @@ const faqs = [
   },
   {
     question: 'How do client photo proofing and selection exports work?',
-    answer: 'You can review and flag images using keyboard shortcuts (1 for Keep, 2 for Flag, 3 for Reject). When finished, open the Export drawer and choose "Lightroom TXT" or "CSV Table" to copy a filtered list of approved filenames directly into Lightroom Classic or Capture One search filters.',
+    answer: 'You can review and flag images using keyboard shortcuts (1 for Keep, 2 for Flag, 3 for Reject). When finished, open the Export drawer and choose "Lightroom Filter" (comma-separated text) or "Selected Filenames" (CSV) to get a filtered list of approved filenames for Lightroom Classic or Capture One search filters.',
   },
   {
     question: 'Are my photos uploaded to a cloud server?',
-    answer: 'No. Make Contact Sheet is built on a local-first client-side architecture. All image decoding, thumbnail downscaling, and PDF rendering take place in your browser\'s local memory sandbox via HTML5 Canvas and Web Workers. Your image files and metadata are never uploaded to remote servers.',
+    answer: 'No. Make Contact Sheet is built on a local-first client-side architecture. All image decoding, thumbnail downscaling, and PDF rendering take place in your browser\'s local memory sandbox via HTML5 Canvas. Your image files and metadata are never uploaded to remote servers.',
   },
 ];
 
@@ -333,7 +333,7 @@ const schemas = [
             </p>
             <ul class="list-disc pl-5 space-y-2 text-marketing-text/90">
               <li><strong>Print-Ready PDF Documents:</strong> Multi-page proof sheets formatted for standard US Letter and A4 dimensions at 300 DPI, complete with custom headers, studio watermarks, and page numbers.</li>
-              <li><strong>High-Resolution Master Images:</strong> Export single-page JPEG, PNG, or WebP contact sheets and <a href="/collage-templates" class="text-accent-ink hover:underline font-medium">collage templates</a> up to 4K resolution.</li>
+              <li><strong>High-Resolution Master Images:</strong> Export single-page JPEG or PNG contact sheets and <a href="/collage-templates" class="text-accent-ink hover:underline font-medium">collage templates</a> up to 4K resolution.</li>
               <li><strong>Adobe Lightroom and Capture One Handoff:</strong> Download filtered TXT selection lists or structured CSV manifests to paste directly into Lightroom search bars, or export industry-standard XMP sidecar XMLs that automatically apply star ratings and color labels to your original RAW files.</li>
               <li><strong>Serverless Client Proofing Portals:</strong> Export a standalone, self-contained HTML gallery with built-in client rating buttons, zero hosting dependencies, and interactive review export.</li>
             </ul>
@@ -353,7 +353,7 @@ const schemas = [
               In-Browser Execution and Client-Side Data Privacy
             </h3>
             <p>
-              All image decoding, thumbnail generation, EXIF parsing, and rendering operations execute locally on your device hardware using HTML5 Canvas and client Web Workers. Your image files, camera filenames, and confidential client assets are never uploaded to an external server or stored in a remote cloud database. This local-first architecture ensures strict client confidentiality, avoids bandwidth bottlenecks, and allows immediate processing of large photo collections.
+              All image decoding, thumbnail generation, EXIF parsing, and rendering operations execute locally on your device hardware using HTML5 Canvas. Your image files, camera filenames, and confidential client assets are never uploaded to an external server or stored in a remote cloud database. This local-first architecture ensures strict client confidentiality, avoids bandwidth bottlenecks, and allows immediate processing of large photo collections.
             </p>
           </div>
 

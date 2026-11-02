@@ -3,6 +3,17 @@ import path from 'path';
 import http from 'http';
 
 const DIST_DIR = path.resolve('dist');
+
+// Astro builds with `build.format: 'file'` (/page.html), but keep accepting the
+// directory layout (/page/index.html) so the checks don't care which is in use.
+function resolveRouteFile(route) {
+  const clean = route.replace(/\/$/, '');
+  if (clean === '' || clean === '/') return path.join(DIST_DIR, 'index.html');
+  const asFile = path.join(DIST_DIR, clean.replace(/^\//, '') + '.html');
+  if (fs.existsSync(asFile)) return asFile;
+  return path.join(DIST_DIR, clean.replace(/^\//, ''), 'index.html');
+}
+
 const LOCALES = ['en', 'es', 'de', 'fr', 'ja', 'pt'];
 const NON_DEFAULT_LOCALES = ['es', 'de', 'fr', 'ja', 'pt'];
 
@@ -49,7 +60,8 @@ console.log('▶ [PHASE 1] Checking Route Parity Across All 6 Locales...');
 const englishRoutes = [];
 for (const file of allFiles) {
   const rel = path.relative(DIST_DIR, file);
-  const segments = rel.split(path.sep);
+  // `es.html` (file build format) is the Spanish homepage, like `es/index.html`.
+  const segments = rel.replace(/\.html$/, '').split(path.sep);
   if (!NON_DEFAULT_LOCALES.includes(segments[0])) {
     const cleanRel = rel.replace(/(^|\/)index\.html$/, '').replace(/\.html$/, '');
     const route = '/' + cleanRel.replace(/^\//, '');
@@ -64,10 +76,8 @@ console.log(`  Found ${englishRoutes.length} content routes.`);
 // Ensure each English route exists in every non-default locale
 for (const route of englishRoutes) {
   for (const loc of NON_DEFAULT_LOCALES) {
-    const expectedRel = route === '/' 
-      ? path.join(loc, 'index.html')
-      : path.join(loc, route.replace(/^\//, ''), 'index.html');
-    const expectedPath = path.join(DIST_DIR, expectedRel);
+    const expectedPath = resolveRouteFile(route === '/' ? `/${loc}` : `/${loc}${route}`);
+    const expectedRel = path.relative(DIST_DIR, expectedPath);
     if (!fs.existsSync(expectedPath)) {
       recordFailure('Route Parity', `/${loc}${route}`, `Missing localized page for route "${route}" at "${expectedRel}"`);
     }
@@ -100,7 +110,7 @@ for (const file of allFiles) {
   const size = Buffer.byteLength(content, 'utf-8');
 
   // Determine expected locale
-  const firstSeg = rel.split(path.sep)[0];
+  const firstSeg = rel.replace(/\.html$/, '').split(path.sep)[0];
   const locale = NON_DEFAULT_LOCALES.includes(firstSeg) ? firstSeg : 'en';
 
   // 1. File size check (must be at least 1KB)
@@ -202,14 +212,10 @@ for (const file of allFiles) {
     const [pathname, hash] = rawHref.split('#');
     const [cleanPath] = pathname.split('?');
 
-    let targetFile = cleanPath;
-    if (targetFile === '/' || targetFile === '') {
-      targetFile = '/index.html';
-    } else if (!path.extname(targetFile)) {
-      targetFile = targetFile.replace(/\/$/, '') + '/index.html';
-    }
-
-    const fullTargetPath = path.join(DIST_DIR, targetFile.replace(/^\//, ''));
+    const fullTargetPath = path.extname(cleanPath)
+      ? path.join(DIST_DIR, cleanPath.replace(/^\//, ''))
+      : resolveRouteFile(cleanPath);
+    const targetFile = '/' + path.relative(DIST_DIR, fullTargetPath);
     if (!fs.existsSync(fullTargetPath)) {
       recordFailure('Broken Link', rel, `Broken internal link to: "${rawHref}" (resolved to "${targetFile}")`);
     }
@@ -225,13 +231,9 @@ console.log('▶ [PHASE 4] Running Live HTTP Server Crawler across all pages...'
 
 const server = http.createServer((req, res) => {
   let reqPath = decodeURIComponent(req.url.split('?')[0].split('#')[0]);
-  if (reqPath.endsWith('/')) {
-    reqPath += 'index.html';
-  } else if (!path.extname(reqPath)) {
-    reqPath += '/index.html';
-  }
-
-  const filePath = path.join(DIST_DIR, reqPath.replace(/^\//, ''));
+  const filePath = path.extname(reqPath)
+    ? path.join(DIST_DIR, reqPath.replace(/^\//, ''))
+    : resolveRouteFile(reqPath);
   if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
     fs.createReadStream(filePath).pipe(res);

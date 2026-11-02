@@ -3,6 +3,7 @@ import Icon from './Icon.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
 import { type Locale, DEFAULT_LOCALE } from '../../i18n/config';
 import { HEADER_FOOTER_DATA } from '../../i18n/data/headerFooterData';
+import { PALETTES } from '../../lib/palettes';
 import { l } from '../../i18n/utils';
 
 interface Props {
@@ -18,20 +19,20 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
 <header class={`w-full z-50 transition-all ${
   isWorkspace 
     ? 'bg-workspace-panel/95 backdrop-blur-xl border-b border-workspace-border text-workspace-text' 
-    : 'bg-marketing-bg/85 dark:bg-[#120E0C]/85 backdrop-blur-xl border-b border-marketing-border/80 text-marketing-text sticky top-0 shadow-[0_1px_3px_0_rgba(0,0,0,0.02)]'
+    : 'bg-marketing-bg/85 dark:bg-marketing-bg/85 backdrop-blur-xl border-b border-marketing-border/80 text-marketing-text sticky top-0 shadow-[0_1px_3px_0_rgba(0,0,0,0.02)]'
 }`}>
   <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 h-[68px] flex items-center justify-between">
     
     <!-- Brand Logo -->
-    <a href={l("/", locale)} class="flex items-center gap-3 group shrink-0">
-      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-accent/15 via-marketing-surface to-marketing-panel flex items-center justify-center border border-accent/25 dark:border-accent/35 group-hover:border-accent group-hover:scale-[1.04] transition-all duration-200 shadow-2xs">
+    <a href={l("/", locale)} class="flex items-center gap-3 group shrink-0" aria-label="Make Contact Sheet home">
+      <div class={`${isWorkspace ? '' : 'max-[359px]:hidden '}w-9 h-9 rounded-xl bg-gradient-to-br from-accent/15 via-marketing-surface to-marketing-panel flex items-center justify-center border border-accent/25 dark:border-accent/35 group-hover:border-accent group-hover:scale-[1.04] transition-all duration-200 shadow-2xs`}>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-accent-ink">
           <rect width="18" height="18" x="3" y="3" rx="2" />
           <path d="M3 9h18" />
           <path d="M9 21V9" />
         </svg>
       </div>
-      <div class="flex flex-col">
+      <div class={isWorkspace ? 'hidden sm:flex flex-col' : 'flex flex-col'}>
         <span class={`font-bold tracking-tight text-base sm:text-[17px] leading-none ${isWorkspace ? 'text-workspace-text' : 'text-marketing-text'}`}>
           Make Contact <span class="text-accent-ink">Sheet</span>
         </span>
@@ -56,7 +57,7 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
           </button>
           
           <!-- Tools Mega Menu with Spring Scale In -->
-          <div class="absolute left-0 top-[calc(100%+8px)] pointer-events-none group-hover:pointer-events-auto opacity-0 -translate-y-2 scale-95 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 transition-all duration-200 ease-out origin-top-left flex flex-col bg-marketing-panel/98 dark:bg-[#1A1512]/98 backdrop-blur-2xl border border-marketing-border rounded-2xl shadow-2xl p-2 min-w-[310px] z-50">
+          <div class="absolute left-0 top-[calc(100%+8px)] pointer-events-none group-hover:pointer-events-auto opacity-0 -translate-y-2 scale-95 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 transition-all duration-200 ease-out origin-top-left flex flex-col bg-marketing-panel/98 dark:bg-marketing-panel/98 backdrop-blur-2xl border border-marketing-border rounded-2xl shadow-2xl p-2 min-w-[310px] z-50">
             <a href={l("/photo-contact-sheet-maker", locale)} class="group/item flex items-start gap-3 p-2.5 rounded-xl hover:bg-marketing-surface transition-colors">
               <div class="w-8 h-8 rounded-lg bg-marketing-surface border border-marketing-border flex items-center justify-center shrink-0 group-hover/item:border-accent/40 text-marketing-text group-hover/item:text-accent shadow-xs">
                 <Icon name="grid" size={16} />
@@ -107,7 +108,7 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
               <div class="flex flex-col">
                 <div class="flex items-center gap-1.5">
                   <span class="font-semibold text-marketing-text text-xs sm:text-sm group-hover/item:text-accent transition-colors">{nav.toolAutoCull}</span>
-                  <span class="text-[9px] font-mono px-1.5 py-0.2 rounded-full bg-accent-green text-zinc-950 font-bold">AI</span>
+                  <span class="text-[9px] font-mono px-1.5 py-0.2 rounded-full bg-accent-green text-zinc-950 font-bold">AUTO</span>
                 </div>
                 <span class="text-[11px] text-marketing-muted">{nav.toolAutoCullDesc}</span>
               </div>
@@ -161,7 +162,7 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
           </button>
           
           <!-- Templates Dropdown Menu -->
-          <div class="absolute left-0 top-[calc(100%+8px)] pointer-events-none group-hover:pointer-events-auto opacity-0 -translate-y-2 scale-95 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 transition-all duration-200 ease-out origin-top-left flex flex-col bg-marketing-panel/98 dark:bg-[#1A1512]/98 backdrop-blur-2xl border border-marketing-border rounded-2xl shadow-2xl p-2 min-w-[290px] z-50">
+          <div class="absolute left-0 top-[calc(100%+8px)] pointer-events-none group-hover:pointer-events-auto opacity-0 -translate-y-2 scale-95 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 transition-all duration-200 ease-out origin-top-left flex flex-col bg-marketing-panel/98 dark:bg-marketing-panel/98 backdrop-blur-2xl border border-marketing-border rounded-2xl shadow-2xl p-2 min-w-[290px] z-50">
             <a href={l("/contact-sheet-template", locale)} class="group/item flex items-start gap-3 p-2.5 rounded-xl hover:bg-marketing-surface transition-colors">
               <div class="w-8 h-8 rounded-lg bg-marketing-surface border border-marketing-border flex items-center justify-center shrink-0 group-hover/item:border-accent/40 text-marketing-text group-hover/item:text-accent shadow-xs">
                 <Icon name="columns" size={16} />
@@ -205,7 +206,7 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
           </button>
           
           <!-- Guides Dropdown Menu -->
-          <div class="absolute left-0 top-[calc(100%+8px)] pointer-events-none group-hover:pointer-events-auto opacity-0 -translate-y-2 scale-95 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 transition-all duration-200 ease-out origin-top-left flex flex-col bg-marketing-panel/98 dark:bg-[#1A1512]/98 backdrop-blur-2xl border border-marketing-border rounded-2xl shadow-2xl p-2 min-w-[290px] z-50">
+          <div class="absolute left-0 top-[calc(100%+8px)] pointer-events-none group-hover:pointer-events-auto opacity-0 -translate-y-2 scale-95 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 transition-all duration-200 ease-out origin-top-left flex flex-col bg-marketing-panel/98 dark:bg-marketing-panel/98 backdrop-blur-2xl border border-marketing-border rounded-2xl shadow-2xl p-2 min-w-[290px] z-50">
             <a href={l("/guides/how-to-make-a-contact-sheet", locale)} class="group/item flex items-start gap-3 p-2.5 rounded-xl hover:bg-marketing-surface transition-colors">
               <div class="w-8 h-8 rounded-lg bg-marketing-surface border border-marketing-border flex items-center justify-center shrink-0 text-marketing-text group-hover/item:text-accent shadow-xs">
                 <Icon name="file-text" size={16} />
@@ -312,7 +313,7 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
             <Icon name="chevron-down" size={13} class="group-hover:rotate-180 transition-transform duration-200 text-marketing-muted group-hover:text-marketing-text" />
           </button>
           
-          <div class="absolute left-0 top-[calc(100%+8px)] pointer-events-none group-hover:pointer-events-auto opacity-0 -translate-y-2 scale-95 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 transition-all duration-200 ease-out origin-top-left flex flex-col bg-marketing-panel/98 dark:bg-[#1A1512]/98 backdrop-blur-2xl border border-marketing-border rounded-2xl shadow-2xl p-2 min-w-[260px] z-50">
+          <div class="absolute left-0 top-[calc(100%+8px)] pointer-events-none group-hover:pointer-events-auto opacity-0 -translate-y-2 scale-95 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 transition-all duration-200 ease-out origin-top-left flex flex-col bg-marketing-panel/98 dark:bg-marketing-panel/98 backdrop-blur-2xl border border-marketing-border rounded-2xl shadow-2xl p-2 min-w-[260px] z-50">
             <a href={l("/about-us", locale)} class="group/item flex items-start gap-3 p-2.5 rounded-xl hover:bg-marketing-surface transition-colors">
               <div class="w-8 h-8 rounded-lg bg-marketing-surface border border-marketing-border flex items-center justify-center shrink-0 text-marketing-text group-hover/item:text-accent shadow-xs">
                 <Icon name="help" size={16} />
@@ -345,7 +346,7 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
         </div>
       </nav>
     ) : (
-      <div class="flex items-center gap-3 text-xs text-workspace-muted">
+      <div class="hidden md:flex items-center gap-3 text-xs text-workspace-muted">
         <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-workspace-surface/80 border border-workspace-border backdrop-blur-sm shadow-2xs font-mono text-[11px]">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           <span class="text-workspace-text font-medium">{nav.privacyEnclave}</span>
@@ -357,7 +358,49 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
     <div class="flex items-center gap-2.5 sm:gap-3.5 shrink-0">
       
       <!-- Language Switcher -->
-      <LanguageSwitcher currentLocale={locale} currentPath={Astro.url.pathname} variant="header" />
+      <!-- Marketing pages carry a full switcher in the mobile drawer, so the
+           header copy only shows from md; workspace pages have no drawer. -->
+      <div class={isWorkspace ? 'contents' : 'hidden md:contents'}>
+        <LanguageSwitcher currentLocale={locale} currentPath={Astro.url.pathname} variant="header" />
+      </div>
+
+      <!-- Flavour palette picker. Marketing pages move it into the mobile drawer
+           below md; workspace pages have no drawer, so it stays visible. -->
+      <div class={`relative ${isWorkspace ? 'inline-flex' : 'hidden md:inline-flex'}`}>
+        <button
+          id="palette-picker-btn"
+          type="button"
+          class="inline-flex items-center justify-center w-9 h-9 rounded-full border border-marketing-border bg-marketing-panel hover:bg-marketing-surface transition-colors cursor-pointer"
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="palette-picker-menu"
+          aria-label={nav.paletteLabel}
+          title={nav.paletteLabel}
+        >
+          <span class="palette-current" aria-hidden="true"></span>
+        </button>
+        <div
+          id="palette-picker-menu"
+          role="radiogroup"
+          aria-label={nav.paletteLabel}
+          class="hidden absolute right-0 top-full mt-2 w-60 p-2 rounded-2xl border border-marketing-border bg-marketing-panel shadow-xl z-50"
+        >
+          <p class="px-2 pt-1 pb-2 text-[11px] font-mono uppercase tracking-wider text-accent-ink font-bold">{nav.paletteLabel}</p>
+          {PALETTES.map((p) => (
+            <button
+              type="button"
+              role="radio"
+              aria-checked="false"
+              data-palette-option={p.id}
+              class="palette-option w-full flex items-center gap-3 px-2 py-1.5 rounded-xl text-sm font-medium text-marketing-text hover:bg-marketing-surface aria-checked:bg-marketing-surface transition-colors cursor-pointer"
+            >
+              <span class="palette-swatch" style={`--sw-accent:${p.accent};--sw-cream:${p.cream};--sw-cocoa:${p.cocoa}`} aria-hidden="true"></span>
+              <span class="flex-1 text-left">{nav[p.labelKey]}</span>
+              <svg class="palette-check w-4 h-4 text-accent-ink" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+            </button>
+          ))}
+        </div>
+      </div>
 
       <!-- Theme Switcher (Light / Dark slider) -->
       <button
@@ -384,7 +427,7 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
           </svg>
           <!-- Moon icon (right rail) -->
           <svg class="theme-switch-rail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z" />
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
           </svg>
           <span class="theme-switch-knob"></span>
         </span>
@@ -401,10 +444,11 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
       ) : (
         <a
           href="/studio/contact-sheet"
-          class="inline-flex items-center justify-center gap-1.5 h-8.5 px-3.5 rounded-lg bg-workspace-surface hover:bg-workspace-surface-hover text-workspace-text text-xs font-semibold border border-workspace-border transition-colors shadow-2xs"
+          aria-label="New Batch"
+          class="inline-flex items-center justify-center gap-1.5 h-8.5 px-2.5 sm:px-3.5 rounded-lg bg-workspace-surface hover:bg-workspace-surface-hover text-workspace-text text-xs font-semibold border border-workspace-border transition-colors shadow-2xs"
         >
           <Icon name="rotate-ccw" size={13} />
-          <span>New Batch</span>
+          <span class="hidden sm:inline">New Batch</span>
         </a>
       )}
 
@@ -556,6 +600,25 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
         </div>
       </div>
 
+      <!-- Mobile Flavour Palette -->
+      <div class="pt-2 border-t border-marketing-border">
+        <div class="text-[11px] font-mono uppercase tracking-wider text-accent-ink font-bold mb-2">{nav.paletteLabel}</div>
+        <div role="radiogroup" aria-label={nav.paletteLabel} class="grid grid-cols-4 gap-2">
+          {PALETTES.map((p) => (
+            <button
+              type="button"
+              role="radio"
+              aria-checked="false"
+              data-palette-option={p.id}
+              class="palette-option flex flex-col items-center gap-1.5 p-2 rounded-xl border border-transparent text-[11px] font-medium text-marketing-text hover:bg-marketing-surface aria-checked:bg-marketing-surface aria-checked:border-accent transition-colors cursor-pointer"
+            >
+              <span class="palette-swatch" style={`--sw-accent:${p.accent};--sw-cream:${p.cream};--sw-cocoa:${p.cocoa}`} aria-hidden="true"></span>
+              <span class="text-center leading-tight">{nav[p.labelKey]}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
       <!-- Mobile Language Switcher -->
       <div class="pt-2 border-t border-marketing-border">
         <div class="text-[11px] font-mono uppercase tracking-wider text-accent-ink font-bold mb-2">Language</div>
@@ -566,6 +629,8 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
 </header>
 
 <script>
+  import { PALETTES, DEFAULT_PALETTE } from '../../lib/palettes';
+
   // Mobile Menu Toggle
   const toggleBtn = document.getElementById('mobile-menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
@@ -589,5 +654,78 @@ const nav = HEADER_FOOTER_DATA[locale] || HEADER_FOOTER_DATA[DEFAULT_LOCALE];
     const nextIsDark = !document.documentElement.classList.contains('dark');
     localStorage.setItem('theme', nextIsDark ? 'dark' : 'light');
     syncSwitch(nextIsDark);
+  });
+
+  // Flavour palette picker. The attribute is already set before first paint by
+  // BaseLayout's inline script; this only reflects and changes it.
+  const root = document.documentElement;
+  const paletteBtn = document.getElementById('palette-picker-btn');
+  const paletteMenu = document.getElementById('palette-picker-menu');
+  const paletteOptions = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-palette-option]'));
+  const menuOptions = paletteMenu
+    ? Array.from(paletteMenu.querySelectorAll<HTMLButtonElement>('[data-palette-option]'))
+    : [];
+  const validPalettes = new Set(PALETTES.map((p) => p.id as string));
+
+  function syncPaletteOptions() {
+    const current = root.getAttribute('data-palette') ?? DEFAULT_PALETTE;
+    for (const option of paletteOptions) {
+      option.setAttribute('aria-checked', String(option.dataset.paletteOption === current));
+    }
+  }
+
+  function applyPalette(id: string) {
+    if (!validPalettes.has(id)) return;
+    if (id === DEFAULT_PALETTE) {
+      root.removeAttribute('data-palette');
+      localStorage.removeItem('palette');
+    } else {
+      root.setAttribute('data-palette', id);
+      localStorage.setItem('palette', id);
+    }
+    syncPaletteOptions();
+  }
+
+  function setMenuOpen(open: boolean, focusTarget?: 'checked' | 'button') {
+    if (!paletteMenu || !paletteBtn) return;
+    paletteMenu.classList.toggle('hidden', !open);
+    paletteBtn.setAttribute('aria-expanded', String(open));
+    if (open && focusTarget === 'checked') {
+      (menuOptions.find((o) => o.getAttribute('aria-checked') === 'true') ?? menuOptions[0])?.focus();
+    } else if (!open && focusTarget === 'button') {
+      paletteBtn.focus();
+    }
+  }
+
+  syncPaletteOptions();
+
+  paletteBtn?.addEventListener('click', () => {
+    const open = paletteBtn.getAttribute('aria-expanded') !== 'true';
+    setMenuOpen(open, open ? 'checked' : undefined);
+  });
+
+  for (const option of paletteOptions) {
+    option.addEventListener('click', () => {
+      applyPalette(option.dataset.paletteOption ?? DEFAULT_PALETTE);
+      if (paletteMenu?.contains(option)) setMenuOpen(false, 'button');
+    });
+  }
+
+  paletteMenu?.addEventListener('keydown', (e) => {
+    const index = menuOptions.indexOf(document.activeElement as HTMLButtonElement);
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      setMenuOpen(false, 'button');
+    } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const delta = e.key === 'ArrowDown' ? 1 : -1;
+      menuOptions[(index + delta + menuOptions.length) % menuOptions.length]?.focus();
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!paletteMenu || paletteMenu.classList.contains('hidden')) return;
+    const target = e.target as Node;
+    if (!paletteMenu.contains(target) && !paletteBtn?.contains(target)) setMenuOpen(false);
   });
 </script>

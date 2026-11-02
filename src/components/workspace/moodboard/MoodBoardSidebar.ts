@@ -562,7 +562,7 @@ export class MoodBoardSidebar {
       } else if (el.type === 'note') {
         cell.style.backgroundColor = el.backgroundColor || '#fef3c7';
       } else if (el.type === 'text') {
-        cell.style.backgroundColor = 'rgba(201, 138, 70, 0.4)';
+        cell.style.backgroundColor = 'rgb(var(--accent-rgb) / 0.4)';
       }
 
       box.appendChild(cell);

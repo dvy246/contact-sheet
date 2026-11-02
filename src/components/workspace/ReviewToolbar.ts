@@ -6,7 +6,10 @@ import {
   setFilterStatus, 
   setWorkspaceMode, 
   batchSetStatus,
-  setImages
+  $canUndo,
+  $canRedo,
+  undo,
+  redo
 } from '../../lib/store';
 import type { FilterStatus } from '../../lib/types';
 import { runSmartCull } from '../../lib/ai/cullingEngine';
@@ -69,6 +72,18 @@ export class ReviewToolbar {
 
         <!-- Quick Batch Controls & Help -->
         <div class="flex items-center gap-2 shrink-0">
+          <div class="flex items-center rounded-lg border border-workspace-border bg-workspace-surface">
+            <button id="btn-undo" class="w-8 h-8 rounded-l-lg text-workspace-muted hover:text-workspace-text disabled:opacity-30 disabled:cursor-default cursor-pointer flex items-center justify-center" title="Undo (⌘Z)" aria-label="Undo" ${$canUndo.get() ? '' : 'disabled'}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>
+            </button>
+            <button id="btn-redo" class="w-8 h-8 rounded-r-lg border-l border-workspace-border text-workspace-muted hover:text-workspace-text disabled:opacity-30 disabled:cursor-default cursor-pointer flex items-center justify-center" title="Redo (⇧⌘Z)" aria-label="Redo" ${$canRedo.get() ? '' : 'disabled'}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></svg>
+            </button>
+          </div>
+          <button id="btn-open-loupe" class="h-8 px-3 rounded-lg bg-workspace-surface hover:bg-workspace-surface-hover text-workspace-text border border-workspace-border transition-colors text-xs font-semibold cursor-pointer flex items-center justify-center gap-1.5 disabled:opacity-40 disabled:cursor-default" title="Full-screen loupe review (Space)" ${counts.total > 0 ? '' : 'disabled'}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6"/><path d="M8 11h6"/></svg>
+            <span>Loupe</span>
+          </button>
           <button id="btn-smart-cull" class="h-8 px-3 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-700 dark:text-indigo-400 border border-indigo-500/30 transition-colors text-xs font-semibold cursor-pointer flex items-center justify-center gap-1.5" title="Auto-flag blurry images">
             <span>✨</span>
             <span>Smart Cull</span>
@@ -112,10 +127,19 @@ export class ReviewToolbar {
 
     // Batch actions
     document.getElementById('btn-smart-cull')?.addEventListener('click', async () => {
-      const images = $images.get();
-      if (images.length === 0) return;
-      
-      const proceed = confirm(`Run AI Smart Cull on ${images.length} photos to automatically flag blurry & out-of-focus shots?`);
+      const allImages = $images.get();
+      if (allImages.length === 0) return;
+      // Only unreviewed photos are scored: a Keep/Flag/Reject the user chose by
+      // hand outranks a sharpness heuristic (intentional motion blur, soft focus).
+      const images = allImages.filter(img => img.status === 'unreviewed');
+      if (images.length === 0) {
+        alert('Smart Cull only scores unreviewed photos, and every photo already has a decision.');
+        return;
+      }
+      const skipped = allImages.length - images.length;
+      const skippedNote = skipped > 0 ? `\n\n${skipped} photo${skipped === 1 ? '' : 's'} you already reviewed will be left as they are.` : '';
+
+      const proceed = confirm(`Run Smart Cull on ${images.length} unreviewed photo${images.length === 1 ? '' : 's'} to flag blurry & out-of-focus shots?${skippedNote}`);
       if (!proceed) return;
 
       const btn = document.getElementById('btn-smart-cull');
@@ -123,9 +147,6 @@ export class ReviewToolbar {
         btn.innerHTML = `<span class="animate-spin">⚙️</span><span>Culling...</span>`;
         btn.setAttribute('disabled', 'true');
       }
-
-      // Save previous state for undo
-      const prevImages = [...images];
 
       const { flaggedCount, rejectedCount } = await runSmartCull(images, () => {
         // Optional: Update progress in UI if a progress bar existed
@@ -137,15 +158,14 @@ export class ReviewToolbar {
       }
 
       if (flaggedCount > 0 || rejectedCount > 0) {
-        // Find a way to show a toast, simple confirm for undo for now
-        const undo = confirm(`Smart Cull complete: ${flaggedCount} flagged, ${rejectedCount} rejected.\n\nClick Cancel to Undo, or OK to keep changes.`);
-        if (!undo) {
-          setImages(prevImages);
-        }
+        alert(`Smart Cull complete: ${flaggedCount} flagged, ${rejectedCount} rejected.\n\nPress ⌘Z (Ctrl+Z) or the Undo button to revert.`);
       } else {
         alert('Smart Cull complete: All images are sharp!');
       }
     });
+
+    document.getElementById('btn-undo')?.addEventListener('click', () => undo());
+    document.getElementById('btn-redo')?.addEventListener('click', () => redo());
 
     document.getElementById('btn-batch-keep')?.addEventListener('click', () => {
       batchSetStatus('keep');
@@ -159,5 +179,8 @@ export class ReviewToolbar {
     $reviewCounts.subscribe(() => this.render());
     $filterStatus.subscribe(() => this.render());
     $workspaceMode.subscribe(() => this.render());
+    // Patched rather than re-rendered: undo fires from these buttons' own clicks.
+    $canUndo.subscribe((can) => document.getElementById('btn-undo')?.toggleAttribute('disabled', !can));
+    $canRedo.subscribe((can) => document.getElementById('btn-redo')?.toggleAttribute('disabled', !can));
   }
 }

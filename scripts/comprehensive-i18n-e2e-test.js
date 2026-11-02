@@ -52,7 +52,9 @@ for (const filePath of allHtmlFiles) {
   const content = fs.readFileSync(filePath, 'utf-8');
   
   // Determine locale of this file
-  const firstSegment = relPath.split(path.sep)[0];
+  // With `build.format: 'file'` a locale home is `es.html` at the dist root,
+  // not `es/index.html`, so strip the extension before matching the segment.
+  const firstSegment = relPath.split(path.sep)[0].replace(/\.html$/, '');
   const isLocalized = LOCALES.includes(firstSegment);
   const expectedLocale = isLocalized ? firstSegment : 'en';
 
@@ -103,7 +105,9 @@ for (const filePath of allHtmlFiles) {
     if (target === '' || target === '/') {
       target = '/index.html';
     } else if (!path.extname(target)) {
-      target = target.replace(/\/$/, '') + '/index.html';
+      // `build.format: 'file'` emits `/page.html`; accept the old `/page/index.html` too.
+      const clean = target.replace(/\/$/, '');
+      target = fs.existsSync(path.join(DIST_DIR, clean + '.html')) ? clean + '.html' : clean + '/index.html';
     }
     const targetFile = path.join(DIST_DIR, target);
     if (!fs.existsSync(targetFile)) {
